@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.h                                            :+:      :+:    :+:   */
+/*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,12 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INPUT_H
-# define INPUT_H
+#ifndef SHELL_H
+# define SHELL_H
 
-typedef struct		s_input
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <limits.h>
+# include "../include/term.h"
+# include "../include/input.h"
+
+typedef struct		s_sh
 {
-	char			*buff;
-}					t_input;
+	struct s_term	term;
+	struct s_input	input;
+}					t_sh;
+
+void	init_shell(t_sh *shell);
 
 #endif

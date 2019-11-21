@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.h                                            :+:      :+:    :+:   */
+/*   term.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,12 +10,34 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INPUT_H
-# define INPUT_H
+#ifndef TERM_H
+# define TERM_H
 
-typedef struct		s_input
+# include <term.h>
+# include <termios.h>
+# include <curses.h>
+
+struct				s_keys
 {
-	char			*buff;
-}					t_input;
+	int				del;
+	int				left;
+	int				right;
+	int				up;
+	int				down;
+	int				bsp;
+	int				esc;
+	int				spc;
+	int				enter;
+};
 
-#endif
+struct				s_term
+{
+	struct termios	orig_termios;
+	struct s_keys	keys;
+	char			*termtype;
+	int				width;
+};
+
+void				init_term(struct s_term *term);
+
+#endif 
