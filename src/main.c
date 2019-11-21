@@ -6,13 +6,12 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:37:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/21 20:39:42 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 00:28:21 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/shell.h"
-
-#include <stdio.h>
+#include "shell.h"
+#include "libft.h"
 
 int		g_last_exit_st = 0;
 
@@ -25,7 +24,7 @@ int		read_line(t_input *input)
 	{
 		c = 0;
 		read(STDIN_FILENO, &c, 4);
-		add_char_to_dstr(&input->line);
+		add_char_to_dstr(&input->line, c);
 		write(1, &c, 4); //echo char
 	}
 	return(0);

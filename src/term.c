@@ -6,11 +6,16 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/21 20:48:37 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 00:44:22 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/shell.h"
+#include "shell.h"
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <curses.h>
+#include <term.h>
 
 int			ft_putc(int c)
 {
