@@ -6,7 +6,7 @@
 #    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/11/21 20:45:00 by fratajcz         ###   ########.fr        #
+#    Updated: 2019/11/22 00:35:27 by fratajcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ DIR_SRC = src/
 DIR_OBJ = obj/
 DIR_INC = include/
 DIR_LIB = libft/
-SRC =	main.c term.c
+SRC =	main.c term.c init.c input.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
 LIB = $(addprefix $(DIR_LIB), libft.a)
