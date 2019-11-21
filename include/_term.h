@@ -6,16 +6,15 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/21 20:39:09 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 00:46:12 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TERM_H
-# define TERM_H
+#ifndef _TERM_H
+# define _TERM_H
 
-# include <term.h>
-# include <termios.h>
 # include <curses.h>
+# include <termios.h>
 
 struct				s_keys
 {
