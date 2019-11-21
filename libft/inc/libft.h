@@ -6,7 +6,7 @@
 /*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:27:46 by nbousset          #+#    #+#             */
-/*   Updated: 2019/11/21 19:34:08 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/21 23:02:00 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,20 @@ void					*ft_htgetval(t_htable *htable, const char *key);
 void					ft_htclr(t_htable *htable);
 void					ft_htdel(t_htable **ahtable);
 void					ft_htdelone(t_htable *htable, const char *key);
+
+/*
+** -------------------------Dynamic strings------------------------
+*/
+
+typedef struct			s_dstr
+{
+	int					len;
+	char				*str;
+	int					capacity;
+}						t_dstr;
+
+t_dstr					*new_dstr(const char c);
+void					add_char_to_dstr(t_dstr **str, char c);
 
 /*
 ** -----------------------------Memory-----------------------------
