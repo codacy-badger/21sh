@@ -12,11 +12,11 @@
 
 #include "../include/shell.h"
 
-int		g_last_exit_st = 0;
-
 #include <stdio.h>
 
-int		read_line(void)
+int		g_last_exit_st = 0;
+
+int		read_line(t_input *input)
 {
 	unsigned int	c;
 
@@ -25,7 +25,8 @@ int		read_line(void)
 	{
 		c = 0;
 		read(STDIN_FILENO, &c, 4);
-		write(1, &c, 4);
+		add_char_to_dstr(&input->line);
+		write(1, &c, 4); //echo char
 	}
 	return(0);
 }
@@ -37,7 +38,7 @@ int		main(void)
 	init_shell(&shell);
 	while (1)
 	{
-		read_line();
+		read_line(&shell.input);
 		//parse
 		//exec
 	}
