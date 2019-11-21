@@ -6,7 +6,7 @@
 #    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/06/13 22:28:56 by nbousset         ###   ########.fr        #
+#    Updated: 2019/11/21 23:05:30 by fratajcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,7 +104,9 @@ SRC =	mem/ft_memalloc.c \
 		struct/hash/ft_htgetval.c \
 		struct/hash/ft_htclr.c \
 		struct/hash/ft_htdel.c \
-		struct/hash/ft_htdelone.c
+		struct/hash/ft_htdelone.c\
+		struct/dstr/add_char_to_dstr.c\
+		struct/dstr/new_dstr.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
 
