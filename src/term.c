@@ -10,16 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <termios.h>
-#include <term.h>
-#include <curses.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include "input.h"
+#include "../include/shell.h"
 
-int				ft_putc(int c)
+int			ft_putc(int c)
 {
-	return (write(STDIN_FILENO, &c, 1));
+	return (write(STDOUT_FILENO, &c, 1));
 }
 
 void			init_keys(struct s_keys *keys)
@@ -60,7 +55,7 @@ void	init_term(struct s_term *term)
 	init_keys(&(term->keys));
 }
 
-void			reset_term(struct termios *orig_termios)
+void		reset_term(struct termios *orig_termios)
 {
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, orig_termios);
 	tputs(tgetstr("ve", NULL), 1, ft_putc);
