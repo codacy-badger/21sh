@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:46:12 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 01:20:09 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@
 
 struct				s_keys
 {
-	int				del;
-	int				left;
-	int				right;
-	int				up;
-	int				down;
-	int				bsp;
-	int				esc;
-	int				spc;
-	int				enter;
+	unsigned int				del;
+	unsigned int				left;
+	unsigned int				right;
+	unsigned int				up;
+	unsigned int				down;
+	unsigned int				bsp;
+	unsigned int				esc;
+	unsigned int				spc;
+	unsigned int				enter;
 };
 
 struct				s_term
@@ -38,5 +38,6 @@ struct				s_term
 };
 
 void				init_term(struct s_term *term);
+int					ft_putc(int c);
 
 #endif 

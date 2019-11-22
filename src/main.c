@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:37:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 01:08:42 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 01:15:03 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		main(void)
 	init_shell(&shell);
 	while (1)
 	{
-		read_line(&shell.input);
+		read_line(&shell.input, &shell.term.keys);
 		//parse
 		//exec
 	}
