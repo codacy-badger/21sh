@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   term.c                                             :+:      :+:    :+:   */
+/*   init_term.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,18 +11,19 @@
 /* ************************************************************************** */
 
 #include "shell.h"
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <curses.h>
-#include <term.h>
 
-int			ft_putc(int c)
+static void	init_caps(struct s_caps *caps)
 {
-	return (write(STDOUT_FILENO, &c, 1));
+	/*
+	** handle error : if essential caps are missing, quit
+	**					or just disable line editing
+	*/
+	caps->le = tgetstr("le", NULL);
+	caps->ri = tgetstr("ri", NULL);
+	caps->ce = tgetstr("ce", NULL);
 }
 
-void			init_keys(struct s_keys *keys)
+static void	init_keys(struct s_keys *keys)
 {
 	keys->del = (tgetstr("kD", NULL)) ? *((int *)(tgetstr("kD", NULL))) : 0;
 	keys->left = (tgetstr("kl", NULL)) ? *((int *)(tgetstr("kl", NULL))) : 0;
@@ -35,7 +36,7 @@ void			init_keys(struct s_keys *keys)
 	keys->enter = 10;
 }
 
-void	init_term(struct s_term *term)
+void		init_term(struct s_term *term)
 {
 	struct termios	new_termios;
 
@@ -58,11 +59,5 @@ void	init_term(struct s_term *term)
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &new_termios);
 	tputs(tgetstr("ks", NULL), 1, ft_putc);
 	init_keys(&(term->keys));
-}
-
-void		reset_term(struct termios *orig_termios)
-{
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, orig_termios);
-	tputs(tgetstr("ve", NULL), 1, ft_putc);
-	tputs(tgetstr("te", NULL), 1, ft_putc);
+	init_caps(&(term->caps));
 }

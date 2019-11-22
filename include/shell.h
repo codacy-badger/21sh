@@ -13,8 +13,12 @@
 #ifndef SHELL_H
 # define SHELL_H
 
-#include "_term.h"
-#include "input.h"
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include "_term.h"
+# include "input.h"
+# include "libft.h"
 
 typedef struct		s_sh
 {
@@ -23,5 +27,10 @@ typedef struct		s_sh
 }					t_sh;
 
 void	init_shell(t_sh *shell);
+
+/*
+** Utils
+*/
+int		ft_putc(int c);
 
 #endif

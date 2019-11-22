@@ -15,29 +15,38 @@
 
 # include <curses.h>
 # include <termios.h>
+# include <term.h>
 
 struct				s_keys
 {
-	unsigned int				del;
-	unsigned int				left;
-	unsigned int				right;
-	unsigned int				up;
-	unsigned int				down;
-	unsigned int				bsp;
-	unsigned int				esc;
-	unsigned int				spc;
-	unsigned int				enter;
+	unsigned int	del;
+	unsigned int	left;
+	unsigned int	right;
+	unsigned int	up;
+	unsigned int	down;
+	unsigned int	bsp;
+	unsigned int	esc;
+	unsigned int	spc;
+	unsigned int	enter;
 };
 
-struct				s_term
+struct				s_caps
+{
+	char			*le;
+	char			*ri;
+	char			*ce;
+};
+
+typedef struct		s_term
 {
 	struct termios	orig_termios;
 	struct s_keys	keys;
+	struct s_caps	caps;
 	char			*termtype;
 	int				width;
-};
+}					t_term;
 
 void				init_term(struct s_term *term);
-int					ft_putc(int c);
+void				reset_term(struct termios *orig_termios);
 
 #endif 
