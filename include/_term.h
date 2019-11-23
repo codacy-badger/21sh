@@ -28,13 +28,22 @@ struct				s_keys
 	unsigned int	esc;
 	unsigned int	spc;
 	unsigned int	enter;
+	unsigned int	home;
+	unsigned int	end;
+	unsigned int	nextw;
+	unsigned int	prevw;
+
 };
 
 struct				s_caps
 {
+	char			*up;
+	char			*dn;
 	char			*le;
-	char			*ri;
+	char			*nd;
 	char			*ce;
+	char			*sc;
+	char			*rc;
 };
 
 typedef struct		s_term

@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_char_to_dstr.c                                 :+:      :+:    :+:   */
+/*   ft_dstr_new.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 23:03:42 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/21 23:05:58 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/11/21 23:03:31 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/11/21 23:06:12 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/libft.h"
 
-void		add_char_to_dstr(t_dstr **str, char c)
+t_dstr		*ft_dstr_new(size_t size)
 {
-	char	*new;
+	t_dstr *dstr;
 
-	if (*str == NULL)
-		*str = new_dstr(c);
-	else if ((*str)->len == (*str)->capacity - 1)
-	{
-		(*str)->capacity *= 2;
-		new = ft_memalloc((*str)->capacity * sizeof(char));
-		ft_memcpy(new, (*str)->str, (*str)->len);
-		free((*str)->str);
-		(*str)->str = new;
-		(*str)->str[(*str)->len] = c;
-		(*str)->len++;
-	}
-	else
-	{
-		(*str)->str[(*str)->len] = c;
-		(*str)->len++;
-	}
+	if (size == 0)
+		size++;
+	dstr = (t_dstr *)ft_memalloc(sizeof(t_dstr));
+	dstr->str = (char *)ft_memalloc(size);
+	dstr->capacity = size;
+	dstr->len = 0;
+	return (dstr);
 }

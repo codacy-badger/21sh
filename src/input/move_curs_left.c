@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isctrl.c                                        :+:      :+:    :+:   */
+/*   move_curs_left.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/22 00:10:15 by nbousset          #+#    #+#             */
-/*   Updated: 2019/05/10 15:07:01 by nbousset         ###   ########.fr       */
+/*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/libft.h"
+#include "shell.h"
 
-int		ft_isctrl(int c)
+int		move_curs_left(t_input *input, t_term *term)
 {
-	return (!ft_isprint(c));
+	if (input->x > 0)
+	{
+		tputs(term->caps.le, 1, ft_putc);
+		input->x--;
+		input->i--;
+	}
+	return (0);
 }

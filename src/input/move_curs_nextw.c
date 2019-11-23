@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   move_curs_nextw.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 19:37:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 01:15:03 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		g_last_exit_st = 0;
-
-int		main(void)
+int		move_curs_nextw(t_input *input, t_term *term)
 {
-	struct s_sh		shell;
-
-	int i = 1;
-	init_shell(&shell);
-	while (i)
-	{
-		read_line(&shell.term, &shell.input);
-		i = 0;
-		//parse
-		//exec
-	}
-	del_shell(&shell);
+	while (input->line->str[input->i] && !ft_iswhitespace(input->line->str[input->i]))
+		move_curs_right(input, term);
+	while (input->line->str[input->i] && ft_iswhitespace(input->line->str[input->i]))
+		move_curs_right(input, term);
 	return (0);
 }

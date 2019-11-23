@@ -14,6 +14,8 @@
 
 void	init_input(struct s_input *input)
 {
-	input->line = new_dstr(0);
-	input->pos = 0;
+	input->line = ft_dstr_new(0);
+	input->i = 0;
+	input->x = 0;
+	input->y = 0;
 }

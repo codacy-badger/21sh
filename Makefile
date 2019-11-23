@@ -12,17 +12,32 @@
 
 NAME = 21sh 
 CC = gcc
-CFLAGS = -Wall -Wextra -Iinclude #-Werror
+CFLAGS = -Wall -Wextra -Werror
+LFLAGS = -ltermcap
 DIR_SRC = src/
 DIR_OBJ = obj/
 DIR_INC = include/
 DIR_LIB = libft/
-SRC =	main.c term.c init.c input.c
+SRC =		main.c \
+			init/init_shell.c \
+			init/init_term.c \
+			init/init_input.c \
+			del/del_shell.c \
+			reset/reset_term.c \
+			input/display_add_char.c \
+			input/display_del_char.c \
+			input/str_add_char.c \
+			input/str_del_char.c \
+			input/move_curs_left.c \
+			input/move_curs_right.c \
+			input/move_curs_home.c \
+			input/move_curs_nextw.c \
+			input/move_curs_prevw.c \
+			input/read_line.c \
+			utils/utils.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
 LIB = $(addprefix $(DIR_LIB), libft.a)
-
-LFLAGS = -ltermcap
 
 all : $(NAME)
 
@@ -32,7 +47,7 @@ $(NAME) : $(OBJ)
 
 $(DIR_OBJ)%.o : $(DIR_SRC)%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@ -I$(DIR_INC)
 
 clean :
 	@$(MAKE) clean -C $(DIR_LIB)

@@ -201,8 +201,8 @@ typedef struct			s_dstr
 	int					capacity;
 }						t_dstr;
 
-t_dstr					*new_dstr(const char c);
-void					add_char_to_dstr(t_dstr **str, char c);
+t_dstr					*ft_dstr_new(size_t size);
+void					ft_dstr_insert(t_dstr **str, char c, int index);
 
 /*
 ** -----------------------------Memory-----------------------------
@@ -259,6 +259,7 @@ char					*ft_path_getsuffix(const char *path, char alloc);
 ** -----------------------------Char-----------------------------
 */
 
+int						ft_isprint(int c);
 int						ft_iswhitespace(int c);
 int						ft_isctrl(char c);
 int						ft_isalpha(char c);

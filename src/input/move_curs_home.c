@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isctrl.c                                        :+:      :+:    :+:   */
+/*   move_curs_home.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/22 00:10:15 by nbousset          #+#    #+#             */
-/*   Updated: 2019/05/10 15:07:01 by nbousset         ###   ########.fr       */
+/*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/libft.h"
+#include "shell.h"
 
-int		ft_isctrl(int c)
+int		move_curs_home(t_input *input, t_term *term)
 {
-	return (!ft_isprint(c));
+	while (input->x)
+		move_curs_left(input, term);
+	return (0);
 }

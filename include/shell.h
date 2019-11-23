@@ -27,6 +27,7 @@ typedef struct		s_sh
 }					t_sh;
 
 void	init_shell(t_sh *shell);
+void	del_shell(t_sh *shell);
 
 /*
 ** Utils

@@ -18,18 +18,28 @@ static void	init_caps(struct s_caps *caps)
 	** handle error : if essential caps are missing, quit
 	**					or just disable line editing
 	*/
+	caps->up = tgetstr("up", NULL);
+	caps->dn = tgetstr("do", NULL);
 	caps->le = tgetstr("le", NULL);
-	caps->ri = tgetstr("ri", NULL);
+	caps->nd = tgetstr("nd", NULL);
 	caps->ce = tgetstr("ce", NULL);
+	caps->sc = tgetstr("sc", NULL);
+	caps->rc = tgetstr("rc", NULL);
 }
 
 static void	init_keys(struct s_keys *keys)
 {
-	keys->del = (tgetstr("kD", NULL)) ? *((int *)(tgetstr("kD", NULL))) : 0;
-	keys->left = (tgetstr("kl", NULL)) ? *((int *)(tgetstr("kl", NULL))) : 0;
-	keys->right = (tgetstr("kr", NULL)) ? *((int *)(tgetstr("kr", NULL))) : 0;
-	keys->up = (tgetstr("ku", NULL)) ? *((int *)(tgetstr("ku", NULL))) : 0;
-	keys->down = (tgetstr("kd", NULL)) ? *((int *)(tgetstr("kd", NULL))) : 0;
+	char	*s;
+
+	keys->del = (s = tgetstr("kD", NULL)) ? *(int *)s : 0;
+	keys->left = (s = tgetstr("kl", NULL)) ? *(int *)s : 0;
+	keys->right = (s = tgetstr("kr", NULL)) ? *(int *)s : 0;
+	keys->up = (s = tgetstr("ku", NULL)) ? *(int *)s : 0;
+	keys->down = (s = tgetstr("kd", NULL)) ? *(int *)s : 0;
+	keys->home = (s = tgetstr("kh", NULL)) ? *(int *)s : 0;
+	//keys->end = ??
+	keys->nextw = 26139; //Alt(option) + right
+	keys->prevw = 25115; //Alt(option) + left
 	keys->bsp = 127;
 	keys->esc = 27;
 	keys->spc = 32;

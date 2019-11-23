@@ -45,6 +45,7 @@ SRC =	mem/ft_memalloc.c \
 		path/ft_path_addsuffix.c \
 		path/ft_path_getsuffix.c \
 		char/ft_iswhitespace.c \
+		char/ft_isprint.c \
 		char/ft_isalpha.c \
 		char/ft_isdigit.c \
 		char/ft_isalnum.c \
@@ -104,9 +105,9 @@ SRC =	mem/ft_memalloc.c \
 		struct/hash/ft_htgetval.c \
 		struct/hash/ft_htclr.c \
 		struct/hash/ft_htdel.c \
-		struct/hash/ft_htdelone.c\
-		struct/dstr/add_char_to_dstr.c\
-		struct/dstr/new_dstr.c
+		struct/hash/ft_htdelone.c \
+		struct/dstr/ft_dstr_new.c \
+		struct/dstr/ft_dstr_insert.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
 
