@@ -12,9 +12,9 @@
 
 #include "shell.h"
 
-void	reset_term(struct termios *orig_termios)
+void	reset_term(struct termios *orig_term)
 {
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, orig_termios);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, orig_term);
 	tputs(tgetstr("ve", NULL), 1, ft_putc);
 	tputs(tgetstr("te", NULL), 1, ft_putc);
 }

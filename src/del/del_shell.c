@@ -18,7 +18,6 @@ static void	del_input(t_input *input)
 	ft_memdel((void *)&input->line);
 }
 
-
 static void	del_term(t_term *term)
 {
 	(void)term;

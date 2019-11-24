@@ -20,4 +20,5 @@ void	init_shell(t_sh *shell)
 {
 	init_term(&shell->term);
 	init_input(&shell->input);
+	init_sig(shell);
 }

@@ -38,8 +38,8 @@ static void	init_keys(struct s_keys *keys)
 	keys->down = (s = tgetstr("kd", NULL)) ? *(int *)s : 0;
 	keys->home = (s = tgetstr("kh", NULL)) ? *(int *)s : 0;
 	//keys->end = ??
-	keys->nextw = 26139; //Alt(option) + right
-	keys->prevw = 25115; //Alt(option) + left
+	keys->nextw = 26139; //Alt(option) + right arrow
+	keys->prevw = 25115; //Alt(option) + left arrow
 	keys->bsp = 127;
 	keys->esc = 27;
 	keys->spc = 32;
@@ -48,7 +48,7 @@ static void	init_keys(struct s_keys *keys)
 
 void		init_term(struct s_term *term)
 {
-	struct termios	new_termios;
+	struct termios	new_term;
 
 	term->termtype = getenv("TERM");
 	if (term->termtype == NULL || tgetent(NULL, term->termtype) <= 0)
@@ -61,12 +61,12 @@ void		init_term(struct s_term *term)
 		//ft_putendl_fd("Error: STDIN is not a tty", 2);
 		exit(1);
 	}
-	tcgetattr(STDIN_FILENO, &(term->orig_termios));
-	new_termios = term->orig_termios;
-	new_termios.c_lflag &= ~(ECHO | ICANON);
-	new_termios.c_cc[VMIN] = 1;
-	new_termios.c_cc[VTIME] = 0;
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &new_termios);
+	tcgetattr(STDIN_FILENO, &(term->orig_term));
+	new_term = term->orig_term;
+	new_term.c_lflag &= ~(ECHO | ICANON);
+	new_term.c_cc[VMIN] = 1;
+	new_term.c_cc[VTIME] = 0;
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &new_term);
 	tputs(tgetstr("ks", NULL), 1, ft_putc);
 	init_keys(&(term->keys));
 	init_caps(&(term->caps));

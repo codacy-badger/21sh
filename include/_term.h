@@ -48,7 +48,7 @@ struct				s_caps
 
 typedef struct		s_term
 {
-	struct termios	orig_termios;
+	struct termios	orig_term;
 	struct s_keys	keys;
 	struct s_caps	caps;
 	char			*termtype;

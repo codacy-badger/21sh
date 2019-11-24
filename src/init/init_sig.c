@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_input.c                                       :+:      :+:    :+:   */
+/*   init_sig.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 00:37:04 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	init_input(struct s_input *input)
+void	init_sig(t_sh *shell)
 {
-	input->line = ft_dstr_new(32);
-	input->i = 0;
-	input->x = 0;
-	input->y = 0;
+	int		i;
+
+	i = 0;
+	sig_action(shell, 0);
+	while (i++ < 32)
+	{
+		if (i == 9 || i == 17)
+			continue ;
+		signal(i, sig_handle);
+	}
 }

@@ -22,8 +22,11 @@ SRC =		main.c \
 			init/init_shell.c \
 			init/init_term.c \
 			init/init_input.c \
+			init/init_sig.c \
 			del/del_shell.c \
 			reset/reset_term.c \
+			signal/sig_action.c \
+			signal/sig_handle.c \
 			input/display_add_char.c \
 			input/display_del_char.c \
 			input/str_add_char.c \

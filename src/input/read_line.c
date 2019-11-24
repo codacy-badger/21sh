@@ -12,43 +12,44 @@
 
 #include "shell.h"
 
+/*
+** -On resize we'll lose cursor position
+** -Newlines and backslashes are stored in the string
+**
+** To add : -move end line with 'end'
+**			-copy paste
+**			-history
+**			-eventually move up and down on multiline...
+*/
+
 /* ***************************LIBFT*************************************** */
 
-int			ft_quotes(char *str)
+int		ft_quotes(char *str)
 {
-	(void)str;
+	while (*str)
+	{
+		if (*str == 34)
+		{
+			str++;
+			while (*str && *str != 34)
+				str++;
+			if (!*str)
+				return (34);
+		}
+		else if (*str == 39)
+		{
+			str++;
+			while (*str && *str != 39)
+				str++;
+			if (!*str)
+				return (39);
+		}
+		str++;
+	}
 	return (0);
 }
 
 /* ************************************************************************** */
-
-static int	handle_eol(t_input *input, char c)
-{
-	char	quote;
-
-	ft_putc(EOL);
-	if (c == EOL && input->line->str[input->line->len - 1] == '\\')
-	{
-		input->y++;
-		input->x = 0;
-		ft_strremove(&input->line->str[input->line->len - 1], 1);
-		input->line->len--;
-		input->i--;
-		tputs(PS2, 1, ft_putc);
-		return (0);
-	}
-	else if ((quote = ft_quotes(input->line->str)) != 0)
-	{
-		input->y++;
-		input->x = 0;
-		if (quote == '\'')
-			tputs(PSQ, 1, ft_putc);
-		else if (quote == '"')
-			tputs(PSDQ, 1, ft_putc);
-		return (0);
-	}
-	return (EOL);
-}
 
 static int	del_char(t_input *input, t_term *term)
 {
@@ -68,6 +69,38 @@ static int	add_char(t_input *input, t_term *term, char c)
 	move_curs_right(input, term);
 	return (0);
 }
+
+static int	handle_eol(t_input *input, char c)
+{
+	int		quote;
+
+	ft_putc(EOL);
+	if (c == 4)
+		return (EOL);
+	input->i = input->line->len;
+	str_add_char(input, EOL);
+	input->x = 0;
+	input->y++;
+	input->i++;
+	if ((quote = ft_quotes(input->line->str)) != 0)
+	{
+		if (quote == '\'')
+			tputs(PSQ, 1, ft_putc);
+		else if (quote == '"')
+			tputs(PSDQ, 1, ft_putc);
+		return (0);
+	}
+	else if (input->line->str[input->line->len - 2] == '\\')
+	{
+		tputs(PS2, 1, ft_putc);
+		return (0);
+	}
+	/*
+	remove_nl & backslashes;
+	*/
+	return (EOL);
+}
+
 
 static int	process_char(t_input *input, t_term *term, unsigned int c)
 {
@@ -102,6 +135,6 @@ int			read_line(t_term *term, t_input *input)
 		read(STDIN_FILENO, &c, sizeof(c));
 		//printf("%u\n", c);
 	}
-	printf("\nline_cap: %d, line_len: %d\n%s\n", input->line->capacity, input->line->len, input->line->str);
+	printf("\nline_cap: %d, line_len: %d\n%s", input->line->capacity, input->line->len, input->line->str);
 	return (0);
 }

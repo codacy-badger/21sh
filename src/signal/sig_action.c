@@ -1,21 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_input.c                                       :+:      :+:    :+:   */
+/*   sig_action.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	init_input(struct s_input *input)
+void	sig_action(t_sh *shell, int sig)
 {
-	input->line = ft_dstr_new(32);
-	input->i = 0;
-	input->x = 0;
-	input->y = 0;
+	static t_sh	*sh;
+
+	if (shell)
+	{
+		sh = shell;
+		return ;
+	}
+	if (sig == SIGINT)
+		;
+	else if (sig == SIGWINCH)
+		;
+	else if (sig == SIGTSTP)
+		;
+	else if (sig == SIGCONT)
+		;
+	else if ((1 <= sig && sig <= 15) || sig == 17
+			|| (21 <= sig && sig <= 22) || (24 <= sig && sig <= 27))
+	{
+		reset_term(&sh->term.orig_term);
+		signal(sig, SIG_DFL);
+		kill(getpid(), sig); //ioctl
+	}
 }

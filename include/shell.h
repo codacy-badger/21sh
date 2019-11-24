@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/uio.h>
+# include <signal.h>
 # include "_term.h"
 # include "input.h"
 # include "libft.h"
@@ -27,7 +28,11 @@ typedef struct		s_sh
 }					t_sh;
 
 void	init_shell(t_sh *shell);
+void	init_sig(t_sh *shell);
 void	del_shell(t_sh *shell);
+
+void	sig_handle(int sig);
+void	sig_action(t_sh *shell, int sig);
 
 /*
 ** Utils
