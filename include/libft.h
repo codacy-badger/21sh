@@ -6,7 +6,7 @@
 /*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:27:46 by nbousset          #+#    #+#             */
-/*   Updated: 2019/11/22 00:25:28 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/25 20:39:24 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,6 +281,7 @@ size_t					ft_strarray_len(char **array);
 double					ft_power(double nb, double pwr);
 char					ft_isprime(long n);
 long					ft_nextprime(long n);
+unsigned int			ft_next_power_of_two(unsigned int v);
 
 /*
 ** -----------------------------Conv-----------------------------

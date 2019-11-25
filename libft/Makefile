@@ -6,7 +6,7 @@
 #    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/11/21 23:05:30 by fratajcz         ###   ########.fr        #
+#    Updated: 2019/11/25 20:34:32 by fratajcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRC =	mem/ft_memalloc.c \
 		math/ft_power.c \
 		math/ft_isprime.c \
 		math/ft_nextprime.c \
+		math/ft_next_power_of_two.c\
 		struct/buffer/ft_buff_new.c \
 		struct/buffer/ft_bufferize.c \
 		struct/buffer/ft_bufferize_nbr.c \
