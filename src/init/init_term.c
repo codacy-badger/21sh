@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/25 19:29:32 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/25 21:14:41 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ static void	init_keys(struct s_keys *keys)
 	//keys->end = ??
 	keys->nextw = 26139; //Alt(option) + right arrow
 	keys->prevw = 25115; //Alt(option) + left arrow
-	keys->cutword = 17;
+	keys->cutword = 23;
 	keys->cutafter = 11;
-	keys->cutbefore = 15;
-	keys->paste = 19;
+	keys->cutbefore = 21;
+	keys->paste = 25;
 	keys->bsp = 127;
 	keys->esc = 27;
 	keys->spc = 32;
@@ -67,7 +67,7 @@ void		init_term(struct s_term *term)
 	}
 	tcgetattr(STDIN_FILENO, &(term->orig_term));
 	new_term = term->orig_term;
-	new_term.c_lflag &= ~(ECHO | ICANON);
+	new_term.c_lflag &= ~(ECHO | ICANON | ISIG);
 	new_term.c_cc[VMIN] = 1;
 	new_term.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &new_term);

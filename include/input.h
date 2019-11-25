@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 01:14:19 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/25 23:39:08 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 typedef struct		s_input
 {
 	t_dstr			*line;
+	char			*clipboard;
 	int				i;
 	int				x;
 	int				y;
@@ -45,5 +46,14 @@ void	str_add_char(t_input *input, int c);
 void	str_del_char(t_input *input);
 void	display_add_char(t_input *input, t_term *term);
 void	display_del_char(t_input *input, t_term *term);
+
+/*
+** Copy/Paste
+*/
+
+int		cut_previous_word(t_input *input, t_term *term);
+int		cut_after(t_input *input);
+int		cut_before(t_input *input, t_term *term);
+int		paste(t_input *input);
 
 #endif

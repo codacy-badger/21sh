@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/25 23:39:24 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,14 @@ static int	process_char(t_input *input, t_term *term, unsigned int c)
 		return (add_char(input, term, (char)c));
 	else if (c == EOL || c == 4)
 		return (handle_eol(input, (char)c));
+	else if (c == term->keys.cutword)
+		return (cut_previous_word(input, term));
+	else if (c == term->keys.cutafter)
+		return (cut_after(input));
+	else if (c == term->keys.cutbefore)
+		return (cut_before(input, term));
+	else if (c == term->keys.paste)
+		return (paste(input));
 	return (0);
 }
 
@@ -133,8 +141,7 @@ int			read_line(t_term *term, t_input *input)
 	{
 		c = 0;
 		read(STDIN_FILENO, &c, sizeof(c));
-		//printf("%u\n", c);
 	}
-	printf("\nline_cap: %d, line_len: %d\n%s", input->line->capacity, input->line->len, input->line->str);
+	printf("\n'%s'\nline_cap: %d, line_len: %d\n", input->line->str, input->line->capacity, input->line->len);
 	return (0);
 }
