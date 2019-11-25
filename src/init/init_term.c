@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/25 19:29:32 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ static void	init_keys(struct s_keys *keys)
 	//keys->end = ??
 	keys->nextw = 26139; //Alt(option) + right arrow
 	keys->prevw = 25115; //Alt(option) + left arrow
+	keys->cutword = 17;
+	keys->cutafter = 11;
+	keys->cutbefore = 15;
+	keys->paste = 19;
 	keys->bsp = 127;
 	keys->esc = 27;
 	keys->spc = 32;

@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 01:20:09 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/25 19:29:29 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ struct				s_keys
 	unsigned int	end;
 	unsigned int	nextw;
 	unsigned int	prevw;
+	unsigned int 	cutword;
+	unsigned int 	cutafter;
+	unsigned int 	cutbefore;
+	unsigned int 	paste;
 
 };
 
