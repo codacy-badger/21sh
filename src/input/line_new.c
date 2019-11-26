@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_del_char.c                                 :+:      :+:    :+:   */
+/*   line_new.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,10 +12,25 @@
 
 #include "shell.h"
 
-void	display_del_char(t_input *input, t_term *term)
+t_line	*line_new(size_t size, char *prompt)
 {
-	tputs(term->caps.sc, 1, ft_putc);
-	tputs(term->caps.ce, 1, ft_putc);
-	tputs(&input->line->str[input->i], 1, ft_putc);
-	tputs(term->caps.rc, 1, ft_putc);
+	t_line	*line;
+
+	if (!(line = (t_line *)ft_memalloc(sizeof(*line))))
+		return (NULL);
+	if (!(line->prompt = ft_strdup(prompt)))
+	{
+		ft_memdel((void *)&line);
+		return (NULL);
+	}
+	if (!(line->str = (char *)ft_memalloc(size)))
+	{
+		ft_memdel((void *)&line->prompt);
+		ft_memdel((void *)&line);
+		return (NULL);
+	}
+	line->prev = NULL;
+	line->next = NULL;
+	line->size = size;
+	return (line);
 }

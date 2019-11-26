@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   display_nl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		ft_putc(int c)
+int		display_nl(t_term *term)
 {
-	if (write(STDOUT_FILENO, &c, 1) == 1)
-		return (1);
+	ft_putc('\n');
+	term->cx = 0;
+	term->cy++;
 	return (0);
 }

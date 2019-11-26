@@ -12,10 +12,8 @@
 
 #include "shell.h"
 
-void	init_input(struct s_input *input)
+void		init_input(struct s_input *input)
 {
-	input->line = ft_dstr_new(32);
-	input->i = 0;
-	input->x = 0;
-	input->y = 0;
+	input->lines_list = line_new(32, PS1);
+	input->line = input->lines_list;
 }

@@ -18,6 +18,7 @@ static void	init_caps(struct s_caps *caps)
 	** handle error : if essential caps are missing, quit
 	**					or just disable line editing
 	*/
+	caps->cm = tgetstr("cm", NULL);
 	caps->up = tgetstr("up", NULL);
 	caps->dn = tgetstr("do", NULL);
 	caps->le = tgetstr("le", NULL);
@@ -67,7 +68,10 @@ void		init_term(struct s_term *term)
 	new_term.c_cc[VMIN] = 1;
 	new_term.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &new_term);
+	ioctl(STDIN_FILENO, TIOCGWINSZ, &term->win);
 	tputs(tgetstr("ks", NULL), 1, ft_putc);
 	init_keys(&(term->keys));
 	init_caps(&(term->caps));
+	term->cx = 0;
+	term->cy = 0;
 }

@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   move_curs_end.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		ft_putc(int c)
+/*
+int		move_curs_end(t_input *input, t_term *term)
 {
-	if (write(STDOUT_FILENO, &c, 1) == 1)
-		return (1);
+	while (input->i < input->line->len)
+		move_curs_right(input, term);
 	return (0);
 }
+*/

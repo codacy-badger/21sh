@@ -12,7 +12,7 @@
 
 NAME = 21sh 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra #-Werror
 LFLAGS = -ltermcap
 DIR_SRC = src/
 DIR_OBJ = obj/
@@ -27,12 +27,17 @@ SRC =		main.c \
 			reset/reset_term.c \
 			signal/sig_action.c \
 			signal/sig_handle.c \
-			input/display_add_char.c \
-			input/display_del_char.c \
-			input/str_add_char.c \
-			input/str_del_char.c \
+			input/line_new.c \
+			input/line_add.c \
+			input/line_del.c \
+			input/line_add_char.c \
+			input/display_char.c \
+			input/display_str.c \
+			input/display_line.c \
+			input/display_nl.c \
 			input/move_curs_left.c \
 			input/move_curs_right.c \
+			input/move_curs_up.c \
 			input/move_curs_home.c \
 			input/move_curs_nextw.c \
 			input/move_curs_prevw.c \

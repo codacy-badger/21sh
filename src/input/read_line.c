@@ -51,37 +51,57 @@ int		ft_quotes(char *str)
 
 /* ************************************************************************** */
 
+/*
 static int	del_char(t_input *input, t_term *term)
 {
-	if (input->x > 0)
+	int		i;
+
+	i = 0;
+	if (input->x > 0 || input->y > 0)
 	{
+		if (input->x == 0)
+		{
+			tputs(term->caps.up, 1, ft_putc);
+			input->x = term->win.ws_col - 2;
+			while (i++ < term->win.ws_col - 2)
+				tputs(term->caps.nd, 1, ft_putc);
+			input->y--;
+		}
 		move_curs_left(input, term);
 		str_del_char(input);
 		display_del_char(input, term);
 	}
 	return (0);
 }
+*/
 
-static int	add_char(t_input *input, t_term *term, char c)
+static int	add_char(t_term *term, t_input *input, char c)
 {
-	str_add_char(input, c);
-	display_add_char(input, term);
-	move_curs_right(input, term);
+	size_t	oldx;
+	size_t	oldy;
+
+	oldx = term->cx;
+	oldy = term->cy;
+	line_add_char(input->line, c);
+	display_str(term, &input->line->str[input->line->i - 1]);
+	if (input->line->i < input->line->len)
+	{
+		input->line->i = input->line->len;
+		while (term->cy > oldy || term->cx > oldx + 1)
+			move_curs_left(term, input);
+	}
 	return (0);
 }
 
-static int	handle_eol(t_input *input, char c)
+static int	handle_eol(t_term *term, t_input *input, char c)
 {
-	int		quote;
+	t_line	*line;
+	int		y;
+	//int		quote;
+	c = 0;
 
-	ft_putc(EOL);
-	if (c == 4)
-		return (EOL);
-	input->i = input->line->len;
-	str_add_char(input, EOL);
-	input->x = 0;
-	input->y++;
-	input->i++;
+	display_nl(term);
+	/*
 	if ((quote = ft_quotes(input->line->str)) != 0)
 	{
 		if (quote == '\'')
@@ -90,24 +110,43 @@ static int	handle_eol(t_input *input, char c)
 			tputs(PSDQ, 1, ft_putc);
 		return (0);
 	}
-	else if (input->line->str[input->line->len - 2] == '\\')
+	*/
+	if (input->line->str[input->line->len - 1] == '\\')
 	{
-		tputs(PS2, 1, ft_putc);
+		display_str(term, PS2);
+		if (!(line = line_new(32, PS2)))
+			return (-1);
+		line_add(&input->line, line);
+		input->line = input->line->next;
+		if (input->line->next)
+		{
+			y = 0;
+			tputs(term->caps.ce, 1, ft_putc);
+			while (input->line->next)
+			{
+				display_nl(term);
+				display_line(term, input->line->next);
+				input->line = input->line->next;
+				y++;
+			}
+			while (y--)
+				move_curs_up(term, input);
+		}
 		return (0);
 	}
-	/*
-	remove_nl & backslashes;
-	*/
+	// remove backslashes;
 	return (EOL);
 }
 
-
-static int	process_char(t_input *input, t_term *term, unsigned int c)
+static int	process_char(t_term *term, t_input *input, unsigned int c)
 {
 	if (c == term->keys.left)
-		return (move_curs_left(input, term));
+		return (move_curs_left(term, input));
 	else if (c == term->keys.right)
-		return (move_curs_right(input, term));
+		return (move_curs_right(term, input));
+	else if (c == term->keys.up)
+		return (move_curs_up(term, input));
+	/*
 	else if (c == term->keys.bsp)
 		return (del_char(input, term));
 	else if (c == term->keys.home)
@@ -116,10 +155,11 @@ static int	process_char(t_input *input, t_term *term, unsigned int c)
 		return (move_curs_nextw(input, term));
 	else if (c == term->keys.prevw)
 		return (move_curs_prevw(input, term));
+	*/
 	else if (ft_isprint(c))
-		return (add_char(input, term, (char)c));
-	else if (c == EOL || c == 4)
-		return (handle_eol(input, (char)c));
+		return (add_char(term, input, (char)c));
+	else if (c == EOL)
+		return (handle_eol(term, input, (char)c));
 	return (0);
 }
 
@@ -128,13 +168,14 @@ int			read_line(t_term *term, t_input *input)
 	unsigned int	c;
 
 	c = 0;
-	tputs(PS1, 1, ft_putc);
-	while (process_char(input, term, c) != EOL)
+	display_str(term, PS1);
+	//input->line->prompt = ft_strdup(PS1);
+	while (process_char(term, input, c) != EOL)
 	{
 		c = 0;
 		read(STDIN_FILENO, &c, sizeof(c));
 		//printf("%u\n", c);
 	}
-	printf("\nline_cap: %d, line_len: %d\n%s", input->line->capacity, input->line->len, input->line->str);
+	printf("\nline_cap: %zu, line_len: %zu\n%s", input->line->size, input->line->len, input->line->str);
 	return (0);
 }

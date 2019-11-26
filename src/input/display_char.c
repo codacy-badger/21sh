@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_del_char.c                                     :+:      :+:    :+:   */
+/*   display_char.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,8 +12,14 @@
 
 #include "shell.h"
 
-void	str_del_char(t_input *input)
+int		display_char(t_term *term, int c)
 {
-	ft_strremove(&input->line->str[input->i], 1);
-	input->line->str[--input->line->len] = '\0';
+	if (term->cx == term->win.ws_col - 1)
+	{
+		ft_putc('\n');
+		term->cx = 0;
+		term->cy++;
+	}
+	term->cx++;
+	return (ft_putc(c));
 }

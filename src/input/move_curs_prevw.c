@@ -12,6 +12,7 @@
 
 #include "shell.h"
 
+/*
 int		move_curs_prevw(t_input *input, t_term *term)
 {
 	while (input->x > 0 && ft_iswhitespace(input->line->str[input->i - 1]))
@@ -20,3 +21,4 @@ int		move_curs_prevw(t_input *input, t_term *term)
 		move_curs_left(input, term);
 	return (0);
 }
+*/

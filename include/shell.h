@@ -17,6 +17,7 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <signal.h>
+# include <sys/ioctl.h>
 # include "_term.h"
 # include "input.h"
 # include "libft.h"

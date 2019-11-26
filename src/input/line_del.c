@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_add_char.c                                     :+:      :+:    :+:   */
+/*   line_del.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,15 @@
 
 #include "shell.h"
 
-void	str_add_char(t_input *input, int c)
+void	line_del(t_line **line)
 {
-	ft_dstr_insert(&input->line, (char)c, input->i);
+	if (!line || !*line)
+		return ;
+	(*line)->prev->next = (*line)->next;
+	(*line)->next->prev = (*line)->prev;
+	(*line)->prev = NULL;
+	(*line)->next = NULL;
+	ft_memdel((void *)&(*line)->prompt);
+	ft_memdel((void *)&(*line)->str);
+	ft_memdel((void *)line);
 }

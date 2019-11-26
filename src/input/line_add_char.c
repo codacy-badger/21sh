@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_add_char.c                                 :+:      :+:    :+:   */
+/*   line_add_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,9 +12,23 @@
 
 #include "shell.h"
 
-void	display_add_char(t_input *input, t_term *term)
+int		line_add_char(t_line *line, int c)
 {
-	tputs(term->caps.sc, 1, ft_putc);
-	tputs(&input->line->str[input->i], 1, ft_putc);
-	tputs(term->caps.rc, 1, ft_putc);
+	char	*str;
+	size_t	olds;
+	size_t	news;
+
+	if (!line || !(str = line->str))
+		return (-1);
+	if (line->len == line->size - 1)
+	{
+		olds = line->len;
+		news = line->size * 2;
+		if (!(line->str = (char *)ft_memrealloc(str, olds, news)))
+			return (-1);
+		line->size = news;
+	}
+	ft_strinsert(&line->str[line->i++], (char *)&c, 1);
+	line->len++;
+	return (0);
 }

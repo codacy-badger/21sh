@@ -37,6 +37,7 @@ struct				s_keys
 
 struct				s_caps
 {
+	char			*cm;
 	char			*up;
 	char			*dn;
 	char			*le;
@@ -49,10 +50,12 @@ struct				s_caps
 typedef struct		s_term
 {
 	struct termios	orig_term;
+	struct winsize	win;
 	struct s_keys	keys;
 	struct s_caps	caps;
 	char			*termtype;
-	int				width;
+	size_t			cx;
+	size_t			cy;
 }					t_term;
 
 void				init_term(struct s_term *term);

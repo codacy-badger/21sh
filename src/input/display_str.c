@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   display_str.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		ft_putc(int c)
+int		display_str(t_term *term, char *s)
 {
-	if (write(STDOUT_FILENO, &c, 1) == 1)
-		return (1);
-	return (0);
+	int		ret;
+
+	ret = 0;
+	while (*s)
+		ret += display_char(term, *s++);
+	return (ret);
 }
