@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 01:20:09 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:36:27 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,38 +17,47 @@
 # include <termios.h>
 # include <term.h>
 
-# define K_UP		0
-# define K_DOWN		1
-# define K_LEFT		2
-# define K_RIGHT	3
-# define K_HOME		4
-# define K_END		5
-# define K_BSP		6
-# define K_SPC		7
-# define K_DEL		8
-# define K_ENTER	9
-# define K_ESC		10
-# define K_NXTW		11
-# define K_PRVW		12
+enum	e_keys
+{
+		K_UP,
+		K_DOWN,
+		K_LEFT,
+		K_RIGHT,
+		K_HOME,
+		K_END,
+		K_BSP,
+		K_SPC,
+		K_DEL,
+		K_ENTER,
+		K_ESC,
+		K_NXTW,
+		K_PRVW,
+		KEYS_SIZE
+};
 
-# define C_UP		0
-# define C_DOWN		1
-# define C_LEFT		2
-# define C_RIGHT	3
-# define C_CL		4
-# define C_CD		5
-# define C_SC		6
-# define C_RC		7
-# define C_CR		8
-# define C_SF		9
-# define C_SR		10
+enum	e_caps
+{
+		C_UP,
+		C_DOWN,
+		C_LEFT,
+		C_RIGHT,
+		C_CL,
+		C_CD,
+		C_SC,
+		C_RC,
+		C_CR,
+		C_SF,
+		C_SR,
+		C_CM,
+		CAPS_SIZE
+};
 
 typedef struct		s_term
 {
 	struct termios	orig_term;
 	struct winsize	win;
-	unsigned int	keys[13];
-	char			*caps[11];
+	unsigned int	keys[KEYS_SIZE];
+	char			*caps[CAPS_SIZE];
 	char			*termtype;
 	size_t			sizex;
 	size_t			sizey;
