@@ -231,6 +231,7 @@ char					*ft_strchr(const char *str, int c);
 char					*ft_strtrim(char *str);
 char					*ft_strtok(char *str, const char *sep);
 int						ft_strbrkt(char *str, int len);
+int						ft_strquot(char *str);
 void					ft_strremove(char *str, size_t len);
 void					ft_strinsert(char *str, char *insert, ssize_t len);
 char					*ft_strstr(const char *haystack, const char *needle);

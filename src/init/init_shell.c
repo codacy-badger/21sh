@@ -18,6 +18,7 @@
 */
 void	init_shell(t_sh *shell)
 {
+	ft_bzero(shell, sizeof(*shell));
 	init_term(&shell->term);
 	init_input(&shell->input);
 	init_sig(shell);

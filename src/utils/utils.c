@@ -14,7 +14,7 @@
 
 int		ft_putc(int c)
 {
-	if (write(STDOUT_FILENO, &c, 1) == 1)
+	if (write(STDOUT_FILENO, (char *)&c, 1) == 1)
 		return (1);
 	return (0);
 }

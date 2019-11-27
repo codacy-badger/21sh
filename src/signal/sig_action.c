@@ -22,13 +22,17 @@ void	sig_action(t_sh *shell, int sig)
 		return ;
 	}
 	if (sig == SIGINT)
-		;
+	{
+		reset_input(&sh->term, &sh->input);
+	}
 	else if (sig == SIGWINCH)
-		;
+		set_termsize(&sh->term); //remove getcursposition from this function
 	else if (sig == SIGTSTP)
 		;
 	else if (sig == SIGCONT)
 		;
+	//else if (sig == SIGSEGV)
+	//	;
 	else if ((1 <= sig && sig <= 15) || sig == 17
 			|| (21 <= sig && sig <= 22) || (24 <= sig && sig <= 27))
 	{
@@ -36,4 +40,5 @@ void	sig_action(t_sh *shell, int sig)
 		signal(sig, SIG_DFL);
 		kill(getpid(), sig); //ioctl
 	}
+	return ;
 }

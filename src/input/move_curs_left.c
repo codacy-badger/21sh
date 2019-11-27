@@ -14,24 +14,9 @@
 
 int		move_curs_left(t_term *term, t_input *input)
 {
-	int		shift;
-
 	if (input->line->i > 0)
 	{
-		if (term->cx == 0)
-		{
-			tputs(term->caps.up, 1, ft_putc);
-			shift = term->win.ws_col - 2;
-			while (shift--)
-				tputs(term->caps.nd, 1, ft_putc);
-			term->cx = term->win.ws_col - 2;
-			term->cy--;
-		}
-		else
-		{
-			tputs(term->caps.le, 1, ft_putc);
-			term->cx--;
-		}
+		movcleft(term);
 		input->line->i--;
 	}
 	return (0);

@@ -14,19 +14,27 @@
 
 int		g_last_exit_st = 0;
 
-int		main(void)
+int		main_loop(t_sh *shell)
 {
-	struct s_sh		shell;
+	int		ret;
 
-	int i = 1;
-	init_shell(&shell);
-	while (i)
+	while (1)
 	{
-		read_line(&shell.term, &shell.input);
-		i = 0;
-		//parse
+		if ((ret = read_line(&shell->term, &shell->input)))
+			;//if fatal error break else continue
+		//if (parse == NO NL)
+			//input->pmpt = ps2 continue ;
+		break ;
 		//exec
 	}
-	del_shell(&shell);
-	return (0);
+	del_shell(shell);
+	return (ret);
+}
+
+int		main(void)
+{
+	struct s_sh	shell;
+
+	init_shell(&shell);
+	return (main_loop(&shell));
 }

@@ -1,31 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   del_shell.c                                        :+:      :+:    :+:   */
+/*   set_term_size.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:37:04 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void	del_input(t_input *input)
+static int	setcpos(t_term *term)
 {
-	ft_strarray_del(&input->pmpt);
-	line_del(&input->line);
+	char	buff[32];
+	int		i;
+
+	i = 0;
+	if (write(STDOUT_FILENO, "\033[6n", 4) != 4)
+		return (-1);
+	while (read(STDIN_FILENO, &buff[i], 1) == 1 && buff[i] != 'R')
+		i++;
+	i = 2;
+	term->cy = ft_atoi(&buff[i]) - 1;
+	while (buff[i] != ';')
+		i++;
+	term->cx = ft_atoi(&buff[++i]) - 1;
+	return (0);
 }
 
-static void	del_term(t_term *term)
+int			set_termsize(t_term *term)
 {
-	term->termtype = NULL;
-	return ;
-}
-
-void		del_shell(t_sh *shell)
-{
-	del_term(&shell->term);
-	del_input(&shell->input);
+	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &term->win) == -1)
+		return (-1);
+	if (setcpos(term) == -1)
+		return (-1);
+	term->sizex = term->win.ws_col;
+	term->sizey = term->win.ws_row;
+	return (0);
 }

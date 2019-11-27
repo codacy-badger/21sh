@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_curs_up.c                                     :+:      :+:    :+:   */
+/*   display_char.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		move_curs_up(t_term *term, t_input *input)
+size_t	display_char(t_term *term, int c)
 {
-	size_t	shifty;
-	size_t	plen;
-	int		i;
+	size_t		ret;
 
-	if (input->line->prev)
+	if (c == '\n')
+		return (display_nl(term));
+	if ((ret = ft_putc(c)) == 1)
 	{
-		i = input->line->i;
-		input->line->i = 0;
-		input->line = input->line->prev;
-		plen = ft_strlen(input->line->prompt);
-		shifty = (input->line->len + plen) / (size_t)term->win.ws_col + 1;
-		while (shifty--)
-		{
-			tputs(term->caps.up, 1, ft_putc);
-			term->cy--;
-		}
-		input->line->i = i;
-		while (input->line->i > input->line->len)
-			move_curs_left(term, input);
+		if (term->cx == term->sizex - 1)
+			display_nl(term);
+		term->cx++;
 	}
-	return (0);
+	return (ret);
 }

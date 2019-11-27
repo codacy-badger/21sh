@@ -12,11 +12,9 @@
 
 #include "shell.h"
 
-/*
-int		move_curs_home(t_input *input, t_term *term)
+int		move_curs_home(t_term *term, t_input *input)
 {
-	while (input->x)
-		move_curs_left(input, term);
+	while (input->line->i > 0)
+		move_curs_left(term, input);
 	return (0);
 }
-*/

@@ -12,25 +12,17 @@
 
 #include "shell.h"
 
-t_line	*line_new(size_t size, char *prompt)
+t_line	*line_new(size_t size)
 {
 	t_line	*line;
 
 	if (!(line = (t_line *)ft_memalloc(sizeof(*line))))
 		return (NULL);
-	if (!(line->prompt = ft_strdup(prompt)))
-	{
-		ft_memdel((void *)&line);
-		return (NULL);
-	}
 	if (!(line->str = (char *)ft_memalloc(size)))
 	{
-		ft_memdel((void *)&line->prompt);
 		ft_memdel((void *)&line);
 		return (NULL);
 	}
-	line->prev = NULL;
-	line->next = NULL;
 	line->size = size;
 	return (line);
 }

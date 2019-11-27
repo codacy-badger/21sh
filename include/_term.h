@@ -17,48 +17,61 @@
 # include <termios.h>
 # include <term.h>
 
-struct				s_keys
-{
-	unsigned int	del;
-	unsigned int	left;
-	unsigned int	right;
-	unsigned int	up;
-	unsigned int	down;
-	unsigned int	bsp;
-	unsigned int	esc;
-	unsigned int	spc;
-	unsigned int	enter;
-	unsigned int	home;
-	unsigned int	end;
-	unsigned int	nextw;
-	unsigned int	prevw;
+# define K_UP		0
+# define K_DOWN		1
+# define K_LEFT		2
+# define K_RIGHT	3
+# define K_HOME		4
+# define K_END		5
+# define K_BSP		6
+# define K_SPC		7
+# define K_DEL		8
+# define K_ENTER	9
+# define K_ESC		10
+# define K_NXTW		11
+# define K_PRVW		12
 
-};
-
-struct				s_caps
-{
-	char			*cm;
-	char			*up;
-	char			*dn;
-	char			*le;
-	char			*nd;
-	char			*ce;
-	char			*sc;
-	char			*rc;
-};
+# define C_UP		0
+# define C_DOWN		1
+# define C_LEFT		2
+# define C_RIGHT	3
+# define C_CL		4
+# define C_CD		5
+# define C_SC		6
+# define C_RC		7
+# define C_CR		8
+# define C_SF		9
+# define C_SR		10
 
 typedef struct		s_term
 {
 	struct termios	orig_term;
 	struct winsize	win;
-	struct s_keys	keys;
-	struct s_caps	caps;
+	unsigned int	keys[13];
+	char			*caps[11];
 	char			*termtype;
+	size_t			sizex;
+	size_t			sizey;
 	size_t			cx;
 	size_t			cy;
 }					t_term;
 
 void				init_term(struct s_term *term);
 void				reset_term(struct termios *orig_termios);
+int					set_termsize(t_term *term);
+
+size_t				display_char(t_term *term, int c);
+size_t				display_str(t_term *term, char *s);
+size_t				display_nl(t_term *term);
+
+
+int					movcdown(t_term *term);
+int					movcup(t_term *term);
+int					movcleft(t_term *term);
+int					movcright(t_term *term);
+void				movchx(t_term *term);
+void				movchy(t_term *term);
+void				movch(t_term *term);
+
 
 #endif 

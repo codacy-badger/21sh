@@ -14,6 +14,15 @@
 
 void		init_input(struct s_input *input)
 {
-	input->lines_list = line_new(32, PS1);
-	input->line = input->lines_list;
+	if (!(input->pmpt = (char **)ft_memalloc(sizeof(char *) * (4 + 1))))
+		return ;
+	if (!(input->pmpt[PS1] = ft_strdup(">> ")))
+		return ;
+	if (!(input->pmpt[PS2] = ft_strdup("-> ")))
+		return ;
+	if (!(input->pmpt[PS3] = ft_strdup("'> ")))
+		return ;
+	if (!(input->pmpt[PS4] = ft_strdup("\"> ")))
+		return ;
+	input->line = line_new(32);
 }

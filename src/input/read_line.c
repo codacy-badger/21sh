@@ -13,153 +13,78 @@
 #include "shell.h"
 
 /*
-** -On resize we'll lose cursor position
-** -Newlines and backslashes are stored in the string
-**
-** To add : -move end line with 'end'
-**			-copy paste
+** Removed list of lines, useless... could be useful if we handle window resize,
+** which is not in the subject...
+** 
+** To add :
+**			//-copy paste
+**          -we could add y movement on line if line is larger than window
 **			-history
-**			-eventually move up and down on multiline...
+** read prompts from conf file...?? 
 */
 
-/* ***************************LIBFT*************************************** */
-
-int		ft_quotes(char *str)
+static int	handle_eol(t_term *term)
 {
-	while (*str)
+	display_nl(term);
+	return (EOL);
+}
+
+static int	del_char(t_term *term, t_input *input, int c)
+{
+	size_t	offset;
+
+	if (c == (int)term->keys[K_DEL] && input->line->str[input->line->i])
 	{
-		if (*str == 34)
-		{
-			str++;
-			while (*str && *str != 34)
-				str++;
-			if (!*str)
-				return (34);
-		}
-		else if (*str == 39)
-		{
-			str++;
-			while (*str && *str != 39)
-				str++;
-			if (!*str)
-				return (39);
-		}
-		str++;
+		line_del_char(input->line);
+		offset = display_str(term, &input->line->str[input->line->i]);
+		tputs(term->caps[C_CL], 1, ft_putc);
+		while (offset--)
+			movcleft(term);
+	}
+	else if (input->line->i > 0)
+	{
+		move_curs_left(term, input);
+		line_del_char(input->line);
+		offset = display_str(term, &input->line->str[input->line->i]);
+		tputs(term->caps[C_CL], 1, ft_putc);
+		while (offset--)
+			movcleft(term);
 	}
 	return (0);
 }
-
-/* ************************************************************************** */
-
-/*
-static int	del_char(t_input *input, t_term *term)
-{
-	int		i;
-
-	i = 0;
-	if (input->x > 0 || input->y > 0)
-	{
-		if (input->x == 0)
-		{
-			tputs(term->caps.up, 1, ft_putc);
-			input->x = term->win.ws_col - 2;
-			while (i++ < term->win.ws_col - 2)
-				tputs(term->caps.nd, 1, ft_putc);
-			input->y--;
-		}
-		move_curs_left(input, term);
-		str_del_char(input);
-		display_del_char(input, term);
-	}
-	return (0);
-}
-*/
 
 static int	add_char(t_term *term, t_input *input, char c)
 {
-	size_t	oldx;
-	size_t	oldy;
+	size_t		offset;
 
-	oldx = term->cx;
-	oldy = term->cy;
 	line_add_char(input->line, c);
-	display_str(term, &input->line->str[input->line->i - 1]);
-	if (input->line->i < input->line->len)
-	{
-		input->line->i = input->line->len;
-		while (term->cy > oldy || term->cx > oldx + 1)
-			move_curs_left(term, input);
-	}
+	offset = display_str(term, &input->line->str[input->line->i]);
+	while (offset--)
+		movcleft(term);
+	move_curs_right(term, input);
 	return (0);
-}
-
-static int	handle_eol(t_term *term, t_input *input, char c)
-{
-	t_line	*line;
-	int		y;
-	//int		quote;
-	c = 0;
-
-	display_nl(term);
-	/*
-	if ((quote = ft_quotes(input->line->str)) != 0)
-	{
-		if (quote == '\'')
-			tputs(PSQ, 1, ft_putc);
-		else if (quote == '"')
-			tputs(PSDQ, 1, ft_putc);
-		return (0);
-	}
-	*/
-	if (input->line->str[input->line->len - 1] == '\\')
-	{
-		display_str(term, PS2);
-		if (!(line = line_new(32, PS2)))
-			return (-1);
-		line_add(&input->line, line);
-		input->line = input->line->next;
-		if (input->line->next)
-		{
-			y = 0;
-			tputs(term->caps.ce, 1, ft_putc);
-			while (input->line->next)
-			{
-				display_nl(term);
-				display_line(term, input->line->next);
-				input->line = input->line->next;
-				y++;
-			}
-			while (y--)
-				move_curs_up(term, input);
-		}
-		return (0);
-	}
-	// remove backslashes;
-	return (EOL);
 }
 
 static int	process_char(t_term *term, t_input *input, unsigned int c)
 {
-	if (c == term->keys.left)
+	if (c == term->keys[K_LEFT])
 		return (move_curs_left(term, input));
-	else if (c == term->keys.right)
+	else if (c == term->keys[K_RIGHT])
 		return (move_curs_right(term, input));
-	else if (c == term->keys.up)
-		return (move_curs_up(term, input));
-	/*
-	else if (c == term->keys.bsp)
-		return (del_char(input, term));
-	else if (c == term->keys.home)
-		return (move_curs_home(input, term));
-	else if (c == term->keys.nextw)
-		return (move_curs_nextw(input, term));
-	else if (c == term->keys.prevw)
-		return (move_curs_prevw(input, term));
-	*/
+	else if (c == term->keys[K_BSP] || c == term->keys[K_DEL])
+		return (del_char(term, input, c));
+	else if (c == term->keys[K_HOME])
+		return (move_curs_home(term, input));
+	else if (c == term->keys[K_END])
+		return (move_curs_end(term, input));
+	else if (c == term->keys[K_NXTW])
+		return (move_curs_nextw(term, input));
+	else if (c == term->keys[K_PRVW])
+		return (move_curs_prevw(term, input));
 	else if (ft_isprint(c))
 		return (add_char(term, input, (char)c));
-	else if (c == EOL)
-		return (handle_eol(term, input, (char)c));
+	else if (c == EOL || c == 4)
+		return (handle_eol(term));
 	return (0);
 }
 
@@ -168,14 +93,19 @@ int			read_line(t_term *term, t_input *input)
 	unsigned int	c;
 
 	c = 0;
-	display_str(term, PS1);
-	//input->line->prompt = ft_strdup(PS1);
+	//input->line = line_new(32);
+	display_str(term, *(input->pmpt));
 	while (process_char(term, input, c) != EOL)
 	{
 		c = 0;
-		read(STDIN_FILENO, &c, sizeof(c));
+		if (read(STDIN_FILENO, &c, sizeof(c)) == -1)
+			return (-1);
 		//printf("%u\n", c);
 	}
-	printf("\nline_cap: %zu, line_len: %zu\n%s", input->line->size, input->line->len, input->line->str);
+	/*
+	** on tokenization, process backslashes, if line ends with backslash
+	** or is ! correctly quoted, update input->prompt ptr and return read_line
+	*/
+	//printf("\nline_cap: %zu, line_len: %zu, \n%s", input->line->size, input->line->len, input->line->str);
 	return (0);
 }

@@ -35,6 +35,8 @@ void	del_shell(t_sh *shell);
 void	sig_handle(int sig);
 void	sig_action(t_sh *shell, int sig);
 
+int		main_loop(t_sh *shell);
+
 /*
 ** Utils
 */

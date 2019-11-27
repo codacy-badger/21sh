@@ -28,7 +28,7 @@ int		line_add_char(t_line *line, int c)
 			return (-1);
 		line->size = news;
 	}
-	ft_strinsert(&line->str[line->i++], (char *)&c, 1);
+	ft_strinsert(&line->str[line->i], (char *)&c, 1);
 	line->len++;
 	return (0);
 }

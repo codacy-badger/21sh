@@ -25,23 +25,32 @@ SRC =		main.c \
 			init/init_sig.c \
 			del/del_shell.c \
 			reset/reset_term.c \
+			reset/reset_input.c \
 			signal/sig_action.c \
 			signal/sig_handle.c \
+			term/display_char.c \
+			term/display_str.c \
+			term/display_nl.c \
+			term/set_termsize.c \
+			term/movcup.c \
+			term/movcdown.c \
+			term/movcleft.c \
+			term/movcright.c \
+			term/movchx.c \
+			term/movchy.c \
+			term/movch.c \
 			input/line_new.c \
-			input/line_add.c \
 			input/line_del.c \
 			input/line_add_char.c \
-			input/display_char.c \
-			input/display_str.c \
-			input/display_line.c \
-			input/display_nl.c \
+			input/line_del_char.c \
 			input/move_curs_left.c \
 			input/move_curs_right.c \
-			input/move_curs_up.c \
 			input/move_curs_home.c \
+			input/move_curs_end.c \
 			input/move_curs_nextw.c \
 			input/move_curs_prevw.c \
 			input/read_line.c \
+			input/clear_line.c \
 			utils/utils.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))

@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_str.c                                      :+:      :+:    :+:   */
+/*   movcup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		display_str(t_term *term, char *s)
+int		movcup(t_term *term)
 {
-	int		ret;
-
-	ret = 0;
-	while (*s)
-		ret += display_char(term, *s++);
-	return (ret);
+	if (term->cy == 0)
+	{
+		tputs(term->caps[C_CR], 1, ft_putc);
+		tputs(term->caps[C_SR], 1, ft_putc);
+	}
+	else
+	{
+		tputs(term->caps[C_UP], 1, ft_putc);
+		term->cy--;
+	}
+	return (0);
 }

@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_nl.c                                       :+:      :+:    :+:   */
+/*   movchx.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		display_nl(t_term *term)
+void	movchx(t_term *term)
 {
-	ft_putc('\n');
+	tputs(term->caps[C_CR], 1, ft_putc);
 	term->cx = 0;
-	term->cy++;
-	return (0);
 }

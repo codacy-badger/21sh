@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line_add.c                                         :+:      :+:    :+:   */
+/*   display_str.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,21 +12,12 @@
 
 #include "shell.h"
 
-void	line_add(t_line **head, t_line *line)
+size_t	display_str(t_term *term, char *s)
 {
-	t_line	*tmp;
+	size_t	ret;
 
-	if (!head)
-		return ;
-	if (!*head)
-		*head = line;
-	else
-	{
-		if ((*head)->next)
-			(*head)->next->prev = line;
-		tmp = (*head)->next;
-		(*head)->next = line;
-		line->next = tmp;
-		line->prev = *head;
-	}
+	ret = 0;
+	while (*s)
+		ret += display_char(term, *s++);
+	return (ret);
 }

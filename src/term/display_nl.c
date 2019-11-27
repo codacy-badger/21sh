@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_line.c                                     :+:      :+:    :+:   */
+/*   display_nl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,10 +12,14 @@
 
 #include "shell.h"
 
-int		display_line(t_term *term, t_line *line)
+size_t	display_nl(t_term *term)
 {
-	display_str(term, line->prompt);
-	display_str(term, line->str);
-	line->i = line->len;
-	return (0);
+	size_t		ret;
+
+	if ((ret = ft_putc('\n')) == 1)
+	{
+		term->cx = 0;
+		term->cy++;
+	}
+	return (ret);
 }
