@@ -12,11 +12,14 @@
 
 #include "shell.h"
 
-int		move_curs_prevw(t_input *input, t_term *term)
+int		move_curs_prevw(t_term *term, t_input *input)
 {
-	while (input->x > 0 && ft_iswhitespace(input->line->str[input->i - 1]))
-		move_curs_left(input, term);
-	while (input->x > 0 && !ft_iswhitespace(input->line->str[input->i - 1]))
-		move_curs_left(input, term);
+	t_line *line;
+
+	line = input->line;
+	while (line->i > 0 && ft_iswhitespace(line->str[line->i - 1]))
+		move_curs_left(term, input);
+	while (line->i > 0 && !ft_iswhitespace(line->str[line->i - 1]))
+		move_curs_left(term, input);
 	return (0);
 }

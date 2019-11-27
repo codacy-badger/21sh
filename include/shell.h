@@ -17,6 +17,7 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <signal.h>
+# include <sys/ioctl.h>
 # include "_term.h"
 # include "input.h"
 # include "libft.h"
@@ -33,6 +34,8 @@ void	del_shell(t_sh *shell);
 
 void	sig_handle(int sig);
 void	sig_action(t_sh *shell, int sig);
+
+int		main_loop(t_sh *shell);
 
 /*
 ** Utils

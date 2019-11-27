@@ -6,128 +6,93 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/25 23:39:24 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 15:38:19 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 /*
-** -On resize we'll lose cursor position
-** -Newlines and backslashes are stored in the string
-**
-** To add : -move end line with 'end'
-**			-copy paste
+** Removed list of lines, useless... could be useful if we handle window resize,
+** which is not in the subject...
+** 
+** To add :
+**			//-copy paste
+**          -we could add y movement on line if line is larger than window
 **			-history
-**			-eventually move up and down on multiline...
+** read prompts from conf file...?? 
 */
 
-/* ***************************LIBFT*************************************** */
-
-int		ft_quotes(char *str)
+static int	handle_eol(t_term *term)
 {
-	while (*str)
-	{
-		if (*str == 34)
-		{
-			str++;
-			while (*str && *str != 34)
-				str++;
-			if (!*str)
-				return (34);
-		}
-		else if (*str == 39)
-		{
-			str++;
-			while (*str && *str != 39)
-				str++;
-			if (!*str)
-				return (39);
-		}
-		str++;
-	}
-	return (0);
-}
-
-/* ************************************************************************** */
-
-static int	del_char(t_input *input, t_term *term)
-{
-	if (input->x > 0)
-	{
-		move_curs_left(input, term);
-		str_del_char(input);
-		display_del_char(input, term);
-	}
-	return (0);
-}
-
-static int	add_char(t_input *input, t_term *term, char c)
-{
-	str_add_char(input, c);
-	display_add_char(input, term);
-	move_curs_right(input, term);
-	return (0);
-}
-
-static int	handle_eol(t_input *input, char c)
-{
-	int		quote;
-
-	ft_putc(EOL);
-	if (c == 4)
-		return (EOL);
-	input->i = input->line->len;
-	str_add_char(input, EOL);
-	input->x = 0;
-	input->y++;
-	input->i++;
-	if ((quote = ft_quotes(input->line->str)) != 0)
-	{
-		if (quote == '\'')
-			tputs(PSQ, 1, ft_putc);
-		else if (quote == '"')
-			tputs(PSDQ, 1, ft_putc);
-		return (0);
-	}
-	else if (input->line->str[input->line->len - 2] == '\\')
-	{
-		tputs(PS2, 1, ft_putc);
-		return (0);
-	}
-	/*
-	remove_nl & backslashes;
-	*/
+	display_nl(term);
 	return (EOL);
 }
 
-
-static int	process_char(t_input *input, t_term *term, unsigned int c)
+static int	del_char(t_term *term, t_input *input, int c)
 {
-	if (c == term->keys.left)
-		return (move_curs_left(input, term));
-	else if (c == term->keys.right)
-		return (move_curs_right(input, term));
-	else if (c == term->keys.bsp)
-		return (del_char(input, term));
-	else if (c == term->keys.home)
-		return (move_curs_home(input, term));
-	else if (c == term->keys.nextw)
-		return (move_curs_nextw(input, term));
-	else if (c == term->keys.prevw)
-		return (move_curs_prevw(input, term));
+	size_t	offset;
+
+	if (c == (int)term->keys[K_DEL] && input->line->str[input->line->i])
+	{
+		line_del_char(input->line);
+		offset = display_str(term, &input->line->str[input->line->i]);
+		tputs(term->caps[C_CL], 1, ft_putc);
+		while (offset--)
+			movcleft(term);
+	}
+	else if (input->line->i > 0)
+	{
+		move_curs_left(term, input);
+		line_del_char(input->line);
+		offset = display_str(term, &input->line->str[input->line->i]);
+		tputs(term->caps[C_CL], 1, ft_putc);
+		while (offset--)
+			movcleft(term);
+	}
+	return (0);
+}
+
+static int	add_char(t_term *term, t_input *input, char c)
+{
+	size_t		offset;
+
+	line_add_char(input->line, c);
+	offset = display_str(term, &input->line->str[input->line->i]);
+	while (offset--)
+		movcleft(term);
+	move_curs_right(term, input);
+	return (0);
+}
+
+static int	process_char(t_term *term, t_input *input, unsigned int c)
+{
+	if (c == term->keys[K_LEFT])
+		return (move_curs_left(term, input));
+	else if (c == term->keys[K_RIGHT])
+		return (move_curs_right(term, input));
+	else if (c == term->keys[K_BSP] || c == term->keys[K_DEL])
+		return (del_char(term, input, c));
+	else if (c == term->keys[K_HOME])
+		return (move_curs_home(term, input));
+	else if (c == term->keys[K_END])
+		return (move_curs_end(term, input));
+	else if (c == term->keys[K_NXTW])
+		return (move_curs_nextw(term, input));
+	else if (c == term->keys[K_PRVW])
+		return (move_curs_prevw(term, input));
 	else if (ft_isprint(c))
-		return (add_char(input, term, (char)c));
+		return (add_char(term, input, (char)c));
 	else if (c == EOL || c == 4)
-		return (handle_eol(input, (char)c));
-	else if (c == term->keys.cutword)
-		return (cut_previous_word(input, term));
-	else if (c == term->keys.cutafter)
+		return (handle_eol(term));
+	else if (c == term->keys[K_CUTWORD])
+		return (cut_previous_word(term, input));
+	else if (c == term->keys[K_CUTAFTER])
 		return (cut_after(input));
-	else if (c == term->keys.cutbefore)
-		return (cut_before(input, term));
-	else if (c == term->keys.paste)
-		return (paste(input));
+	else if (c == term->keys[K_CUTBEFORE])
+		return (cut_before(term, input));
+	else if (c == term->keys[K_PASTE])
+		return (paste(term, input));
 	return (0);
 }
 
@@ -136,12 +101,19 @@ int			read_line(t_term *term, t_input *input)
 	unsigned int	c;
 
 	c = 0;
-	tputs(PS1, 1, ft_putc);
-	while (process_char(input, term, c) != EOL)
+	//input->line = line_new(32);
+	display_str(term, *(input->pmpt));
+	while (process_char(term, input, c) != EOL)
 	{
 		c = 0;
-		read(STDIN_FILENO, &c, sizeof(c));
+		if (read(STDIN_FILENO, &c, sizeof(c)) == -1)
+			return (-1);
+		//printf("%u\n", c);
 	}
-	printf("\n'%s'\nline_cap: %d, line_len: %d\n", input->line->str, input->line->capacity, input->line->len);
+	/*
+	** on tokenization, process backslashes, if line ends with backslash
+	** or is ! correctly quoted, update input->prompt ptr and return read_line
+	*/
+	printf("\nline_cap: %zu, line_len: %zu, \n'%s'", input->line->size, input->line->len, input->line->str);
 	return (0);
 }

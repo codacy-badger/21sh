@@ -12,13 +12,12 @@
 
 #include "shell.h"
 
-int		move_curs_left(t_input *input, t_term *term)
+int		move_curs_left(t_term *term, t_input *input)
 {
-	if (input->x > 0)
+	if (input->line->i > 0)
 	{
-		tputs(term->caps.le, 1, ft_putc);
-		input->x--;
-		input->i--;
+		movcleft(term);
+		input->line->i--;
 	}
 	return (0);
 }

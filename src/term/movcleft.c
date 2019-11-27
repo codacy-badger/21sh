@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   del_shell.c                                        :+:      :+:    :+:   */
+/*   movcleft.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:37:04 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:37:47 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void	del_input(t_input *input)
+int		movcleft(t_term *term)
 {
-	ft_strarray_del(&input->pmpt);
-	line_del(&input->line);
-}
+	int offset;
 
-static void	del_term(t_term *term)
-{
-	term->termtype = NULL;
-	return ;
-}
-
-void		del_shell(t_sh *shell)
-{
-	del_term(&shell->term);
-	del_input(&shell->input);
+	if (term->cx == 0)
+	{
+		term->cx = term->sizex - 1;
+		term->cy--;
+		tputs(tgoto(term->caps[C_CM], term->cx, term->cy), 1, ft_putc);
+	}
+	else
+	{
+		tputs(term->caps[C_LEFT], 1, ft_putc);
+		term->cx--;
+	}
+	return (0);
 }

@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   del_shell.c                                        :+:      :+:    :+:   */
+/*   line_new.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:37:04 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void	del_input(t_input *input)
+t_line	*line_new(size_t size)
 {
-	ft_strarray_del(&input->pmpt);
-	line_del(&input->line);
-}
+	t_line	*line;
 
-static void	del_term(t_term *term)
-{
-	term->termtype = NULL;
-	return ;
-}
-
-void		del_shell(t_sh *shell)
-{
-	del_term(&shell->term);
-	del_input(&shell->input);
+	if (!(line = (t_line *)ft_memalloc(sizeof(*line))))
+		return (NULL);
+	if (!(line->str = (char *)ft_memalloc(size)))
+	{
+		ft_memdel((void *)&line);
+		return (NULL);
+	}
+	line->size = size;
+	return (line);
 }

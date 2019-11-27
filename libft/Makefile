@@ -31,6 +31,7 @@ SRC =	mem/ft_memalloc.c \
 		str/ft_strequ.c \
 		str/ft_strtok.c \
 		str/ft_strbrkt.c \
+		str/ft_strquot.c \
 		str/ft_strchr.c \
 		str/ft_strremove.c \
 		str/ft_strinsert.c \

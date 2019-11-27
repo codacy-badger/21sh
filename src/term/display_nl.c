@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_add_char.c                                     :+:      :+:    :+:   */
+/*   display_nl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,14 @@
 
 #include "shell.h"
 
-void	str_add_char(t_input *input, int c)
+size_t	display_nl(t_term *term)
 {
-	ft_dstr_insert(&input->line, (char)c, input->i);
+	size_t		ret;
+
+	if ((ret = ft_putc('\n')) == 1)
+	{
+		term->cx = 0;
+		term->cy++;
+	}
+	return (ret);
 }

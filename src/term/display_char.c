@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   del_shell.c                                        :+:      :+:    :+:   */
+/*   display_char.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:37:04 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:28:04 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void	del_input(t_input *input)
+size_t	display_char(t_term *term, int c)
 {
-	ft_strarray_del(&input->pmpt);
-	line_del(&input->line);
-}
+	size_t		ret;
 
-static void	del_term(t_term *term)
-{
-	term->termtype = NULL;
-	return ;
-}
-
-void		del_shell(t_sh *shell)
-{
-	del_term(&shell->term);
-	del_input(&shell->input);
+	if (c == '\n')
+		return (display_nl(term));
+	if ((ret = ft_putc(c)) == 1)
+	{
+		if (term->cx == term->sizex - 1)
+		{
+			term->cx = 0;
+			term->cy++;
+		}
+		else
+			term->cx++;
+	}
+	return (ret);
 }
