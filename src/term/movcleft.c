@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 14:37:47 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 16:58:26 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int		movcleft(t_term *term)
 	if (term->cx == 0)
 	{
 		term->cx = term->sizex - 1;
-		term->cy--;
+		if (term->cy > 0)
+			term->cy--;
 		tputs(tgoto(term->caps[C_CM], term->cx, term->cy), 1, ft_putc);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 19:30:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 15:40:30 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 16:38:29 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,10 @@ int		paste(t_term *term, t_input *input)
 			ft_strlen(line + input->line->i));
 	ft_memcpy(line + input->line->i, input->clipboard, clipboard_len);
 	display_str(term, line + input->line->i);
+	i = input->line->len - input->line->i;
 	input->line->len += clipboard_len;
 	input->line->i += clipboard_len;
+	while (i--)
+		movcleft(term);
 	return (14);
 }
