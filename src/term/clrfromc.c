@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 16:53:55 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 20:48:08 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	clrfromc(t_term *term)
 {
 	tputs(term->caps[C_SC], 1, ft_putc);
-	tputs(term->caps[C_CL], 1, ft_putc);
+	tputs(term->caps[C_CE], 1, ft_putc);
 	if (term->cy < term->sizey - 1)
 	{
 		tputs(term->caps[C_DOWN], 1, ft_putc);

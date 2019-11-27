@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 20:34:47 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 20:47:05 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ enum	e_caps
 		C_DOWN,
 		C_LEFT,
 		C_RIGHT,
-		C_CL,
+		C_CE,
 		C_CD,
 		C_SC,
 		C_RC,
@@ -54,6 +54,7 @@ enum	e_caps
 		C_SF,
 		C_SR,
 		C_CM,
+		C_CL,
 		CAPS_SIZE
 };
 

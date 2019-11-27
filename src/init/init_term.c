@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 20:31:39 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 20:47:40 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	init_caps(struct s_term *term)
 	term->caps[C_DOWN] = tgetstr("do", NULL);
 	term->caps[C_LEFT] = tgetstr("le", NULL);
 	term->caps[C_RIGHT] = tgetstr("nd", NULL);
-	term->caps[C_CL] = tgetstr("ce", NULL);
+	term->caps[C_CE] = tgetstr("ce", NULL);
 	term->caps[C_CD] = tgetstr("cd", NULL);
 	term->caps[C_SC] = tgetstr("sc", NULL);
 	term->caps[C_RC] = tgetstr("rc", NULL);
@@ -26,6 +26,7 @@ static void	init_caps(struct s_term *term)
 	term->caps[C_SF] = tgetstr("sf", NULL);
 	term->caps[C_SR] = tgetstr("sr", NULL);
 	term->caps[C_CM] = tgetstr("cm", NULL);
+	term->caps[C_CL] = tgetstr("cl", NULL);
 }
 
 static void	init_keys(struct s_term *term)

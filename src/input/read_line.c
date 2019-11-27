@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 20:35:12 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 20:47:56 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	del_char(t_term *term, t_input *input, int c)
 	{
 		line_del_char(input->line);
 		offset = display_str(term, &input->line->str[input->line->i]);
-		tputs(term->caps[C_CL], 1, ft_putc);
+		tputs(term->caps[C_CE], 1, ft_putc);
 		while (offset--)
 			movcleft(term);
 	}
