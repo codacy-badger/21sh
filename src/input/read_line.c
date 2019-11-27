@@ -23,8 +23,14 @@
 ** read prompts from conf file...?? 
 */
 
-static int	handle_eol(t_term *term)
+static int	handle_eol(t_term *term, t_input *input)
 {
+	if (input->line->i == input->line->len)
+		move_curs_left(term, input);
+	while (input->line->i < input->line->len - 1)
+		move_curs_right(term, input);
+	ft_strinsert(&input->line->str[input->line->i + 1], "\n", 1);
+	input->line->len++;
 	display_nl(term);
 	return (EOL);
 }
@@ -45,8 +51,8 @@ static int	del_char(t_term *term, t_input *input, int c)
 	{
 		move_curs_left(term, input);
 		line_del_char(input->line);
+		clrfromc(term);
 		offset = display_str(term, &input->line->str[input->line->i]);
-		tputs(term->caps[C_CL], 1, ft_putc);
 		while (offset--)
 			movcleft(term);
 	}
@@ -83,8 +89,6 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 		return (move_curs_prevw(term, input));
 	else if (ft_isprint(c))
 		return (add_char(term, input, (char)c));
-	else if (c == EOL || c == 4)
-		return (handle_eol(term));
 	else if (c == term->keys[K_CUTWORD])
 		return (cut_previous_word(term, input));
 	else if (c == term->keys[K_CUTAFTER])
@@ -93,6 +97,8 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 		return (cut_before(term, input));
 	else if (c == term->keys[K_PASTE])
 		return (paste(term, input));
+	else if (c == EOL || c == 4)
+		return (handle_eol(term, input));
 	return (0);
 }
 

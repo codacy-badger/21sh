@@ -86,5 +86,6 @@ void				movchx(t_term *term);
 void				movchy(t_term *term);
 void				movch(t_term *term);
 
+void				clrfromc(t_term *term);
 
 #endif 

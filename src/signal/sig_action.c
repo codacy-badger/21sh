@@ -26,7 +26,12 @@ void	sig_action(t_sh *shell, int sig)
 		reset_input(&sh->term, &sh->input);
 	}
 	else if (sig == SIGWINCH)
-		set_termsize(&sh->term); //remove getcursposition from this function
+	{
+		signal(sig, SIG_DFL);
+		set_termsize(&sh->term);
+		//reprint line;
+		signal(sig, sig_handle);
+	}
 	else if (sig == SIGTSTP)
 		;
 	else if (sig == SIGCONT)

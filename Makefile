@@ -39,6 +39,7 @@ SRC =		main.c \
 			term/movchx.c \
 			term/movchy.c \
 			term/movch.c \
+			term/clrfromc.c \
 			input/line_new.c \
 			input/line_del.c \
 			input/line_add_char.c \

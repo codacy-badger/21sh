@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   movcleft.c                                         :+:      :+:    :+:   */
+/*   clrfromc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 16:58:26 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 16:53:55 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		movcleft(t_term *term)
+void	clrfromc(t_term *term)
 {
-	if (term->cx == 0)
+	tputs(term->caps[C_SC], 1, ft_putc);
+	tputs(term->caps[C_CL], 1, ft_putc);
+	if (term->cy < term->sizey - 1)
 	{
-		term->cx = term->sizex - 1;
-		if (term->cy > 0)
-			term->cy--;
-		tputs(tgoto(term->caps[C_CM], term->cx, term->cy), 1, ft_putc);
+		tputs(term->caps[C_DOWN], 1, ft_putc);
+		tputs(term->caps[C_CR], 1, ft_putc);
+		tputs(term->caps[C_CD], 1, ft_putc);
 	}
-	else
-	{
-		tputs(term->caps[C_LEFT], 1, ft_putc);
-		term->cx--;
-	}
-	return (0);
+	tputs(term->caps[C_RC], 1, ft_putc);
 }
