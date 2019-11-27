@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reset_input.c                                      :+:      :+:    :+:   */
+/*   term_reset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		reset_input(t_term *term, t_input *input)
+void	term_reset(struct termios *orig_term)
 {
-	clear_line(term, input);	
-	line_del(&input->line);
-	input->line = line_new(32);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, orig_term);
+	tputs(tgetstr("ve", NULL), 1, ft_putc);
+	tputs(tgetstr("te", NULL), 1, ft_putc);
 }

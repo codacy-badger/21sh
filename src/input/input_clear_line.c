@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line_del.c                                         :+:      :+:    :+:   */
+/*   input_clear_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,12 +12,15 @@
 
 #include "shell.h"
 
-void	line_del(t_line **line)
+void	input_clear_line(t_term *term, t_input *input)
 {
-	if (!line || !*line)
-		return ;
-	while ((*line)->prev)
-		(*line) = (*line)->prev;
-	while (*line)
-		line_delone(line);
+	size_t	plen;
+
+	plen = ft_strlen(*(input->pmpt));
+	while (input->line->i)
+		move_curs_left(term, input);
+	while (plen--)
+		movcleft(term);
+	tputs(term->caps[C_CD], 1, ft_putc);
+	display_str(term, *(input->pmpt));
 }

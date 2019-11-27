@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_line.c                                        :+:      :+:    :+:   */
+/*   input_read_line.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -25,60 +25,23 @@
 
 static int	handle_eol(t_term *term, t_input *input)
 {
-	if (input->line->i == input->line->len)
-		move_curs_left(term, input);
-	while (input->line->i < input->line->len - 1)
-		move_curs_right(term, input);
-	ft_strinsert(&input->line->str[input->line->i + 1], "\n", 1);
-	input->line->len++;
+	move_curs_end(term, input);
+	move_curs_left(term, input);
+	ft_strinsert(&input->line->str[input->line->len++], "\n", 1);
 	display_nl(term);
 	return (EOL);
 }
 
-static int	del_char(t_term *term, t_input *input, int c)
-{
-	size_t	offset;
-
-	if (c == (int)term->keys[K_DEL] && input->line->str[input->line->i])
-	{
-		line_del_char(input->line);
-		offset = display_str(term, &input->line->str[input->line->i]);
-		tputs(term->caps[C_CL], 1, ft_putc);
-		while (offset--)
-			movcleft(term);
-	}
-	else if (input->line->i > 0)
-	{
-		move_curs_left(term, input);
-		line_del_char(input->line);
-		clrfromc(term);
-		offset = display_str(term, &input->line->str[input->line->i]);
-		while (offset--)
-			movcleft(term);
-	}
-	return (0);
-}
-
-static int	add_char(t_term *term, t_input *input, char c)
-{
-	size_t		offset;
-
-	line_add_char(input->line, c);
-	offset = display_str(term, &input->line->str[input->line->i]);
-	while (offset--)
-		movcleft(term);
-	move_curs_right(term, input);
-	return (0);
-}
-
 static int	process_char(t_term *term, t_input *input, unsigned int c)
 {
-	if (c == term->keys[K_LEFT])
+	if (ft_isprint(c))
+		return (input_add_char(term, input, (char)c));
+	else if (c == term->keys[K_BSP] || c == term->keys[K_DEL])
+		return (input_del_char(term, input, c));
+	else if (c == term->keys[K_LEFT])
 		return (move_curs_left(term, input));
 	else if (c == term->keys[K_RIGHT])
 		return (move_curs_right(term, input));
-	else if (c == term->keys[K_BSP] || c == term->keys[K_DEL])
-		return (del_char(term, input, c));
 	else if (c == term->keys[K_HOME])
 		return (move_curs_home(term, input));
 	else if (c == term->keys[K_END])
@@ -87,8 +50,6 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 		return (move_curs_nextw(term, input));
 	else if (c == term->keys[K_PRVW])
 		return (move_curs_prevw(term, input));
-	else if (ft_isprint(c))
-		return (add_char(term, input, (char)c));
 	else if (c == term->keys[K_CUTWORD])
 		return (cut_previous_word(term, input));
 	else if (c == term->keys[K_CUTAFTER])
@@ -102,7 +63,7 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 	return (0);
 }
 
-int			read_line(t_term *term, t_input *input)
+int			input_read_line(t_term *term, t_input *input)
 {
 	unsigned int	c;
 

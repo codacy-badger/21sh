@@ -15,6 +15,10 @@
 /*
 ** TODO: cutting multiple words in a row should add them at the beginning of
 ** the clipboard
+** TODO++: find a key for enter in select mode, set int start & int end,
+			highlight the current char (no need to reprint all line),
+			increase int end or decrease int start when moving right or left,
+			when cut is press, clipboard = strsub(start end)...
 */
 
 int		cut_previous_word(t_term *term, t_input *input)

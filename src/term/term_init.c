@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_term.c                                        :+:      :+:    :+:   */
+/*   term_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -20,6 +20,7 @@ static void	init_caps(struct s_term *term)
 	term->caps[C_RIGHT] = tgetstr("nd", NULL);
 	term->caps[C_CL] = tgetstr("ce", NULL);
 	term->caps[C_CD] = tgetstr("cd", NULL);
+	term->caps[C_DC] = tgetstr("dc", NULL);
 	term->caps[C_SC] = tgetstr("sc", NULL);
 	term->caps[C_RC] = tgetstr("rc", NULL);
 	term->caps[C_CR] = tgetstr("cr", NULL);
@@ -52,7 +53,7 @@ static void	init_keys(struct s_term *term)
 
 }
 
-void		init_term(struct s_term *term)
+void		term_init(struct s_term *term)
 {
 	struct termios	new_term;
 
@@ -74,7 +75,7 @@ void		init_term(struct s_term *term)
 	new_term.c_cc[VTIME] = 1;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &new_term);
 	tputs(tgetstr("ks", NULL), 1, ft_putc);
-	set_termsize(term);
+	term_setsize(term);
 	init_keys(term);
 	init_caps(term);
 }

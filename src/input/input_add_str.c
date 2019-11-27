@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   del_shell.c                                        :+:      :+:    :+:   */
+/*   input_add_str.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:37:04 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 15:38:19 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void	del_input(t_input *input)
+int		input_add_str(t_term *term, t_input *input, char *s)
 {
-	ft_strarray_del(&input->pmpt);
-	line_del(&input->line);
-}
+	size_t	offset;
+	int		len;
 
-static void	del_term(t_term *term)
-{
-	term->termtype = NULL;
-	return ;
-}
-
-void		del_shell(t_sh *shell)
-{
-	del_term(&shell->term);
-	del_input(&shell->input);
+	len = ft_strlen(s);
+	line_add_str(input->line, s);
+	offset = display_str(term, &input->line->str[input->line->i]);
+	while (offset--)
+		movcleft(term);
+	while (len--)
+		move_curs_right(term, input);
+	return (0);
 }

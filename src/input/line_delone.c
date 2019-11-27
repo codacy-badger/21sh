@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shell.c                                       :+:      :+:    :+:   */
+/*   line_delone.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:37:04 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-/*
-** Think about interactive & non interactive mode...
-** assert read line works properly when read from file
-*/
-void	init_shell(t_sh *shell)
+void	line_delone(t_line **line)
 {
-	ft_bzero(shell, sizeof(*shell));
-	init_term(&shell->term);
-	init_input(&shell->input);
-	init_sig(shell);
+	t_line	*tmp;
+
+	if (!line || !(*line))
+		return ;
+	tmp = (*line)->next;
+	if ((*line)->prev)
+		(*line)->prev->next = (*line)->next;
+	if ((*line)->next)
+		(*line)->next->prev = (*line)->prev;
+	ft_memdel((void *)&(*line)->str);
+	ft_memdel((void *)line);
+	(*line) = tmp;
 }

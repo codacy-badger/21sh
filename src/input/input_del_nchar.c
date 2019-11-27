@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clrfromc.c                                         :+:      :+:    :+:   */
+/*   input_del_nchar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 16:53:55 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 15:38:19 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	clrfromc(t_term *term)
+int		input_del_nchar(t_term *term, t_input *input, int c, int n)
 {
-	tputs(term->caps[C_SC], 1, ft_putc);
-	tputs(term->caps[C_CL], 1, ft_putc);
-	if (term->cy < term->sizey - 1)
+	size_t	offset;
+	size_t	i;
+
+	i = n;
+	if (input->line->len == 0
+		|| (c == (int)term->keys[K_BSP] && input->line->i == 0)
+		|| (c == (int)term->keys[K_DEL] && !input->line->str[input->line->i]))
+		return (0);
+	if (c == (int)term->keys[K_BSP])
 	{
-		tputs(term->caps[C_DOWN], 1, ft_putc);
-		tputs(term->caps[C_CR], 1, ft_putc);
-		tputs(term->caps[C_CD], 1, ft_putc);
+		while (i--)
+			move_curs_left(term, input);
 	}
-	tputs(term->caps[C_RC], 1, ft_putc);
+	clear_fromc(term);
+	line_del_nchar(input->line, n);
+	offset = display_str(term, &input->line->str[input->line->i]);
+	while (offset--)
+		movcleft(term);
+	return (0);
 }

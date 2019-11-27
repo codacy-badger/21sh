@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reset_term.c                                       :+:      :+:    :+:   */
+/*   shell_del.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 00:37:04 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	reset_term(struct termios *orig_term)
+//file
+static void	input_del(t_input *input)
 {
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, orig_term);
-	tputs(tgetstr("ve", NULL), 1, ft_putc);
-	tputs(tgetstr("te", NULL), 1, ft_putc);
+	ft_strarray_del(&input->pmpt);
+	line_del(&input->line);
+}
+
+//file
+static void	term_del(t_term *term)
+{
+	term->termtype = NULL;
+	return ;
+}
+
+void		shell_del(t_sh *shell)
+{
+	term_del(&shell->term);
+	input_del(&shell->input);
 }

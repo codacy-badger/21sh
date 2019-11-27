@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line_del.c                                         :+:      :+:    :+:   */
+/*   reset_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,12 +12,9 @@
 
 #include "shell.h"
 
-void	line_del(t_line **line)
+void		input_reset(t_term *term, t_input *input)
 {
-	if (!line || !*line)
-		return ;
-	while ((*line)->prev)
-		(*line) = (*line)->prev;
-	while (*line)
-		line_delone(line);
+	input_clear_line(term, input);	
+	line_del(&input->line);
+	input->line = line_new(32);
 }

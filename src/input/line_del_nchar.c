@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line_del.c                                         :+:      :+:    :+:   */
+/*   line_del_nchar.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,12 +12,13 @@
 
 #include "shell.h"
 
-void	line_del(t_line **line)
+int		line_del_nchar(t_line *line, int n)
 {
-	if (!line || !*line)
-		return ;
-	while ((*line)->prev)
-		(*line) = (*line)->prev;
-	while (*line)
-		line_delone(line);
+	char	*str;
+
+	if (!line || !(str = line->str))
+		return (-1);
+	ft_strremove(&line->str[line->i], n);
+	line->len -= n;
+	return (n);
 }
