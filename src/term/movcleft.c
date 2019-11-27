@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:37:47 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 int		movcleft(t_term *term)
 {
-	size_t	offset;
+	int offset;
 
 	if (term->cx == 0)
 	{
-		movcup(term);
-		offset = term->sizex - 2;
-		while (offset--)
-			movcright(term);
+		term->cx = term->sizex - 1;
+		term->cy--;
+		tputs(tgoto(term->caps[C_CM], term->cx, term->cy), 1, ft_putc);
 	}
 	else
 	{

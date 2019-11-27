@@ -6,12 +6,11 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:37:10 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
 
 static void	init_caps(struct s_term *term)
 {
@@ -26,6 +25,7 @@ static void	init_caps(struct s_term *term)
 	term->caps[C_CR] = tgetstr("cr", NULL);
 	term->caps[C_SF] = tgetstr("sf", NULL);
 	term->caps[C_SR] = tgetstr("sr", NULL);
+	term->caps[C_CM] = tgetstr("cm", NULL);
 }
 
 static void	init_keys(struct s_term *term)

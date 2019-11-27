@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:28:04 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,12 @@ size_t	display_char(t_term *term, int c)
 	if ((ret = ft_putc(c)) == 1)
 	{
 		if (term->cx == term->sizex - 1)
-			display_nl(term);
-		term->cx++;
+		{
+			term->cx = 0;
+			term->cy++;
+		}
+		else
+			term->cx++;
 	}
 	return (ret);
 }
