@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 14:28:04 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 15:48:46 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,12 @@ size_t	display_char(t_term *term, int c)
 		if (term->cx == term->sizex - 1)
 		{
 			term->cx = 0;
-			term->cy++;
+			if (term->cy == term->sizey - 1)
+			{
+				tputs(term->caps[C_SF], 1, ft_putc);
+			}
+			else
+				term->cy++;
 		}
 		else
 			term->cx++;
