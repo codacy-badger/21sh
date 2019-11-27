@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 15:38:19 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 20:35:12 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 		return (cut_before(term, input));
 	else if (c == term->keys[K_PASTE])
 		return (paste(term, input));
+	else if (c == term->keys[K_REDRAW])
+		redraw(term, input);
 	else if (c == EOL || c == 4)
 		return (handle_eol(term, input));
 	return (0);

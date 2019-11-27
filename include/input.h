@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 14:53:32 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 20:35:05 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,11 @@ int					move_curs_prevw(t_term *term, t_input *input);
 ** Copy/Paste
 */
 
-int		cut_previous_word(t_term *term, t_input *input);
-int		cut_after(t_input *input);
-int		cut_before(t_term *term, t_input *input);
-int		paste(t_term *term, t_input *input);
+int					cut_previous_word(t_term *term, t_input *input);
+int					cut_after(t_input *input);
+int					cut_before(t_term *term, t_input *input);
+int					paste(t_term *term, t_input *input);
+
+void				redraw(t_term *term, t_input *input);
 
 #endif

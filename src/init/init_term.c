@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 14:59:15 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 20:31:39 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	init_keys(struct s_term *term)
 	term->keys[K_CUTAFTER] = 11;
 	term->keys[K_CUTBEFORE] = 21;
 	term->keys[K_PASTE] = 25;
-
+	term->keys[K_REDRAW] = 12;
 }
 
 void		init_term(struct s_term *term)

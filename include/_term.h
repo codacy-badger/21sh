@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 14:56:00 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 20:34:47 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ enum	e_keys
 		K_CUTAFTER,
 		K_CUTBEFORE,
 		K_PASTE,
+		K_REDRAW,
 		KEYS_SIZE
 };
 
