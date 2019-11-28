@@ -24,8 +24,8 @@
 # define EOL		'\n'
 
 /*
-** prompt scroll...
 ** input->prompt...
+** prompt scroll...
 */
 
 typedef struct		s_input
@@ -33,7 +33,7 @@ typedef struct		s_input
 	char			**pmpt;
 	struct s_line	*line;
 	//struct s_line	*hist;??
-	//struct s_line	*cb;??
+	//struct s_line	*clipboard;??
 	char			*clipboard;
 }					t_input;
 
@@ -52,9 +52,9 @@ void				input_reset(t_term *term, t_input *input);
 int					input_read_line(t_term *term, t_input *input);
 void				input_clear_line(t_term *term, t_input *input);
 int					input_add_char(t_term *term, t_input *input, char c);
-int					input_add_str(t_term *term, t_input *input, char *s);
+int					input_add_str(t_term *term, t_input *input, char *s); //useful for cp/paste
 int					input_del_char(t_term *term, t_input *input, int c);
-int					input_del_nchar(t_term *term, t_input *input, int c, int n);
+int					input_del_nchar(t_term *term, t_input *input, int c, int n); //useful for cp/paste
 
 /*
 ** T_line struct
@@ -74,6 +74,8 @@ void				line_del(t_line **line);
 */
 int					move_curs_left(t_term *term, t_input *input);
 int					move_curs_right(t_term *term, t_input *input);
+int					move_curs_up(t_term *term, t_input *input);
+int					move_curs_down(t_term *term, t_input *input);
 int					move_curs_home(t_term *term, t_input *input);
 int					move_curs_end(t_term *term, t_input *input);
 int					move_curs_nextw(t_term *term, t_input *input);

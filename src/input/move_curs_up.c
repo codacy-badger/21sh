@@ -1,40 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_del_nchar.c                                  :+:      :+:    :+:   */
+/*   move_curs_up.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 15:38:19 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 /*
-** int c is BSP for cut before, DEL for cut after
+** We could optimize this a bit
 */
 
-int		input_del_nchar(t_term *term, t_input *input, int c, int n)
+int		move_curs_up(t_term *term, t_input *input)
 {
-	size_t	offset;
-	size_t	i;
+	int		i;
 
-	i = n;
-	if (input->line->len == 0
-		|| (c == (int)term->keys[K_BSP] && input->line->i == 0)
-		|| (c == (int)term->keys[K_DEL] && !input->line->str[input->line->i]))
-		return (0);
-	if (c == (int)term->keys[K_BSP])
-	{
-		while (i--)
-			move_curs_left(term, input);
-	}
-	clear_fromc(term);
-	line_del_nchar(input->line, n);
-	offset = display_str(term, &input->line->str[input->line->i]);
-	while (offset--)
-		movcleft(term);
+	i = term->sizex;
+	while (input->line->i > 0 && i--)
+		move_curs_left(term, input);
 	return (0);
 }

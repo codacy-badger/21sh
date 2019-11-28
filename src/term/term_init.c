@@ -40,16 +40,16 @@ static void	init_keys(struct s_term *term)
 	term->keys[K_DOWN] = (s = tgetstr("kd", NULL)) ? *(int *)s : 0;
 	term->keys[K_HOME] = (s = tgetstr("kh", NULL)) ? *(int *)s : 0;
 	term->keys[K_END] = 4607771;
-	term->keys[K_NXTW] = 26139; //Alt(option) + right arrow
-	term->keys[K_PRVW] = 25115; //Alt(option) + left arrow
 	term->keys[K_BSP] = 127;
 	term->keys[K_ESC] = 27;
 	term->keys[K_SPC] = 32;
 	term->keys[K_ENTER] = 10;
-	term->keys[K_CUTWORD] = 23;
-	term->keys[K_CUTAFTER] = 11;
-	term->keys[K_CUTBEFORE] = 21;
-	term->keys[K_PASTE] = 25;
+	term->keys[K_PRVW] = 24; // ^X
+	term->keys[K_NXTW] = 14; // ^N
+	term->keys[K_CUTWORD] = 23;// ^W
+	term->keys[K_CUTAFTER] = 11;// ^K
+	term->keys[K_CUTBEFORE] = 21; // ^U
+	term->keys[K_PASTE] = 25; // ^Y
 
 }
 
@@ -71,8 +71,8 @@ void		term_init(struct s_term *term)
 	tcgetattr(STDIN_FILENO, &(term->orig_term));
 	new_term = term->orig_term;
 	new_term.c_lflag &= ~(ECHO | ICANON | ISIG);
-	new_term.c_cc[VMIN] = 0;
-	new_term.c_cc[VTIME] = 1;
+	new_term.c_cc[VMIN] = 1;
+	new_term.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &new_term);
 	tputs(tgetstr("ks", NULL), 1, ft_putc);
 	term_setsize(term);

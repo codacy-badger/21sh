@@ -12,14 +12,11 @@
 
 #include "shell.h"
 
-/*
-** Removed list of lines, useless... could be useful if we handle window resize,
-** which is not in the subject...
-** 
+/* 
 ** To add :
-**			//-copy paste
-**          -we could add y movement on line if line is larger than window
-**			-history
+**			-handle str reallocation directly in ft_strinsert,
+**				which is not protected btw...
+**			-history (lexer)
 ** read prompts from conf file...?? 
 */
 
@@ -27,8 +24,9 @@ static int	handle_eol(t_term *term, t_input *input)
 {
 	move_curs_end(term, input);
 	move_curs_left(term, input);
-	ft_strinsert(&input->line->str[input->line->len++], "\n", 1);
 	display_nl(term);
+	printf("\nline_cap: %zu, line_len: %zu, \n'%s'", input->line->size, input->line->len + 1, input->line->str);
+	ft_strinsert(&input->line->str[input->line->len++], "\n", 1);
 	return (EOL);
 }
 
@@ -42,6 +40,10 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 		return (move_curs_left(term, input));
 	else if (c == term->keys[K_RIGHT])
 		return (move_curs_right(term, input));
+	else if (c == term->keys[K_UP]) //ctrl - down 
+		return (move_curs_up(term, input));
+	else if (c == term->keys[K_DOWN]) //ctrl - up
+		return (move_curs_down(term, input));
 	else if (c == term->keys[K_HOME])
 		return (move_curs_home(term, input));
 	else if (c == term->keys[K_END])
@@ -68,7 +70,7 @@ int			input_read_line(t_term *term, t_input *input)
 	unsigned int	c;
 
 	c = 0;
-	//input->line = line_new(32);
+	//input->line = line_new(32); //handle this in reset input
 	display_str(term, *(input->pmpt));
 	while (process_char(term, input, c) != EOL)
 	{
@@ -81,6 +83,5 @@ int			input_read_line(t_term *term, t_input *input)
 	** on tokenization, process backslashes, if line ends with backslash
 	** or is ! correctly quoted, update input->prompt ptr and return read_line
 	*/
-	printf("\nline_cap: %zu, line_len: %zu, \n'%s'", input->line->size, input->line->len, input->line->str);
 	return (0);
 }

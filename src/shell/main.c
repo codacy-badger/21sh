@@ -20,12 +20,13 @@ static int	main_loop(t_sh *shell)
 
 	while (1)
 	{
+		//reset input, lexer, parser somewhere, but not on first loop
 		if ((ret = input_read_line(&shell->term, &shell->input)))
-			;//if fatal error break else continue
+			;//if fatal error break else if line !correct continue
 		//if (parse == NO NL)
 			//input->pmpt = ps2 continue ;
-		break ;
 		//exec
+		break ;
 	}
 	shell_del(shell);
 	return (ret);

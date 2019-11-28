@@ -49,6 +49,8 @@ SRC =		shell/main.c \
 			input/line_del_nchar.c \
 			input/move_curs_left.c \
 			input/move_curs_right.c \
+			input/move_curs_up.c \
+			input/move_curs_down.c \
 			input/move_curs_home.c \
 			input/move_curs_end.c \
 			input/move_curs_nextw.c \
