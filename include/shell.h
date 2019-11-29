@@ -22,6 +22,8 @@
 # include "input.h"
 # include "libft.h"
 
+# define ALLOC_ERROR	3
+
 typedef struct		s_sh
 {
 	struct s_term	term;
@@ -39,8 +41,8 @@ void	sig_action(t_sh *shell, int sig);
 ** Utils
 */
 int		ft_putc(int c);
-ssize_t	ft_putwc(int c);
+ssize_t	ft_putwc(char *c);
 ssize_t	getcsize(int c);
-ssize_t	getcsize_rev(char *s);
+ssize_t	getcsize_rev(char *s, int i);
 
 #endif

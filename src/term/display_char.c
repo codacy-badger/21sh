@@ -12,11 +12,11 @@
 
 #include "shell.h"
 
-size_t	display_char(t_term *term, int c)
+size_t	display_char(t_term *term, char *c)
 {
 	size_t		ret;
 
-	if (c == '\n')
+	if (*c == '\n')
 		return (display_nl(term));
 	if ((ret = ft_putwc(c)) > 0)
 	{

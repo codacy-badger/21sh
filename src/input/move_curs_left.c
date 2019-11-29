@@ -15,11 +15,13 @@
 int		move_curs_left(t_term *term, t_input *input)
 {
 	ssize_t	csize;
+	t_line	*line;
 
-	if (input->line->i > 0)
+	line = input->line;
+	if (line->i > 0)
 	{
-		csize = getcsize_rev(&input->line->str[input->line->i - 1]);
-		input->line->i -= csize;
+		csize = getcsize_rev(&line->str[line->i - 1], line->i - 1);
+		line->i -= csize;
 		movcleft(term);
 	}
 	return (0);

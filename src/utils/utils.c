@@ -12,15 +12,17 @@
 
 #include "shell.h"
 
-ssize_t	getcsize_rev(char *s)
+ssize_t	getcsize_rev(char *s, int i)
 {
 	ssize_t	size;
 
 	size = 1;
-	if (*s-- < 0)
+	if (i == 0)
+		return (size);
+	if (i && *s-- < 0)
 	{
 		size++;
-		while (!(*s-- & (1 << 6)))
+		while (i-- && !(*s-- & (1 << 6)))
 			size++;
 	}
 	return (size);
@@ -32,26 +34,23 @@ ssize_t	getcsize(int c)
 	ssize_t	size;
 	int		i;
 
-	i = 7;
+	i = 6;
 	size = 1;
 	ptr = (char *)&c;
-	if ((*ptr & (1 << i--)))
+	if (*ptr < 0)
 	{
-		while ((*ptr & (1 << i)) && size < 4)
-		{
+		while ((*ptr & (1 << i--)) && size < 5)
 			size++;
-			i--;
-		}
 	}
 	return (size);
 }
 
-ssize_t	ft_putwc(int c)
+ssize_t	ft_putwc(char *c)
 {
 	ssize_t	size;
 
-	size = getcsize(c);
-	if (write(STDOUT_FILENO, (char *)&c, size) != size)
+	size = getcsize(*c);
+	if (write(STDOUT_FILENO, c, size) != size)
 		return (0);
 	return (size);
 }

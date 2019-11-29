@@ -19,7 +19,7 @@ size_t	display_str(t_term *term, char *s)
 	ret = 0;
 	while (*s)
 	{
-		s += display_char(term, *(int *)s);
+		s += display_char(term, s);
 		ret++;
 	}
 	return (ret);

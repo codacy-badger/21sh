@@ -41,8 +41,8 @@ typedef struct		s_line
 	struct s_line	*next;
 	char			*str;
 	size_t			size;
-	size_t			clen;
-	size_t			len;
+	size_t			clen;//maybe we ll need the number of chars?
+	size_t			len;//actually len is len in bytes
 	size_t			i;
 }					t_line;
 
@@ -83,9 +83,10 @@ int					move_curs_prevw(t_term *term, t_input *input);
 /*
 ** Copy/Paste
 */
-int		cut_prevw(t_term *term, t_input *input);
-int		cut_after(t_term *term, t_input *input);
-int		cut_before(t_term *term, t_input *input);
-int		paste(t_term *term, t_input *input);
+int					cut_before(t_term *term, t_input *input);
+int					cut_after(t_term *term, t_input *input);
+int					cut_prevw(t_term *term, t_input *input);
+int					cut_nextw(t_term *term, t_input *input);
+int					paste(t_term *term, t_input *input);
 
 #endif

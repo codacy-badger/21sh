@@ -12,10 +12,6 @@
 
 #include "shell.h"
 
-/*
-** int c is BSP for cut before, DEL for cut after
-*/
-
 int		input_del_nchar(t_term *term, t_input *input, int c, int n)
 {
 	size_t	offset;

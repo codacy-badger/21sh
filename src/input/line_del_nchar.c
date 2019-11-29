@@ -18,7 +18,7 @@ int		line_del_nchar(t_line *line, int n)
 
 	if (!line || !(str = line->str))
 		return (-1);
-	while (n--)
-		line_del_char(line);
+	ft_strremove(&str[line->i], n);
+	line->len -= n;
 	return (n);
 }

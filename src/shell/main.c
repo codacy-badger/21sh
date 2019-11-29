@@ -17,13 +17,9 @@ static int	main_loop(t_sh *shell)
 {
 	int		ret;
 
-	//char	*ws;
-	//ws = malloc(64);
-	//ft_memcpy(ws, "ɸʆʣ௸ಧé", ft_strlen("ɸʆʣ௸ಧé"));
-	//display_str(&shell->term, ws);
 	while (1)
 	{
-		//reset input, lexer, parser somewhere, but not on first loop
+		//reset input, lexer, parser somewhere, but not on first iteration
 		if ((ret = input_read_line(&shell->term, &shell->input)))
 			;//if fatal error break else if line !correct continue
 		//if (parse == NO NL)

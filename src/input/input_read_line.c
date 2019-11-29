@@ -19,9 +19,9 @@
 **			-history (lexer)
 */
 
-static int	char_isctrl(t_term *term, unsigned int c)
+static int	isctrl(t_term *term, unsigned int c)
 {
-	//libft function probably
+	//there is probably a libft function to do this
 	return (c == term->keys[K_EOL] || c == term->keys[K_EOF]
 			|| c == term->keys[K_BSP] || c == term->keys[K_DEL]
 			|| c == term->keys[K_LEFT] || c == term->keys[K_RIGHT]
@@ -46,7 +46,7 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 	/*
 	** make function table
 	*/
-	if (!char_isctrl(term, c) && c != 0) //cant use ft_isprint because of wchar, care about weird codes
+	if (!isctrl(term, c) && c != 0) //cant use ft_isprint because of wchar, care about weird codes
 		return (input_add_char(term, input, c));
 	else if (c == term->keys[K_EOL] || c == term->keys[K_EOF])
 		return (handle_eol(term, input, c));
@@ -56,9 +56,9 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 		return (move_curs_left(term, input));
 	else if (c == term->keys[K_RIGHT])
 		return (move_curs_right(term, input));
-	else if (c == term->keys[K_UP]) //ctrl - down //handle y == 0
+	else if (c == term->keys[K_UP])
 		return (move_curs_up(term, input));
-	else if (c == term->keys[K_DOWN]) //ctrl - up //handle y == sizey
+	else if (c == term->keys[K_DOWN])
 		return (move_curs_down(term, input));
 	else if (c == term->keys[K_HOME])
 		return (move_curs_home(term, input));
@@ -92,5 +92,6 @@ int			input_read_line(t_term *term, t_input *input)
 			return (-1);
 		//printf("%u\n", c);
 	}
+	printf("|%s|\nlen: %zu, i: %zu", input->line->str, input->line->len, input->line->i);
 	return (0);
 }

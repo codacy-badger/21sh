@@ -76,7 +76,7 @@ void				term_init(struct s_term *term);
 void				term_reset(struct termios *orig_termios);
 int					term_setsize(t_term *term);
 
-size_t				display_char(t_term *term, int c);
+size_t				display_char(t_term *term, char *c);
 size_t				display_str(t_term *term, char *s);
 size_t				display_nl(t_term *term);
 void				clear_fromc(t_term *term);

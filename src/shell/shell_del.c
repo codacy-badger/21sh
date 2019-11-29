@@ -17,6 +17,7 @@ static void	input_del(t_input *input)
 {
 	ft_strarray_del(&input->pmpt);
 	line_del(&input->line);
+	line_del(&input->clipb);
 }
 
 //file

@@ -14,19 +14,18 @@
 
 int		line_add_char(t_line *line, unsigned int c)
 {
-	char	*str;
 	size_t	olds;
 	size_t	news;
 	size_t	csize;
 
-	if (!line || !(str = line->str))
+	if (!line)
 		return (-1);
 	csize = getcsize(c);
 	if (line->len + csize >= line->size - 1)
 	{
 		olds = line->len;
 		news = line->size * 2;
-		if (!(line->str = (char *)ft_memrealloc(str, olds, news)))
+		if (!(ft_memrealloc((void **)&line->str, olds, news)))
 			return (-1);
 		line->size = news;
 	}

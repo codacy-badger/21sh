@@ -15,13 +15,16 @@
 int		input_add_str(t_term *term, t_input *input, char *s)
 {
 	size_t	offset;
+	size_t	new_i;
 	int		len;
 
 	len = ft_strlen(s);
+	new_i = input->line->i + len;
 	line_add_str(input->line, s);
-	offset = display_str(term, &input->line->str[input->line->i]) - len;
+	offset = display_str(term, &input->line->str[input->line->i]);
 	while (offset--)
 		movcleft(term);
-	input->line->i += len;
+	while (input->line->i < new_i)
+		move_curs_right(term, input);
 	return (0);
 }

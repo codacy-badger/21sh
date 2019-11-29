@@ -209,7 +209,7 @@ void					ft_dstr_insert(t_dstr **str, char c, int index);
 */
 
 void					*ft_memalloc(size_t size);
-void					*ft_memrealloc(void *m, size_t old_size,
+void					*ft_memrealloc(void **m, size_t old_size,
 														size_t new_size);
 void					ft_bzero(void *m, size_t n);
 void					*ft_memcpy(void *dst, const void *src, size_t n);

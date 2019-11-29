@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-int				line_del_char(t_line *line)
+int		line_del_char(t_line *line)
 {
 	char	*str;
 	size_t	csize;
