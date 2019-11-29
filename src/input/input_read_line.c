@@ -17,32 +17,48 @@
 **			-handle str reallocation directly in ft_strinsert,
 **				which is not protected btw...
 **			-history (lexer)
-** read prompts from conf file...?? 
 */
 
-static int	handle_eol(t_term *term, t_input *input)
+static int	char_isctrl(t_term *term, unsigned int c)
+{
+	//libft function probably
+	return (c == term->keys[K_EOL] || c == term->keys[K_EOF]
+			|| c == term->keys[K_BSP] || c == term->keys[K_DEL]
+			|| c == term->keys[K_LEFT] || c == term->keys[K_RIGHT]
+			|| c == term->keys[K_UP] || c == term->keys[K_DOWN]
+			|| c == term->keys[K_HOME] || c == term->keys[K_END]
+			|| c == term->keys[K_NXTW] || c == term->keys[K_PRVW]
+			|| c == term->keys[K_CUTW] || c == term->keys[K_CUTA]
+			|| c == term->keys[K_CUTB] || c == term->keys[K_PAST]);
+}
+
+static int	handle_eol(t_term *term, t_input *input, unsigned int c)
 {
 	move_curs_end(term, input);
 	move_curs_left(term, input);
+	ft_strinsert(&input->line->str[input->line->len++], (char *)&c, 1);
 	display_nl(term);
-	printf("\nline_cap: %zu, line_len: %zu, \n'%s'", input->line->size, input->line->len + 1, input->line->str);
-	ft_strinsert(&input->line->str[input->line->len++], "\n", 1);
-	return (EOL);
+	return (K_EOL);
 }
 
 static int	process_char(t_term *term, t_input *input, unsigned int c)
 {
-	if (ft_isprint(c))
-		return (input_add_char(term, input, (char)c));
+	/*
+	** make function table
+	*/
+	if (!char_isctrl(term, c) && c != 0) //cant use ft_isprint because of wchar, care about weird codes
+		return (input_add_char(term, input, c));
+	else if (c == term->keys[K_EOL] || c == term->keys[K_EOF])
+		return (handle_eol(term, input, c));
 	else if (c == term->keys[K_BSP] || c == term->keys[K_DEL])
 		return (input_del_char(term, input, c));
 	else if (c == term->keys[K_LEFT])
 		return (move_curs_left(term, input));
 	else if (c == term->keys[K_RIGHT])
 		return (move_curs_right(term, input));
-	else if (c == term->keys[K_UP]) //ctrl - down 
+	else if (c == term->keys[K_UP]) //ctrl - down //handle y == 0
 		return (move_curs_up(term, input));
-	else if (c == term->keys[K_DOWN]) //ctrl - up
+	else if (c == term->keys[K_DOWN]) //ctrl - up //handle y == sizey
 		return (move_curs_down(term, input));
 	else if (c == term->keys[K_HOME])
 		return (move_curs_home(term, input));
@@ -52,16 +68,14 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 		return (move_curs_nextw(term, input));
 	else if (c == term->keys[K_PRVW])
 		return (move_curs_prevw(term, input));
-	else if (c == term->keys[K_CUTWORD])
-		return (cut_previous_word(term, input));
-	else if (c == term->keys[K_CUTAFTER])
-		return (cut_after(input));
-	else if (c == term->keys[K_CUTBEFORE])
+	else if (c == term->keys[K_CUTW])
+		return (cut_prevw(term, input));
+	else if (c == term->keys[K_CUTA])
+		return (cut_after(term, input));
+	else if (c == term->keys[K_CUTB])
 		return (cut_before(term, input));
-	else if (c == term->keys[K_PASTE])
+	else if (c == term->keys[K_PAST])
 		return (paste(term, input));
-	else if (c == EOL || c == 4)
-		return (handle_eol(term, input));
 	return (0);
 }
 
@@ -70,18 +84,13 @@ int			input_read_line(t_term *term, t_input *input)
 	unsigned int	c;
 
 	c = 0;
-	//input->line = line_new(32); //handle this in reset input
 	display_str(term, *(input->pmpt));
-	while (process_char(term, input, c) != EOL)
+	while (process_char(term, input, c) != K_EOL)
 	{
 		c = 0;
 		if (read(STDIN_FILENO, &c, sizeof(c)) == -1)
 			return (-1);
 		//printf("%u\n", c);
 	}
-	/*
-	** on tokenization, process backslashes, if line ends with backslash
-	** or is ! correctly quoted, update input->prompt ptr and return read_line
-	*/
 	return (0);
 }

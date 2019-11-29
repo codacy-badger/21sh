@@ -18,7 +18,7 @@ t_line	*line_new(size_t size)
 
 	if (!(line = (t_line *)ft_memalloc(sizeof(*line))))
 		return (NULL);
-	if (!(line->str = (char *)ft_memalloc(size)))
+	if (size > 0 && !(line->str = (char *)ft_memalloc(size)))
 	{
 		ft_memdel((void *)&line);
 		return (NULL);

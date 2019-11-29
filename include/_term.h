@@ -32,10 +32,12 @@ enum	e_keys
 		K_ESC,
 		K_NXTW,
 		K_PRVW,
-		K_CUTWORD,
-		K_CUTAFTER,
-		K_CUTBEFORE,
-		K_PASTE,
+		K_CUTW,
+		K_CUTA,
+		K_CUTB,
+		K_PAST,
+		K_EOL,
+		K_EOF,
 		KEYS_SIZE
 };
 
@@ -85,5 +87,8 @@ int					movcright(t_term *term);
 void				movchx(t_term *term);
 void				movchy(t_term *term);
 void				movch(t_term *term);
+void				movcex(t_term *term);
+void				movcey(t_term *term);
+void				movce(t_term *term);
 
 #endif 

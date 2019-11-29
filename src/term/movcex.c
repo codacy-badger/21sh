@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_curs_left.c                                   :+:      :+:    :+:   */
+/*   movcex.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,15 +12,8 @@
 
 #include "shell.h"
 
-int		move_curs_left(t_term *term, t_input *input)
+void	movcex(t_term *term)
 {
-	ssize_t	csize;
-
-	if (input->line->i > 0)
-	{
-		csize = getcsize_rev(&input->line->str[input->line->i - 1]);
-		input->line->i -= csize;
-		movcleft(term);
-	}
-	return (0);
+	tputs(tgoto(term->caps[C_CM], term->sizex - 1, term->cy), 1, ft_putc);
+	term->cx = term->sizex - 1;
 }

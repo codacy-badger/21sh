@@ -14,10 +14,13 @@
 
 int		move_curs_right(t_term *term, t_input *input)
 {
+	size_t	csize;
+
+	csize = getcsize((int)input->line->str[input->line->i]);
 	if (input->line->i < input->line->len)
 	{
 		movcright(term);
-		input->line->i++;
+		input->line->i += csize;
 	}
 	return (0);
 }

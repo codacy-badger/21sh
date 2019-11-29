@@ -16,7 +16,7 @@ void		input_init(struct s_input *input)
 {
 	if (!(input->pmpt = (char **)ft_memalloc(sizeof(char *) * (4 + 1))))
 		return ;
-	if (!(input->pmpt[PS1] = ft_strdup(">> ")))
+	if (!(input->pmpt[PS1] = ft_strdup("21sh©>> ")))
 		return ;
 	if (!(input->pmpt[PS2] = ft_strdup("-> ")))
 		return ;
@@ -24,5 +24,8 @@ void		input_init(struct s_input *input)
 		return ;
 	if (!(input->pmpt[PS4] = ft_strdup("\"> ")))
 		return ;
-	input->line = line_new(32);
+	if (!(input->line = line_new(32)))
+		return ;
+	if (!(input->clipb = line_new(32)))
+		return ;
 }

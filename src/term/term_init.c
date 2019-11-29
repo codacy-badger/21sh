@@ -46,11 +46,12 @@ static void	init_keys(struct s_term *term)
 	term->keys[K_ENTER] = 10;
 	term->keys[K_PRVW] = 24; // ^X
 	term->keys[K_NXTW] = 14; // ^N
-	term->keys[K_CUTWORD] = 23;// ^W
-	term->keys[K_CUTAFTER] = 11;// ^K
-	term->keys[K_CUTBEFORE] = 21; // ^U
-	term->keys[K_PASTE] = 25; // ^Y
-
+	term->keys[K_CUTW] = 23;// ^W
+	term->keys[K_CUTA] = 11;// ^K
+	term->keys[K_CUTB] = 21; // ^U
+	term->keys[K_PAST] = 25; // ^Y
+	term->keys[K_EOL] = 10; //nl,  cr??
+	term->keys[K_EOF] = 4; // ^D
 }
 
 void		term_init(struct s_term *term)

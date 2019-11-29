@@ -18,11 +18,11 @@ int		movcright(t_term *term)
 	{
 		term->cx = 0;
 		term->cy++;
-		tputs(tgoto(tgetstr("cm", NULL), term->cx, term->cy), 1, ft_putc);
+		tputs(tgoto(term->caps[C_CM], term->cx, term->cy), 20, ft_putc);
 	}
 	else
 	{
-		tputs(term->caps[C_RIGHT], 1, ft_putc);
+		tputs(term->caps[C_RIGHT], 20, ft_putc);
 		term->cx++;
 	}
 	return (0);

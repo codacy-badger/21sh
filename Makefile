@@ -37,10 +37,15 @@ SRC =		shell/main.c \
 			term/movchx.c \
 			term/movchy.c \
 			term/movch.c \
+			term/movcex.c \
+			term/movcey.c \
+			term/movce.c \
 			term/clear_fromc.c \
 			input/input_init.c \
 			input/input_reset.c \
 			input/line_new.c \
+			input/line_add.c \
+			input/line_add_at.c \
 			input/line_del.c \
 			input/line_delone.c \
 			input/line_add_char.c \

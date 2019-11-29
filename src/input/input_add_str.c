@@ -19,10 +19,9 @@ int		input_add_str(t_term *term, t_input *input, char *s)
 
 	len = ft_strlen(s);
 	line_add_str(input->line, s);
-	offset = display_str(term, &input->line->str[input->line->i]);
+	offset = display_str(term, &input->line->str[input->line->i]) - len;
 	while (offset--)
 		movcleft(term);
-	while (len--)
-		move_curs_right(term, input);
+	input->line->i += len;
 	return (0);
 }

@@ -12,15 +12,17 @@
 
 #include "shell.h"
 
-int		line_add_char(t_line *line, int c)
+int		line_add_char(t_line *line, unsigned int c)
 {
 	char	*str;
 	size_t	olds;
 	size_t	news;
+	size_t	csize;
 
 	if (!line || !(str = line->str))
 		return (-1);
-	if (line->len == line->size - 1)
+	csize = getcsize(c);
+	if (line->len + csize >= line->size - 1)
 	{
 		olds = line->len;
 		news = line->size * 2;
@@ -28,7 +30,7 @@ int		line_add_char(t_line *line, int c)
 			return (-1);
 		line->size = news;
 	}
-	ft_strinsert(&line->str[line->i], (char *)&c, 1);
-	line->len++;
+	ft_strinsert(&line->str[line->i], (char *)&c, csize);
+	line->len += csize;
 	return (0);
 }

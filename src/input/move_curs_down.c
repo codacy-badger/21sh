@@ -12,15 +12,13 @@
 
 #include "shell.h"
 
-/*
-** We could optimize this a bit
-*/
-
 int		move_curs_down(t_term *term, t_input *input)
 {
 	int		i;
 
 	i = term->sizex;
+	if (input->line->len - input->line->i <= term->sizex - term->cx)
+		return (0);
 	while (input->line->i < input->line->len && i--)
 		move_curs_right(term, input);
 	return (0);

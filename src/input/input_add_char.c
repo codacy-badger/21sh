@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-int		input_add_char(t_term *term, t_input *input, char c)
+int		input_add_char(t_term *term, t_input *input, unsigned int c)
 {
 	size_t		offset;
 

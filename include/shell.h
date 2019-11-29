@@ -39,5 +39,8 @@ void	sig_action(t_sh *shell, int sig);
 ** Utils
 */
 int		ft_putc(int c);
+ssize_t	ft_putwc(int c);
+ssize_t	getcsize(int c);
+ssize_t	getcsize_rev(char *s);
 
 #endif
