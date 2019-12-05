@@ -21,9 +21,10 @@
 
 static int	handle_eol(t_term *term, t_input *input, unsigned int c)
 {
+	input->prev = c;
 	move_curs_end(term, input);
-	move_curs_left(term, input);
 	ft_strinsert(&input->line->str[input->line->len++], (char *)&c, 1);
+	move_curs_left(term, input);
 	display_nl(term);
 	return (K_EOL);
 }
@@ -68,18 +69,19 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 
 int			input_read_line(t_term *term, t_input *input)
 {
+	int				ret;
 	unsigned int	c;
 
 	c = 0;
 	display_str(term, *(input->pmpt));
-	while (process_char(term, input, c) != K_EOL)
+	while ((ret = read(STDIN_FILENO, &c, sizeof(c))) != -1)
 	{
+		if ((ret = process_char(term, input, c)) == K_EOL)
+			return (0);
+		else if (ret < 0)
+			break ; //error
 		input->prev = c;
 		c = 0;
-		if (read(STDIN_FILENO, &c, sizeof(c)) == -1)
-			return (-1);
-		//printf("%u\n", c);
 	}
-	printf("|%s|\nlen: %zu, i: %zu\n\r", input->line->str, input->line->len, input->line->i);
-	return (0);
+	return (ret);
 }
