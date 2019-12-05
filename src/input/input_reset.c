@@ -12,9 +12,9 @@
 
 #include "shell.h"
 
-void		input_reset(t_term *term, t_input *input)
-{
-	input_clear_line(term, input);	
+void		input_reset(t_input *input)
+{	
 	line_del(&input->line);
 	input->line = line_new(32);
+	input->prompt = input->shell->data.prompts[PS1];
 }

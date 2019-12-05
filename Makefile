@@ -70,6 +70,8 @@ SRC =		shell/main.c \
 			input/cp_cut_before.c \
 			input/cp_cut_after.c \
 			input/cp_cut_prevw.c \
+			lexer/lexer_init.c \
+			lexer/lexer_tokenize.c \
 			utils/utils.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))

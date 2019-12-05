@@ -15,11 +15,43 @@
 /*
 ** Think about interactive & non interactive mode...
 ** assert read line works properly when read from file
+
+** these functions return integers
 */
-void	shell_init(t_sh *shell)
+
+
+static int	data_init(t_data *data)
 {
+	if (!(data->prompts = (char **)ft_memalloc(sizeof(char *) * 5)))
+		return (ALLOC_ERROR);
+	if (!(data->prompts[PS1] = ft_strdup("21sh©>> ")))
+		return (ALLOC_ERROR);
+	if (!(data->prompts[PS2] = ft_strdup("-> ")))
+		return (ALLOC_ERROR);
+	if (!(data->prompts[PS3] = ft_strdup("'> ")))
+		return (ALLOC_ERROR);
+	if (!(data->prompts[PS4] = ft_strdup("\"> ")))
+		return (ALLOC_ERROR);
+	data->prompts[4] = NULL;
+	return (0);
+}
+
+int			shell_init(t_sh *shell)
+{
+	int		ret;
+
 	ft_bzero(shell, sizeof(*shell));
-	term_init(&shell->term);
-	input_init(&shell->input);
 	sig_init(shell);
+	if ((ret = data_init(&shell->data)) != 0)
+		return (ret);
+	shell->term.shell = shell;
+	shell->input.shell = shell;
+	shell->lexer.shell = shell;
+	if ((ret = term_init(&shell->term)) != 0)
+		return (ret);
+	if ((ret = input_init(&shell->input)) != 0)
+		return (ret);
+	if ((ret = lexer_init(&shell->lexer)) != 0)
+		return (ret);
+	return (ret);
 }

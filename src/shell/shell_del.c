@@ -15,7 +15,6 @@
 //file
 static void	input_del(t_input *input)
 {
-	ft_strarray_del(&input->pmpt);
 	line_del(&input->line);
 	line_del(&input->clipb);
 }
@@ -28,8 +27,14 @@ static void	term_del(t_term *term)
 	return ;
 }
 
+static void	data_del(t_data *data)
+{
+	ft_strarray_del(&data->prompts);
+}
+
 void		shell_del(t_sh *shell)
 {
+	data_del(&shell->data);
 	input_del(&shell->input);
 	term_del(&shell->term);
 }

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   term.h                                             :+:      :+:    :+:   */
+/*   terminal.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _TERM_H
-# define _TERM_H
+#ifndef TERMINAL_H
+# define TERMINAL_H
 
 # include <curses.h>
 # include <termios.h>
@@ -61,6 +61,7 @@ enum	e_caps
 
 typedef struct		s_term
 {
+	struct s_sh		*shell;
 	struct termios	orig_term;
 	struct winsize	win;
 	unsigned int	keys[KEYS_SIZE];
@@ -72,7 +73,7 @@ typedef struct		s_term
 	size_t			cy;
 }					t_term;
 
-void				term_init(struct s_term *term);
+int					term_init(struct s_term *term);
 void				term_reset(struct termios *orig_termios);
 int					term_setsize(t_term *term);
 

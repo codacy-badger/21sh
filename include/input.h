@@ -13,8 +13,6 @@
 #ifndef INPUT_H
 # define INPUT_H
 
-# include "libft.h"
-# include "_term.h"
 # include "shell.h"
 
 # define PS1		0
@@ -23,16 +21,15 @@
 # define PS4		3
 
 /*
-** input->prompt...
 ** prompt scroll...
 */
 
 typedef struct		s_input
 {
-	struct s_line	*line;
-	//struct s_line	*hist;??
+	struct s_sh		*shell;
+	char			*prompt;
 	struct s_line	*clipb;
-	char			**pmpt;
+	struct s_line	*line;
 	unsigned int	prev;
 }					t_input;
 
@@ -46,8 +43,8 @@ typedef struct		s_line
 	size_t			i;
 }					t_line;
 
-void				input_init(t_input *input);
-void				input_reset(t_term *term, t_input *input);
+int					input_init(t_input *input);
+void				input_reset(t_input *input);
 int					input_read_line(t_term *term, t_input *input);
 void				input_clear_line(t_term *term, t_input *input);
 int					input_add_char(t_term *term, t_input *input, unsigned int c);

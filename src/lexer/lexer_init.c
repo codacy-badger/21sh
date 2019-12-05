@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_clear_line.c                                 :+:      :+:    :+:   */
+/*   lexer_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/11/27 14:56:00 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	input_clear_line(t_term *term, t_input *input)
-{
-	size_t	plen;
+/*
+** should use the list functions of new/lexer branch, added to the libft
+** to replace current list functions.
+*/
 
-	plen = ft_strlen(input->prompt);
-	while (input->line->i)
-		move_curs_left(term, input);
-	while (plen--)
-		movcleft(term);
-	tputs(term->caps[C_CD], 1, ft_putc);
-	display_str(term, input->prompt);
+int     lexer_init(t_lexer *lexer)
+{
+    if (!(lexer->tokens = ft_list_new(0)))
+        return (ALLOC_ERROR);
+    return (0);
 }
