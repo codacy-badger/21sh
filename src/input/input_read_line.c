@@ -57,13 +57,13 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 	else if (c == term->keys[K_PRVW])
 		return (move_curs_prevw(term, input));
 	else if (c == term->keys[K_CUTW])
-		return (cut_prevw(term, input));
+		return (cp_cut_prevw(term, input));
 	else if (c == term->keys[K_CUTA])
-		return (cut_after(term, input));
+		return (cp_cut_after(term, input));
 	else if (c == term->keys[K_CUTB])
-		return (cut_before(term, input));
+		return (cp_cut_before(term, input));
 	else if (c == term->keys[K_PAST])
-		return (paste(term, input));
+		return (cp_paste(term, input));
 	return (0);
 }
 

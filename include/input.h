@@ -83,9 +83,9 @@ int					move_curs_prevw(t_term *term, t_input *input);
 /*
 ** Copy/Paste
 */
-int					cut_before(t_term *term, t_input *input);
-int					cut_after(t_term *term, t_input *input);
-int					cut_prevw(t_term *term, t_input *input);
-int					paste(t_term *term, t_input *input);
+int					cp_cut_before(t_term *term, t_input *input);
+int					cp_cut_after(t_term *term, t_input *input);
+int					cp_cut_prevw(t_term *term, t_input *input);
+int					cp_paste(t_term *term, t_input *input);
 
 #endif

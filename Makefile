@@ -66,7 +66,10 @@ SRC =		shell/main.c \
 			input/input_del_nchar.c \
 			input/input_read_line.c \
 			input/input_clear_line.c \
-			input/copypaste.c \
+			input/cp_paste.c \
+			input/cp_cut_before.c \
+			input/cp_cut_after.c \
+			input/cp_cut_prevw.c \
 			utils/utils.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
