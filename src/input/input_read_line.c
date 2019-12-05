@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 15:38:19 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/06 00:29:43 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 		return (cp_cut_before(term, input));
 	else if (c == term->keys[K_PAST])
 		return (cp_paste(term, input));
+	else if (c == term->keys[K_REDRAW])
+		return (redraw(term, input));
 	return (0);
 }
 

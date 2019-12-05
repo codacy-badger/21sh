@@ -6,13 +6,13 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 20:33:11 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 20:47:47 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/06 00:29:44 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <shell.h>
 
-void	redraw(t_term *term, t_input *input)
+int		redraw(t_term *term, t_input *input)
 {
 	int		i;
 
@@ -22,4 +22,5 @@ void	redraw(t_term *term, t_input *input)
 	i = input->line->len - input->line->i;
 	while (i--)
 		movcleft(term);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 14:46:46 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/06 00:29:47 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int		isctrl(t_term *term, unsigned int c)
 			|| c == term->keys[K_HOME] || c == term->keys[K_END]
 			|| c == term->keys[K_NXTW] || c == term->keys[K_PRVW]
 			|| c == term->keys[K_CUTW] || c == term->keys[K_CUTA]
-			|| c == term->keys[K_CUTB] || c == term->keys[K_PAST]);
+			|| c == term->keys[K_CUTB] || c == term->keys[K_PAST]
+			|| c == term->keys[K_REDRAW]);
 }
 
 ssize_t	getcsize_rev(char *s, int i)

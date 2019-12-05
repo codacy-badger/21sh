@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/05 21:48:40 by ferfi            ###   ########.fr       */
+/*   Updated: 2019/12/06 00:28:15 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,5 @@ int					cp_cut_after(t_term *term, t_input *input);
 int					cp_cut_prevw(t_term *term, t_input *input);
 int					cp_paste(t_term *term, t_input *input);
 
-void				redraw(t_term *term, t_input *input);
+int					redraw(t_term *term, t_input *input);
 #endif
