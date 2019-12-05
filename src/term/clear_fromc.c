@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_curs_left.c                                   :+:      :+:    :+:   */
+/*   clear_fromc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 20:48:08 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		move_curs_left(t_term *term, t_input *input)
+void	clear_fromc(t_term *term)
 {
-	ssize_t	csize;
-	t_line	*line;
-
-	line = input->line;
-	if (line->i > 0)
+	tputs(term->caps[C_SC], 1, ft_putc);
+	tputs(term->caps[C_CE], 1, ft_putc);
+	if (term->cy < term->sizey - 1)
 	{
-		csize = getcsize_rev(&line->str[line->i - 1], line->i - 1);
-		line->i -= csize;
-		movcleft(term);
+		tputs(term->caps[C_DOWN], 1, ft_putc);
+		tputs(term->caps[C_CR], 1, ft_putc);
+		tputs(term->caps[C_CD], 1, ft_putc);
 	}
-	return (0);
+	tputs(term->caps[C_RC], 1, ft_putc);
 }

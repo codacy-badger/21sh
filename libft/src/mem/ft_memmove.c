@@ -30,17 +30,9 @@ static void	*ft_memrcpy(void *dst, const void *src, size_t n)
 
 void		*ft_memmove(void *dst, const void *src, size_t len)
 {
-	char	*p;
-
 	if (src > dst)
-	{
-		p = dst;
 		ft_memcpy(dst, src, len);
-	}
 	if (src < dst)
-	{
-		p = dst + len - 1;
 		ft_memrcpy(dst, src, len);
-	}
 	return (dst);
 }

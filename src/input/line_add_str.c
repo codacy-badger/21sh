@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_line.c                                       :+:      :+:    :+:   */
+/*   line_add_str.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,15 +12,24 @@
 
 #include "shell.h"
 
-void	clear_line(t_term *term, t_input *input)
+int		line_add_str(t_line *line, char *s)
 {
-	size_t	plen;
+	size_t	olds;
+	size_t	news;
+	size_t	len;
 
-	plen = ft_strlen(*(input->pmpt));
-	while (input->line->i)
-		move_curs_left(term, input);
-	while (plen--)
-		movcleft(term);
-	tputs(term->caps[C_CD], 1, ft_putc);
-	display_str(term, *(input->pmpt));
+	if (!line)
+		return (-1);
+	len = ft_strlen(s);
+	while (line->len + len > line->size - 1)
+	{
+		olds = line->len;
+		news = line->size * 2;
+		if (!(ft_memrealloc((void **)&line->str, olds, news)))
+			return (-1);
+		line->size = news;
+	}
+	ft_strinsert(&line->str[line->i], s, len);
+	line->len += len;
+	return (0);
 }

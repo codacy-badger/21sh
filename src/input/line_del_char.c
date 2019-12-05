@@ -15,10 +15,12 @@
 int		line_del_char(t_line *line)
 {
 	char	*str;
+	size_t	csize;
 
 	if (!line || !(str = line->str))
 		return (-1);
-	ft_strremove(&line->str[line->i], 1);
-	line->len--;
+	csize = getcsize(str[line->i]);
+	ft_strremove(&str[line->i], csize);
+	line->len -= csize;
 	return (0);
 }

@@ -14,8 +14,10 @@
 
 void	line_del(t_line **line)
 {
-	if (!line || !(*line))
+	if (!line || !*line)
 		return ;
-	ft_memdel((void *)&(*line)->str);
-	ft_memdel((void *)line);
+	while ((*line)->prev)
+		(*line) = (*line)->prev;
+	while (*line)
+		line_delone(line);
 }

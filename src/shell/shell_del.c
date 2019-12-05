@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_input.c                                       :+:      :+:    :+:   */
+/*   shell_del.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 14:56:57 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 00:37:04 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void		init_input(struct s_input *input)
+//file
+static void	input_del(t_input *input)
 {
-	if (!(input->pmpt = (char **)ft_memalloc(sizeof(char *) * (4 + 1))))
-		return ;
-	if (!(input->pmpt[PS1] = ft_strdup(">> ")))
-		return ;
-	if (!(input->pmpt[PS2] = ft_strdup("-> ")))
-		return ;
-	if (!(input->pmpt[PS3] = ft_strdup("'> ")))
-		return ;
-	if (!(input->pmpt[PS4] = ft_strdup("\"> ")))
-		return ;
-	input->line = line_new(32);
+	ft_strarray_del(&input->pmpt);
+	line_del(&input->line);
+	line_del(&input->clipb);
+}
+
+//file
+static void	term_del(t_term *term)
+{
+	term->termtype = NULL;
+	term_reset(&term->orig_term);
+	return ;
+}
+
+void		shell_del(t_sh *shell)
+{
+	input_del(&shell->input);
+	term_del(&shell->term);
 }

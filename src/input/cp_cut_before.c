@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_curs_left.c                                   :+:      :+:    :+:   */
+/*   cp_cut_before.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/11/25 19:30:52 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/11/27 16:38:29 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		move_curs_left(t_term *term, t_input *input)
+int		cp_cut_before(t_term *term, t_input *input)
 {
-	ssize_t	csize;
-	t_line	*line;
+	char	*cp;
 
-	line = input->line;
-	if (line->i > 0)
+	if (input->line->i == 0)
+		return (0);
+	if (input->clipb != NULL)
 	{
-		csize = getcsize_rev(&line->str[line->i - 1], line->i - 1);
-		line->i -= csize;
-		movcleft(term);
+		line_del(&input->clipb);
+		if (!(input->clipb = line_new(32)))
+			return (-1);
 	}
+	if (!(cp = ft_strsub(input->line->str, 0, input->line->i)))
+		return (-1);
+	input_del_nchar(term, input, term->keys[K_BSP], input->line->i);
+	line_add_str(input->clipb, cp);
+	ft_memdel((void *)&cp);
 	return (0);
 }

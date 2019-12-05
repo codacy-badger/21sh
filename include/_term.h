@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 20:47:05 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/05 21:51:40 by ferfi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ enum	e_keys
 		K_ESC,
 		K_NXTW,
 		K_PRVW,
-		K_CUTWORD,
-		K_CUTAFTER,
-		K_CUTBEFORE,
-		K_PASTE,
 		K_REDRAW,
+		K_CUTW,
+		K_CUTA,
+		K_CUTB,
+		K_PAST,
+		K_EOL,
+		K_EOF,
 		KEYS_SIZE
 };
 
@@ -48,6 +50,7 @@ enum	e_caps
 		C_RIGHT,
 		C_CE,
 		C_CD,
+		C_DC,
 		C_SC,
 		C_RC,
 		C_CR,
@@ -71,15 +74,14 @@ typedef struct		s_term
 	size_t			cy;
 }					t_term;
 
-void				init_term(struct s_term *term);
-void				reset_term(struct termios *orig_termios);
-int					set_termsize(t_term *term);
+void				term_init(struct s_term *term);
+void				term_reset(struct termios *orig_termios);
+int					term_setsize(t_term *term);
 
-size_t				display_char(t_term *term, int c);
+size_t				display_char(t_term *term, char *c);
 size_t				display_str(t_term *term, char *s);
 size_t				display_nl(t_term *term);
-
-
+void				clear_fromc(t_term *term);
 int					movcdown(t_term *term);
 int					movcup(t_term *term);
 int					movcleft(t_term *term);
@@ -87,7 +89,8 @@ int					movcright(t_term *term);
 void				movchx(t_term *term);
 void				movchy(t_term *term);
 void				movch(t_term *term);
-
-void				clrfromc(t_term *term);
+void				movcex(t_term *term);
+void				movcey(t_term *term);
+void				movce(t_term *term);
 
 #endif 

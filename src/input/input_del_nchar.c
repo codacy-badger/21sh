@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shell.c                                       :+:      :+:    :+:   */
+/*   input_del_nchar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:37:04 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 15:38:19 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-/*
-** Think about interactive & non interactive mode...
-** assert read line works properly when read from file
-*/
-void	init_shell(t_sh *shell)
+int		input_del_nchar(t_term *term, t_input *input, int c, int n)
 {
-	ft_bzero(shell, sizeof(*shell));
-	init_term(&shell->term);
-	init_input(&shell->input);
-	init_sig(shell);
+	size_t	offset;
+	size_t	i;
+
+	i = n;
+	if (input->line->len == 0
+		|| (c == (int)term->keys[K_BSP] && input->line->i == 0)
+		|| (c == (int)term->keys[K_DEL] && !input->line->str[input->line->i]))
+		return (0);
+	if (c == (int)term->keys[K_BSP])
+	{
+		while (i--)
+			move_curs_left(term, input);
+	}
+	clear_fromc(term);
+	line_del_nchar(input->line, n);
+	offset = display_str(term, &input->line->str[input->line->i]);
+	while (offset--)
+		movcleft(term);
+	return (0);
 }

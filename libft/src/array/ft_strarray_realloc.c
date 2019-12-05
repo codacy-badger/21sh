@@ -30,5 +30,6 @@ char	**ft_strarray_realloc(char **array, size_t new_size)
 	}
 	while (i < new_size)
 		new_array[i] = NULL;
+	ft_strarray_del(&array);
 	return (new_array);
 }

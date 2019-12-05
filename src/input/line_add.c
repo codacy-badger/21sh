@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_curs_left.c                                   :+:      :+:    :+:   */
+/*   line_add.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/11/25 19:30:52 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/11/27 16:38:29 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		move_curs_left(t_term *term, t_input *input)
+t_line	*line_add(t_line **head, t_line *line, int stack)
 {
-	ssize_t	csize;
-	t_line	*line;
+	t_line	*curr;
 
-	line = input->line;
-	if (line->i > 0)
+	if (!head || !line)
+		return (NULL);
+	if (!(*head))
+		return ((*head) = line);
+	if (stack)
 	{
-		csize = getcsize_rev(&line->str[line->i - 1], line->i - 1);
-		line->i -= csize;
-		movcleft(term);
+		line->next = (*head);
+		line->prev = (*head)->prev;
+		if (line->prev)
+			line->prev->next = line;
+		(*head)->prev = line;
+		return ((*head) = line);
 	}
-	return (0);
+	curr = *head;
+	while (curr->next)
+		curr = curr->next;
+	curr->next = line;
+	line->prev = curr;
+	return (line);
 }

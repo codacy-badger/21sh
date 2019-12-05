@@ -23,7 +23,7 @@ void		ft_dstr_insert(t_dstr **dstr, char c, int index)
 	{
 		old_size = (*dstr)->capacity;
 		new_size = ((*dstr)->capacity *= 2);
-		(*dstr)->str = (char *)ft_memrealloc((*dstr)->str, old_size, new_size);
+		(*dstr)->str = (char *)ft_memrealloc((void **)&(*dstr)->str, old_size, new_size);
 		if (!((*dstr)->str))
 			return ; //(-1)
 	}

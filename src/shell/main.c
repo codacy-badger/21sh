@@ -11,30 +11,33 @@
 /* ************************************************************************** */
 
 #include "shell.h"
-
 int		g_last_exit_st = 0;
 
-int		main_loop(t_sh *shell)
+static int	main_loop(t_sh *shell)
 {
 	int		ret;
 
 	while (1)
 	{
-		if ((ret = read_line(&shell->term, &shell->input)))
-			;//if fatal error break else continue
+		//reset input, lexer, parser somewhere, but not on first iteration
+		if ((ret = input_read_line(&shell->term, &shell->input)) != 0)
+		{
+			;//if fatal error break else if line !correct continue
 		//if (parse == NO NL)
 			//input->pmpt = ps2 continue ;
-		break ;
 		//exec
+		}
+		printf("|%s|\nlen: %zu, i: %zu\n\r", shell->input.line->str, shell->input.line->len, shell->input.line->i);
+		break ;
 	}
-	del_shell(shell);
+	shell_del(shell);
 	return (ret);
 }
 
-int		main(void)
+int			main(void)
 {
 	struct s_sh	shell;
 
-	init_shell(&shell);
+	shell_init(&shell);
 	return (main_loop(&shell));
 }

@@ -22,24 +22,28 @@
 # include "input.h"
 # include "libft.h"
 
+# define ALLOC_ERROR	3
+
 typedef struct		s_sh
 {
 	struct s_term	term;
 	struct s_input	input;
 }					t_sh;
 
-void	init_shell(t_sh *shell);
-void	init_sig(t_sh *shell);
-void	del_shell(t_sh *shell);
+void	shell_init(t_sh *shell);
+void	shell_del(t_sh *shell);
 
+void	sig_init(t_sh *shell);
 void	sig_handle(int sig);
 void	sig_action(t_sh *shell, int sig);
-
-int		main_loop(t_sh *shell);
 
 /*
 ** Utils
 */
 int		ft_putc(int c);
+ssize_t	ft_putwc(char *c);
+ssize_t	getcsize(int c);
+ssize_t	getcsize_rev(char *s, int i);
+int		isctrl(t_term *term, unsigned int c);
 
 #endif

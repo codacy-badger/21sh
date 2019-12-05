@@ -19,11 +19,11 @@ int		movcleft(t_term *term)
 		term->cx = term->sizex - 1;
 		if (term->cy > 0)
 			term->cy--;
-		tputs(tgoto(term->caps[C_CM], term->cx, term->cy), 1, ft_putc);
+		tputs(tgoto(term->caps[C_CM], term->cx, term->cy), 20, ft_putc);
 	}
 	else
 	{
-		tputs(term->caps[C_LEFT], 1, ft_putc);
+		tputs(term->caps[C_LEFT], 20, ft_putc);
 		term->cx--;
 	}
 	return (0);

@@ -12,22 +12,23 @@
 
 #include "../../inc/libft.h"
 
-void	*ft_memrealloc(void *m, size_t old_size, size_t new_size)
+void	*ft_memrealloc(void **m, size_t old_size, size_t new_size)
 {
-	void	*new;
+	void	*tmp;
 
-	new = NULL;
-	if (new_size < old_size)
-		old_size = new_size;
-	else if (new_size == old_size)
-		return (m);
-	if (!(new = ft_memalloc(new_size + 1)))
+	if (!m)
 		return (NULL);
-	if (m)
+	else if (new_size == old_size)
+		return (*m);
+	else if (new_size < old_size)
+		old_size = new_size;
+	tmp = *m;
+	if (!(*m = ft_memalloc(new_size + 1)))
+		return (NULL);
+	if (tmp)
 	{
-		ft_memcpy(new, m, old_size);
-		ft_bzero(m, old_size);
-		ft_memdel(&m);
+		ft_memcpy(*m, tmp, old_size);
+		ft_memdel(&tmp);
 	}
-	return (new);
+	return (*m);
 }

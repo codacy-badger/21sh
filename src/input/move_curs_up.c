@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_curs_left.c                                   :+:      :+:    :+:   */
+/*   move_curs_up.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,17 +12,14 @@
 
 #include "shell.h"
 
-int		move_curs_left(t_term *term, t_input *input)
+int		move_curs_up(t_term *term, t_input *input)
 {
-	ssize_t	csize;
-	t_line	*line;
+	int		i;
 
-	line = input->line;
-	if (line->i > 0)
-	{
-		csize = getcsize_rev(&line->str[line->i - 1], line->i - 1);
-		line->i -= csize;
-		movcleft(term);
-	}
+	i = term->sizex;
+	if (input->line->i + ft_strlen(*(input->pmpt)) < term->sizex)
+		return (0);
+	while (input->line->i > 0 && i--)
+		move_curs_left(term, input);
 	return (0);
 }

@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_curs_left.c                                   :+:      :+:    :+:   */
+/*   sig_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/22 00:37:04 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		move_curs_left(t_term *term, t_input *input)
+void	sig_init(t_sh *shell)
 {
-	ssize_t	csize;
-	t_line	*line;
+	int		i;
 
-	line = input->line;
-	if (line->i > 0)
+	i = 0;
+	sig_action(shell, 0);
+	while (i++ < 32)
 	{
-		csize = getcsize_rev(&line->str[line->i - 1], line->i - 1);
-		line->i -= csize;
-		movcleft(term);
+		if (i == 9 || i == 17)
+			continue ;
+		signal(i, sig_handle);
 	}
-	return (0);
 }

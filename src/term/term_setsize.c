@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_term_size.c                                    :+:      :+:    :+:   */
+/*   term_setsize.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -30,7 +30,7 @@ static int	setcpos(t_term *term)
 	return (0);
 }
 
-int			set_termsize(t_term *term)
+int			term_setsize(t_term *term)
 {
 	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &term->win) == -1)
 		return (-1);
