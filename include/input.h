@@ -51,6 +51,7 @@ int					input_add_char(t_term *term, t_input *input, unsigned int c);
 int					input_add_str(t_term *term, t_input *input, char *s);
 int					input_del_char(t_term *term, t_input *input, int c);
 int					input_del_nchar(t_term *term, t_input *input, int c, int n);
+int    				input_add_line(t_input *input);
 
 /*
 ** T_line struct

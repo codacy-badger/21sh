@@ -43,6 +43,13 @@ SRC =		shell/main.c \
 			term/clear_fromc.c \
 			input/input_init.c \
 			input/input_reset.c \
+			input/input_add_char.c \
+			input/input_add_str.c \
+			input/input_del_char.c \
+			input/input_del_nchar.c \
+			input/input_read_line.c \
+			input/input_clear_line.c \
+			input/input_add_line.c \
 			input/line_new.c \
 			input/line_add.c \
 			input/line_add_at.c \
@@ -60,12 +67,6 @@ SRC =		shell/main.c \
 			input/move_curs_end.c \
 			input/move_curs_nextw.c \
 			input/move_curs_prevw.c \
-			input/input_add_char.c \
-			input/input_add_str.c \
-			input/input_del_char.c \
-			input/input_del_nchar.c \
-			input/input_read_line.c \
-			input/input_clear_line.c \
 			input/cp_paste.c \
 			input/cp_cut_before.c \
 			input/cp_cut_after.c \
