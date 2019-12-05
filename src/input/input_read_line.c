@@ -19,19 +19,6 @@
 **			-history (lexer)
 */
 
-static int	isctrl(t_term *term, unsigned int c)
-{
-	//there is probably a libft function to do this
-	return (c == term->keys[K_EOL] || c == term->keys[K_EOF]
-			|| c == term->keys[K_BSP] || c == term->keys[K_DEL]
-			|| c == term->keys[K_LEFT] || c == term->keys[K_RIGHT]
-			|| c == term->keys[K_UP] || c == term->keys[K_DOWN]
-			|| c == term->keys[K_HOME] || c == term->keys[K_END]
-			|| c == term->keys[K_NXTW] || c == term->keys[K_PRVW]
-			|| c == term->keys[K_CUTW] || c == term->keys[K_CUTA]
-			|| c == term->keys[K_CUTB] || c == term->keys[K_PAST]);
-}
-
 static int	handle_eol(t_term *term, t_input *input, unsigned int c)
 {
 	move_curs_end(term, input);
@@ -87,11 +74,12 @@ int			input_read_line(t_term *term, t_input *input)
 	display_str(term, *(input->pmpt));
 	while (process_char(term, input, c) != K_EOL)
 	{
+		input->prev = c;
 		c = 0;
 		if (read(STDIN_FILENO, &c, sizeof(c)) == -1)
 			return (-1);
 		//printf("%u\n", c);
 	}
-	printf("|%s|\nlen: %zu, i: %zu", input->line->str, input->line->len, input->line->i);
+	printf("|%s|\nlen: %zu, i: %zu\n\r", input->line->str, input->line->len, input->line->i);
 	return (0);
 }

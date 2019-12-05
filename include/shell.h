@@ -44,5 +44,6 @@ int		ft_putc(int c);
 ssize_t	ft_putwc(char *c);
 ssize_t	getcsize(int c);
 ssize_t	getcsize_rev(char *s, int i);
+int		isctrl(t_term *term, unsigned int c);
 
 #endif

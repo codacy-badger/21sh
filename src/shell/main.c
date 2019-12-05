@@ -21,10 +21,12 @@ static int	main_loop(t_sh *shell)
 	{
 		//reset input, lexer, parser somewhere, but not on first iteration
 		if ((ret = input_read_line(&shell->term, &shell->input)))
+		{
 			;//if fatal error break else if line !correct continue
 		//if (parse == NO NL)
 			//input->pmpt = ps2 continue ;
 		//exec
+		}
 		break ;
 	}
 	shell_del(shell);

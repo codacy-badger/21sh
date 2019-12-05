@@ -24,11 +24,12 @@ static void	input_del(t_input *input)
 static void	term_del(t_term *term)
 {
 	term->termtype = NULL;
+	term_reset(&term->orig_term);
 	return ;
 }
 
 void		shell_del(t_sh *shell)
 {
-	term_del(&shell->term);
 	input_del(&shell->input);
+	term_del(&shell->term);
 }

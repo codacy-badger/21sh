@@ -12,6 +12,18 @@
 
 #include "shell.h"
 
+int		isctrl(t_term *term, unsigned int c)
+{
+	return (c == term->keys[K_EOL] || c == term->keys[K_EOF]
+			|| c == term->keys[K_BSP] || c == term->keys[K_DEL]
+			|| c == term->keys[K_LEFT] || c == term->keys[K_RIGHT]
+			|| c == term->keys[K_UP] || c == term->keys[K_DOWN]
+			|| c == term->keys[K_HOME] || c == term->keys[K_END]
+			|| c == term->keys[K_NXTW] || c == term->keys[K_PRVW]
+			|| c == term->keys[K_CUTW] || c == term->keys[K_CUTA]
+			|| c == term->keys[K_CUTB] || c == term->keys[K_PAST]);
+}
+
 ssize_t	getcsize_rev(char *s, int i)
 {
 	ssize_t	size;
