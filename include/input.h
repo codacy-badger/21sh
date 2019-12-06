@@ -27,11 +27,39 @@
 ** prompt scroll...
 */
 
+enum	e_keys
+{
+		K_UP,
+		K_DOWN,
+		K_LEFT,
+		K_RIGHT,
+		K_HOME,
+		K_END,
+		K_BSP,
+		K_SPC,
+		K_DEL,
+		K_ENTER,
+		K_ESC,
+		K_NXTW,
+		K_PRVW,
+		K_REDRAW,
+		K_CUTW,
+		K_CUTA,
+		K_CUTB,
+		K_PAST,
+		K_EOL,
+		K_EOF,
+		KEYS_SIZE
+};
+
+
 typedef struct		s_input
 {
 	struct s_line	*line;
 	//struct s_line	*hist;??
+	
 	struct s_line	*clipb;
+	unsigned int	keys[KEYS_SIZE];
 	char			**pmpt;
 	unsigned int	prev;
 }					t_input;

@@ -32,7 +32,7 @@ int		cp_cut_after(t_term *term, t_input *input)
 	}
 	if (!(cp = ft_strdup(input->line->str + input->line->i)))
 		return (-1);
-	input_del_nchar(term, input, term->keys[K_DEL], input->line->len - input->line->i);
+	input_del_nchar(term, input, input->keys[K_DEL], input->line->len - input->line->i);
 	line_add_str(input->clipb, cp);
 	ft_memdel((void *)&cp);
 	return (0);
@@ -52,7 +52,7 @@ int		cp_cut_before(t_term *term, t_input *input)
 	}
 	if (!(cp = ft_strsub(input->line->str, 0, input->line->i)))
 		return (-1);
-	input_del_nchar(term, input, term->keys[K_BSP], input->line->i);
+	input_del_nchar(term, input, input->keys[K_BSP], input->line->i);
 	line_add_str(input->clipb, cp);
 	ft_memdel((void *)&cp);
 	return (0);
@@ -66,7 +66,7 @@ int		cp_cut_prevw(t_term *term, t_input *input)
 	size_t	end;
 	t_line	*new;
 
-	if (input->prev != term->keys[K_CUTW])
+	if (input->prev != input->keys[K_CUTW])
 		line_del(&input->clipb);
 	if (input->line->i == 0)
 		return (0);
@@ -78,7 +78,7 @@ int		cp_cut_prevw(t_term *term, t_input *input)
 		return (-1);
 	if (!(cp = ft_strsub(input->line->str + start, 0, size)))
 		return (-1);
-	input_del_nchar(term, input, term->keys[K_DEL], size);
+	input_del_nchar(term, input, input->keys[K_DEL], size);
 	line_add_str(new, cp);
 	line_add(&input->clipb, new, 1);
 	return (0);

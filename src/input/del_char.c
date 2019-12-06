@@ -30,10 +30,10 @@ int		input_del_char(t_term *term, t_input *input, int c)
 	size_t	offset;
 
 	if (input->line->len == 0
-		|| (c == (int)term->keys[K_BSP] && input->line->i == 0)
-		|| (c == (int)term->keys[K_DEL] && !input->line->str[input->line->i]))
+		|| (c == (int)input->keys[K_BSP] && input->line->i == 0)
+		|| (c == (int)input->keys[K_DEL] && !input->line->str[input->line->i]))
 		return (0);
-	if (c == (int)term->keys[K_BSP])
+	if (c == (int)input->keys[K_BSP])
 		move_curs_left(term, input);
 	clear_fromc(term);
 	line_del_char(input->line);
@@ -61,10 +61,10 @@ int		input_del_nchar(t_term *term, t_input *input, int c, int n)
 
 	i = n;
 	if (input->line->len == 0
-		|| (c == (int)term->keys[K_BSP] && input->line->i == 0)
-		|| (c == (int)term->keys[K_DEL] && !input->line->str[input->line->i]))
+		|| (c == (int)input->keys[K_BSP] && input->line->i == 0)
+		|| (c == (int)input->keys[K_DEL] && !input->line->str[input->line->i]))
 		return (0);
-	if (c == (int)term->keys[K_BSP])
+	if (c == (int)input->keys[K_BSP])
 	{
 		while (i--)
 			move_curs_left(term, input);
