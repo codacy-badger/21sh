@@ -25,33 +25,27 @@
 
 # define ALLOC_ERROR	3
 
-typedef struct		s_data
-{
-	char			**prompts;
-}					t_data;
-
 typedef struct		s_sh
 {
 	struct s_term	term;
-	struct s_data	data;
 	struct s_input	input;
 	struct s_lexer	lexer;
 }					t_sh;
 
-int		shell_init(t_sh *shell);
-void	shell_del(t_sh *shell);
+int					shell_init(t_sh *shell);
+void				shell_del(t_sh *shell);
 
-void	sig_init(t_sh *shell);
-void	sig_handle(int sig);
-void	sig_action(t_sh *shell, int sig);
+void				sig_init(t_sh *shell);
+void				sig_handle(int sig);
+void				sig_action(t_sh *shell, int sig);
 
 /*
 ** Utils
 */
-int		ft_putc(int c);
-ssize_t	ft_putwc(char *c);
-ssize_t	getcsize(int c);
-ssize_t	getcsize_rev(char *s, int i);
-int		isctrl(unsigned int *keys, unsigned int c);
+int					ft_putc(int c);
+ssize_t				ft_putwc(char *c);
+ssize_t				getcsize(int c);
+ssize_t				getcsize_rev(char *s, int i);
+int					isctrl(unsigned int *keys, unsigned int c);
 
 #endif

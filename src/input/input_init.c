@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-void	input_clear_line(t_term *term, t_input *input)
+void		input_clear_line(t_term *term, t_input *input)
 {
 	size_t	plen;
 
@@ -79,9 +79,8 @@ int			input_init(struct s_input *input)
 	return (0);
 }
 
-void		input_reset(t_term *term, t_input *input)
+void		input_reset(t_input *input)
 {
-	input_clear_line(term, input);	
 	line_del(&input->line);
 	input->line = line_new(32);
 }

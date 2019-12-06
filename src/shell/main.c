@@ -20,15 +20,10 @@ static int	main_loop(t_sh *shell)
 
 	while (1)
 	{
-		//reset input, lexer, parser somewhere, but not on first iteration
 		if ((ret = read_line(&shell->term, &shell->input)) != 0)
 			break ;
-		else if ((ret = tokenize(&shell->lexer, &shell->input, &shell->term)) != 0)
-		{
-			if (ret == LEX_NO_EOL)
-				continue ;
+		if ((ret = tokenize(&shell->lexer, &shell->input)) != 0)
 			break ;
-		}
 		//printf("|%s|\nlen: %zu, i: %zu\n\r", shell->input.line->str, shell->input.line->len, shell->input.line->i);
 		break ;
 	}

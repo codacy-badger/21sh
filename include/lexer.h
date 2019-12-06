@@ -69,10 +69,10 @@ typedef struct		s_token
 
 typedef struct		s_lexer
 {
-	;
+	t_list_head		*tokens;
 }					t_lexer;
 
 int     			lexer_init(t_lexer *lexer);
-int					tokenize(t_lexer *lexer, t_input *input, t_term *term);
+int					tokenize(t_lexer *lexer, t_input *input);
 
 #endif 

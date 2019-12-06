@@ -24,8 +24,6 @@
 ** prompt scroll...
 */
 
-struct		s_data;
-
 enum	e_keys
 {
 		K_UP,
@@ -51,22 +49,18 @@ enum	e_keys
 		KEYS_SIZE
 };
 
-
 typedef struct		s_input
 {
+	unsigned int	keys[KEYS_SIZE];
 	char			*prompts[4];
 	char			*prompt;
-	struct s_line	*line;
-	//struct s_line	*hist;??
 	struct s_line	*clipb;
-	unsigned int	keys[KEYS_SIZE];
+	struct s_line	*line;
 	unsigned int	prev;
 }					t_input;
 
 typedef struct		s_line
 {
-	struct s_line	*prev;
-	struct s_line	*next;
 	char			*str;
 	size_t			size;
 	size_t			len;
@@ -74,7 +68,7 @@ typedef struct		s_line
 }					t_line;
 
 int					input_init(t_input *input);
-void				input_reset(t_term *term, t_input *input);
+void				input_reset(t_input *input);
 void				input_clear_line(t_term *term, t_input *input);
 int					input_add_char(t_term *term, t_input *input, unsigned int c);
 int					input_add_str(t_term *term, t_input *input, char *s);
@@ -91,9 +85,6 @@ int					line_add_char(t_line *line, unsigned int c);
 int					line_add_str(t_line *line, char *s);
 int					line_del_char(t_line *line);
 int					line_del_nchar(t_line *line, int n);
-t_line				*line_add(t_line **head, t_line *line, int stack);
-t_line				*line_add_at(t_line **head, t_line *line, int stack);
-void				line_delone(t_line **line);
 void				line_del(t_line **line);
 
 /*
@@ -117,4 +108,5 @@ int					cp_cut_prevw(t_term *term, t_input *input);
 int					cp_paste(t_term *term, t_input *input);
 
 int					redraw(t_term *term, t_input *input);
+
 #endif

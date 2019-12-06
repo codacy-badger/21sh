@@ -19,5 +19,7 @@
 
 int     lexer_init(t_lexer *lexer)
 {
+    if (!(lexer->tokens = ft_list_first_head(NULL)))
+        return (-1);
     return (0);
 }

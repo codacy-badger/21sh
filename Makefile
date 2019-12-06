@@ -30,10 +30,7 @@ SRC =		shell/main.c \
 			term/movc_cardinal.c \
 			term/clear_fromc.c \
 			input/input_init.c \
-			lexer/lexer_init.c \
-			lexer/tokenize.c \
-			input/multiline_list.c\
-			input/input_add_line.c\
+			input/line.c\
 			input/move_curs_cardinal.c \
 			input/move_curs_special.c \
 			input/add_str.c\
@@ -41,6 +38,8 @@ SRC =		shell/main.c \
 			input/redraw.c\
 			input/read_line.c \
 			input/copypaste.c \
+			lexer/lexer_init.c \
+			lexer/tokenize.c \
 			utils/utils.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))

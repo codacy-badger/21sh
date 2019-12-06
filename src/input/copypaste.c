@@ -64,38 +64,32 @@ int		cp_cut_prevw(t_term *term, t_input *input)
 	size_t	size;
 	size_t	start;
 	size_t	end;
-	t_line	*new;
 
 	if (input->prev != input->keys[K_CUTW])
+	{
 		line_del(&input->clipb);
+		if (!(input->clipb = line_new(32)))
+			return (-1);
+	}
 	if (input->line->i == 0)
 		return (0);
 	end = input->line->i;
 	move_curs_prevw(term, input);
 	start = input->line->i;
 	size = end - start;
-	if (!(new = line_new(32)))
-		return (-1);
 	if (!(cp = ft_strsub(input->line->str + start, 0, size)))
 		return (-1);
 	input_del_nchar(term, input, input->keys[K_DEL], size);
-	line_add_str(new, cp);
-	line_add(&input->clipb, new, 1);
+	input->clipb->i = 0;
+	line_add_str(input->clipb, cp);
 	return (0);
 }
 
 int		cp_paste(t_term *term, t_input *input)
 {
-	t_line	*cb;
-
-	cb = input->clipb;
 	if (input->clipb == NULL)
 		return (0);
-	while (cb)
-	{
-		input_add_str(term, input, cb->str);
-		cb = cb->next;
-	}
+	input_add_str(term, input, input->clipb->str);
 	return (0);
 }
 
