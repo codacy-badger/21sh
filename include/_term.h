@@ -17,31 +17,6 @@
 # include <termios.h>
 # include <term.h>
 
-enum	e_keys
-{
-		K_UP,
-		K_DOWN,
-		K_LEFT,
-		K_RIGHT,
-		K_HOME,
-		K_END,
-		K_BSP,
-		K_SPC,
-		K_DEL,
-		K_ENTER,
-		K_ESC,
-		K_NXTW,
-		K_PRVW,
-		K_REDRAW,
-		K_CUTW,
-		K_CUTA,
-		K_CUTB,
-		K_PAST,
-		K_EOL,
-		K_EOF,
-		KEYS_SIZE
-};
-
 enum	e_caps
 {
 		C_UP,
@@ -65,7 +40,6 @@ typedef struct		s_term
 {
 	struct termios	orig_term;
 	struct winsize	win;
-	unsigned int	keys[KEYS_SIZE];
 	char			*caps[CAPS_SIZE];
 	char			*termtype;
 	size_t			sizex;

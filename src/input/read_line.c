@@ -34,42 +34,42 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 	/*
 	** make function table
 	*/
-	if (!isctrl(term, c) && c != 0) //cant use ft_isprint because of wchar, care about weird codes
+	if (!isctrl(input->keys, c) && c != 0) //cant use ft_isprint because of wchar, care about weird codes
 		return (input_add_char(term, input, c));
-	else if (c == term->keys[K_EOL] || c == term->keys[K_EOF])
+	else if (c == input->keys[K_EOL] || c == input->keys[K_EOF])
 		return (handle_eol(term, input, c));
-	else if (c == term->keys[K_BSP] || c == term->keys[K_DEL])
+	else if (c == input->keys[K_BSP] || c == input->keys[K_DEL])
 		return (input_del_char(term, input, c));
-	else if (c == term->keys[K_LEFT])
+	else if (c == input->keys[K_LEFT])
 		return (move_curs_left(term, input));
-	else if (c == term->keys[K_RIGHT])
+	else if (c == input->keys[K_RIGHT])
 		return (move_curs_right(term, input));
-	else if (c == term->keys[K_UP])
+	else if (c == input->keys[K_UP])
 		return (move_curs_up(term, input));
-	else if (c == term->keys[K_DOWN])
+	else if (c == input->keys[K_DOWN])
 		return (move_curs_down(term, input));
-	else if (c == term->keys[K_HOME])
+	else if (c == input->keys[K_HOME])
 		return (move_curs_home(term, input));
-	else if (c == term->keys[K_END])
+	else if (c == input->keys[K_END])
 		return (move_curs_end(term, input));
-	else if (c == term->keys[K_NXTW])
+	else if (c == input->keys[K_NXTW])
 		return (move_curs_nextw(term, input));
-	else if (c == term->keys[K_PRVW])
+	else if (c == input->keys[K_PRVW])
 		return (move_curs_prevw(term, input));
-	else if (c == term->keys[K_CUTW])
+	else if (c == input->keys[K_CUTW])
 		return (cp_cut_prevw(term, input));
-	else if (c == term->keys[K_CUTA])
+	else if (c == input->keys[K_CUTA])
 		return (cp_cut_after(term, input));
-	else if (c == term->keys[K_CUTB])
+	else if (c == input->keys[K_CUTB])
 		return (cp_cut_before(term, input));
-	else if (c == term->keys[K_PAST])
+	else if (c == input->keys[K_PAST])
 		return (cp_paste(term, input));
-	else if (c == term->keys[K_REDRAW])
+	else if (c == input->keys[K_REDRAW])
 		return (redraw(term, input));
 	return (0);
 }
 
-int			input_read_line(t_term *term, t_input *input)
+int			read_line(t_term *term, t_input *input)
 {
 	int				ret;
 	unsigned int	c;

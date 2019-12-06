@@ -12,17 +12,17 @@
 
 #include "shell.h"
 
-int		isctrl(t_term *term, unsigned int c)
+int		isctrl(unsigned int *keys, unsigned int c)
 {
-	return (c == term->keys[K_EOL] || c == term->keys[K_EOF]
-			|| c == term->keys[K_BSP] || c == term->keys[K_DEL]
-			|| c == term->keys[K_LEFT] || c == term->keys[K_RIGHT]
-			|| c == term->keys[K_UP] || c == term->keys[K_DOWN]
-			|| c == term->keys[K_HOME] || c == term->keys[K_END]
-			|| c == term->keys[K_NXTW] || c == term->keys[K_PRVW]
-			|| c == term->keys[K_CUTW] || c == term->keys[K_CUTA]
-			|| c == term->keys[K_CUTB] || c == term->keys[K_PAST]
-			|| c == term->keys[K_REDRAW]);
+	return (c == keys[K_EOL] || c == keys[K_EOF]
+			|| c == keys[K_BSP] || c == keys[K_DEL]
+			|| c == keys[K_LEFT] || c == keys[K_RIGHT]
+			|| c == keys[K_UP] || c == keys[K_DOWN]
+			|| c == keys[K_HOME] || c == keys[K_END]
+			|| c == keys[K_NXTW] || c == keys[K_PRVW]
+			|| c == keys[K_CUTW] || c == keys[K_CUTA]
+			|| c == keys[K_CUTB] || c == keys[K_PAST]
+			|| c == keys[K_REDRAW]);
 }
 
 ssize_t	getcsize_rev(char *s, int i)
