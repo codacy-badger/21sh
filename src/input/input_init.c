@@ -51,10 +51,27 @@ static void	init_keys(struct s_input *input)
 	input->keys[K_EOF] = 4; // ^D
 }
 
-int			input_init(struct s_input *input, struct s_data *data)
+static int	init_prompts(struct s_input *input)
 {
+	if (!(input->prompts[PS1] = ft_strdup("21sh©>> ")))
+		return (ALLOC_ERROR);
+	if (!(input->prompts[PS2] = ft_strdup("-> ")))
+		return (ALLOC_ERROR);
+	if (!(input->prompts[PS3] = ft_strdup("'> ")))
+		return (ALLOC_ERROR);
+	if (!(input->prompts[PS4] = ft_strdup("\"> ")))
+		return (ALLOC_ERROR);
+	input->prompt = input->prompts[PS1];
+	return (0);
+}
+
+int			input_init(struct s_input *input)
+{
+	int		ret;
+
 	init_keys(input);
-	input->prompt = data->prompts[PS1];
+	if ((ret = init_prompts(input)) < 0)
+		return (ret);
 	if (!(input->line = line_new(32)))
 		return (ALLOC_ERROR);
 	if (!(input->clipb = line_new(32)))

@@ -31,7 +31,7 @@ SRC =		shell/main.c \
 			term/clear_fromc.c \
 			input/input_init.c \
 			lexer/lexer_init.c \
-			lexer/lexer_tokenize.c \
+			lexer/tokenize.c \
 			input/multiline_list.c\
 			input/input_add_line.c\
 			input/move_curs_cardinal.c \

@@ -38,7 +38,6 @@ enum	e_caps
 
 typedef struct		s_term
 {
-	struct s_sh		*shell;
 	struct termios	orig_term;
 	struct winsize	win;
 	char			*caps[CAPS_SIZE];

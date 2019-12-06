@@ -54,6 +54,7 @@ enum	e_keys
 
 typedef struct		s_input
 {
+	char			*prompts[4];
 	char			*prompt;
 	struct s_line	*line;
 	//struct s_line	*hist;??
@@ -72,15 +73,15 @@ typedef struct		s_line
 	size_t			i;
 }					t_line;
 
-int					input_init(struct s_input *input, struct s_data *data);
+int					input_init(t_input *input);
 void				input_reset(t_term *term, t_input *input);
-int					read_line(t_term *term, t_input *input);
 void				input_clear_line(t_term *term, t_input *input);
 int					input_add_char(t_term *term, t_input *input, unsigned int c);
 int					input_add_str(t_term *term, t_input *input, char *s);
 int					input_del_char(t_term *term, t_input *input, int c);
 int					input_del_nchar(t_term *term, t_input *input, int c, int n);
-int     			input_add_line(t_input *input);
+int    				input_add_line(t_input *input);
+int					read_line(t_term *term, t_input *input);
 
 /*
 ** T_line struct
