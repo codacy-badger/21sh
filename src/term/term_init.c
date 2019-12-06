@@ -55,3 +55,10 @@ void		term_init(struct s_term *term)
 	term_setsize(term);
 	init_caps(term);
 }
+
+void	term_reset(struct termios *orig_term)
+{
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, orig_term);
+	tputs(tgetstr("ve", NULL), 1, ft_putc);
+	tputs(tgetstr("te", NULL), 1, ft_putc);
+}

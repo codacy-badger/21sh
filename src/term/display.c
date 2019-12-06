@@ -36,3 +36,28 @@ size_t	display_char(t_term *term, char *c)
 	}
 	return (ret);
 }
+
+size_t	display_nl(t_term *term)
+{
+	size_t		ret;
+
+	if ((ret = ft_putc('\n')) == 1)
+	{
+		term->cx = 0;
+		term->cy++;
+	}
+	return (ret);
+}
+
+size_t	display_str(t_term *term, char *s)
+{
+	size_t	ret;
+
+	ret = 0;
+	while (*s)
+	{
+		s += display_char(term, s);
+		ret++;
+	}
+	return (ret);
+}
