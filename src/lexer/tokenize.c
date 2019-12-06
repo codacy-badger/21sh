@@ -15,15 +15,13 @@
 static int  preprocess(t_input *input)
 {
     t_line  *line;
-    int     k_eol;
     char    *eol;
 
     line = input->line;
     eol = &line->str[line->len - 1];
-    k_eol = input->shell->term.keys[K_EOL]; //handle eof ?
     if (line->len == 1)
         return (0);
-    if (*eol == k_eol && *(--eol) == BACKSLASH)
+    if (*eol == '\n' && *(--eol) == BACKSLASH)
     {
         ft_strremove(eol, 2);
         input_add_line(input); //add new line to the list and change the prompt
@@ -35,7 +33,7 @@ static int  preprocess(t_input *input)
     return (0);
 }
 
-int         lexer_tokenize(t_lexer *lexer, t_input *input)
+int         tokenize(t_lexer *lexer, t_input *input)
 {
     int     ret;
 

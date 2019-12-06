@@ -47,9 +47,9 @@ SRC =		shell/main.c \
 			input/input_add_str.c \
 			input/input_del_char.c \
 			input/input_del_nchar.c \
-			input/input_read_line.c \
 			input/input_clear_line.c \
 			input/input_add_line.c \
+			input/read_line.c \
 			input/line_new.c \
 			input/line_add.c \
 			input/line_add_at.c \
@@ -72,7 +72,7 @@ SRC =		shell/main.c \
 			input/cp_cut_after.c \
 			input/cp_cut_prevw.c \
 			lexer/lexer_init.c \
-			lexer/lexer_tokenize.c \
+			lexer/tokenize.c \
 			utils/utils.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))

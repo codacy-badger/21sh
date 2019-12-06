@@ -16,5 +16,5 @@ void		input_reset(t_input *input)
 {	
 	line_del(&input->line);
 	input->line = line_new(32);
-	input->prompt = input->shell->data.prompts[PS1];
+	input->prompt = input->prompts[PS1];
 }

@@ -26,7 +26,7 @@
 
 typedef struct		s_input
 {
-	struct s_sh		*shell;
+	char			*prompts[4];
 	char			*prompt;
 	struct s_line	*clipb;
 	struct s_line	*line;
@@ -45,13 +45,13 @@ typedef struct		s_line
 
 int					input_init(t_input *input);
 void				input_reset(t_input *input);
-int					input_read_line(t_term *term, t_input *input);
 void				input_clear_line(t_term *term, t_input *input);
 int					input_add_char(t_term *term, t_input *input, unsigned int c);
 int					input_add_str(t_term *term, t_input *input, char *s);
 int					input_del_char(t_term *term, t_input *input, int c);
 int					input_del_nchar(t_term *term, t_input *input, int c, int n);
 int    				input_add_line(t_input *input);
+int					read_line(t_term *term, t_input *input);
 
 /*
 ** T_line struct
