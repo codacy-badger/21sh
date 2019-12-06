@@ -20,7 +20,7 @@ static int  preprocess(t_input *input)
 
     line = input->line;
     eol = &line->str[line->len - 1];
-    k_eol = input->shell->term.keys[K_EOL]; //handle eof ?
+    k_eol = input->keys[K_EOL]; //handle eof ?
     if (line->len == 1)
         return (0);
     if (*eol == k_eol && *(--eol) == BACKSLASH)
@@ -35,7 +35,7 @@ static int  preprocess(t_input *input)
     return (0);
 }
 
-int         lexer_tokenize(t_lexer *lexer, t_input *input)
+int         lexer_tokenize(t_lexer *lexer, t_input *input, t_term *term)
 {
     int     ret;
 
@@ -67,6 +67,6 @@ int         lexer_tokenize(t_lexer *lexer, t_input *input)
         line = line->prev;
     }
     /******************/
-    input_reset(input);
+    input_reset(term, input);
     return (0);
 }

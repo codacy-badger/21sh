@@ -73,6 +73,6 @@ typedef struct		s_lexer
 }					t_lexer;
 
 int     			lexer_init(t_lexer *lexer);
-int					lexer_tokenize(t_lexer *lexer, t_input *input);
+int         		lexer_tokenize(t_lexer *lexer, t_input *input, t_term *term);
 
 #endif 

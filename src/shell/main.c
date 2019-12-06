@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "shell.h"
+
 int		g_last_exit_st = 0;
 
 static int	main_loop(t_sh *shell)
@@ -20,9 +21,9 @@ static int	main_loop(t_sh *shell)
 	while (1)
 	{
 		//reset input, lexer, parser somewhere, but not on first iteration
-		if ((ret = input_read_line(&shell->term, &shell->input)) != 0)
+		if ((ret = read_line(&shell->term, &shell->input)) != 0)
 			break ;
-		else if ((ret = lexer_tokenize(&shell->lexer, &shell->input)) != 0)
+		else if ((ret = lexer_tokenize(&shell->lexer, &shell->input, &shell->term)) != 0)
 		{
 			if (ret == LEX_NO_EOL)
 				continue ;

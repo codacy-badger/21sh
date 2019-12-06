@@ -44,12 +44,9 @@ int			shell_init(t_sh *shell)
 	sig_init(shell);
 	if ((ret = data_init(&shell->data)) != 0)
 		return (ret);
-	shell->term.shell = shell;
-	shell->input.shell = shell;
-	shell->lexer.shell = shell;
 	if ((ret = term_init(&shell->term)) != 0)
 		return (ret);
-	if ((ret = input_init(&shell->input)) != 0)
+	if ((ret = input_init(&shell->input, &shell->data)) != 0)
 		return (ret);
 	if ((ret = lexer_init(&shell->lexer)) != 0)
 		return (ret);

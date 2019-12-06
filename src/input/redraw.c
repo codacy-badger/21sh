@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line_delone.c                                      :+:      :+:    :+:   */
+/*   redraw.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/11/27 20:33:11 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/12/06 00:29:44 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include <shell.h>
 
-void	line_delone(t_line **line)
+int		redraw(t_term *term, t_input *input)
 {
-	t_line	*tmp;
+	int		i;
 
-	if (!line || !(*line))
-		return ;
-	tmp = (*line)->next;
-	if ((*line)->prev)
-		(*line)->prev->next = (*line)->next;
-	if ((*line)->next)
-		(*line)->next->prev = (*line)->prev;
-	ft_memdel((void *)&(*line)->str);
-	ft_memdel((void *)line);
-	(*line) = tmp;
+	tputs(term->caps[C_CL], 1, ft_putc);
+	display_str(term, input->prompt);
+	display_str(term, input->line->str);
+	i = input->line->len - input->line->i;
+	while (i--)
+		movcleft(term);
+	return (1);
 }

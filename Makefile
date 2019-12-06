@@ -6,7 +6,7 @@
 #    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/11/27 15:23:39 by fratajcz         ###   ########.fr        #
+#    Updated: 2019/12/06 15:02:10 by fratajcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,54 +25,22 @@ SRC =		shell/main.c \
 			signal/sig_action.c \
 			signal/sig_handle.c \
 			term/term_init.c \
-			term/term_reset.c \
-			term/display_char.c \
-			term/display_str.c \
-			term/display_nl.c \
+			term/display.c \
 			term/term_setsize.c \
-			term/movcup.c \
-			term/movcdown.c \
-			term/movcleft.c \
-			term/movcright.c \
-			term/movchx.c \
-			term/movchy.c \
-			term/movch.c \
-			term/movcex.c \
-			term/movcey.c \
-			term/movce.c \
+			term/movc_cardinal.c \
 			term/clear_fromc.c \
 			input/input_init.c \
-			input/input_reset.c \
-			input/input_add_char.c \
-			input/input_add_str.c \
-			input/input_del_char.c \
-			input/input_del_nchar.c \
-			input/input_read_line.c \
-			input/input_clear_line.c \
-			input/input_add_line.c \
-			input/line_new.c \
-			input/line_add.c \
-			input/line_add_at.c \
-			input/line_del.c \
-			input/line_delone.c \
-			input/line_add_char.c \
-			input/line_add_str.c \
-			input/line_del_char.c \
-			input/line_del_nchar.c \
-			input/move_curs_left.c \
-			input/move_curs_right.c \
-			input/move_curs_up.c \
-			input/move_curs_down.c \
-			input/move_curs_home.c \
-			input/move_curs_end.c \
-			input/move_curs_nextw.c \
-			input/move_curs_prevw.c \
-			input/cp_paste.c \
-			input/cp_cut_before.c \
-			input/cp_cut_after.c \
-			input/cp_cut_prevw.c \
 			lexer/lexer_init.c \
 			lexer/lexer_tokenize.c \
+			input/multiline_list.c\
+			input/input_add_line.c\
+			input/move_curs_cardinal.c \
+			input/move_curs_special.c \
+			input/add_str.c\
+			input/del_char.c\
+			input/redraw.c\
+			input/read_line.c \
+			input/copypaste.c \
 			utils/utils.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))

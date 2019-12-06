@@ -19,6 +19,5 @@ int     input_add_line(t_input *input)
     if (!(new = line_new(32)))
         return (ALLOC_ERROR);
     line_add(&input->line, new, 1);
-    input->prompt = input->shell->data.prompts[PS2];
     return (0);
 }
