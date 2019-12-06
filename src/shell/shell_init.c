@@ -16,10 +16,18 @@
 ** Think about interactive & non interactive mode...
 ** assert read line works properly when read from file
 */
-void	shell_init(t_sh *shell)
+
+int			shell_init(t_sh *shell)
 {
+	int		ret;
+
 	ft_bzero(shell, sizeof(*shell));
-	term_init(&shell->term);
-	input_init(&shell->input);
 	sig_init(shell);
+	if ((ret = term_init(&shell->term)) != 0)
+		return (ret);
+	if ((ret = input_init(&shell->input)) != 0)
+		return (ret);
+	if ((ret = lexer_init(&shell->lexer)) != 0)
+		return (ret);
+	return (ret);
 }

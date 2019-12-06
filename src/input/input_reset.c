@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list_incr_index.c                               :+:      :+:    :+:   */
+/*   reset_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/12 16:27:46 by nbousset          #+#    #+#             */
-/*   Updated: 2019/06/12 19:41:15 by nbousset         ###   ########.fr       */
+/*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/11/22 01:44:22 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/libft.h"
+#include "shell.h"
 
-static void	incr(t_list_elem *elem)
-{
-	if (elem)
-		elem->index++;
-}
-
-void		ft_list_incr_index(t_list *list, int start)
-{
-	ft_list_iter(list, start, -1, incr);
+void		input_reset(t_input *input)
+{	
+	line_del(&input->line);
+	input->line = line_new(32);
+	input->prompt = input->prompts[PS1];
 }

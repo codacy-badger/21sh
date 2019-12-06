@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list_del.c                                      :+:      :+:    :+:   */
+/*   ft_list_foreach.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,14 +12,16 @@
 
 #include "../../../inc/libft.h"
 
-/*
-** deletes entry from a list
-*/
-
-void	ft_list_del(t_list_head *head)
+void    ft_list_foreach(t_list_head *head, void (*f)(void *a, void *priv),
+		void *priv)
 {
-	free(head->data);
-	head->prev->next = head->next;
-	head->next->prev = head->prev;
-	free(head);
+	t_list_head			*cur;
+
+	cur = head;
+	while (!ft_list_is_last(cur, head))
+	{
+		f(cur->data, priv);
+		cur = cur->next;
+	}
+	f(cur->data, priv);
 }

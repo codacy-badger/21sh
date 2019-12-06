@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list_decr_index.c                               :+:      :+:    :+:   */
+/*   ft_list_is_first.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/12 16:27:46 by nbousset          #+#    #+#             */
-/*   Updated: 2019/06/12 19:41:15 by nbousset         ###   ########.fr       */
+/*   Created: 2019/05/08 17:11:09 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/11/29 00:15:24 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/libft.h"
 
-static void	decr(t_list_elem *elem)
-{
-	if (elem)
-		elem->index--;
-}
+/*
+** return 1 if list is the first entry in head
+*/
 
-void		ft_list_decr_index(t_list *list, int start)
+int		ft_list_is_first(const t_list_head *list, const t_list_head *head)
 {
-	ft_list_iter(list, start, -1, decr);
+	return (list->prev == head);
 }

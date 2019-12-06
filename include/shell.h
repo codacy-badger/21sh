@@ -18,19 +18,27 @@
 # include <sys/uio.h>
 # include <signal.h>
 # include <sys/ioctl.h>
-# include "_term.h"
-# include "input.h"
 # include "libft.h"
+# include "terminal.h"
+# include "input.h"
+# include "lexer.h"
 
 # define ALLOC_ERROR	3
+
+typedef struct		s_data
+{
+	char			**prompts;
+}					t_data;
 
 typedef struct		s_sh
 {
 	struct s_term	term;
+	struct s_data	data;
 	struct s_input	input;
+	struct s_lexer	lexer;
 }					t_sh;
 
-void	shell_init(t_sh *shell);
+int		shell_init(t_sh *shell);
 void	shell_del(t_sh *shell);
 
 void	sig_init(t_sh *shell);

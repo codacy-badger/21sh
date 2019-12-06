@@ -30,21 +30,15 @@ static void	init_caps(struct s_term *term)
 	term->caps[C_CL] = tgetstr("cl", NULL);
 }
 
-void		term_init(struct s_term *term)
+int		term_init(struct s_term *term)
 {
 	struct termios	new_term;
 
 	term->termtype = getenv("TERM");
 	if (term->termtype == NULL || tgetent(NULL, term->termtype) <= 0)
-	{
-		//ft_putendl_fd("Error: unknown terminal. Try setting $TERM", 2);
-		exit(1);
-	}
+		return (-1); //error
 	if (!isatty(STDIN_FILENO))
-	{
-		//ft_putendl_fd("Error: STDIN is not a tty", 2);
-		exit(1);
-	}
+		return (-1); //error
 	tcgetattr(STDIN_FILENO, &(term->orig_term));
 	new_term = term->orig_term;
 	new_term.c_lflag &= ~(ECHO | ICANON | ISIG);
@@ -54,6 +48,7 @@ void		term_init(struct s_term *term)
 	tputs(tgetstr("ks", NULL), 1, ft_putc);
 	term_setsize(term);
 	init_caps(term);
+	return (0);
 }
 
 void	term_reset(struct termios *orig_term)

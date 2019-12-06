@@ -17,7 +17,7 @@ int		redraw(t_term *term, t_input *input)
 	int		i;
 
 	tputs(term->caps[C_CL], 1, ft_putc);
-	display_str(term, *(input->pmpt));
+	display_str(term, input->prompt);
 	display_str(term, input->line->str);
 	i = input->line->len - input->line->i;
 	while (i--)

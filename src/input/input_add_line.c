@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list_get_first.c                                :+:      :+:    :+:   */
+/*   input_add_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/12 16:27:46 by nbousset          #+#    #+#             */
-/*   Updated: 2019/06/12 19:41:15 by nbousset         ###   ########.fr       */
+/*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/11/27 15:38:19 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/libft.h"
+#include "shell.h"
 
-t_list_elem	*ft_list_get_first(t_list *list)
+int     input_add_line(t_input *input)
 {
-	if (!list)
-		return (NULL);
-	return (list->elems);
+    t_line  *new;
+
+    if (!(new = line_new(32)))
+        return (ALLOC_ERROR);
+    line_add(&input->line, new, 1);
+    return (0);
 }

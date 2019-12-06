@@ -15,9 +15,14 @@
 //file
 static void	input_del(t_input *input)
 {
-	ft_strarray_del(&input->pmpt);
+	int		i;
+
+	i = 0;
 	line_del(&input->line);
 	line_del(&input->clipb);
+	while (i < 4)
+		ft_memdel((void *)&input->prompts[i++]);
+	input->prompt = NULL;
 }
 
 //file

@@ -57,7 +57,7 @@ int		move_curs_up(t_term *term, t_input *input)
 	int		i;
 
 	i = term->sizex;
-	if (input->line->i + ft_strlen(*(input->pmpt)) < term->sizex)
+	if (input->line->i + ft_strlen(input->prompt) < term->sizex)
 		return (0);
 	while (input->line->i > 0 && i--)
 		move_curs_left(term, input);

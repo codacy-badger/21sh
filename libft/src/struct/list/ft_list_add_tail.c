@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list_del.c                                      :+:      :+:    :+:   */
+/*   ft_list_add_tail.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,13 +13,17 @@
 #include "../../../inc/libft.h"
 
 /*
-** deletes entry from a list
+** add a new entry before the specified list head
 */
 
-void	ft_list_del(t_list_head *head)
+void    ft_list_add_tail(void *data, t_list_head *head)
 {
-	free(head->data);
-	head->prev->next = head->next;
-	head->next->prev = head->prev;
-	free(head);
+	t_list_head *new;
+
+	if ((new = ft_list_new_head(data)) == NULL)
+		return ;
+	head->prev->next = new;
+	new->prev = head->prev;
+	head->prev = new;
+	new->next = head;
 }

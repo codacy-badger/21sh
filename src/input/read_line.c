@@ -75,7 +75,7 @@ int			read_line(t_term *term, t_input *input)
 	unsigned int	c;
 
 	c = 0;
-	display_str(term, *(input->pmpt));
+	display_str(term, input->prompt);
 	while ((ret = read(STDIN_FILENO, &c, sizeof(c))) != -1)
 	{
 		if ((ret = process_char(term, input, c)) == K_EOL)

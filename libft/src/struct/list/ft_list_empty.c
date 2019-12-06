@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list_del.c                                      :+:      :+:    :+:   */
+/*   ft_list_empty.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,14 +12,7 @@
 
 #include "../../../inc/libft.h"
 
-/*
-** deletes entry from a list
-*/
-
-void	ft_list_del(t_list_head *head)
+int		ft_list_empty(const t_list_head *head)
 {
-	free(head->data);
-	head->prev->next = head->next;
-	head->next->prev = head->prev;
-	free(head);
+	return (head->next == head);
 }

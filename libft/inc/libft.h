@@ -91,60 +91,28 @@ int						ft_stack_isempty(t_stack **stack);
 ** -----------------------------Struct list-----------------------------
 */
 
-/*
-** Add pointer to last elem.
-** void *get_by_value(t_list *list, void *value);
-** No doubles ?
-*/
-
-typedef struct			s_list
+typedef struct			s_list_head
 {
-	struct s_list_elem	*elems;
-	bool				circular;
-	int					count;
-}						t_list;
+	struct s_list_head	*prev;
+	struct s_list_head	*next;
+	void				*data;
+}						t_list_head;
 
-typedef struct			s_list_elem
-{
-	void				*content;
-	size_t				content_size;
-	struct s_list_elem	*prev;
-	struct s_list_elem	*next;
-	int					index;
-	char				type;
-}						t_list_elem;
-
-/*
-** Low level
-*/
-t_list_elem				*ft_list_elem_new(const void *content,
-													ssize_t content_size);
-void					ft_list_elem_del(t_list_elem **elem,
-												void (*del)(void *, size_t));
-void					ft_list_iter(t_list *list, int start, int end,
-													void (*f)(t_list_elem *));
-void					ft_list_incr_index(t_list *list, int start);
-void					ft_list_decr_index(t_list *list, int start);
-bool					ft_list_add_front(t_list *list, t_list_elem *new);
-bool					ft_list_add_back(t_list *list, t_list_elem *new);
-void					ft_list_del_front(t_list *list,
-												void (*del)(void *, size_t));
-void					ft_list_del_back(t_list *list,
-												void (*del)(void *, size_t));
-
-/*
-** High level
-*/
-t_list					*ft_list_new(int circular);
-t_list_elem				*ft_list_get_first(t_list *list);
-t_list_elem				*ft_list_get_last(t_list *list);
-t_list_elem				*ft_list_get_at(t_list *list, int index);
-void					*ft_list_get_value_at(t_list *list, int index);
-bool					ft_list_insert_at(t_list *list, const void *value,
-													int index, ssize_t size);
-void					ft_list_del_at(t_list *list, int index,
-												void (*del)(void *, size_t));
-void					ft_list_del(t_list **list, void (*del)(void *, size_t));
+t_list_head				*ft_list_new_head(void *data);
+t_list_head				*ft_list_first_head(void *data);
+void					ft_list_add(void *data, t_list_head *head);
+void					ft_list_add_tail(void *data, t_list_head *head);
+void					ft_list_del(t_list_head *head);
+void					ft_list_replace(t_list_head *old, t_list_head *new);
+int						ft_list_is_first(const t_list_head *list, const t_list_head *head);
+int						ft_list_is_last(const t_list_head *list, const t_list_head *head);
+int						ft_list_empty(const t_list_head *head);
+void					ft_list_foreach(t_list_head *head, void (*f)(void *a, void *priv),
+						void *priv);
+void					ft_list_foreach_rev(t_list_head *head,
+						void (*f)(void *a, void *priv), void *priv);
+void					ft_list_split(t_list_head *head, t_list_head **a, t_list_head **b);
+void					ft_list_sort(t_list_head **head, int (*cmp)(void *a, void *b));
 
 /*
 ** -----------------------------Struct hashtable-----------------------------

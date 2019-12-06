@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list_get_last.c                                 :+:      :+:    :+:   */
+/*   lexer_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/12 16:27:46 by nbousset          #+#    #+#             */
-/*   Updated: 2019/06/12 19:41:15 by nbousset         ###   ########.fr       */
+/*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/11/27 14:56:00 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/libft.h"
+#include "shell.h"
 
-t_list_elem	*ft_list_get_last(t_list *list)
+/*
+** should use the list functions of new/lexer branch, added to the libft
+** to replace current list functions.
+*/
+
+int     lexer_init(t_lexer *lexer)
 {
-	t_list_elem	*elem;
-
-	if (!list || !(elem = list->elems))
-		return (NULL);
-	while (elem->index < (list->count - 1))
-		elem = elem->next;
-	return (elem);
+    return (0);
 }

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list_del.c                                      :+:      :+:    :+:   */
+/*   ft_list_first_head.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,14 +12,14 @@
 
 #include "../../../inc/libft.h"
 
-/*
-** deletes entry from a list
-*/
-
-void	ft_list_del(t_list_head *head)
+t_list_head	*ft_list_first_head(void *data)
 {
-	free(head->data);
-	head->prev->next = head->next;
-	head->next->prev = head->prev;
-	free(head);
+	t_list_head *new;
+
+	if ((new = (t_list_head *)ft_memalloc(sizeof(t_list_head))) == NULL)
+		return (NULL);
+	new->data = data;
+	new->prev = new;
+	new->next = new;
+	return (new);
 }

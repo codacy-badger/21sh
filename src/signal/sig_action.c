@@ -23,6 +23,7 @@ void	sig_action(t_sh *shell, int sig)
 	}
 	if (sig == SIGINT)
 	{
+		input_clear_line(&shell->term, &shell->input);
 		input_reset(&sh->term, &sh->input);
 	}
 	else if (sig == SIGWINCH)
