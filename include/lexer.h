@@ -70,7 +70,6 @@ typedef struct		s_token
 typedef struct		s_lexer
 {
 	struct s_sh		*shell;
-	t_list			*tokens;
 }					t_lexer;
 
 int     			lexer_init(t_lexer *lexer);

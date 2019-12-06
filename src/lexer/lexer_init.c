@@ -19,7 +19,5 @@
 
 int     lexer_init(t_lexer *lexer)
 {
-    if (!(lexer->tokens = ft_list_new(0)))
-        return (ALLOC_ERROR);
     return (0);
 }

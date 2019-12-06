@@ -80,23 +80,16 @@ SRC =	mem/ft_memalloc.c \
 		struct/stack/ft_stack_del.c \
 		struct/stack/ft_stack_count.c \
 		struct/stack/ft_stack_isempty.c \
-		struct/list/ft_list_new.c \
+		struct/list/ft_list_new_head.c \
+		struct/list/ft_list_first_head.c \
+		struct/list/ft_list_add.c \
+		struct/list/ft_list_add_tail.c \
 		struct/list/ft_list_del.c \
-		struct/list/ft_list_iter.c \
-		struct/list/ft_list_elem_new.c \
-		struct/list/ft_list_elem_del.c \
-		struct/list/ft_list_add_front.c \
-		struct/list/ft_list_del_front.c \
-		struct/list/ft_list_add_back.c \
-		struct/list/ft_list_del_back.c \
-		struct/list/ft_list_insert_at.c \
-		struct/list/ft_list_del_at.c \
-		struct/list/ft_list_get_first.c \
-		struct/list/ft_list_get_last.c \
-		struct/list/ft_list_get_at.c \
-		struct/list/ft_list_get_value_at.c \
-		struct/list/ft_list_incr_index.c \
-		struct/list/ft_list_decr_index.c \
+		struct/list/ft_list_is_first.c \
+		struct/list/ft_list_is_last.c \
+		struct/list/ft_list_empty.c \
+		struct/list/ft_list_foreach.c \
+		struct/list/ft_list_foreach_rev.c \
 		struct/hash/ft_htnew.c \
 		struct/hash/ft_hentrynew_cpy.c \
 		struct/hash/ft_hentrynew_ptr.c \

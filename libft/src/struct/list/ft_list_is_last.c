@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list_get_value.c                                :+:      :+:    :+:   */
+/*   ft_list_is_last.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/12 16:27:46 by nbousset          #+#    #+#             */
-/*   Updated: 2019/06/12 19:41:15 by nbousset         ###   ########.fr       */
+/*   Created: 2019/05/08 17:11:09 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/11/29 00:15:24 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/libft.h"
 
-void	*ft_list_get_value_at(t_list *list, int index)
-{
-	t_list_elem	*elem;
+/*
+** return 1 if list is the last entry in head
+*/
 
-	if (!list || !(elem = ft_list_get_at(list, index)))
-		return (NULL);
-	return (elem->content);
+int		ft_list_is_last(const t_list_head *list, const t_list_head *head)
+{
+	return (list->next == head);
 }

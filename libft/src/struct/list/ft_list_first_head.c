@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list_get_last.c                                 :+:      :+:    :+:   */
+/*   ft_list_first_head.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/12 16:27:46 by nbousset          #+#    #+#             */
-/*   Updated: 2019/06/12 19:41:15 by nbousset         ###   ########.fr       */
+/*   Created: 2019/05/08 17:11:09 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/11/29 00:15:24 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/libft.h"
 
-t_list_elem	*ft_list_get_last(t_list *list)
+t_list_head	*ft_list_first_head(void *data)
 {
-	t_list_elem	*elem;
+	t_list_head *new;
 
-	if (!list || !(elem = list->elems))
+	if ((new = (t_list_head *)ft_memalloc(sizeof(t_list_head))) == NULL)
 		return (NULL);
-	while (elem->index < (list->count - 1))
-		elem = elem->next;
-	return (elem);
+	new->data = data;
+	new->prev = new;
+	new->next = new;
+	return (new);
 }
