@@ -6,7 +6,7 @@
 #    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/12/06 01:25:13 by fratajcz         ###   ########.fr        #
+#    Updated: 2019/12/06 15:02:10 by fratajcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,16 +30,7 @@ SRC =		shell/main.c \
 			term/display_str.c \
 			term/display_nl.c \
 			term/term_setsize.c \
-			term/movcup.c \
-			term/movcdown.c \
-			term/movcleft.c \
-			term/movcright.c \
-			term/movchx.c \
-			term/movchy.c \
-			term/movch.c \
-			term/movcex.c \
-			term/movcey.c \
-			term/movce.c \
+			term/movc_cardinal.c \
 			term/clear_fromc.c \
 			input/init_reset.c \
 			input/multiline_list.c\
