@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_init.c                                       :+:      :+:    :+:   */
+/*   init_reset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fratajcz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 14:56:57 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/12/06 01:23:20 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/12/06 01:23:57 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+void	input_clear_line(t_term *term, t_input *input)
+{
+	size_t	plen;
+
+	plen = ft_strlen(*(input->pmpt));
+	while (input->line->i)
+		move_curs_left(term, input);
+	while (plen--)
+		movcleft(term);
+	tputs(term->caps[C_CD], 1, ft_putc);
+	display_str(term, *(input->pmpt));
+}
 
 void		input_init(struct s_input *input)
 {
@@ -28,4 +41,11 @@ void		input_init(struct s_input *input)
 		return ;
 	if (!(input->clipb = line_new(32)))
 		return ;
+}
+
+void		input_reset(t_term *term, t_input *input)
+{
+	input_clear_line(term, input);	
+	line_del(&input->line);
+	input->line = line_new(32);
 }

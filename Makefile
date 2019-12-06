@@ -6,7 +6,7 @@
 #    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/12/05 21:48:03 by ferfi            ###   ########.fr        #
+#    Updated: 2019/12/06 01:25:13 by fratajcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,36 +41,15 @@ SRC =		shell/main.c \
 			term/movcey.c \
 			term/movce.c \
 			term/clear_fromc.c \
-			input/input_init.c \
-			input/input_reset.c \
-			input/line_new.c \
-			input/line_add.c \
-			input/line_add_at.c \
-			input/line_del.c \
-			input/line_delone.c \
-			input/line_add_char.c \
-			input/line_add_str.c \
-			input/line_del_char.c \
-			input/line_del_nchar.c \
-			input/move_curs_left.c \
-			input/move_curs_right.c \
-			input/move_curs_up.c \
-			input/move_curs_down.c \
-			input/move_curs_home.c \
-			input/move_curs_end.c \
-			input/move_curs_nextw.c \
-			input/move_curs_prevw.c \
+			input/init_reset.c \
+			input/multiline_list.c\
+			input/move_curs_cardinal.c \
+			input/move_curs_special.c \
+			input/add_str.c\
+			input/del_char.c\
 			input/redraw.c\
-			input/input_add_char.c \
-			input/input_add_str.c \
-			input/input_del_char.c \
-			input/input_del_nchar.c \
 			input/input_read_line.c \
-			input/input_clear_line.c \
-			input/cp_paste.c \
-			input/cp_cut_before.c \
-			input/cp_cut_after.c \
-			input/cp_cut_prevw.c \
+			input/copypaste.c \
 			utils/utils.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
