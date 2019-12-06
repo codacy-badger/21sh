@@ -20,7 +20,7 @@ static int	main_loop(t_sh *shell)
 	while (1)
 	{
 		//reset input, lexer, parser somewhere, but not on first iteration
-		if ((ret = input_read_line(&shell->term, &shell->input)) != 0)
+		if ((ret = read_line(&shell->term, &shell->input)) != 0)
 		{
 			;//if fatal error break else if line !correct continue
 		//if (parse == NO NL)

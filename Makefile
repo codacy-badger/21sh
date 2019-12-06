@@ -25,21 +25,18 @@ SRC =		shell/main.c \
 			signal/sig_action.c \
 			signal/sig_handle.c \
 			term/term_init.c \
-			term/term_reset.c \
-			term/display_char.c \
-			term/display_str.c \
-			term/display_nl.c \
+			term/display.c \
 			term/term_setsize.c \
 			term/movc_cardinal.c \
 			term/clear_fromc.c \
-			input/init_reset.c \
+			input/input_init.c \
 			input/multiline_list.c\
 			input/move_curs_cardinal.c \
 			input/move_curs_special.c \
 			input/add_str.c\
 			input/del_char.c\
 			input/redraw.c\
-			input/input_read_line.c \
+			input/read_line.c \
 			input/copypaste.c \
 			utils/utils.c
 
