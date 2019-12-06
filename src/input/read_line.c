@@ -69,7 +69,7 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 	return (0);
 }
 
-int			input_read_line(t_term *term, t_input *input)
+int			read_line(t_term *term, t_input *input)
 {
 	int				ret;
 	unsigned int	c;
