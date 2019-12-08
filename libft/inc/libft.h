@@ -6,7 +6,7 @@
 /*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:27:46 by nbousset          #+#    #+#             */
-/*   Updated: 2019/12/08 19:28:30 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/08 20:07:47 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,8 @@ typedef struct s_node
 	struct s_node	**child;
 } t_node;
 
-int		ft_node_new(void *data);
-int		ft_node_add_child(t_node *parent, t_node *child);
+t_node					*ft_node_new(void *data);
+int						ft_node_add_child(t_node *parent, t_node *child);
 
 /*
 ** -----------------------------Struct hashtable-----------------------------
