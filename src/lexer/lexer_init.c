@@ -19,7 +19,13 @@
 
 int     lexer_init(t_lexer *lexer)
 {
+    int     ret;
+
+    lexer->prev_tok = NULL;
+    lexer->curr_tok = NULL;
     if (!(lexer->tokens = ft_list_first_head(NULL)))
         return (-1);
+    if (!(ret = add_token(lexer, START)))
+        return (ret);
     return (0);
 }

@@ -102,6 +102,7 @@ SRC =	mem/ft_memalloc.c \
 		struct/hash/ft_htdel.c \
 		struct/hash/ft_htdelone.c \
 		struct/dstr/ft_dstr_new.c \
+		struct/dstr/ft_dstr_add.c \
 		struct/dstr/ft_dstr_insert.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))

@@ -30,11 +30,9 @@
 **		   ';'	   '|'
 */
 
-# define LEX_OK		0
-# define LEX_NO_EOL	1
-
 enum 				e_tok_type
 {
+	NONE,
 	START,
 	END,
 	WORD,
@@ -49,16 +47,10 @@ enum 				e_tok_type
 	DLESSDASH,
 	AMPERSAND,
 	SEMI,
-	NEWLINE,
-	PIPE
-};
-
-enum 				e_quote_type
-{
-	NONE,
-	BACKSLASH = '\\',
-	SQUOTE = '\'',
-	DQUOTE = '\"'
+	PIPE,
+	AND_IF,
+	OR_IF,
+	NEWLINE
 };
 
 typedef struct		s_token
@@ -70,9 +62,26 @@ typedef struct		s_token
 typedef struct		s_lexer
 {
 	t_list_head		*tokens;
+	t_token			*curr_tok;
+	t_token			*prev_tok;
 }					t_lexer;
 
 int     			lexer_init(t_lexer *lexer);
 int					tokenize(t_lexer *lexer, t_input *input);
+int    				add_token(t_lexer *lexer, int type);
+
+/*
+** Tokenization functions
+*/
+int					tok_end(t_lexer *lexer, char **str);
+int					tok_ope(t_lexer *lexer, char **str);
+int					tok_eol(t_lexer *lexer, char **str);
+int					tok_spc(t_lexer *lexer, char **str);
+int					tok_wrd(t_lexer *lexer, char **str);
+
+/*
+** T_token struct
+*/
+t_token 			*token_new(int type);
 
 #endif 

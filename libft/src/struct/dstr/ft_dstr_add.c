@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dstr_insert.c                                   :+:      :+:    :+:   */
+/*   ft_dstr_add.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,10 +12,7 @@
 
 #include "../../../inc/libft.h"
 
-/*
-** insert char * here
-*/
-void		ft_dstr_insert(t_dstr **dstr, char c, int index)
+void		ft_dstr_add(t_dstr **dstr, char c)
 {
 	size_t	old_size;
 	size_t	new_size;
@@ -30,10 +27,6 @@ void		ft_dstr_insert(t_dstr **dstr, char c, int index)
 		if (!((*dstr)->str))
 			return ; //(-1)
 	}
-	if (index > (*dstr)->capacity - 1)
-		index = (*dstr)->capacity - 1;
-	if (index < 0)
-		index = 0;
-	ft_strinsert(&(*dstr)->str[index], &c, 1);
-	(*dstr)->len++;
+	(*dstr)->str[(*dstr)->len++] = c;
+	(*dstr)->str[(*dstr)->len] = 0;
 }

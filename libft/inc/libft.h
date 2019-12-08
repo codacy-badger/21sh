@@ -170,6 +170,7 @@ typedef struct			s_dstr
 }						t_dstr;
 
 t_dstr					*ft_dstr_new(size_t size);
+void					ft_dstr_add(t_dstr **dstr, char c);
 void					ft_dstr_insert(t_dstr **str, char c, int index);
 
 /*

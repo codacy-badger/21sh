@@ -41,6 +41,7 @@ SRC =		shell/main.c \
 			input/history.c \
 			lexer/lexer_init.c \
 			lexer/tokenize.c \
+			lexer/token_new.c \
 			utils/utils.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
