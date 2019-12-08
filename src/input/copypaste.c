@@ -6,7 +6,7 @@
 /*   By: fratajcz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 00:37:34 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/06 00:41:33 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/08 02:12:42 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "shell.h"
@@ -82,6 +82,7 @@ int		cp_cut_prevw(t_term *term, t_input *input)
 	input_del_nchar(term, input, input->keys[K_DEL], size);
 	input->clipb->i = 0;
 	line_add_str(input->clipb, cp);
+	ft_memdel((void *)&cp);
 	return (0);
 }
 
