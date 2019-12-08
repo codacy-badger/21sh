@@ -6,7 +6,7 @@
 #    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/11/25 20:34:32 by fratajcz         ###   ########.fr        #
+#    Updated: 2019/12/08 19:36:09 by fratajcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,6 +98,7 @@ SRC =	mem/ft_memalloc.c \
 		struct/list/ft_list_empty.c \
 		struct/list/ft_list_foreach.c \
 		struct/list/ft_list_foreach_rev.c \
+		struct/node/node.c\
 		struct/hash/ft_htnew.c \
 		struct/hash/ft_hentrynew_cpy.c \
 		struct/hash/ft_hentrynew_ptr.c \
