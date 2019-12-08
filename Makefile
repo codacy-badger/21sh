@@ -6,7 +6,7 @@
 #    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/12/08 21:06:27 by fratajcz         ###   ########.fr        #
+#    Updated: 2019/12/08 21:48:10 by fratajcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,21 +40,14 @@ SRC =		shell/main.c \
 			input/copypaste.c \
 			input/history.c \
 			input/input_utils.c \
-			lexer/lexer_init.c \
-			lexer/tokenize.c \
-			lexer/token_new.c \
-			lexer/add_token.c \
-			lexer/tok_end.c \
-			lexer/tok_ope_next.c \
-			lexer/tok_ope_end.c \
-			lexer/tok_quote.c \
-			lexer/tok_ope_start.c \
-			lexer/tok_eol.c \
-			lexer/tok_blank.c \
-			lexer/tok_word_next.c \
-			lexer/tok_hash.c \
-			lexer/tok_word_start.c \
-			lexer/tok_utils.c
+			lexer/lexer_init.c\
+			lexer/lexer_utils.c\
+			lexer/tok_operator.c\
+			lexer/tok_quote.c\
+			lexer/tok_special.c\
+			lexer/tok_utils.c\
+			lexer/tok_word.c\
+			lexer/tokenize.c\
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
 LIB = $(addprefix $(DIR_LIB), libft.a)
