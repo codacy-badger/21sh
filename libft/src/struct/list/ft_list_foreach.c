@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 17:11:09 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/29 00:15:24 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/08 00:25:35 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void    ft_list_foreach(t_list_head *head, void (*f)(void *a, void *priv),
 {
 	t_list_head			*cur;
 
-	cur = head;
+	cur = head->next;
 	while (!ft_list_is_last(cur, head))
 	{
 		f(cur->data, priv);
