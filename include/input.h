@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/08 03:07:33 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/08 03:41:04 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ enum	e_keys
 /*
 ** history_cur is a pointer to the current history line being displayed. if the
 ** current line is not in the history list yet, history_cur is set to NULL.
+**
+** line_backup is the line that was being edited before the user pressed UP
 */
 
 typedef struct		s_input
