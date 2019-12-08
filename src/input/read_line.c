@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_read_line.c                                  :+:      :+:    :+:   */
+/*   read_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/06 00:29:43 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/08 03:24:57 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	handle_eol(t_term *term, t_input *input, unsigned int c)
 {
 	input->prev = c;
 	move_curs_end(term, input);
-	ft_strinsert(&input->line->str[input->line->len++], (char *)&c, 1);
+	//ft_strinsert(&input->line->str[input->line->len++], (char *)&c, 1);
 	move_curs_left(term, input);
 	display_nl(term);
 	return (K_EOL);
@@ -36,7 +36,7 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 	*/
 	if (!isctrl(input->keys, c) && c != 0) //cant use ft_isprint because of wchar, care about weird codes
 		return (input_add_char(term, input, c));
-	else if (c == input->keys[K_EOL] || c == input->keys[K_EOF])
+	else if (c == input->keys[K_EOL])
 		return (handle_eol(term, input, c));
 	else if (c == input->keys[K_BSP] || c == input->keys[K_DEL])
 		return (input_del_char(term, input, c));
@@ -45,9 +45,13 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 	else if (c == input->keys[K_RIGHT])
 		return (move_curs_right(term, input));
 	else if (c == input->keys[K_UP])
-		return (move_curs_up(term, input));
+		return (history_move_up(term, input));
 	else if (c == input->keys[K_DOWN])
-		return (move_curs_down(term, input));
+		return (history_move_down(term, input));
+	//else if (c == input->keys[K_C_UP])
+	//	return (move_curs_up(term, input));
+	//else if (c == input->keys[K_C_DOWN])
+	//	return (move_curs_down(term, input));
 	else if (c == input->keys[K_HOME])
 		return (move_curs_home(term, input));
 	else if (c == input->keys[K_END])
@@ -66,6 +70,9 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 		return (cp_paste(term, input));
 	else if (c == input->keys[K_REDRAW])
 		return (redraw(term, input));
+	else if(c == input->keys[K_EOF] && input->line->len == 0)
+		exit(0);//temporary
+
 	return (0);
 }
 
@@ -79,7 +86,10 @@ int			read_line(t_term *term, t_input *input)
 	while ((ret = read(STDIN_FILENO, &c, sizeof(c))) != -1)
 	{
 		if ((ret = process_char(term, input, c)) == K_EOL)
-			return (0);
+		{
+			input_reset(input);
+			display_str(term, input->prompt);
+		}
 		else if (ret < 0)
 			break ; //error
 		input->prev = c;

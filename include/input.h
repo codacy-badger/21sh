@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/06 00:28:15 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/08 03:07:33 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,26 @@ enum	e_keys
 		K_PAST,
 		K_EOL,
 		K_EOF,
+		K_C_UP,
+		K_C_DOWN,
 		KEYS_SIZE
 };
 
+/*
+** history_cur is a pointer to the current history line being displayed. if the
+** current line is not in the history list yet, history_cur is set to NULL.
+*/
+
 typedef struct		s_input
 {
+	t_list_head		*history;
+	t_list_head		*history_cur;
 	unsigned int	keys[KEYS_SIZE];
 	char			*prompts[4];
 	char			*prompt;
 	struct s_line	*clipb;
 	struct s_line	*line;
+	struct s_line	*line_backup;
 	unsigned int	prev;
 }					t_input;
 
@@ -108,5 +118,12 @@ int					cp_cut_prevw(t_term *term, t_input *input);
 int					cp_paste(t_term *term, t_input *input);
 
 int					redraw(t_term *term, t_input *input);
+
+/*
+** History
+*/
+
+int					history_move_up(t_term *term, t_input *input);
+int					history_move_down(t_term *term, t_input *input);
 
 #endif

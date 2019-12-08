@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_reset.c                                       :+:      :+:    :+:   */
+/*   input_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 01:23:20 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/06 01:23:57 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/08 03:24:45 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static void	init_keys(struct s_input *input)
 	input->keys[K_PAST] = 25; // ^Y
 	input->keys[K_EOL] = 10; //nl,  cr??
 	input->keys[K_EOF] = 4; // ^D
+	//input->keys[K_C_UP] = ;
+	//input->keys[K_C_DOWN] =; 
 }
 
 static int	init_prompts(struct s_input *input)
@@ -76,11 +78,24 @@ int			input_init(struct s_input *input)
 		return (ALLOC_ERROR);
 	if (!(input->clipb = line_new(32)))
 		return (ALLOC_ERROR);
+	if (!(input->history = ft_list_first_head(ft_strdup("START"))))
+		return(ALLOC_ERROR);
+	input->history_cur = NULL;
+	input->line_backup = NULL;
 	return (0);
 }
 
 void		input_reset(t_input *input)
 {
-	line_del(&input->line);
+	if (input->line->len == 0)
+	{
+		line_del(&input->line);
+		input->line_backup = NULL;
+	}
+	else if (input->line_backup != NULL && input->line != input->line_backup)
+		line_del(&input->line_backup);
+	if (input->line != NULL && input->line->len != 0)
+		ft_list_add_tail(input->line, input->history);
+	input->history_cur = NULL;
 	input->line = line_new(32);
 }
