@@ -170,7 +170,7 @@ typedef struct			s_dstr
 }						t_dstr;
 
 t_dstr					*ft_dstr_new(size_t size);
-void					ft_dstr_add(t_dstr **dstr, char c);
+int						ft_dstr_add(t_dstr **dstr, char c);
 void					ft_dstr_insert(t_dstr **str, char c, int index);
 
 /*
@@ -206,6 +206,7 @@ char					*ft_strstr(const char *haystack, const char *needle);
 char					*ft_strsub(char const *s, unsigned int start,
 																size_t len);
 char					*ft_strjoin(const char *s1, const char *s2);
+bool    				ft_strisnbr(char *str);
 
 /*
 ** -----------------------------Array-----------------------------
@@ -234,6 +235,8 @@ int						ft_isctrl(int c);
 int						ft_isalpha(int c);
 int						ft_isdigit(int c);
 int						ft_isalnum(int c);
+bool					ft_isblank(char c);
+bool					ft_isquote(char c);
 
 /*
 ** -----------------------------Length-----------------------------

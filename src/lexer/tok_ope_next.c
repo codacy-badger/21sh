@@ -1,42 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell.h                                            :+:      :+:    :+:   */
+/*   tok_ope_next.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/08 02:28:05 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:56:00 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
+#include "shell.h"
 
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <signal.h>
-# include <sys/ioctl.h>
-# include "libft.h"
-# include "terminal.h"
-# include "input.h"
-# include "lexer.h"
-
-# define ALLOC_ERROR	3
-
-typedef struct		s_sh
+int     tok_ope_next(t_lexer *lexer, char **str)
 {
-	struct s_term	term;
-	struct s_input	input;
-	struct s_lexer	lexer;
-}					t_sh;
-
-int					shell_init(t_sh *shell);
-void				shell_del(t_sh *shell);
-
-void				sig_init(t_sh *shell);
-void				sig_handle(int sig);
-void				sig_action(t_sh *shell, int sig);
-
-#endif
+    if (!lexer->curr_tok->is_delim && is_operator(lexer->prev)
+    && is_operator_next(lexer->curr_tok->content->str, **str))
+    {
+        if (ft_dstr_add(&lexer->curr_tok->content, **str) < 0)
+            return (ALLOC_ERROR);
+        lexer->prev = **str;
+        (*str)++;
+        return (1);
+    }
+    return (0);
+}

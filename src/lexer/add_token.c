@@ -1,42 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell.h                                            :+:      :+:    :+:   */
+/*   add_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/08 02:28:05 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:56:00 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_H
-# define SHELL_H
+#include "shell.h"
 
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <signal.h>
-# include <sys/ioctl.h>
-# include "libft.h"
-# include "terminal.h"
-# include "input.h"
-# include "lexer.h"
-
-# define ALLOC_ERROR	3
-
-typedef struct		s_sh
+int     add_token(t_lexer *lexer, int type)
 {
-	struct s_term	term;
-	struct s_input	input;
-	struct s_lexer	lexer;
-}					t_sh;
-
-int					shell_init(t_sh *shell);
-void				shell_del(t_sh *shell);
-
-void				sig_init(t_sh *shell);
-void				sig_handle(int sig);
-void				sig_action(t_sh *shell, int sig);
-
-#endif
+    lexer->prev_tok = lexer->curr_tok;
+    if (!(lexer->curr_tok = token_new(type)))
+        return (ALLOC_ERROR);
+    ft_list_add_tail(lexer->curr_tok, lexer->tokens);
+    return (0);
+}

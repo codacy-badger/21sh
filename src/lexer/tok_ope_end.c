@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_new.c                                        :+:      :+:    :+:   */
+/*   tok_ope_end.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,18 +12,29 @@
 
 #include "shell.h"
 
-t_token *token_new(int type)
+static void set_operator_type(t_lexer *lexer, char **str)
 {
-    t_token *token;
+    char    *ope;
+    char    *prev_tok;
 
-    if (!(token = (t_token *)ft_memalloc(sizeof(*token))))
-        return (NULL);
-    if (!(token->content = ft_dstr_new(1)))
+    ope = lexer->curr_tok->content->str;
+    lexer->curr_tok->type = get_operator_type(ope);
+    if (is_operator_redir(lexer->curr_tok) && lexer->prev_tok)
     {
-        ft_memdel((void *)&token);
-        return (NULL);
+        prev_tok = lexer->prev_tok->content->str;
+        if (!ft_isblank(*(*str - (ft_strlen(ope) + 1))) && ft_strisnbr(prev_tok))
+            lexer->prev_tok->type = IO_NUMBER;
     }
-    token->is_delim = 0;
-    token->type = type;
-    return (token);
+}
+
+int         tok_ope_end(t_lexer *lexer, char **str)
+{
+    if (!lexer->curr_tok->is_delim && is_operator(lexer->prev)
+    && !is_operator_next(lexer->curr_tok->content->str, **str))
+    {
+        set_operator_type(lexer, str);
+        lexer->curr_tok->is_delim = true;
+        return (1);
+    }
+    return (0);
 }

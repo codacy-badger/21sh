@@ -6,7 +6,7 @@
 #    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/12/08 02:23:39 by fratajcz         ###   ########.fr        #
+#    Updated: 2019/12/08 21:06:27 by fratajcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,19 +30,31 @@ SRC =		shell/main.c \
 			term/movc_cardinal.c \
 			term/clear_fromc.c \
 			input/input_init.c \
-			input/line.c\
+			input/line.c \
 			input/move_curs_cardinal.c \
 			input/move_curs_special.c \
-			input/add_str.c\
-			input/del_char.c\
-			input/redraw.c\
+			input/add_str.c \
+			input/del_char.c \
+			input/redraw.c \
 			input/read_line.c \
 			input/copypaste.c \
 			input/history.c \
+			input/input_utils.c \
 			lexer/lexer_init.c \
 			lexer/tokenize.c \
 			lexer/token_new.c \
-			utils/utils.c
+			lexer/add_token.c \
+			lexer/tok_end.c \
+			lexer/tok_ope_next.c \
+			lexer/tok_ope_end.c \
+			lexer/tok_quote.c \
+			lexer/tok_ope_start.c \
+			lexer/tok_eol.c \
+			lexer/tok_blank.c \
+			lexer/tok_word_next.c \
+			lexer/tok_hash.c \
+			lexer/tok_word_start.c \
+			lexer/tok_utils.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
 LIB = $(addprefix $(DIR_LIB), libft.a)

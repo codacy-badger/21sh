@@ -25,7 +25,9 @@ int     lexer_init(t_lexer *lexer)
     lexer->curr_tok = NULL;
     if (!(lexer->tokens = ft_list_first_head(NULL)))
         return (-1);
-    if (!(ret = add_token(lexer, START)))
+    if ((ret = add_token(lexer, START)) < 0)
         return (ret);
+    lexer->curr_tok->is_delim = true;
+    lexer->prev = 0;
     return (0);
 }

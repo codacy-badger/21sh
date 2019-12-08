@@ -41,7 +41,7 @@ int		term_init(struct s_term *term)
 		return (-1); //error
 	tcgetattr(STDIN_FILENO, &(term->orig_term));
 	new_term = term->orig_term;
-	new_term.c_lflag &= ~(ECHO | ICANON | ISIG);
+	new_term.c_lflag &= ~(ECHO | ICANON /*| ISIG*/);
 	new_term.c_cc[VMIN] = 1;
 	new_term.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &new_term);

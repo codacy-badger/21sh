@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/08 03:41:04 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/08 21:06:20 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,15 @@ int					redraw(t_term *term, t_input *input);
 
 int					history_move_up(t_term *term, t_input *input);
 int					history_move_down(t_term *term, t_input *input);
+
+/*
+** Utils
+*/
+
+int					ft_putc(int c);
+ssize_t				ft_putwc(char *c);
+ssize_t				getcsize(int c);
+ssize_t				getcsize_rev(char *s, int i);
+int					isctrl(unsigned int *keys, unsigned int c);
 
 #endif
