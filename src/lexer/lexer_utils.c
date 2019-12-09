@@ -33,6 +33,7 @@ void		delim_token(t_lexer *lexer, char **str)
 	lexer->curr_tok->is_delim = true;
 	if (is_operator_start(*lexer->curr_tok->content->str))
 		set_operator_type(lexer, str);
+	
 	//else if (is NAME, ASSIGMENTblabla)
 	//	do great stuff
 }
