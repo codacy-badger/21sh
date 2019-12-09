@@ -12,36 +12,49 @@
 
 #include "shell.h"
 
-int			tok_ope_end(t_lexer *lexer, char **str)
+int		tok_ope_next(void *lex, char **str)
 {
-	if (!lexer->curr_tok->is_delim && is_operator_part(lexer->prev)
-			&& !is_operator_next(lexer->curr_tok->content->str, **str))
-	{
-		delim_token(lexer, str);
-		return (1);
-	}
-	return (0);
-}
+	t_lexer *lexer;
 
-int			tok_ope_start(t_lexer *lexer, char **str)
-{
-	if (!lexer->curr_tok->is_delim && is_operator_start(**str))
-	{
-		delim_token(lexer, str);
-		return (1);
-	}
-	return (0);
-}
-
-int			tok_ope_next(t_lexer *lexer, char **str)
-{
-	if (!lexer->curr_tok->is_delim && is_operator_part(lexer->prev)
+	lexer = (t_lexer *)lex;
+	if (lexer->qstatus)
+		return (0);
+	if (!lexer->curr_tok->delimited && is_operator_part(lexer->prev)
 			&& is_operator_next(lexer->curr_tok->content->str, **str))
 	{
-		if (ft_dstr_add(&lexer->curr_tok->content, **str) < 0)
+		if (token_add_char(lexer, str) < 0)
 			return (ALLOC_ERROR);
-		lexer->prev = **str;
-		(*str)++;
+		return (0);
+	}
+	return (0);
+}
+
+int		tok_ope_end(void *lex, char **str)
+{
+	t_lexer *lexer;
+
+	lexer = (t_lexer *)lex;
+	if (lexer->qstatus)
+		return (0);
+	if (!lexer->curr_tok->delimited && is_operator_part(lexer->prev)
+			&& !is_operator_next(lexer->curr_tok->content->str, **str))
+	{
+		token_delim(lexer, str);
+		return (1);
+	}
+	return (0);
+}
+
+int		tok_ope_start(void *lex, char **str)
+{
+	t_lexer *lexer;
+
+	lexer = (t_lexer *)lex;
+	if (lexer->qstatus)
+		return (0);
+	if (!lexer->curr_tok->delimited && is_operator_start(**str))
+	{
+		token_delim(lexer, str);
 		return (1);
 	}
 	return (0);

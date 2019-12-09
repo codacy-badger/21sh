@@ -19,12 +19,32 @@
 **			-history (lexer)
 */
 
+static void	remove_esc_eol(t_input *input)
+{
+	char	*ptr;
+	bool	esc;
+
+	esc = false;
+	ptr = input->line->str;
+	while (*ptr && *ptr != '\n')
+	{
+		if (esc == false && *ptr == '\\')
+			esc = true;
+		else
+			esc = false;
+		ptr++;
+	}
+	if (esc)
+		ft_strremove(ptr - 1, 2);
+}
+
 static int	handle_eol(t_term *term, t_input *input, unsigned int c)
 {
 	input->prev = c;
 	move_curs_end(term, input);
-	//ft_strinsert(&input->line->str[input->line->len++], (char *)&c, 1);
+	ft_strinsert(&input->line->str[input->line->len++], (char *)&c, 1);
 	move_curs_left(term, input);
+	remove_esc_eol(input);
 	display_nl(term);
 	return (K_EOL);
 }

@@ -12,42 +12,44 @@
 
 #include "shell.h"
 
-static int  tok_squote(t_lexer *lexer, char **str)
+static int  tok_squote(t_lexer *lexer)
 {
-    ft_dstr_add(&lexer->curr_tok->content, *(*str)++);
-    while (**str && **str != '\'')
-        ft_dstr_add(&lexer->curr_tok->content, *(*str)++);
-    ft_dstr_add(&lexer->curr_tok->content, *(*str)++);
-    return (1);
+    if (lexer->qstatus == NONE)
+        lexer->qstatus = SQUOTE;
+    else if (lexer->qstatus == SQUOTE)
+        lexer->qstatus = NONE;
+    return (0);
 }
 
-static int  tok_dquote(t_lexer *lexer, char **str)
+static int  tok_dquote(t_lexer *lexer)
 {
-    ft_dstr_add(&lexer->curr_tok->content, *(*str)++);
-    while (**str && **str != '"')
-        ft_dstr_add(&lexer->curr_tok->content, *(*str)++);
-    ft_dstr_add(&lexer->curr_tok->content, *(*str)++);
-    return (1);
+    if (lexer->qstatus == NONE)
+        lexer->qstatus = DQUOTE;
+    else if (lexer->qstatus == DQUOTE)
+        lexer->qstatus = NONE;
+    return (0);
 }
 
-static int  tok_escape(t_lexer *lexer, char **str)
+/*
+** the escape status is reset in token_add_char()
+*/
+static int  tok_escape(t_lexer *lexer)
 {
-    if (**str != '\n')
-    {
-        ft_dstr_add(&lexer->curr_tok->content, **str);
-        ft_dstr_add(&lexer->curr_tok->content, *(*str + 1));
-    }
-    (*str) += 2;
-    return (1);
+    if (lexer->qstatus == NONE)
+        lexer->qstatus = BSLASH;
+    return (0);
 }
 
-int         tok_quote(t_lexer *lexer, char **str)
+int         tok_quote(void *lex, char **str)
 {
+    t_lexer *lexer;
+
+	lexer = (t_lexer *)lex;
     if (**str == '\\')
-        return (tok_escape(lexer, str));
+        return (tok_escape(lexer));
     else if (**str == '\'')
-        return (tok_squote(lexer, str));
+        return (tok_squote(lexer));
     else if (**str == '"')
-        return (tok_dquote(lexer, str));
+        return (tok_dquote(lexer));
     return (0);
 }

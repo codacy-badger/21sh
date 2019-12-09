@@ -30,6 +30,8 @@
 **		   ';'	   '|'
 */
 
+# define FUNC_NB	9
+
 enum 				e_tok_type
 {
 	START,
@@ -52,45 +54,72 @@ enum 				e_tok_type
 	NEWLINE
 };
 
+enum				e_qstatus
+{
+	NONE = 0,
+	BSLASH = '\\',
+	SQUOTE = '\'',
+	DQUOTE = '"'
+};
+
 typedef struct		s_token
 {
 	t_dstr			*content;
-	bool			is_delim;
+	bool			delimited;
 	enum e_tok_type	type;
 }					t_token;
+
+/*
+** qstatus is the current quote status of the lexer:
+** backslash, quote, dquote.
+**
+** In tok_quote, we set qstatus and we return 0
+** so the while loop will not "continue" (it would cause 
+** an infinite loop because the pointer is still on the quote).
+** Like this tok_word_next() || tok_word_start() will do their jobs
+** adding the chars to current token.
+** The functions like tok_ope_start will not enter in their
+** if statements if is the qstatus is != 0;
+**
+** dont need tok_end() anymore, maybe to handle eof, removed it.
+*/
+
+/*
+** Need void * to avoid chicken and egg problems
+*/
+typedef int			(*t_lex_func)(void *, char **);
 
 typedef struct		s_lexer
 {
 	t_list_head		*tokens;
+	t_lex_func		ftable[FUNC_NB];
 	t_token			*curr_tok;
 	t_token			*prev_tok;
+	char			prev_sep;
+	enum e_qstatus	qstatus;
 	char			prev;
 }					t_lexer;
 
 int     			lexer_init(t_lexer *lexer);
 int					tokenize(t_lexer *lexer, t_input *input);
-int    				add_token(t_lexer *lexer, int type);
-void				delim_token(t_lexer *lexer, char **str);
+int					token_add_char(t_lexer *lexer, char **str);
+int    				token_add(t_lexer *lexer, int type);
+void				token_delim(t_lexer *lexer, char **str);
+t_token 			*token_new(int type);
 
 /*
 ** Tokenization functions
 */
-int					tok_end(t_lexer *lexer, char **str);
-int     			tok_ope_next(t_lexer *lexer, char **str);
-int     			tok_ope_end(t_lexer *lexer, char **str);
-int         		tok_quote(t_lexer *lexer, char **str);
+int     			tok_ope_next(void *lex, char **str);
+int     			tok_ope_end(void *lex, char **str);
+int         		tok_quote(void *lex, char **str);
 //					tok_$
-int     			tok_ope_start(t_lexer *lexer, char **str);
-int					tok_eol(t_lexer *lexer, char **str);
-int     			tok_blank(t_lexer *lexer, char **str);
-int     			tok_word_next(t_lexer *lexer, char **str);
-int         		tok_hash(t_lexer *lexer, char **str);
-int					tok_word_start(t_lexer *lexer, char **str);
-
-/*
-** T_token struct
-*/
-t_token 			*token_new(int type);
+int     			tok_ope_start(void *lex, char **str);
+int					tok_eol(void *lex, char **str);
+int     			tok_blank(void *lex, char **str);
+int     			tok_word_next(void *lex, char **str);
+int         		tok_hash(void *lex, char **str);
+int					tok_word_start(void *lex, char **str);
 
 /*
 ** Utils

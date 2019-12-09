@@ -12,59 +12,50 @@
 
 #include "shell.h"
 
-int		tok_blank(t_lexer *lexer, char **str)
+int		tok_eol(void *lex, char **str)
 {
-	if (ft_isblank(**str))
-	{
-		delim_token(lexer, str);
-		while (ft_isblank(**str))
-		{
-			lexer->prev = **str;
-			(*str)++;
-		}
-		return (1);
-	}
-	return (0);
-}
+	t_lexer *lexer;
 
-int		tok_eol(t_lexer *lexer, char **str)
-{
+	lexer = (t_lexer *)lex;
+	if (lexer->qstatus)
+		return (0);
 	if (**str == '\n')
 	{
-		delim_token(lexer, str);
-		if (add_token(lexer, NEWLINE) < 0)
+		token_delim(lexer, str);
+		if (token_add(lexer, NEWLINE) < 0)
 			return (ALLOC_ERROR);
-		if (ft_dstr_add(&lexer->curr_tok->content, **str) < 0) //not neccessary ?
+		if (token_add(lexer, END) < 0)
 			return (ALLOC_ERROR);
-		lexer->curr_tok->is_delim = true;
-		lexer->prev = **str;
-		(*str)++;
+		lexer->prev = *(*str)++;
 		return (1);
 	}
 	return (0);
 }
 
-int		tok_end(t_lexer *lexer, char **str)
+int		tok_blank(void *lex, char **str)
 {
-	if (**str == '\0')
+	t_lexer *lexer;
+
+	lexer = (t_lexer *)lex;
+	if (lexer->qstatus)
+		return (0);
+	if (ft_isblank(**str))
 	{
-		delim_token(lexer, str);
-		if (add_token(lexer, END) < 0)
-			return (ALLOC_ERROR);
+		token_delim(lexer, str);
+		while (ft_isblank(**str))
+			lexer->prev = *(*str)++;
 		return (1);
 	}
 	return (0);
 }
 
-int		tok_hash(t_lexer *lexer, char **str)
+int		tok_hash(void *lex, char **str)
 {
+	(void)lex;
 	if (**str == '#')
 	{
 		while (**str != '\n')
-		{
-			lexer->prev = **str;
 			(*str)++;
-		}
 		return (1);
 	}
 	return (0);

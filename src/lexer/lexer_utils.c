@@ -1,64 +1,73 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   lexer_utils_ope.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/08 21:45:49 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/08 21:46:23 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/12/08 21:36:29 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void	set_operator_type(t_lexer *lexer, char **str)
+bool	is_operator_start(char c)
 {
-	char	*ope;
-	char	*prev_tok;
+	return (c == '<' || c == '>' || c == '&' || c == ';' || c == '|');
+}
 
-	ope = lexer->curr_tok->content->str;
-	lexer->curr_tok->type = get_operator_type(ope);
-	if (is_operator_redir(lexer->curr_tok) && lexer->prev_tok)
+bool	is_operator_part(char c)
+{
+	return ((is_operator_start(c)) || c == '-');
+}
+
+bool	is_operator_next(char *ope, char c)
+{
+	if (is_operator_part(c))
 	{
-		prev_tok = lexer->prev_tok->content->str;
-		if (!ft_isblank(*(*str - (ft_strlen(ope) + 1)))
-				&& ft_strisnbr(prev_tok))
-			lexer->prev_tok->type = IO_NUMBER;
+		if (c == '<')
+			return (ft_strequ(ope, "<"));
+		else if (c == '>')
+			return (ft_strequ(ope, "<") || ft_strequ(ope, ">"));
+		else if (c == '&')
+			return (ft_strequ(ope, "<") || ft_strequ(ope, ">") || ft_strequ(ope, "&"));
+		else if (c == '|')
+			return (ft_strequ(ope, "|"));
+		else if (c == '-')
+			return (ft_strequ(ope, "<<"));
 	}
-}
-
-void		delim_token(t_lexer *lexer, char **str)
-{
-	lexer->curr_tok->is_delim = true;
-	if (is_operator_start(*lexer->curr_tok->content->str))
-		set_operator_type(lexer, str);
-	
-	//else if (is NAME, ASSIGMENTblabla)
-	//	do great stuff
-}
-
-int			add_token(t_lexer *lexer, int type)
-{
-	lexer->prev_tok = lexer->curr_tok;
-	if (!(lexer->curr_tok = token_new(type)))
-		return (ALLOC_ERROR);
-	ft_list_add_tail(lexer->curr_tok, lexer->tokens);
 	return (0);
 }
 
-t_token		*token_new(int type)
+bool	is_operator_redir(t_token *token)
 {
-	t_token *token;
+	return (DLESS <= token->type && token->type <= DLESSDASH);
+}
 
-	if (!(token = (t_token *)ft_memalloc(sizeof(*token))))
-		return (NULL);
-	if (!(token->content = ft_dstr_new(1)))
-	{
-		ft_memdel((void *)&token);
-		return (NULL);
-	}
-	token->is_delim = 0;
-	token->type = type;
-	return (token);
+int		get_operator_type(char *ope)
+{
+	if (ft_strequ(ope, "<<"))
+		return (DLESS);
+	else if (ft_strequ(ope, ">>"))
+		return (DGREAT);
+	else if (ft_strequ(ope, "<&") || ft_strequ(ope, "<"))
+		return (LESSAND);
+	else if (ft_strequ(ope, ">&") || ft_strequ(ope, ">"))
+		return (GREATAND);
+	else if (ft_strequ(ope, "<>"))
+		return (LESSGREAT);
+	else if (ft_strequ(ope, "<<-"))
+		return (DLESSDASH);
+	else if (ft_strequ(ope, "&"))
+		return (AMPERSAND);
+	else if (ft_strequ(ope, "&&"))
+		return (AND_IF);
+	else if (ft_strequ(ope, "|"))
+		return (PIPE);
+	else if (ft_strequ(ope, "||"))
+		return (OR_IF);
+	else if (ft_strequ(ope, ";"))
+		return (SEMI);
+	return (0);
 }

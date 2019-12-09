@@ -12,32 +12,31 @@
 
 #include "shell.h"
 
-int		tok_word_next(t_lexer *lexer, char **str)
+int		tok_word_next(void *lex, char **str)
 {
-	if (**str && !lexer->curr_tok->is_delim)
+	t_lexer *lexer;
+
+	lexer = (t_lexer *)lex;
+	if (**str && !lexer->curr_tok->delimited)
 	{
-		if (ft_isquote(**str))
-			return (tok_quote(lexer, str));
-		if (ft_dstr_add(&lexer->curr_tok->content, **str) < 0)
+		if (token_add_char(lexer, str) < 0)
 			return (ALLOC_ERROR);
-		lexer->prev = **str;
-		(*str)++;
 		return (1);
 	}
 	return (0);
 }
 
-int		tok_word_start(t_lexer *lexer, char **str)
+int		tok_word_start(void *lex, char **str)
 {
-	if (**str && lexer->curr_tok->is_delim)
+	t_lexer *lexer;
+
+	lexer = (t_lexer *)lex;
+	if (**str && lexer->curr_tok->delimited)
 	{
-		if (add_token(lexer, WORD) < 0)
+		if (token_add(lexer, WORD) < 0)
 			return (ALLOC_ERROR);
-		if (ft_isquote(**str))
-			return (tok_quote(lexer, str));
-		ft_dstr_add(&lexer->curr_tok->content, **str);
-		lexer->prev = **str;
-		(*str)++;
+		if (token_add_char(lexer, str) < 0)
+			return (ALLOC_ERROR);
 		return (1);
 	}
 	return (0);

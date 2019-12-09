@@ -42,10 +42,13 @@ SRC =		shell/main.c \
 			input/input_utils.c \
 			lexer/lexer_init.c\
 			lexer/lexer_utils.c\
+			lexer/token_add_char.c \
+			lexer/token_add.c \
+			lexer/token_delim.c \
+			lexer/token_new.c \
 			lexer/tok_operator.c\
 			lexer/tok_quote.c\
 			lexer/tok_special.c\
-			lexer/tok_utils.c\
 			lexer/tok_word.c\
 			lexer/tokenize.c\
 
