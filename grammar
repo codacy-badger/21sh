@@ -12,23 +12,25 @@
 /* -------------------------------------------------------
    The Grammar
    ------------------------------------------------------- */
-complete_command : list separator_op
+complete_command : list separator
                  | list
                  ;
-list             : list separator_op and_or
+/*
+list             : list separator    and_or
                  |                   and_or
+                 ;
+*/ ^ causes infinite recursion (left-recursive)
+
+list1            : and_or list2
+                 ;
+list2            : separator and_or list2
+                 | EMPTY
                  ;
 and_or           :               pipeline
                  | and_or AND_IF pipeline
                  | and_or OR_IF  pipeline
 pipeline         :              command
                  | pipeline '|' command
-                 ;
-term             : term separator pipeline
-                 |                pipeline
-                 ;
-wordlist         : wordlist WORD
-                 |          WORD
                  ;
 command          : cmd_prefix cmd_word cmd_suffix
                  | cmd_prefix cmd_word
@@ -74,7 +76,4 @@ here_end         : WORD                      /* Apply rule 3 */
                  ;
 separator        : '&'
                  | ';'
-                 ;
-sequential_sep   : ';' linebreak
-                 | newline_list
                  ;
