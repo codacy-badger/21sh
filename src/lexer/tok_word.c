@@ -16,6 +16,8 @@ int		tok_word_next(t_lexer *lexer, char **str)
 {
 	if (**str && !lexer->curr_tok->is_delim)
 	{
+		if (ft_isquote(**str))
+			return (tok_quote(lexer, str));
 		if (ft_dstr_add(&lexer->curr_tok->content, **str) < 0)
 			return (ALLOC_ERROR);
 		lexer->prev = **str;
@@ -31,6 +33,8 @@ int		tok_word_start(t_lexer *lexer, char **str)
 	{
 		if (add_token(lexer, WORD) < 0)
 			return (ALLOC_ERROR);
+		if (ft_isquote(**str))
+			return (tok_quote(lexer, str));
 		ft_dstr_add(&lexer->curr_tok->content, **str);
 		lexer->prev = **str;
 		(*str)++;

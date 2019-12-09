@@ -86,10 +86,7 @@ int			read_line(t_term *term, t_input *input)
 	while ((ret = read(STDIN_FILENO, &c, sizeof(c))) != -1)
 	{
 		if ((ret = process_char(term, input, c)) == K_EOL)
-		{
-			input_reset(input);
-			display_str(term, input->prompt);
-		}
+			return (0);
 		else if (ret < 0)
 			break ; //error
 		input->prev = c;

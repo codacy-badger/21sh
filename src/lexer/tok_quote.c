@@ -32,7 +32,7 @@ static int  tok_dquote(t_lexer *lexer, char **str)
 
 static int  tok_escape(t_lexer *lexer, char **str)
 {
-    if (*(*str + 1) != '\n')
+    if (**str != '\n')
     {
         ft_dstr_add(&lexer->curr_tok->content, **str);
         ft_dstr_add(&lexer->curr_tok->content, *(*str + 1));
@@ -43,7 +43,6 @@ static int  tok_escape(t_lexer *lexer, char **str)
 
 int         tok_quote(t_lexer *lexer, char **str)
 {
-    lexer->prev = **str;
     if (**str == '\\')
         return (tok_escape(lexer, str));
     else if (**str == '\'')

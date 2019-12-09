@@ -16,7 +16,7 @@ int		tok_blank(t_lexer *lexer, char **str)
 {
 	if (ft_isblank(**str))
 	{
-		lexer->curr_tok->is_delim = true;
+		delim_token(lexer, str);
 		while (ft_isblank(**str))
 		{
 			lexer->prev = **str;
@@ -31,7 +31,7 @@ int		tok_eol(t_lexer *lexer, char **str)
 {
 	if (**str == '\n')
 	{
-		lexer->curr_tok->is_delim = true;
+		delim_token(lexer, str);
 		if (add_token(lexer, NEWLINE) < 0)
 			return (ALLOC_ERROR);
 		if (ft_dstr_add(&lexer->curr_tok->content, **str) < 0) //not neccessary ?
@@ -48,7 +48,7 @@ int		tok_end(t_lexer *lexer, char **str)
 {
 	if (**str == '\0')
 	{
-		lexer->curr_tok->is_delim = true;
+		delim_token(lexer, str);
 		if (add_token(lexer, END) < 0)
 			return (ALLOC_ERROR);
 		return (1);

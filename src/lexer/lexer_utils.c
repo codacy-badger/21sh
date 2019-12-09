@@ -12,7 +12,32 @@
 
 #include "shell.h"
 
-int		add_token(t_lexer *lexer, int type)
+static void	set_operator_type(t_lexer *lexer, char **str)
+{
+	char	*ope;
+	char	*prev_tok;
+
+	ope = lexer->curr_tok->content->str;
+	lexer->curr_tok->type = get_operator_type(ope);
+	if (is_operator_redir(lexer->curr_tok) && lexer->prev_tok)
+	{
+		prev_tok = lexer->prev_tok->content->str;
+		if (!ft_isblank(*(*str - (ft_strlen(ope) + 1)))
+				&& ft_strisnbr(prev_tok))
+			lexer->prev_tok->type = IO_NUMBER;
+	}
+}
+
+void		delim_token(t_lexer *lexer, char **str)
+{
+	lexer->curr_tok->is_delim = true;
+	if (is_operator_start(*lexer->curr_tok->content->str))
+		set_operator_type(lexer, str);
+	//else if (is NAME, ASSIGMENTblabla)
+	//	do great stuff
+}
+
+int			add_token(t_lexer *lexer, int type)
 {
 	lexer->prev_tok = lexer->curr_tok;
 	if (!(lexer->curr_tok = token_new(type)))
@@ -21,7 +46,7 @@ int		add_token(t_lexer *lexer, int type)
 	return (0);
 }
 
-t_token	*token_new(int type)
+t_token		*token_new(int type)
 {
 	t_token *token;
 

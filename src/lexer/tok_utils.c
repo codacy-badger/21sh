@@ -17,14 +17,14 @@ bool	is_operator_start(char c)
 	return (c == '<' || c == '>' || c == '&' || c == ';' || c == '|');
 }
 
-bool	is_operator(char c)
+bool	is_operator_part(char c)
 {
 	return ((is_operator_start(c)) || c == '-');
 }
 
 bool	is_operator_next(char *ope, char c)
 {
-	if (is_operator(c))
+	if (is_operator_part(c))
 	{
 		if (c == '<')
 			return (ft_strequ(ope, "<"));
@@ -69,5 +69,5 @@ int		get_operator_type(char *ope)
 		return (OR_IF);
 	else if (ft_strequ(ope, ";"))
 		return (SEMI);
-	return (NONE);
+	return (0);
 }

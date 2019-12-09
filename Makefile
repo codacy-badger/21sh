@@ -12,7 +12,7 @@
 
 NAME = 21sh 
 CC = gcc
-CFLAGS = -Wall -Wextra -glldb# -fsanitize=address#-Werror
+CFLAGS = -Wall -Wextra #-glldb# -fsanitize=address#-Werror
 LFLAGS = -ltermcap
 DIR_SRC = src/
 DIR_OBJ = obj/

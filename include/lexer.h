@@ -32,7 +32,6 @@
 
 enum 				e_tok_type
 {
-	NONE,
 	START,
 	END,
 	WORD,
@@ -71,6 +70,7 @@ typedef struct		s_lexer
 int     			lexer_init(t_lexer *lexer);
 int					tokenize(t_lexer *lexer, t_input *input);
 int    				add_token(t_lexer *lexer, int type);
+void				delim_token(t_lexer *lexer, char **str);
 
 /*
 ** Tokenization functions
@@ -96,7 +96,7 @@ t_token 			*token_new(int type);
 ** Utils
 */
 bool    			is_operator_start(char c);
-bool    			is_operator(char c);
+bool    			is_operator_part(char c);
 bool    			is_operator_next(char *ope, char c);
 bool   				is_operator_redir(t_token *token);
 int     			get_operator_type(char *ope);

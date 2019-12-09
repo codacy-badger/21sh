@@ -26,8 +26,6 @@ int		tokenize(t_lexer *lexer, t_input *input)
 			continue ;
 		if (tok_ope_end(lexer, &str))
 			continue ;
-		if (tok_quote(lexer, &str))
-			continue ;
 		//if (tok_$`)
 		//  continue ;
 		if (tok_ope_start(lexer, &str))
