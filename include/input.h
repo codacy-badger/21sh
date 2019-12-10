@@ -20,10 +20,6 @@
 # define PS3		2
 # define PS4		3
 
-/*
-** prompt scroll...
-*/
-
 enum	e_keys
 {
 		K_UP,

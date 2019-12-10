@@ -106,6 +106,7 @@ int					token_add_char(t_lexer *lexer, char **str);
 int    				token_add(t_lexer *lexer, int type);
 void				token_delim(t_lexer *lexer, char **str);
 t_token 			*token_new(int type);
+void				token_del(void *tok, void *priv);
 
 /*
 ** Tokenization functions

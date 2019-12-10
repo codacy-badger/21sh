@@ -14,6 +14,7 @@
 
 static void	lexer_del(t_lexer *lexer)
 {
+	ft_list_foreach(lexer->tokens, &token_del, NULL);
 	while (!ft_list_empty(lexer->tokens))
 		ft_list_del(lexer->tokens->next);
 	ft_list_del(lexer->tokens);
@@ -27,6 +28,14 @@ static void	input_del(t_input *input)
 	i = 0;
 	line_del(&input->line);
 	line_del(&input->clipb);
+	line_del(&input->line_backup);
+	while (!ft_list_empty(input->history))
+	{
+		line_del((t_line **)&input->history->next->data);
+		ft_list_del(input->history->next);
+	}
+	ft_memdel(&input->history->data);
+	ft_list_del(input->history);
 	while (i < 4)
 		ft_memdel((void *)&input->prompts[i++]);
 	input->prompt = NULL;
