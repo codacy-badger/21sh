@@ -91,6 +91,7 @@ int					read_line(t_term *term, t_input *input);
 /*
 ** T_line struct
 */
+
 t_line				*line_new(size_t size);
 int					line_add_str(t_line *line, char *s);
 int					line_del_char(t_line *line);
@@ -100,6 +101,7 @@ void				line_del(t_line **line);
 /*
 ** Cursor motion
 */
+
 int					move_curs_left(t_term *term, t_input *input);
 int					move_curs_right(t_term *term, t_input *input);
 int					move_curs_up(t_term *term, t_input *input);
@@ -112,6 +114,7 @@ int					move_curs_prevw(t_term *term, t_input *input);
 /*
 ** Copy/Paste
 */
+
 int					cp_cut_before(t_term *term, t_input *input);
 int					cp_cut_after(t_term *term, t_input *input);
 int					cp_cut_prevw(t_term *term, t_input *input);

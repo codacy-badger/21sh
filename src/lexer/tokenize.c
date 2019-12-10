@@ -74,6 +74,7 @@ int			tokenize(t_lexer *lexer, t_input *input)
 		return (tokenize(lexer, input));
 	}
 	*/
+	
 	/**************debug*************/    
 	t_list_head *list;
 	t_token     *token;

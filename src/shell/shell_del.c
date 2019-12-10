@@ -12,6 +12,13 @@
 
 #include "shell.h"
 
+static void	lexer_del(t_lexer *lexer)
+{
+	while (!ft_list_empty(lexer->tokens))
+		ft_list_del(lexer->tokens->next);
+	ft_list_del(lexer->tokens);
+}
+
 //file
 static void	input_del(t_input *input)
 {
@@ -35,6 +42,7 @@ static void	term_del(t_term *term)
 
 void		shell_del(t_sh *shell)
 {
+	lexer_del(&shell->lexer);
 	input_del(&shell->input);
 	term_del(&shell->term);
 }

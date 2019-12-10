@@ -14,6 +14,7 @@
 
 /*
 ** deletes entry from a list
+** this should take a ** to update the head
 */
 
 void	ft_list_del(t_list_head *head)
