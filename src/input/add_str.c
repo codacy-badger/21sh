@@ -12,40 +12,6 @@
 
 #include "shell.h"
 
-int		line_add_char(t_line *line, unsigned int c)
-{
-	size_t	olds;
-	size_t	news;
-	size_t	csize;
-
-	if (!line)
-		return (-1);
-	csize = getcsize(c);
-	if (line->len + csize >= line->size - 1)
-	{
-		olds = line->len;
-		news = line->size * 2;
-		if (!(ft_memrealloc((void **)&line->str, olds, news)))
-			return (-1);
-		line->size = news;
-	}
-	ft_strinsert(&line->str[line->i], (char *)&c, csize);
-	line->len += csize;
-	return (0);
-}
-
-int		input_add_char(t_term *term, t_input *input, unsigned int c)
-{
-	size_t		offset;
-
-	line_add_char(input->line, c);
-	offset = display_str(term, &input->line->str[input->line->i]);
-	while (offset--)
-		movcleft(term);
-	move_curs_right(term, input);
-	return (0);
-}
-
 int		line_add_str(t_line *line, char *s)
 {
 	size_t	olds;

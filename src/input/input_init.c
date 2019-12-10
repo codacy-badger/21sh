@@ -49,8 +49,8 @@ static void	init_keys(struct s_input *input)
 	input->keys[K_PAST] = 25; // ^Y
 	input->keys[K_EOL] = 10; //nl,  cr??
 	input->keys[K_EOF] = 4; // ^D
-	//input->keys[K_C_UP] = ;
-	//input->keys[K_C_DOWN] =; 
+	input->keys[K_C_UP] = 71696882162459;
+	input->keys[K_C_DOWN] = 72796393790235; 
 }
 
 static int	init_prompts(struct s_input *input)

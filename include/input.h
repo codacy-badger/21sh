@@ -62,13 +62,13 @@ typedef struct		s_input
 {
 	t_list_head		*history;
 	t_list_head		*history_cur;
-	unsigned int	keys[KEYS_SIZE];
+	unsigned long	keys[KEYS_SIZE];
 	char			*prompts[4];
 	char			*prompt;
 	struct s_line	*clipb;
 	struct s_line	*line;
 	struct s_line	*line_backup;
-	unsigned int	prev;
+	unsigned long	prev;
 }					t_input;
 
 typedef struct		s_line
@@ -82,10 +82,9 @@ typedef struct		s_line
 int					input_init(t_input *input);
 void				input_reset(t_input *input);
 void				input_clear_line(t_term *term, t_input *input);
-int					input_add_char(t_term *term, t_input *input, unsigned int c);
 int					input_add_str(t_term *term, t_input *input, char *s);
-int					input_del_char(t_term *term, t_input *input, int c);
-int					input_del_nchar(t_term *term, t_input *input, int c, int n);
+int					input_del_char(t_term *term, t_input *input, unsigned long c);
+int					input_del_nchar(t_term *term, t_input *input, unsigned long c, int n);
 int    				input_add_line(t_input *input);
 int					read_line(t_term *term, t_input *input);
 
@@ -93,7 +92,6 @@ int					read_line(t_term *term, t_input *input);
 ** T_line struct
 */
 t_line				*line_new(size_t size);
-int					line_add_char(t_line *line, unsigned int c);
 int					line_add_str(t_line *line, char *s);
 int					line_del_char(t_line *line);
 int					line_del_nchar(t_line *line, int n);
@@ -136,6 +134,6 @@ int					ft_putc(int c);
 ssize_t				ft_putwc(char *c);
 ssize_t				getcsize(int c);
 ssize_t				getcsize_rev(char *s, int i);
-int					isctrl(unsigned int *keys, unsigned int c);
+int					is_printable(unsigned long c);
 
 #endif

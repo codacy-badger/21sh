@@ -12,18 +12,9 @@
 
 #include "shell.h"
 
-int		isctrl(unsigned int *keys, unsigned int c)
+int		is_printable(unsigned long c)
 {
-	return (c == keys[K_EOL] || c == keys[K_EOF]
-			|| c == keys[K_BSP] || c == keys[K_DEL]
-			|| c == keys[K_LEFT] || c == keys[K_RIGHT]
-			|| c == keys[K_UP] || c == keys[K_DOWN]
-			|| c == keys[K_HOME] || c == keys[K_END]
-			|| c == keys[K_NXTW] || c == keys[K_PRVW]
-			|| c == keys[K_CUTW] || c == keys[K_CUTA]
-			|| c == keys[K_CUTB] || c == keys[K_PAST]
-			|| c == keys[K_REDRAW] || c == keys[K_C_UP]
-			|| c == keys[K_C_DOWN]);
+	return ((char)c != 27 && !(c < 32 || c == 127));
 }
 
 ssize_t	getcsize_rev(char *s, int i)

@@ -38,7 +38,7 @@ static void	remove_esc_eol(t_input *input)
 		ft_strremove(ptr - 1, 2);
 }
 
-static int	handle_eol(t_term *term, t_input *input, unsigned int c)
+static int	handle_eol(t_term *term, t_input *input, unsigned long c)
 {
 	input->prev = c;
 	move_curs_end(term, input);
@@ -49,13 +49,13 @@ static int	handle_eol(t_term *term, t_input *input, unsigned int c)
 	return (K_EOL);
 }
 
-static int	process_char(t_term *term, t_input *input, unsigned int c)
+static int	process_char(t_term *term, t_input *input, unsigned long c)
 {
 	/*
 	** make function table
 	*/
-	if (!isctrl(input->keys, c) && c != 0) //cant use ft_isprint because of wchar, care about weird codes
-		return (input_add_char(term, input, c));
+	if (is_printable(c))
+		return (input_add_str(term, input, (char *)&c));
 	else if (c == input->keys[K_EOL])
 		return (handle_eol(term, input, c));
 	else if (c == input->keys[K_BSP] || c == input->keys[K_DEL])
@@ -68,10 +68,10 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 		return (history_move_up(term, input));
 	else if (c == input->keys[K_DOWN])
 		return (history_move_down(term, input));
-	//else if (c == input->keys[K_C_UP])
-	//	return (move_curs_up(term, input));
-	//else if (c == input->keys[K_C_DOWN])
-	//	return (move_curs_down(term, input));
+	else if (c == input->keys[K_C_UP])
+		return (move_curs_up(term, input));
+	else if (c == input->keys[K_C_DOWN])
+		return (move_curs_down(term, input));
 	else if (c == input->keys[K_HOME])
 		return (move_curs_home(term, input));
 	else if (c == input->keys[K_END])
@@ -99,11 +99,11 @@ static int	process_char(t_term *term, t_input *input, unsigned int c)
 int			read_line(t_term *term, t_input *input)
 {
 	int				ret;
-	unsigned int	c;
+	unsigned long	c;
 
 	c = 0;
 	display_str(term, input->prompt);
-	while ((ret = read(STDIN_FILENO, &c, sizeof(c))) != -1)
+	while ((ret = read(STDIN_FILENO, &c, sizeof(c) - 1)) != -1)
 	{
 		if ((ret = process_char(term, input, c)) == K_EOL)
 			return (0);
