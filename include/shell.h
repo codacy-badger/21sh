@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/08 02:28:05 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/08 23:51:00 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "terminal.h"
 # include "input.h"
 # include "lexer.h"
+# include "parser.h"
 
 /*
 ** TODO:

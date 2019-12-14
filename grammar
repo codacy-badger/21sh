@@ -21,17 +21,34 @@ list             : list separator    and_or
                  ;
 */ ^ causes infinite recursion (left-recursive)
 
-list1            : and_or list2
+list             : and_or list1
                  ;
-list2            : separator and_or list2
+list1            : separator and_or list1
                  | EMPTY
                  ;
+/*
 and_or           :               pipeline
                  | and_or AND_IF pipeline
                  | and_or OR_IF  pipeline
+/* ^left-recursive
+
+and_or           : pipeline and_or1
+                 ;
+
+and_or1          : AND_IF pipeline and_or1
+                 | OR_IF pipeline and_or1
+				 | EMPTY
+				 ;
+/*
 pipeline         :              command
                  | pipeline '|' command
                  ;
+*/ ^left-recursive
+
+pipeline         : command pipeline1
+                 ;
+pipeline1        : '|' command pipeline1
+                 | EMPTY
 command          : cmd_prefix cmd_word cmd_suffix
                  | cmd_prefix cmd_word
                  | cmd_prefix
@@ -51,9 +68,6 @@ cmd_suffix       :            io_redirect
                  | cmd_suffix io_redirect
                  |            WORD
                  | cmd_suffix WORD
-                 ;
-redirect_list    :               io_redirect
-                 | redirect_list io_redirect
                  ;
 io_redirect      :           io_file
                  | IO_NUMBER io_file
