@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 19:37:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/17 18:36:40 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/12/08 23:49:26 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/12/08 23:50:47 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#ifndef PARSER_H
+# define PARSER_H
 
-int		main(void)
-{
-	struct s_sh	shell;
+# include "libft.h"
 
-	init(&shell);
-	while (1)
-	{
-		draw_prompt(&shell.input);
-		readline(&shell.input);
-		//tokenize(&shell->lexer, &shell->input)) != 0)
-		//parse((&shell->lexer)->tokens->next->next);
-	}
-	return (0);
-}
+int		parse(t_list_head *token_list);
+
+#endif
