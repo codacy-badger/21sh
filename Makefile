@@ -6,7 +6,7 @@
 #    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/12/08 23:53:23 by fratajcz         ###   ########.fr        #
+#    Updated: 2019/12/15 08:54:32 by fratajcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,10 @@ SRC =		shell/main.c \
 			lexer/tok_special.c\
 			lexer/tok_word.c\
 			lexer/tokenize.c\
-			parser/parser.c
+			parser/parser.c\
+			parser/pipeline.c\
+			parser/redirect.c\
+			parser/utils.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
 LIB = $(addprefix $(DIR_LIB), libft.a)
