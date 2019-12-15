@@ -6,7 +6,7 @@
 /*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:27:46 by nbousset          #+#    #+#             */
-/*   Updated: 2019/12/08 20:07:47 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/15 11:07:45 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,10 @@ char					*ft_strsub(char const *s, unsigned int start,
 																size_t len);
 char					*ft_strjoin(const char *s1, const char *s2);
 bool    				ft_strisnbr(char *str);
+char					*ft_strcat(char *s1, const char *s2);
+size_t					ft_strnlen(const char *s, size_t maxlen);
+char					*ft_strndup(const char *s1, size_t n);
+
 
 /*
 ** -----------------------------Array-----------------------------

@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strnlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 19:37:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/17 18:39:11 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/12/15 10:37:16 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/12/15 10:37:18 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include <string.h>
 
-int		main(void)
+size_t		ft_strnlen(const char *s, size_t maxlen)
 {
-	struct s_sh	shell;
+	unsigned int i;
 
-	init(&shell);
-	while (1)
-	{
-		draw_prompt(&shell.input);
-		readline(&shell.input);
-		//tokenize(&shell->lexer, &shell->input)) != 0)
-		//parse((&shell->lexer)->tokens->next->next);
-
-		//printf("|%s|\nlen: %zu, i: %zu\n\r", shell->input.line->str, shell->input.line->len, shell->input.line->i);
-	}
-	return (0);
+	i = 0;
+	while (s[i] && i < maxlen)
+		i++;
+	return (i);
 }

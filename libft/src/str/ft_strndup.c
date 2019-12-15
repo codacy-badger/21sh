@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 19:37:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/17 18:39:11 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/12/15 10:37:44 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/12/15 10:38:02 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include <string.h>
+#include "../../inc/libft.h"
 
-int		main(void)
+char	*ft_strndup(const char *s1, size_t n)
 {
-	struct s_sh	shell;
+	size_t	len;
+	char	*new;
 
-	init(&shell);
-	while (1)
-	{
-		draw_prompt(&shell.input);
-		readline(&shell.input);
-		//tokenize(&shell->lexer, &shell->input)) != 0)
-		//parse((&shell->lexer)->tokens->next->next);
-
-		//printf("|%s|\nlen: %zu, i: %zu\n\r", shell->input.line->str, shell->input.line->len, shell->input.line->i);
-	}
-	return (0);
+	len = ft_strnlen(s1, n);
+	if (!(new = ft_strnew(len)))
+		return (NULL);
+	ft_memcpy(new, s1, len);
+	new[len] = '\0';
+	return (new);
 }

@@ -6,7 +6,7 @@
 #    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/12/15 08:54:32 by fratajcz         ###   ########.fr        #
+#    Updated: 2019/12/17 18:37:30 by fratajcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,10 @@ SRC =		shell/main.c \
 			shell/_init.c \
 			shell/del.c \
 			signal/_init.c \
+			shell/utils.c\
+			shell/env_utils.c\
+			shell/path_utils.c\
+			signal/sig_init.c \
 			signal/sig_action.c \
 			signal/sig_handle.c \
 			term/_init.c \
@@ -53,7 +57,10 @@ SRC =		shell/main.c \
 			parser/parser.c\
 			parser/pipeline.c\
 			parser/redirect.c\
-			parser/utils.c
+			parser/utils.c\
+			parser/command.c\
+			exec/exec.c\
+			exec/redir.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
 LIB = $(addprefix $(DIR_LIB), libft.a)

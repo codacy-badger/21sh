@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 19:37:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/17 18:39:11 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/12/15 15:00:39 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/12/15 15:03:01 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
 
-int		main(void)
-{
-	struct s_sh	shell;
+#ifndef EXEC_H
+# define EXEC_H
 
-	init(&shell);
-	while (1)
-	{
-		draw_prompt(&shell.input);
-		readline(&shell.input);
-		//tokenize(&shell->lexer, &shell->input)) != 0)
-		//parse((&shell->lexer)->tokens->next->next);
+# include "shell.h"
 
-		//printf("|%s|\nlen: %zu, i: %zu\n\r", shell->input.line->str, shell->input.line->len, shell->input.line->i);
-	}
-	return (0);
-}
+int				set_redirections(t_node *cmd, int stdin_fd, int stdout_fd);
+int				exec_pipe(t_node *ast, t_env *env, int input_fd);
+int				exec_with_io(t_node *cmd, t_env *env, int stdin_fd, 
+				int stdout_fd);
+int				exec_command(char **argv, t_env *env);
+
+#endif

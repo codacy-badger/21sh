@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 19:37:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/17 18:39:11 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/12/15 10:36:24 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/12/15 10:36:28 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
-
-int		main(void)
+char	*ft_strcat(char *s1, const char *s2)
 {
-	struct s_sh	shell;
+	int i;
+	int j;
 
-	init(&shell);
-	while (1)
+	i = 0;
+	j = 0;
+	while (s1[i])
+		i++;
+	while (s2[j])
 	{
-		draw_prompt(&shell.input);
-		readline(&shell.input);
-		//tokenize(&shell->lexer, &shell->input)) != 0)
-		//parse((&shell->lexer)->tokens->next->next);
-
-		//printf("|%s|\nlen: %zu, i: %zu\n\r", shell->input.line->str, shell->input.line->len, shell->input.line->i);
+		s1[i + j] = s2[j];
+		j++;
 	}
-	return (0);
+	s1[i + j] = 0;
+	return (s1);
 }

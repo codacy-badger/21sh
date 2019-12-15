@@ -6,7 +6,7 @@
 #    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/12/08 19:36:09 by fratajcz         ###   ########.fr        #
+#    Updated: 2019/12/15 10:38:44 by fratajcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,9 @@ SRC =	mem/ft_memalloc.c \
 		str/ft_strsub.c \
 		str/ft_strjoin.c \
 		str/ft_strisnbr.c \
+		str/ft_strndup.c\
+		str/ft_strcat.c\
+		str/ft_strnlen.c\
 		array/ft_strarray_dup.c \
 		array/ft_strarray_realloc.c \
 		array/ft_strarray_del.c \

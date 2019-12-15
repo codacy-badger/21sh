@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 14:56:00 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/15 11:00:15 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 **		  SEMI    PIPE
 **		   ';'	   '|'
 */
+struct	s_token;
+struct s_lexer;
 
 # define FUNC_NB	9
 
