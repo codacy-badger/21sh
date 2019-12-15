@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/14 06:22:41 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/15 04:02:53 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_node	*command(t_list_head **token_list)
 	return (node);
 }
 
-t_node	*pipeline1(t_list_head **token_list, t_node *left_command)
+t_node	*pipe_list(t_list_head **token_list, t_node *left_command)
 {
 	t_node	*left_pipe;
 	t_node	*right_command;
@@ -54,7 +54,7 @@ t_node	*pipeline1(t_list_head **token_list, t_node *left_command)
 		(*token_list) = (*token_list)->next;
 		ft_node_add_child(left_pipe, left_command);
 		right_command = command(token_list);
-		right_pipe = pipeline1(token_list, right_command);
+		right_pipe = pipe_list(token_list, right_command);
 		if (right_pipe != NULL)
 			ft_node_add_child(left_pipe, right_pipe);
 		else 
@@ -69,8 +69,9 @@ t_node	*pipeline(t_list_head **token_list)
 	t_node *pipe;
 
 	left_command = command(token_list);
+	pipe = pipe_list(token_list, left_command);
 	if (pipe != NULL)
-		return (pipeline1(token_list, left_command));
+		return (pipe);
 	return (left_command);
 }
 
@@ -79,7 +80,7 @@ t_node	*and_or(t_list_head **token_list)
 	return (pipeline(token_list));
 }
 
-t_node	*list1(t_list_head **token_list)
+t_node	*list_next(t_list_head **token_list)
 {
 	t_node	*node;
 	t_node	*tmp;
@@ -90,7 +91,7 @@ t_node	*list1(t_list_head **token_list)
 		node = ft_node_new(token(*token_list));
 		(*token_list) = (*token_list)->next;
 		ft_node_add_child(node, and_or(token_list));
-		tmp = list1(token_list);
+		tmp = list_next(token_list);
 		if (tmp != NULL)
 		ft_node_add_child(node->child[0], tmp);
 	}
@@ -103,7 +104,7 @@ t_node	*list(t_list_head **token_list)
 	t_node *tmp;
 
 	node = and_or(token_list);
-	tmp = list1(token_list);
+	tmp = list_next(token_list);
 	if (tmp != NULL)
 		ft_node_add_child(node, tmp);
 	return (node);
