@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/15 08:53:15 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/15 14:52:42 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 #define PARSE_ERROR 20
 
+t_token	*node_token(t_node *node)
+{
+	return (node->data);
+}
 
 t_node	*and_or(t_list_head **tok_list)
 {
@@ -40,17 +44,33 @@ t_ast	*get_ast(t_list_head **tok_list)
 	return (ast);
 }
 
-int		parse(t_list_head *tok_list)
+int		traverse_ast(t_node *ast, t_env *env)
 {
-	t_ast *ast;
+	int		i;
+
+	if (ast->data == NULL)
+		return (exec_command(get_argv(ast, env), env));
+	else if (((t_token *)ast->data)->type == PIPE)
+		return (exec_pipe(ast, env, 0));
+	i = 0;
+	while (i < ast->nb_children)
+		traverse_ast(ast->child[i++], env);
+	return (1);
+}
+
+int		parse(t_list_head *tok_list, t_env *env)
+{
+	t_ast	*ast;
+	char	**argv;
 
 	ast = get_ast(&tok_list);
 	if (ast == NULL)
 		return (PARSE_ERROR);
 	while (ast != NULL)
 	{
-		printf("AST:\n");
-		print_ast(ast->node);
+		//printf("AST:\n");
+		//print_ast(ast->node);
+		traverse_ast(ast->node, env);
 		ast = ast->next;
 	}
 	return (0);
