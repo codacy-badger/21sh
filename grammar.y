@@ -19,36 +19,36 @@ complete_command : list separator
 list             : list separator    and_or
                  |                   and_or
                  ;
-*/ ^ causes infinite recursion (left-recursive)
+*/
 
-list             : and_or list1
+list             : and_or list_next
                  ;
-list1            : separator and_or list1
+list_next        : separator and_or list_next
                  | EMPTY
                  ;
 /*
 and_or           :               pipeline
                  | and_or AND_IF pipeline
                  | and_or OR_IF  pipeline
-/* ^left-recursive
+*/
 
-and_or           : pipeline and_or1
+and_or           : pipeline and_or_list
                  ;
-
-and_or1          : AND_IF pipeline and_or1
-                 | OR_IF pipeline and_or1
+and_or_list      : AND_IF pipeline and_or_list
+                 | OR_IF pipeline and_or_list
 				 | EMPTY
 				 ;
 /*
 pipeline         :              command
                  | pipeline '|' command
                  ;
-*/ ^left-recursive
+*/ 
 
-pipeline         : command pipeline1
+pipeline         : command pipe_list
                  ;
-pipeline1        : '|' command pipeline1
+pipe_list        : '|' command pipe_list
                  | EMPTY
+				 ;
 command          : cmd_prefix cmd_word cmd_suffix
                  | cmd_prefix cmd_word
                  | cmd_prefix
@@ -59,16 +59,32 @@ cmd_name         : WORD                   /* Apply rule 7a */
                  ;
 cmd_word         : WORD                   /* Apply rule 7b */
                  ;
-cmd_prefix       :            io_redirect
+/*cmd_prefix       :            io_redirect
                  | cmd_prefix io_redirect
                  |            ASSIGNMENT_WORD
                  | cmd_prefix ASSIGNMENT_WORD
                  ;
+*/
+cmd_prefix       : io_redirect cmd_prefix_list
+                 | assignment_word cmd_prefix_list
+				 ;
+cmd_prefix_list  : io_redirect cmd_prefix_list
+                 | assignment_word cmd_prefix_list
+				 | EMPTY
+				 ;
+/*
 cmd_suffix       :            io_redirect
                  | cmd_suffix io_redirect
                  |            WORD
                  | cmd_suffix WORD
                  ;
+*/
+cmd_suffix       : io_redirect cmd_suffix_list
+                 | WORD cmd_suffix_list
+				 ;
+cmd_suffix_list  | io_redirect cmd_suffix_list
+                 | WORD cmd_suffix_list
+                 | EMPTY;
 io_redirect      :           io_file
                  | IO_NUMBER io_file
                  |           io_here
