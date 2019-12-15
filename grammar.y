@@ -66,10 +66,10 @@ cmd_word         : WORD                   /* Apply rule 7b */
                  ;
 */
 cmd_prefix       : io_redirect cmd_prefix_list
-                 | assignment_word cmd_prefix_list
+                 | ASSIGNMENT_WORD cmd_prefix_list
 				 ;
 cmd_prefix_list  : io_redirect cmd_prefix_list
-                 | assignment_word cmd_prefix_list
+                 | ASSIGNMENT_WORD cmd_prefix_list
 				 | EMPTY
 				 ;
 /*

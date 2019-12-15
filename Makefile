@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2020/01/02 15:15:52 by fratajcz         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = 21sh 
 CC = gcc
 CFLAGS = -Wall -Wextra #-glldb# -fsanitize=address#-Werror
@@ -47,6 +35,9 @@ SRC =		shell/main.c \
 			lexer/eat.c \
 			lexer/utils.c
 			parser/parser.c
+			parser/pipeline.c\
+			parser/redirect.c\
+			parser/utils.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
 LIB = $(addprefix $(DIR_LIB), libft.a)
