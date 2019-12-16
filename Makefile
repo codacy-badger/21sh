@@ -6,7 +6,7 @@
 #    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/12/17 18:37:30 by fratajcz         ###   ########.fr        #
+#    Updated: 2019/12/17 18:41:51 by fratajcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,8 @@ SRC =		shell/main.c \
 			parser/utils.c\
 			parser/command.c\
 			exec/exec.c\
-			exec/redir.c
+			exec/redir.c\
+			exec/pipe.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
 LIB = $(addprefix $(DIR_LIB), libft.a)

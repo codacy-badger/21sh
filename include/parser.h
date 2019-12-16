@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 23:49:26 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/15 15:01:37 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/16 21:18:30 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ bool	all_tokens_used(t_list_head *tok_list);
 t_node	*io_redirect(t_list_head **tok_list);
 t_node	*pipeline(t_list_head **tok_list);
 char	**get_argv(t_node *cmd, t_env *env);
-int		exec_pipe(t_node *ast, t_env *env, int input_fd);
 t_token	*node_token(t_node *node);
 
 #endif
