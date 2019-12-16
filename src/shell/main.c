@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:37:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/17 18:39:11 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/17 18:40:11 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		main(void)
 		readline(&shell.input);
 		//tokenize(&shell->lexer, &shell->input)) != 0)
 		//parse((&shell->lexer)->tokens->next->next);
+		//tcsetattr(STDIN_FILENO, TCSAFLUSH, &(shell->term).new_term);
 
 		//printf("|%s|\nlen: %zu, i: %zu\n\r", shell->input.line->str, shell->input.line->len, shell->input.line->i);
 	}
