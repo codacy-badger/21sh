@@ -6,11 +6,13 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/16 21:21:03 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/17 12:09:54 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+int				g_last_exit_st;
 
 static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid,
 		int input_fd)
@@ -20,7 +22,10 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid,
 
 	argv = get_argv(cmd, env);
 	pipe(fildes);
-	*pid = fork();
+	if (argv != NULL)
+		*pid = fork();
+	else
+		*pid = -1;
 	if (*pid == 0)
 	{
 		dup2(fildes[1], 1);
@@ -30,6 +35,7 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid,
 		if (input_fd != 0)
 			close(input_fd);
 		execve(argv[0], argv, env->env);
+		exit(0);
 	}
 	close(fildes[1]);
 	if (input_fd != 0)
@@ -43,12 +49,16 @@ static void		exec_last_pipe(t_node *cmd, t_env *env, int *pid, int input_fd)
 	char **argv;
 
 	argv = get_argv(cmd, env);
-	pid[0] = fork();
-	if (pid[0] == 0)
+	if (argv != NULL)
+		*pid = fork();
+	else
+		*pid = -1;
+	if (*pid == 0)
 	{
 		dup2(input_fd, 0);
 		close(input_fd);
 		execve(argv[0], argv, env->env);
+		exit(0);
 	}
 	close(input_fd);
 	free_arr(argv);
@@ -79,8 +89,7 @@ static void		exec_pipes(t_node *pipe, t_env *env, int pipe_count)
 	i = -1;
 	while (++i < pipe_count + 1)
 		waitpid(pid[i], &status[i], 0);
-	free(pid);
-	free(status);
+	exit(WEXITSTATUS(status));
 }
 
 static int		get_pipe_count(t_node *pipe)
@@ -102,6 +111,7 @@ int				exec_pipe(t_node *pipe, t_env *env)
 {
 	int			pid;
 	int			pipe_count;
+	int			status;
 
 	pid = fork();
 	if (pid == 0)
@@ -109,6 +119,8 @@ int				exec_pipe(t_node *pipe, t_env *env)
 		pipe_count = get_pipe_count(pipe);
 		exec_pipes(pipe, env, pipe_count);
 	}
-	wait(NULL);
+	wait(&status);
+	if (WIFEXITED(status))
+		g_last_exit_st = WEXITSTATUS(status); 
 	return (0);
 }
