@@ -19,6 +19,7 @@
 ** when the next char is added we know we must reset qstatus
 */
 
+/*
 int		token_add_char(t_lexer *lexer, char **str)
 {
 	static bool	esc_reset = false;
@@ -32,3 +33,4 @@ int		token_add_char(t_lexer *lexer, char **str)
 	lexer->prev = *(*str)++;
 	return (0);
 }
+*/

@@ -12,6 +12,7 @@
 
 #include "shell.h"
 
+/*
 int		tok_ope_next(void *lex, char **str)
 {
 	t_lexer *lexer;
@@ -59,3 +60,4 @@ int		tok_ope_start(void *lex, char **str)
 	}
 	return (0);
 }
+*/

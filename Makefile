@@ -19,27 +19,25 @@ DIR_OBJ = obj/
 DIR_INC = include/
 DIR_LIB = libft/
 SRC =		shell/main.c \
-			shell/shell_init.c \
-			shell/shell_del.c \
-			signal/sig_init.c \
+			shell/_init.c \
+			shell/del.c \
+			signal/_init.c \
 			signal/sig_action.c \
 			signal/sig_handle.c \
-			term/term_init.c \
-			term/display.c \
-			term/term_setsize.c \
-			term/movc_cardinal.c \
-			term/clear_fromc.c \
-			input/input_init.c \
-			input/line.c \
-			input/move_curs_cardinal.c \
-			input/move_curs_special.c \
-			input/add_str.c \
-			input/del_char.c \
-			input/redraw.c \
-			input/read_line.c \
+			term/_init.c \
+			term/print.c \
+			term/cursor.c \
+			term/clear.c \
+			term/window.c \
+			input/_init.c \
+			input/move_basic.c \
+			input/move_spec.c \
+			input/delchar.c \
+			input/enter.c \
+			input/draw.c \
+			input/readline.c \
 			input/copypaste.c \
 			input/history.c \
-			input/input_utils.c \
 			lexer/lexer_init.c\
 			lexer/lexer_utils.c\
 			lexer/token_add_char.c \

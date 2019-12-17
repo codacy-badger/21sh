@@ -22,17 +22,9 @@ void	sig_action(t_sh *shell, int sig)
 		return ;
 	}
 	if (sig == SIGINT)
-	{
-		input_clear_line(&shell->term, &shell->input);
-		input_reset(&sh->input);
-	}
+		;
 	else if (sig == SIGWINCH)
-	{
-		signal(sig, SIG_DFL);
-		term_setsize(&sh->term);
-		//reprint line;
-		signal(sig, sig_handle);
-	}
+		;
 	else if (sig == SIGTSTP)
 		;
 	else if (sig == SIGCONT)
@@ -42,7 +34,7 @@ void	sig_action(t_sh *shell, int sig)
 	else if ((1 <= sig && sig <= 15) || sig == 17
 			|| (21 <= sig && sig <= 22) || (24 <= sig && sig <= 27))
 	{
-		term_reset(&sh->term.orig_term);
+		del(sh);
 		signal(sig, SIG_DFL);
 		kill(getpid(), sig); //ioctl
 	}

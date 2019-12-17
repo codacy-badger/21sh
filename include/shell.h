@@ -29,13 +29,12 @@ typedef struct		s_sh
 {
 	struct s_term	term;
 	struct s_input	input;
-	struct s_lexer	lexer;
 }					t_sh;
 
-int					shell_init(t_sh *shell);
-void				shell_del(t_sh *shell);
+int					init(t_sh *shell);
+void				del(t_sh *shell);
 
-void				sig_init(t_sh *shell);
+void				init_sig(t_sh *shell);
 void				sig_handle(int sig);
 void				sig_action(t_sh *shell, int sig);
 

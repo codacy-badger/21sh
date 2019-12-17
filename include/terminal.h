@@ -20,9 +20,10 @@
 enum	e_caps
 {
 		C_UP,
-		C_DOWN,
-		C_LEFT,
-		C_RIGHT,
+		C_DO,
+		C_LE,
+		C_ND,
+		C_HO,
 		C_CE,
 		C_CD,
 		C_DC,
@@ -33,25 +34,36 @@ enum	e_caps
 		C_SR,
 		C_CM,
 		C_CL,
+		C_BL,
 		CAPS_SIZE
 };
 
 typedef struct		s_term
 {
-	struct termios	orig_term;
 	struct winsize	win;
+	struct termios	oldterm;
+	struct termios	newterm;
 	char			*caps[CAPS_SIZE];
-	char			*termtype;
-	size_t			sizex;
-	size_t			sizey;
-	size_t			cx;
-	size_t			cy;
+	size_t			size;
+	size_t			cpos;
 }					t_term;
 
-int					term_init(struct s_term *term);
-void				term_reset(struct termios *orig_termios);
-int					term_setsize(t_term *term);
+int					init_term(struct s_term *term);
 
+int					getwinsize(t_term *term);
+int					getcpos(t_term *term);
+void				setcpos(t_term *term, size_t value);
+void				incrcpos(t_term *term, size_t value);
+void				decrcpos(t_term *term, size_t value);
+void				movcleft(t_term *term);
+void				movcright(t_term *term);
+void				movcto(t_term *term, size_t pos);
+void				movcnl(t_term *term);
+void				clearfromc(t_term *term);
+int					printstr(t_term *term, char *str);
+int					ft_putc(int c);
+
+/*
 size_t				display_char(t_term *term, char *c);
 size_t				display_str(t_term *term, char *s);
 size_t				display_nl(t_term *term);
@@ -67,4 +79,5 @@ void				movcex(t_term *term);
 void				movcey(t_term *term);
 void				movce(t_term *term);
 
+*/
 #endif 

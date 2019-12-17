@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   term_init.c                                        :+:      :+:    :+:   */
+/*   _init.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,10 +14,12 @@
 
 static void	init_caps(struct s_term *term)
 {
+	tputs(tgetstr("ks", NULL), 1, ft_putc);
 	term->caps[C_UP] = tgetstr("up", NULL);
-	term->caps[C_DOWN] = tgetstr("do", NULL);
-	term->caps[C_LEFT] = tgetstr("le", NULL);
-	term->caps[C_RIGHT] = tgetstr("nd", NULL);
+	term->caps[C_DO] = tgetstr("do", NULL);
+	term->caps[C_LE] = tgetstr("le", NULL);
+	term->caps[C_ND] = tgetstr("nd", NULL);
+	term->caps[C_HO] = tgetstr("ho", NULL);
 	term->caps[C_CE] = tgetstr("ce", NULL);
 	term->caps[C_CD] = tgetstr("cd", NULL);
 	term->caps[C_DC] = tgetstr("dc", NULL);
@@ -28,32 +30,23 @@ static void	init_caps(struct s_term *term)
 	term->caps[C_SR] = tgetstr("sr", NULL);
 	term->caps[C_CM] = tgetstr("cm", NULL);
 	term->caps[C_CL] = tgetstr("cl", NULL);
+	term->caps[C_BL] = tgetstr("bl", NULL);
 }
 
-int		term_init(struct s_term *term)
+int			init_term(struct s_term *term)
 {
-	struct termios	new_term;
-
-	term->termtype = getenv("TERM");
-	if (term->termtype == NULL || tgetent(NULL, term->termtype) <= 0)
-		return (-1); //error
+	if (tgetent(NULL, getenv("TERM")) <= 0)
+		exit(1);
 	if (!isatty(STDIN_FILENO))
-		return (-1); //error
-	tcgetattr(STDIN_FILENO, &(term->orig_term));
-	new_term = term->orig_term;
-	new_term.c_lflag &= ~(ECHO | ICANON /*| ISIG*/);
-	new_term.c_cc[VMIN] = 1;
-	new_term.c_cc[VTIME] = 0;
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &new_term);
-	tputs(tgetstr("ks", NULL), 1, ft_putc);
-	term_setsize(term);
+		exit(1);
+	tcgetattr(STDIN_FILENO, &(term->oldterm));
+	term->newterm = term->oldterm;
+	term->newterm.c_lflag &= ~(ECHO | ICANON /*| ISIG*/);
+	term->newterm.c_cc[VMIN] = 1;
+	term->newterm.c_cc[VTIME] = 0;
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->newterm);
 	init_caps(term);
+	getwinsize(term);
+	getcpos(term);
 	return (0);
-}
-
-void	term_reset(struct termios *orig_term)
-{
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, orig_term);
-	tputs(tgetstr("ve", NULL), 1, ft_putc);
-	tputs(tgetstr("te", NULL), 1, ft_putc);
 }

@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sig_init.c                                         :+:      :+:    :+:   */
+/*   redraw.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:37:04 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/11/27 20:33:11 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/12/06 00:29:44 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include <shell.h>
 
-void	sig_init(t_sh *shell)
+int		prompt(t_input *input)
 {
-	int		i;
+	//a shell in the shell
+	printstr(input->termp, "🐚  ");
+	return (0);
+}
 
-	i = 0;
-	sig_action(shell, 0);
-	while (i++ < 32)
-	{
-		if (i == 9 || i == 17)
-			continue ;
-		signal(i, sig_handle);
-	}
+int		redraw(t_input *input)
+{
+	tputs(input->termp->caps[C_CL], 1, ft_putc);
+	input->termp->cpos = 0;
+	prompt(input);
+	printstr(input->termp, input->line->str);
+	input->pos = input->line->len;
+	return (0);
 }

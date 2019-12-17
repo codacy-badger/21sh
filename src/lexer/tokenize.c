@@ -45,6 +45,7 @@
 ** corresponding opening quote in input and see the result.
 */
 
+/*
 int			tokenize(t_lexer *lexer, t_input *input)
 {
 	char	*str;
@@ -66,16 +67,13 @@ int			tokenize(t_lexer *lexer, t_input *input)
 			i++;
 		}
 	}
-	/*
 	//to test no eol or uncorrect quotes
 	if (lexer->curr_tok->type != END)
 	{
 		input->line->str = ft_strdup("blabla'def ghi\n");
 		return (tokenize(lexer, input));
 	}
-	*/
 	
-	/**************debug*************/    
 	t_list_head *list;
 	t_token     *token;
 
@@ -94,8 +92,8 @@ int			tokenize(t_lexer *lexer, t_input *input)
 		list = list->next;
 	}
 	printf("qstatus: %d, last_tok->delimited: %d\n", lexer->qstatus, lexer->curr_tok->delimited);
-	/**************debug*************/
 
 	input_reset(input);
 	return (0);
 }
+*/

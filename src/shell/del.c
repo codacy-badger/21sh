@@ -12,6 +12,7 @@
 
 #include "shell.h"
 
+/*
 static void	lexer_del(t_lexer *lexer)
 {
 	ft_list_foreach(lexer->tokens, &token_del, NULL);
@@ -19,39 +20,25 @@ static void	lexer_del(t_lexer *lexer)
 		ft_list_del(lexer->tokens->next);
 	ft_list_del(lexer->tokens);
 }
+*/
 
-//file
-static void	input_del(t_input *input)
+static void	del_input(t_input *input)
 {
-	int		i;
-
-	i = 0;
-	line_del(&input->line);
-	line_del(&input->clipb);
-	line_del(&input->line_backup);
-	while (!ft_list_empty(input->history))
-	{
-		line_del((t_line **)&input->history->next->data);
-		ft_list_del(input->history->next);
-	}
-	ft_memdel(&input->history->data);
-	ft_list_del(input->history);
-	while (i < 4)
-		ft_memdel((void *)&input->prompts[i++]);
-	input->prompt = NULL;
+	while (input->head->next != input->head)
+		ft_lstdel(input->head->next, ft_dstr_del, NULL);
+	ft_lstdel(input->head, NULL, NULL);
+	ft_dstr_del((void **)&input->line, NULL);
+	ft_dstr_del((void **)&input->clip, NULL);
 }
 
-//file
-static void	term_del(t_term *term)
+static void	del_term(t_term *term)
 {
-	term->termtype = NULL;
-	term_reset(&term->orig_term);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term->oldterm);
 	return ;
 }
 
-void		shell_del(t_sh *shell)
+void		del(t_sh *shell)
 {
-	lexer_del(&shell->lexer);
-	input_del(&shell->input);
-	term_del(&shell->term);
+	del_term(&shell->term);
+	del_input(&shell->input);
 }

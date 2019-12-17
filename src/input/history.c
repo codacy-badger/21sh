@@ -12,67 +12,91 @@
 
 #include "shell.h"
 
-t_line	*line_dup(t_line *line)
-{
-	t_line *new;
+/*
+** -input->head is the head of the list, curr is the pointer, pointing on head
+**  when we are on current line. The lines are added to head in enter() function.
+** -temp is the current line backup, its set the first time we move up, and reset
+**  to NULL when we go back on the current line. Its freed in enter() function if
+**  it hasnt been reset to NULL.
+** -In the case we have identical lines one after the other, we skip them.
+*/
 
-	new = line_new(line->size);
-	new->i = line->i;
-	new->len = line->len;
-	ft_strcpy(new->str, line->str);
-	return (new);
+static t_dstr	*getnextline(t_input *input)
+{
+	t_dstr	*target;
+	t_dstr	*cmp;
+
+	input->curr = input->curr->next;
+	target = (t_dstr *)input->curr->data;
+	cmp = (t_dstr *)input->curr->prev->data;
+	while (input->curr != input->head && ft_strequ(target->str, cmp->str))
+	{
+		input->curr = input->curr->next;
+		target = (t_dstr *)input->curr->data;
+		cmp = (t_dstr *)input->curr->prev->data;
+	}
+	return (target);
 }
 
-int		history_move_up(t_term *term, t_input *input)
+static t_dstr	*getprevline(t_input *input)
 {
-	int		old_i;
+	t_dstr	*target;
+	t_dstr	*cmp;
 
-	if (ft_list_empty(input->history))
-		return (1);
-	old_i = input->line->i;
-	if (input->history_cur == NULL)
+	input->curr = input->curr->prev;
+	target = (t_dstr *)input->curr->data;
+	cmp = (t_dstr *)input->curr->prev->data;
+	while (input->curr->prev != input->head && ft_strequ(target->str, cmp->str))
 	{
-		input->history_cur = input->history->prev;
-		input->line_backup = input->line;
+		input->curr = input->curr->prev;
+		target = (t_dstr *)input->curr->data;
+		cmp = (t_dstr *)input->curr->prev->data;
 	}
-	else if (!ft_list_is_first(input->history_cur, input->history))
+	return (target);
+}
+
+int			history_down(t_input *input)
+{
+	t_dstr	*target;
+
+	if (input->curr == input->head)
+		return (0);
+	move_home(input);
+	if (input->line)
+		ft_dstr_del((void **)&input->line, NULL);
+	if ((target = getnextline(input)) && input->curr != input->head
+	&& !(input->line = ft_dstr_new(target->str, target->len, target->size)))
+		return (-1);
+	else if (input->curr == input->head)
 	{
-		input->history_cur = input->history_cur->prev;
-		line_del(&input->line);
+		input->line = input->temp;
+		input->temp = NULL;
 	}
-	else
-		return (1);
-	while (old_i-- > 0)
-		movcleft(term);
-	clear_fromc(term);
-	input->line = line_dup(input->history_cur->data);
-	input->line->i = input->line->len;
-	display_str(term, input->line->str);
+	clearfromc(input->termp);
+	printstr(input->termp, input->line->str);
+	input->pos = input->line->len;
 	return (0);
 }
 
-int		history_move_down(t_term *term, t_input *input)
+int			history_up(t_input *input)
 {
-	int		old_i;
+	t_dstr	*target;
 
-	if (input->history_cur == NULL)
-		return (1);
-	old_i = input->line->i;
-	line_del(&input->line);
-	if (!ft_list_is_last(input->history_cur, input->history))
+	if (input->curr->prev == input->head)
+		return (0);
+	move_home(input);
+	if (!input->temp)
 	{
-		input->history_cur = input->history_cur->next;
-		input->line = line_dup(input->history_cur->data);
+		input->temp = input->line;
+		input->line = NULL;
 	}
-	else
-	{
-		input->history_cur = NULL;
-		input->line = input->line_backup;
-	}
-	while (old_i-- > 0)
-		movcleft(term);
-	clear_fromc(term);
-	input->line->i = input->line->len;
-	display_str(term, input->line->str);
+	else if (input->line)
+		ft_dstr_del((void **)&input->line, NULL);
+	if ((target = getprevline(input))
+	&& !(input->line = ft_dstr_new(target->str, target->len, target->size)))
+		return (-1);
+	clearfromc(input->termp);
+	printstr(input->termp, input->line->str);
+	input->pos = input->line->len;
 	return (0);
 }

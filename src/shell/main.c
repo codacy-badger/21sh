@@ -12,29 +12,17 @@
 
 #include "shell.h"
 
-int		g_last_exit_st = 0;
-
-static int	main_loop(t_sh *shell)
-{
-	int		ret;
-
-	while (1)
-	{
-		if ((ret = read_line(&shell->term, &shell->input)) != 0)
-			break ;
-		if ((ret = tokenize(&shell->lexer, &shell->input)) != 0)
-			break ;
-		//printf("|%s|\nlen: %zu, i: %zu\n\r", shell->input.line->str, shell->input.line->len, shell->input.line->i);
-		break ;
-	}
-	shell_del(shell);
-	return (ret);
-}
 
 int			main(void)
 {
 	struct s_sh	shell;
 
-	shell_init(&shell);
-	return (main_loop(&shell));
+	init(&shell);
+	while (1)
+	{
+		prompt(&shell.input);
+		readline(&shell.input);
+		//tokenize(&shell->lexer, &shell->input)) != 0)
+	}
+	return (0);
 }

@@ -54,6 +54,8 @@ SRC =	mem/ft_memalloc.c \
 		char/ft_isctrl.c \
 		char/ft_isquote.c \
 		char/ft_isblank.c \
+		len/ft_charlen.c \
+		len/ft_charlen_rev.c \
 		len/ft_strlen.c \
 		len/ft_nbrlen.c \
 		len/ft_strarray_len.c \
@@ -83,6 +85,9 @@ SRC =	mem/ft_memalloc.c \
 		struct/stack/ft_stack_del.c \
 		struct/stack/ft_stack_count.c \
 		struct/stack/ft_stack_isempty.c \
+		struct/lst/ft_lstnew.c \
+		struct/lst/ft_lstadd.c \
+		struct/lst/ft_lstdel.c \
 		struct/list/ft_list_new_head.c \
 		struct/list/ft_list_first_head.c \
 		struct/list/ft_list_add.c \
@@ -106,7 +111,10 @@ SRC =	mem/ft_memalloc.c \
 		struct/hash/ft_htdelone.c \
 		struct/dstr/ft_dstr_new.c \
 		struct/dstr/ft_dstr_add.c \
-		struct/dstr/ft_dstr_insert.c
+		struct/dstr/ft_dstr_insert.c \
+		struct/dstr/ft_dstr_remove.c \
+		struct/dstr/ft_dstr_del.c \
+		struct/dstr/ft_dstr_clear.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
 

@@ -11,86 +11,81 @@
 /* ************************************************************************** */
 #include "shell.h"
 
-/*
-** TODO++: find a key for enter in select mode, set int start & int end,
-			highlight the current char (no need to reprint all line),
-			increase int end or decrease int start when moving right or left,
-			when cut is press, clipboard = strsub(start end)...
-*/
-
-int		cp_cut_after(t_term *term, t_input *input)
+int		cut_word(t_input *input)
 {
-	char	*cp;
+	char	*ptr;
+	size_t	len;
+	size_t	nprint;
 
-	if (input->line->str[input->line->i] == '\0')
+	len = input->pos;
+	if (len == 0)
 		return (0);
-	if (input->clipb != NULL)
+	move_prevword(input);
+	len -= input->pos;
+	ptr = &input->line->str[input->pos];
+	if (input->clip != NULL && input->oldkey == input->keys[K_CUTW]
+	&& ft_dstr_insert(input->clip, 0, ptr, len) < 0)
+		return (-1);
+	else if (input->oldkey != input->keys[K_CUTW])
 	{
-		line_del(&input->clipb);
-		if (!(input->clipb = line_new(32)))
+		if (input->clip != NULL)
+			ft_dstr_del((void **)&input->clip, NULL);
+		if (!(input->clip = ft_dstr_new(ptr, len, len)))
 			return (-1);
 	}
-	if (!(cp = ft_strdup(input->line->str + input->line->i)))
-		return (-1);
-	input_del_nchar(term, input, input->keys[K_DEL], input->line->len - input->line->i);
-	line_add_str(input->clipb, cp);
-	ft_memdel((void *)&cp);
+	ft_dstr_remove(input->line, input->pos, len);
+	nprint = printstr(input->termp, ptr);
+	clearfromc(input->termp);
+	movcto(input->termp, input->termp->cpos - nprint);
 	return (0);
 }
 
-int		cp_cut_before(t_term *term, t_input *input)
+int		cut_after(t_input *input)
 {
-	char	*cp;
+	size_t	len;
 
-	if (input->line->i == 0)
+	len = input->line->len - input->pos;
+	if (len == 0)
 		return (0);
-	if (input->clipb != NULL)
-	{
-		line_del(&input->clipb);
-		if (!(input->clipb = line_new(32)))
-			return (-1);
-	}
-	if (!(cp = ft_strsub(input->line->str, 0, input->line->i)))
+	if (input->clip != NULL)
+		ft_dstr_del((void **)&input->clip, NULL);
+	if (!(input->clip = ft_dstr_new(&input->line->str[input->pos], len, len)))
 		return (-1);
-	input_del_nchar(term, input, input->keys[K_BSP], input->line->i);
-	line_add_str(input->clipb, cp);
-	ft_memdel((void *)&cp);
+	ft_dstr_remove(input->line, input->pos, len);
+	clearfromc(input->termp);
 	return (0);
 }
 
-int		cp_cut_prevw(t_term *term, t_input *input)
+int		cut_before(t_input *input)
 {
-	char	*cp;
-	size_t	size;
-	size_t	start;
-	size_t	end;
+	size_t	len;
+	size_t	nprint;
 
-	if (input->prev != input->keys[K_CUTW])
-	{
-		line_del(&input->clipb);
-		if (!(input->clipb = line_new(32)))
-			return (-1);
-	}
-	if (input->line->i == 0)
+	len = input->pos;
+	if (len == 0)
 		return (0);
-	end = input->line->i;
-	move_curs_prevw(term, input);
-	start = input->line->i;
-	size = end - start;
-	if (!(cp = ft_strsub(input->line->str + start, 0, size)))
+	if (input->clip != NULL)
+		ft_dstr_del((void **)&input->clip, NULL);
+	if (!(input->clip = ft_dstr_new(input->line->str, len, len)))
 		return (-1);
-	input_del_nchar(term, input, input->keys[K_DEL], size);
-	input->clipb->i = 0;
-	line_add_str(input->clipb, cp);
-	ft_memdel((void *)&cp);
+	move_home(input);
+	ft_dstr_remove(input->line, 0, len);
+	nprint = printstr(input->termp, input->line->str);
+	clearfromc(input->termp);
+	movcto(input->termp, input->termp->cpos - nprint);
 	return (0);
 }
 
-int		cp_paste(t_term *term, t_input *input)
+int		paste(t_input *input)
 {
-	if (input->clipb == NULL)
+	size_t	nprint;
+
+	if (input->clip == NULL)
 		return (0);
-	input_add_str(term, input, input->clipb->str);
+	ft_dstr_insert(input->line, input->pos, input->clip->str, input->clip->len);
+	input->pos += input->clip->len;
+	printstr(input->termp, input->clip->str);
+	nprint = printstr(input->termp, &input->line->str[input->pos]);
+	movcto(input->termp, input->termp->cpos - nprint);
 	return (0);
 }
-

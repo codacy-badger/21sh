@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_charlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,59 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../../inc/libft.h"
 
-int		is_printable(unsigned long c)
+size_t	ft_charlen(t_uint8 c)
 {
-	return ((char)c != 27 && !(c < 32 || c == 127));
-}
-
-ssize_t	getcsize_rev(char *s, int i)
-{
-	ssize_t	size;
+	size_t	size;
 
 	size = 1;
-	if (i == 0)
-		return (size);
-	if (i && *s-- < 0)
+	if (c & 0x80)
 	{
-		size++;
-		while (i-- && !(*s-- & (1 << 6)))
-			size++;
+		c <<= 1;
+		while (c & 0x80 && size++ < 4)
+			c <<= 1;
 	}
 	return (size);
-}
-
-ssize_t	getcsize(int c)
-{
-	char	*ptr;
-	ssize_t	size;
-	int		i;
-
-	i = 6;
-	size = 1;
-	ptr = (char *)&c;
-	if (*ptr < 0)
-	{
-		while ((*ptr & (1 << i--)) && size < 5)
-			size++;
-	}
-	return (size);
-}
-
-ssize_t	ft_putwc(char *c)
-{
-	ssize_t	size;
-
-	size = getcsize(*c);
-	if (write(STDOUT_FILENO, c, size) != size)
-		return (0);
-	return (size);
-}
-
-int		ft_putc(int c)
-{
-	if (write(STDOUT_FILENO, (char *)&c, 1) != 1)
-		return (0);
-	return (1);
 }

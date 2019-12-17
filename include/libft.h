@@ -6,7 +6,7 @@
 /*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:27:46 by nbousset          #+#    #+#             */
-/*   Updated: 2019/11/25 20:39:24 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/11/25 20:53:29 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,21 @@ int						ft_stack_count(t_stack **stack);
 int						ft_stack_isempty(t_stack **stack);
 
 /*
+** -----------------------------Struct t_list-----------------------------
+*/
+
+typedef struct			s_list
+{
+	void				*data;
+	struct s_list		*prev;
+	struct s_list		*next;
+}						t_list;
+
+t_list					*ft_lstnew(void *data);
+void					ft_lstdel(t_list *head, void (*del)(void **, void *), void *priv);
+void					ft_lstadd(t_list *head, t_list *new);
+
+/*
 ** -----------------------------Struct list-----------------------------
 */
 
@@ -113,7 +128,6 @@ void					ft_list_foreach_rev(t_list_head *head,
 						void (*f)(void *a, void *priv), void *priv);
 void					ft_list_split(t_list_head *head, t_list_head **a, t_list_head **b);
 void					ft_list_sort(t_list_head **head, int (*cmp)(void *a, void *b));
-
 
 /*
 ** -----------------------------Struct hashtable-----------------------------
@@ -165,21 +179,24 @@ void					ft_htdelone(t_htable *htable, const char *key);
 
 typedef struct			s_dstr
 {
-	int					len;
 	char				*str;
-	int					capacity;
+	size_t				size;
+	size_t				len;
 }						t_dstr;
 
-t_dstr					*ft_dstr_new(size_t size);
-int						ft_dstr_add(t_dstr **dstr, char c);
-void					ft_dstr_insert(t_dstr **str, char c, int index);
+t_dstr					*ft_dstr_new(char *str, size_t len, size_t size);
+void					ft_dstr_del(void **ptr, void *priv);
+int						ft_dstr_add(t_dstr *dstr, char c);
+int						ft_dstr_insert(t_dstr *dstr, size_t i, char *str, size_t len);
+int						ft_dstr_remove(t_dstr *dstr, size_t i, size_t len);
+int						ft_dstr_clear(t_dstr *dstr, size_t size);
 
 /*
 ** -----------------------------Memory-----------------------------
 */
 
 void					*ft_memalloc(size_t size);
-void					*ft_memrealloc(void **m, size_t old_size,
+void					*ft_memrealloc(void *ptr, size_t old_size,
 														size_t new_size);
 void					ft_bzero(void *m, size_t n);
 void					*ft_memcpy(void *dst, const void *src, size_t n);
@@ -201,7 +218,6 @@ char					*ft_strchr(const char *str, int c);
 char					*ft_strtrim(char *str);
 char					*ft_strtok(char *str, const char *sep);
 int						ft_strbrkt(char *str, int len);
-int						ft_strquot(char *str);
 void					ft_strremove(char *str, size_t len);
 void					ft_strinsert(char *str, char *insert, ssize_t len);
 char					*ft_strstr(const char *haystack, const char *needle);
@@ -231,10 +247,10 @@ char					*ft_path_getsuffix(const char *path, char alloc);
 ** -----------------------------Char-----------------------------
 */
 
-int						ft_isprint(int c);
+int						ft_isprint(t_uint32 c);
 int						ft_iswhitespace(int c);
-int						ft_isctrl(char c);
-int						ft_isalpha(char c);
+int						ft_isctrl(t_uint32 c);
+int						ft_isalpha(int c);
 int						ft_isdigit(int c);
 int						ft_isalnum(int c);
 bool					ft_isblank(char c);
@@ -244,6 +260,8 @@ bool					ft_isquote(char c);
 ** -----------------------------Length-----------------------------
 */
 
+size_t					ft_charlen(t_uint8 c);
+size_t					ft_charlen_rev(char *c);
 size_t					ft_strlen(const char *str);
 size_t					ft_nbrlen(long n, t_uint32 base);
 size_t					ft_strarray_len(char **array);

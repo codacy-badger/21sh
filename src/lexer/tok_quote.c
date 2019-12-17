@@ -12,6 +12,7 @@
 
 #include "shell.h"
 
+/*
 static int  tok_squote(t_lexer *lexer)
 {
     if (lexer->qstatus == NONE)
@@ -30,9 +31,6 @@ static int  tok_dquote(t_lexer *lexer)
     return (0);
 }
 
-/*
-** the escape status is reset in token_add_char()
-*/
 static int  tok_escape(t_lexer *lexer)
 {
     if (lexer->qstatus == NONE)
@@ -53,3 +51,4 @@ int         tok_quote(void *lex, char **str)
         return (tok_dquote(lexer));
     return (0);
 }
+*/

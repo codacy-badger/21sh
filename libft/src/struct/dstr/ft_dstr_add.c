@@ -12,23 +12,24 @@
 
 #include "../../../inc/libft.h"
 
-int		ft_dstr_add(t_dstr **dstr, char c)
+int		ft_dstr_add(t_dstr *dstr, char c)
 {
-	size_t	old_size;
-	size_t	new_size;
+	char	*tmp;
+	size_t	new_len;
 
-	if (*dstr == NULL)
-		*dstr = ft_dstr_new(1);
-	if ((*dstr)->len == (*dstr)->capacity - 1)
+	if (!dstr)
+		return (0);
+	new_len = dstr->len + 1;
+	if (new_len > dstr->size - 1)
 	{
-		old_size = (*dstr)->capacity;
-		new_size = ((*dstr)->capacity *= 2);
-		(*dstr)->str = (char *)ft_memrealloc(
-						(void **)&(*dstr)->str, old_size, new_size);
-		if (!((*dstr)->str))
+		tmp = dstr->str;
+		dstr->size *= 2;
+		dstr->str = (char *)ft_memrealloc(dstr->str, dstr->len, dstr->size);
+		free(tmp);
+		if (!dstr->str)
 			return (-1);
 	}
-	(*dstr)->str[(*dstr)->len++] = c;
-	(*dstr)->str[(*dstr)->len] = 0;
-	return (0);
+	dstr->str[dstr->len] = c;
+	dstr->len++;
+	return (1);
 }

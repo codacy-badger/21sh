@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memrealloc.c                                    :+:      :+:    :+:   */
+/*   ft_charlen_rev.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/10 00:37:27 by nbousset          #+#    #+#             */
-/*   Updated: 2019/05/10 00:37:49 by nbousset         ###   ########.fr       */
+/*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/12/08 03:09:45 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/libft.h"
 
-void	*ft_memrealloc(void *ptr, size_t old_size, size_t new_size)
+size_t	ft_charlen_rev(char *c)
 {
-	void	*new;
+	size_t	size;
 
-	if (new_size < old_size)
-		old_size = new_size;
-	if (!(new = ft_memalloc(new_size)))
-		return (NULL);
-	if (ptr)
-		ft_memcpy(new, ptr, old_size);
-	return (new);
+	size = 1;
+	if (*c < 0)
+	{
+		while (!(*c & 0x40) && size++ < 4)
+			c--;
+	}
+	return (size);
 }

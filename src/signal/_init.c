@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_init.c                                       :+:      :+:    :+:   */
+/*   _init.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,22 +12,16 @@
 
 #include "shell.h"
 
-/*
-** Think about interactive & non interactive mode...
-** assert read line works properly when read from file
-*/
-
-int			shell_init(t_sh *shell)
+void	init_sig(t_sh *shell)
 {
-	int		ret;
+	int		i;
 
-	ft_bzero(shell, sizeof(*shell));
-	sig_init(shell);
-	if ((ret = term_init(&shell->term)) != 0)
-		return (ret);
-	if ((ret = input_init(&shell->input)) != 0)
-		return (ret);
-	if ((ret = lexer_init(&shell->lexer)) != 0)
-		return (ret);
-	return (ret);
+	i = 0;
+	sig_action(shell, 0);
+	while (i++ < 32)
+	{
+		if (i == 9 || i == 17)
+			continue ;
+		signal(i, sig_handle);
+	}
 }

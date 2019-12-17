@@ -12,6 +12,7 @@
 
 #include "shell.h"
 
+/*
 t_token		*token_new(int type)
 {
 	t_token *token;
@@ -27,3 +28,4 @@ t_token		*token_new(int type)
 	token->type = type;
 	return (token);
 }
+*/

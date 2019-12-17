@@ -12,19 +12,6 @@
 
 #include "shell.h"
 
-void		input_clear_line(t_term *term, t_input *input)
-{
-	size_t	plen;
-
-	plen = ft_strlen(input->prompt);
-	while (input->line->i)
-		move_curs_left(term, input);
-	while (plen--)
-		movcleft(term);
-	tputs(term->caps[C_CD], 1, ft_putc);
-	display_str(term, input->prompt);
-}
-
 static void	init_keys(struct s_input *input)
 {
 	char	*s;
@@ -35,7 +22,10 @@ static void	init_keys(struct s_input *input)
 	input->keys[K_UP] = (s = tgetstr("ku", NULL)) ? *(int *)s : 0;
 	input->keys[K_DOWN] = (s = tgetstr("kd", NULL)) ? *(int *)s : 0;
 	input->keys[K_HOME] = (s = tgetstr("kh", NULL)) ? *(int *)s : 0;
+	input->keys[K_CUP] = 71696882162459;
+	input->keys[K_CDOWN] = 72796393790235;
 	input->keys[K_END] = 4607771;
+
 	input->keys[K_BSP] = 127;
 	input->keys[K_ESC] = 27;
 	input->keys[K_SPC] = 32;
@@ -44,58 +34,18 @@ static void	init_keys(struct s_input *input)
 	input->keys[K_PRVW] = 24; // ^X
 	input->keys[K_NXTW] = 14; // ^N
 	input->keys[K_CUTW] = 23;// ^W
-	input->keys[K_CUTA] = 11;// ^K
+	input->keys[K_CUTA] = 11;// ^K			
 	input->keys[K_CUTB] = 21; // ^U
 	input->keys[K_PAST] = 25; // ^Y
-	input->keys[K_EOL] = 10; //nl,  cr??
-	input->keys[K_EOF] = 4; // ^D
-	input->keys[K_C_UP] = 71696882162459;
-	input->keys[K_C_DOWN] = 72796393790235; 
 }
 
-static int	init_prompts(struct s_input *input)
+int			init_input(struct s_input *input, struct s_term *term)
 {
-	if (!(input->prompts[PS1] = ft_strdup("21sh©>> ")))
-		return (ALLOC_ERROR);
-	if (!(input->prompts[PS2] = ft_strdup("-> ")))
-		return (ALLOC_ERROR);
-	if (!(input->prompts[PS3] = ft_strdup("'> ")))
-		return (ALLOC_ERROR);
-	if (!(input->prompts[PS4] = ft_strdup("\"> ")))
-		return (ALLOC_ERROR);
-	input->prompt = input->prompts[PS1];
-	return (0);
-}
-
-int			input_init(struct s_input *input)
-{
-	int		ret;
-
 	init_keys(input);
-	if ((ret = init_prompts(input)) < 0)
-		return (ret);
-	if (!(input->line = line_new(32)))
-		return (ALLOC_ERROR);
-	if (!(input->clipb = line_new(32)))
-		return (ALLOC_ERROR);
-	if (!(input->history = ft_list_first_head(ft_strdup("START"))))
-		return(ALLOC_ERROR);
-	input->history_cur = NULL;
-	input->line_backup = NULL;
+	input->termp = term;
+	input->head = ft_lstnew(NULL);
+	input->curr = input->head;
+	input->temp = NULL;
+	input->esc = false;
 	return (0);
-}
-
-void		input_reset(t_input *input)
-{
-	if (input->line->len == 0)
-	{
-		line_del(&input->line);
-		input->line_backup = NULL;
-	}
-	else if (input->line_backup != NULL && input->line != input->line_backup)
-		line_del(&input->line_backup);
-	if (input->line != NULL && input->line->len != 0)
-		ft_list_add_tail(input->line, input->history);
-	input->history_cur = NULL;
-	input->line = line_new(32);
 }

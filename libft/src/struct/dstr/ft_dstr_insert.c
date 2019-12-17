@@ -13,27 +13,30 @@
 #include "../../../inc/libft.h"
 
 /*
-** insert char * here
+** i is the index in the dstr where you want to insert.
+** str is the address of the string to insert, len is the length of that string,
 */
-void		ft_dstr_insert(t_dstr **dstr, char c, int index)
+int		ft_dstr_insert(t_dstr *dstr, size_t i, char *str, size_t len)
 {
-	size_t	old_size;
-	size_t	new_size;
+	char	*tmp;
+	char	*ptr;
+	size_t	new_len;
 
-	if (*dstr == NULL)
-		*dstr = ft_dstr_new(1);
-	if ((*dstr)->len == (*dstr)->capacity - 1)
+	if (!dstr)
+		return (0);
+	new_len = dstr->len + len;
+	if (new_len > dstr->size - 1)
 	{
-		old_size = (*dstr)->capacity;
-		new_size = ((*dstr)->capacity *= 2);
-		(*dstr)->str = (char *)ft_memrealloc((void **)&(*dstr)->str, old_size, new_size);
-		if (!((*dstr)->str))
-			return ; //(-1)
+		tmp = dstr->str;
+		dstr->size = ft_next_power_of_two(new_len + 1);
+		dstr->str = (char *)ft_memrealloc(dstr->str, dstr->len, dstr->size);
+		free(tmp);
+		if (!dstr->str)
+			return (-1);
 	}
-	if (index > (*dstr)->capacity - 1)
-		index = (*dstr)->capacity - 1;
-	if (index < 0)
-		index = 0;
-	ft_strinsert(&(*dstr)->str[index], &c, 1);
-	(*dstr)->len++;
+	ptr = dstr->str + i;
+	ft_memmove(ptr + len, ptr, ft_strlen(ptr) + 1);
+	ft_memcpy(ptr, str, len);
+	dstr->len += len;
+	return (len);
 }

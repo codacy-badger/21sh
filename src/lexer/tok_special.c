@@ -12,6 +12,7 @@
 
 #include "shell.h"
 
+/*
 int		tok_eol(void *lex, char **str)
 {
 	t_lexer *lexer;
@@ -60,3 +61,4 @@ int		tok_hash(void *lex, char **str)
 	}
 	return (0);
 }
+*/

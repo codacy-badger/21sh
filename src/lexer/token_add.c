@@ -12,6 +12,7 @@
 
 #include "shell.h"
 
+/*
 int		token_add(t_lexer *lexer, int type)
 {
 	lexer->prev_tok = lexer->curr_tok;
@@ -25,3 +26,4 @@ int		token_add(t_lexer *lexer, int type)
 		ft_list_add_tail(lexer->curr_tok, lexer->tokens);
 	return (0);
 }
+*/
