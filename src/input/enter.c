@@ -12,6 +12,14 @@
 
 #include "shell.h"
 
+/*
+** -We move cursor to newline only if we are not at the beginning of the line.
+** -If the line backup for history is not NULL (because we have scrolled up
+**  in history and not have not scrolled down to the prev current line), we
+**  delete it.
+** -We add the current line to history if its not empty, else we delete it.
+** -We reset the history cursor and the pos.
+*/
 int		enter(t_input *input)
 {
 	move_end(input);

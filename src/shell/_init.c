@@ -24,5 +24,4 @@ int		init(t_sh *shell)
 	init_term(&shell->term);
 	init_input(&shell->input, &shell->term);
 	return (0);
-	//lexer_init(&shell->lexer);
 }

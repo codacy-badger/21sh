@@ -25,7 +25,6 @@ static void	init_keys(struct s_input *input)
 	input->keys[K_CUP] = 71696882162459;
 	input->keys[K_CDOWN] = 72796393790235;
 	input->keys[K_END] = 4607771;
-
 	input->keys[K_BSP] = 127;
 	input->keys[K_ESC] = 27;
 	input->keys[K_SPC] = 32;
