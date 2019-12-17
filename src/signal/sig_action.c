@@ -24,7 +24,13 @@ void	sig_action(t_sh *shell, int sig)
 	if (sig == SIGINT)
 		;
 	else if (sig == SIGWINCH)
-		;
+	{
+		signal(sig, SIG_DFL);
+		getwinsize(&sh->term);
+		getcpos(&sh->term);
+		redraw(&sh->input);
+		signal(sig, sig_handle);
+	}
 	else if (sig == SIGTSTP)
 		;
 	else if (sig == SIGCONT)

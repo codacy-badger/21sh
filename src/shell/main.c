@@ -13,7 +13,7 @@
 #include "shell.h"
 
 
-int			main(void)
+int		main(void)
 {
 	struct s_sh	shell;
 

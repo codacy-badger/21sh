@@ -38,7 +38,7 @@ int		move_up(t_input *input)
 	size_t	i;
 
 	offset = 0;
-	i = input->termp->win.ws_col;
+	i = input->termp->sizex;
 	while (i-- && input->pos > 0)
 	{
 		input->pos -= ft_charlen_rev(&input->line->str[input->pos - 1]);
@@ -54,7 +54,7 @@ int		move_down(t_input *input)
 	size_t	i;
 
 	offset = 0;
-	i = input->termp->win.ws_col;
+	i = input->termp->sizex;
 	while (i-- && input->pos < input->line->len)
 	{
 		input->pos += ft_charlen(input->line->str[input->pos]);

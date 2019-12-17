@@ -40,10 +40,11 @@ enum	e_caps
 
 typedef struct		s_term
 {
-	struct winsize	win;
 	struct termios	oldterm;
 	struct termios	newterm;
 	char			*caps[CAPS_SIZE];
+	size_t			sizex;
+	size_t			sizey;
 	size_t			size;
 	size_t			cpos;
 }					t_term;
@@ -63,21 +64,4 @@ void				clearfromc(t_term *term);
 int					printstr(t_term *term, char *str);
 int					ft_putc(int c);
 
-/*
-size_t				display_char(t_term *term, char *c);
-size_t				display_str(t_term *term, char *s);
-size_t				display_nl(t_term *term);
-void				clear_fromc(t_term *term);
-int					movcdown(t_term *term);
-int					movcup(t_term *term);
-int					movcleft(t_term *term);
-int					movcright(t_term *term);
-void				movchx(t_term *term);
-void				movchy(t_term *term);
-void				movch(t_term *term);
-void				movcex(t_term *term);
-void				movcey(t_term *term);
-void				movce(t_term *term);
-
-*/
 #endif 

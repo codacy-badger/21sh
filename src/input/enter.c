@@ -23,7 +23,7 @@
 int		enter(t_input *input)
 {
 	move_end(input);
-	if (input->termp->cpos % input->termp->win.ws_col)
+	if (input->termp->cpos % input->termp->sizex)
 		movcnl(input->termp);
 	if (input->temp)
 		ft_dstr_del((void **)&input->temp, NULL);

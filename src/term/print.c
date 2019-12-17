@@ -35,7 +35,7 @@ int		printstr(t_term *term, char *str)
 	{
 		clen = ft_charlen(*str);
 		write(STDOUT_FILENO, str, clen);
-		if (!((term->cpos + 1) % term->win.ws_col))
+		if (!((term->cpos + 1) % term->sizex))
 			tputs(term->caps[C_SF], 1, ft_putc);
 		incrcpos(term, 1);
 		str += clen;
