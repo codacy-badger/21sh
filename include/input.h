@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/08 21:06:20 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/17 15:36:30 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct		s_input
 
 int					init_input(t_input *input, struct s_term *term);
 int					readline(t_input *input);
-int					prompt(t_input *input);
+int					draw_prompt(t_input *input);
 int					redraw(t_input *input);
 
 int					backspace(t_input *input);
