@@ -15,7 +15,7 @@
 int		prompt(t_input *input)
 {
 	//a shell in the shell
-	printstr(input->termp, "🐚  ");
+	printstr(input->termp, "$> ");
 	return (0);
 }
 
