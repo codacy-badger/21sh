@@ -45,7 +45,6 @@
 ** corresponding opening quote in input and see the result.
 */
 
-/*
 int			tokenize(t_lexer *lexer, t_input *input)
 {
 	char	*str;
@@ -92,8 +91,5 @@ int			tokenize(t_lexer *lexer, t_input *input)
 		list = list->next;
 	}
 	printf("qstatus: %d, last_tok->delimited: %d\n", lexer->qstatus, lexer->curr_tok->delimited);
-
-	input_reset(input);
 	return (0);
 }
-*/

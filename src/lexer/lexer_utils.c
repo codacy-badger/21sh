@@ -12,7 +12,6 @@
 
 #include "shell.h"
 
-/*
 bool	is_operator_start(char c)
 {
 	return (c == '<' || c == '>' || c == '&' || c == ';' || c == '|');
@@ -72,4 +71,3 @@ int		get_operator_type(char *ope)
 		return (SEMI);
 	return (0);
 }
-*/

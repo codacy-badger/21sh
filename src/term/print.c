@@ -37,10 +37,6 @@ int		printstr(t_term *term, char *str)
 		write(STDOUT_FILENO, str, clen);
 		if (!((term->cpos + 1) % term->win.ws_col))
 			tputs(term->caps[C_SF], 1, ft_putc);
-		/*
-		**if (clen > 2)
-		**	incrcpos(term, 1);
-		*/
 		incrcpos(term, 1);
 		str += clen;
 		nprint++;

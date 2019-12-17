@@ -12,14 +12,13 @@
 
 #include "shell.h"
 
-/*
 t_token		*token_new(int type)
 {
 	t_token *token;
 
 	if (!(token = (t_token *)ft_memalloc(sizeof(*token))))
 		return (NULL);
-	if (!(token->content = ft_dstr_new(1)))
+	if (!(token->content = ft_dstr_new("", 0, 32)))
 	{
 		ft_memdel((void *)&token);
 		return (NULL);
@@ -28,4 +27,3 @@ t_token		*token_new(int type)
 	token->type = type;
 	return (token);
 }
-*/

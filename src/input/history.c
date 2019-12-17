@@ -24,41 +24,30 @@
 **  decide to not store them in history.
 */
 
+static char		*str(t_list *list)
+{
+	return (((t_dstr *)list->data)->str);
+}
+
 static t_dstr	*getnextline(t_input *input)
 {
-	t_dstr	*target;
-	t_dstr	*cmp;
-
 	input->curr = input->curr->next;
-	target = (t_dstr *)input->curr->data;
-	cmp = (t_dstr *)input->curr->prev->data;
-	while (input->curr != input->head && ft_strequ(target->str, cmp->str))
-	{
+	while (input->curr != input->head
+	&& ft_strequ(str(input->curr), str(input->curr->prev)))
 		input->curr = input->curr->next;
-		target = (t_dstr *)input->curr->data;
-		cmp = (t_dstr *)input->curr->prev->data;
-	}
-	return (target);
+	return ((t_dstr *)input->curr->data);
 }
 
 static t_dstr	*getprevline(t_input *input)
 {
-	t_dstr	*target;
-	t_dstr	*cmp;
-
 	input->curr = input->curr->prev;
-	target = (t_dstr *)input->curr->data;
-	cmp = (t_dstr *)input->curr->prev->data;
-	while (input->curr->prev != input->head && ft_strequ(target->str, cmp->str))
-	{
+	while (input->curr->prev != input->head
+	&& ft_strequ(str(input->curr), str(input->curr->prev)))
 		input->curr = input->curr->prev;
-		target = (t_dstr *)input->curr->data;
-		cmp = (t_dstr *)input->curr->prev->data;
-	}
-	return (target);
+	return ((t_dstr *)input->curr->data);
 }
 
-int			history_down(t_input *input)
+int				history_down(t_input *input)
 {
 	t_dstr	*target;
 

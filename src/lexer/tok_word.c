@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-/*
+
 int		tok_word_next(void *lex, char **str)
 {
 	t_lexer *lexer;
@@ -42,4 +42,3 @@ int		tok_word_start(void *lex, char **str)
 	}
 	return (0);
 }
-*/

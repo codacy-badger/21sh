@@ -12,7 +12,6 @@
 
 #include "shell.h"
 
-/*
 void	token_del(void *tok, void *priv)
 {
 	t_token	*token;
@@ -23,4 +22,3 @@ void	token_del(void *tok, void *priv)
 	ft_memdel((void *)&token->content);
 	ft_memdel((void *)&tok);
 }
-*/

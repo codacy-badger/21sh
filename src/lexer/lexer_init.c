@@ -13,10 +13,10 @@
 #include "shell.h"
 
 /*
-** should use the list ftabletions of new/lexer branch, added to the libft
-** to replace current list ftabletions.
+** should use the list functions of new/lexer branch, added to the libft
+** to replace current list functions.
 */
-/*
+
 void    init_ftable(t_lexer *lexer)
 {
     lexer->ftable[0] = &tok_ope_next;
@@ -42,4 +42,3 @@ int     lexer_init(t_lexer *lexer)
     lexer->prev = 0;
     return (0);
 }
-*/

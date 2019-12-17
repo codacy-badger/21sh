@@ -12,7 +12,6 @@
 
 #include "shell.h"
 
-/*
 static void	set_operator_type(t_lexer *lexer)
 {
 	char	*ope;
@@ -39,4 +38,3 @@ void		token_delim(t_lexer *lexer, char **str)
 	//	do great stuff
 	lexer->prev_sep = **str;
 }
-*/

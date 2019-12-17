@@ -12,7 +12,6 @@
 
 #include "shell.h"
 
-/*
 static int  tok_squote(t_lexer *lexer)
 {
     if (lexer->qstatus == NONE)
@@ -51,4 +50,3 @@ int         tok_quote(void *lex, char **str)
         return (tok_dquote(lexer));
     return (0);
 }
-*/
