@@ -6,11 +6,15 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 04:05:12 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/15 05:52:01 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/18 18:45:04 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+/*
+**	filename         : WORD
+*/
 
 static t_node	*filename(t_list_head **token_list)
 {
@@ -25,6 +29,27 @@ static t_node	*filename(t_list_head **token_list)
 	}
 	return (node);
 }
+
+/*
+**  io_file          : '<'       filename
+**                   | LESSAND   filename
+**                   | '>'       filename
+**                   | GREATAND  filename
+**                   | DGREAT    filename
+**                   | LESSGREAT filename
+**                   ;
+**
+**	the io_number is added as child 0 of the redirect node, and the output is
+**	added as child 1
+**	example:               2> file.txt
+**
+**                           >
+**                          / \
+**                         2  file.txt
+**
+**  if there is no input file descriptor, the input node is NULL (unlike a
+**	command's root node, where the data is set to NULL but the node exists)
+*/
 
 static t_node	*io_file(t_list_head **token_list, t_token *io_number)
 {

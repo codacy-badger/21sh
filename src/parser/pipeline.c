@@ -6,11 +6,23 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 04:37:16 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/15 15:05:30 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/18 18:37:55 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+/*
+**	returns commands in this format:	
+**	
+**	ls -l 2 > test -a -f
+**
+**                                 NULL
+**                          /   /   |   \   \
+**                         ls  -l   >   -a  -f
+**                                 / \
+**                                2   test
+*/
 
 static t_node	*command(t_list_head **tok_list)
 {
@@ -35,6 +47,12 @@ static t_node	*command(t_list_head **tok_list)
 	return (command);
 }
 
+/*
+** pipe_list        : '|' command pipe_list
+**                  | EMPTY
+**                  ;
+*/
+
 static t_node	*pipe_list(t_list_head **tok_list, t_node *left_command)
 {
 	t_node	*left_pipe;
@@ -56,6 +74,21 @@ static t_node	*pipe_list(t_list_head **tok_list, t_node *left_command)
 	}
 	return (left_pipe);
 }
+
+/*
+**	pipeline         : command pipe_list
+**	returns pipes in this format :
+**	ex:           ls | cat | wc:
+**	
+**
+**						"|"
+**                     /   \
+**                    ls   "|"
+**                        /   \
+**                      cat    wc
+**	(commands are actually stored with a NULL node whose children contain the 
+**	words, see above)
+*/
 
 t_node			*pipeline(t_list_head **tok_list)
 {
