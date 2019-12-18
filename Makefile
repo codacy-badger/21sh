@@ -6,7 +6,7 @@
 #    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/12/18 11:01:42 by fratajcz         ###   ########.fr        #
+#    Updated: 2019/12/18 19:19:06 by fratajcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ SRC =		shell/main.c \
 			parser/pipeline.c\
 			parser/redirect.c\
 			parser/utils.c\
-			parser/command.c\
+			exec/get_argv.c\
 			exec/exec.c\
 			exec/redir.c\
 			exec/pipe.c
