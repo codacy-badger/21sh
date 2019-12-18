@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/18 16:11:48 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/18 18:05:54 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid,
 	int		fildes[2];
 
 	argv = get_argv(cmd, env);
-	set_redirections(cmd);
 	pipe(fildes);
 	*pid = (argv != NULL) ? fork() : -1;
 	if (*pid == 0)
 	{
+		set_redirections(cmd);
 		dup2(fildes[1], 1);
 		dup2(input_fd, 0);
 		close(fildes[1]);
@@ -53,6 +53,7 @@ static void		exec_last_pipe(t_node *cmd, t_env *env, int *pid, int input_fd)
 		*pid = -1;
 	if (*pid == 0)
 	{
+		set_redirections(cmd);
 		dup2(input_fd, 0);
 		close(input_fd);
 		execve(argv[0], argv, env->env);

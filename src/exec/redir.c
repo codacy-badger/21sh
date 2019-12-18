@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/18 16:21:53 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/18 18:01:39 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 */
 #define RIGHTS 420
 
-char	*redir_output(t_node *op_node)
+char		*redir_output(t_node *op_node)
 {
 	return (node_token(op_node->child[1])->content->str);
 }
 
-int		set_redirections(t_node *cmd)
+int			set_redirections(t_node *cmd)
 {
 	int		i;
 	int		fd;
