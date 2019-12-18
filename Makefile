@@ -6,13 +6,13 @@
 #    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/12/17 18:41:51 by fratajcz         ###   ########.fr        #
+#    Updated: 2019/12/18 11:01:42 by fratajcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 21sh 
 CC = gcc
-CFLAGS = -Wall -Wextra #-glldb# -fsanitize=address#-Werror
+CFLAGS = -Wall -Wextra -glldb# -fsanitize=address#-Werror
 LFLAGS = -ltermcap
 DIR_SRC = src/
 DIR_OBJ = obj/
@@ -25,7 +25,6 @@ SRC =		shell/main.c \
 			shell/utils.c\
 			shell/env_utils.c\
 			shell/path_utils.c\
-			signal/sig_init.c \
 			signal/sig_action.c \
 			signal/sig_handle.c \
 			term/_init.c \
@@ -42,8 +41,8 @@ SRC =		shell/main.c \
 			input/readline.c \
 			input/copypaste.c \
 			input/history.c \
-			lexer/lexer_init.c\
 			lexer/lexer_utils.c\
+			lexer/lexer_init.c\
 			lexer/token_add_char.c \
 			lexer/token_add.c \
 			lexer/token_delim.c \

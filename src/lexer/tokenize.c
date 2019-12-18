@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/08 21:32:58 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/18 11:11:12 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int			tokenize(t_lexer *lexer, t_input *input)
 	int		ret;
 	int		i;
 
+	if (input->line == NULL)
+		return (1);
 	str = input->line->str;
 	while (*str)
 	{
@@ -69,7 +71,7 @@ int			tokenize(t_lexer *lexer, t_input *input)
 	//to test no eol or uncorrect quotes
 	if (lexer->curr_tok->type != END)
 	{
-		input->line->str = ft_strdup("blabla'def ghi\n");
+		input->line->str = ft_strdup("\n");
 		return (tokenize(lexer, input));
 	}
 	

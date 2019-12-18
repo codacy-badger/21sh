@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/16 21:20:43 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/18 16:14:28 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,22 @@ t_ast	*get_ast(t_list_head **tok_list)
 	return (ast);
 }
 
-int		traverse_ast(t_node *ast, t_env *env)
+int		traverse_ast(t_node *node, t_env *env)
 {
 	int		i;
 
-	if (ast->data == NULL)
-		return (exec_command(get_argv(ast, env), env));
-	else if (((t_token *)ast->data)->type == PIPE)
-		return (exec_pipe(ast, env));
+	if (node == NULL)
+		return (1);
+	if (node->data == NULL)
+	{
+		set_redirections(node);
+		return (exec_command(get_argv(node, env), env));
+	}
+	else if (((t_token *)node->data)->type == PIPE)
+		return (exec_pipe(node, env));
 	i = 0;
-	while (i < ast->nb_children)
-		traverse_ast(ast->child[i++], env);
+	while (i < node->nb_children)
+		traverse_ast(node->child[i++], env);
 	return (1);
 }
 
@@ -66,10 +71,8 @@ int		parse(t_list_head *tok_list, t_env *env)
 	ast = get_ast(&tok_list);
 	if (ast == NULL)
 		return (PARSE_ERROR);
-	while (ast != NULL)
+	while (ast != NULL && ast->node != NULL)
 	{
-		//printf("AST:\n");
-		//print_ast(ast->node);
 		traverse_ast(ast->node, env);
 		ast = ast->next;
 	}

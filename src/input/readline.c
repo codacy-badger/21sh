@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/08 03:24:57 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:51:55 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ static int		control(t_input *input, t_uint8 **bufp)
 		return (paste(input));
 	else if (*input->key == 12)
 		return (redraw(input));
+	else if (*input->key == 04)
+		exit(0);
 	return (0);
 }
 
