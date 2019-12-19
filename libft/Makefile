@@ -88,8 +88,8 @@ SRC =	mem/ft_memalloc.c \
 		struct/lst/ft_lstnew.c \
 		struct/lst/ft_lstadd.c \
 		struct/lst/ft_lstdel.c \
-		struct/list/ft_list_new_head.c \
 		struct/list/ft_list_first_head.c \
+		struct/list/ft_list_new_head.c \
 		struct/list/ft_list_add.c \
 		struct/list/ft_list_add_tail.c \
 		struct/list/ft_list_del.c \

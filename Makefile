@@ -38,18 +38,13 @@ SRC =		shell/main.c \
 			input/readline.c \
 			input/copypaste.c \
 			input/history.c \
-			lexer/lexer_init.c\
-			lexer/lexer_utils.c\
-			lexer/token_add_char.c \
-			lexer/token_add.c \
-			lexer/token_delim.c \
-			lexer/token_new.c \
-			lexer/token_del.c \
-			lexer/tok_operator.c\
-			lexer/tok_quote.c\
-			lexer/tok_special.c\
-			lexer/tok_word.c\
-			lexer/tokenize.c\
+			lexer/_init.c \
+			lexer/token.c \
+			lexer/append.c\
+			lexer/delim.c \
+			lexer/quote.c \
+			lexer/eat.c \
+			lexer/utils.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
 LIB = $(addprefix $(DIR_LIB), libft.a)

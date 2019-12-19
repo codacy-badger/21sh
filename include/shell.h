@@ -23,12 +23,18 @@
 # include "input.h"
 # include "lexer.h"
 
-# define ALLOC_ERROR	3
+/*
+** TODO:
+** -Improve redraw on resize.
+** -Find more elegant way to deal with
+**  operators in lexer. 
+*/
 
 typedef struct		s_sh
 {
 	struct s_term	term;
 	struct s_input	input;
+	struct s_lexer	lexer;
 }					t_sh;
 
 int					init(t_sh *shell);

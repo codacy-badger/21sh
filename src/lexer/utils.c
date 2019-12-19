@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils_ope.c                                  :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -22,6 +22,11 @@ bool	is_operator_part(char c)
 	return ((is_operator_start(c)) || c == '-');
 }
 
+bool	is_redir(t_token *token)
+{
+	return (LESS <= token->type && token->type <= DLESSDASH);
+}
+
 bool	is_operator_next(char *ope, char c)
 {
 	if (is_operator_part(c))
@@ -40,20 +45,19 @@ bool	is_operator_next(char *ope, char c)
 	return (0);
 }
 
-bool	is_operator_redir(t_token *token)
-{
-	return (DLESS <= token->type && token->type <= DLESSDASH);
-}
-
 int		get_operator_type(char *ope)
 {
-	if (ft_strequ(ope, "<<"))
+	if (ft_strequ(ope, "<"))
+		return (LESS);
+	else if (ft_strequ(ope, ">"))
+		return (GREAT);
+	else if (ft_strequ(ope, "<<"))
 		return (DLESS);
 	else if (ft_strequ(ope, ">>"))
 		return (DGREAT);
-	else if (ft_strequ(ope, "<&") || ft_strequ(ope, "<"))
+	else if (ft_strequ(ope, "<&"))
 		return (LESSAND);
-	else if (ft_strequ(ope, ">&") || ft_strequ(ope, ">"))
+	else if (ft_strequ(ope, ">&"))
 		return (GREATAND);
 	else if (ft_strequ(ope, "<>"))
 		return (LESSGREAT);

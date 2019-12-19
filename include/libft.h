@@ -113,8 +113,8 @@ typedef struct			s_list_head
 	void				*data;
 }						t_list_head;
 
-t_list_head				*ft_list_new_head(void *data);
 t_list_head				*ft_list_first_head(void *data);
+t_list_head				*ft_list_new_head(void *data);
 void					ft_list_add(void *data, t_list_head *head);
 void					ft_list_add_tail(void *data, t_list_head *head);
 void					ft_list_del(t_list_head *head);

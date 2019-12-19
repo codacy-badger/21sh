@@ -165,11 +165,11 @@ int				readline(t_input *input)
 			else
 				ret = addchar(input, &bufp);
 			if (ret == CONTINUE)
-				continue ;
+				continue ; 
 			input->oldkey = *(t_uint64 *)input->key;
 			*(t_uint64 *)input->key = 0;
 			if (ret == EOL)
-				return (0);
+				return (ret);
 		}
 	}
 	return (ret);
