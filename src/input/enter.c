@@ -22,15 +22,21 @@
 */
 int		enter(t_input *input)
 {
+	t_dstr	*last;
+
 	move_end(input);
 	if (input->termp->cpos % input->termp->sizex)
 		movcnl(input->termp);
 	if (input->temp)
 		ft_dstr_del((void **)&input->temp, NULL);
-	if (input->line->len > 0)
-		ft_lstadd(input->head, ft_lstnew(input->line));
+	if (input->line_cont)
+	{
+		last = (t_dstr *)input->head->prev->data;
+		ft_dstr_insert(last, last->len, input->line->str, input->line->len);
+		input->line_cont = false ;
+	}
 	else
-		ft_dstr_del((void **)&input->line, NULL);
+		ft_lstadd(input->head, ft_lstnew(input->line));
 	input->curr = input->head;
 	input->pos = 0;
 	return (EOL);

@@ -72,6 +72,7 @@ typedef struct		s_input
 	t_dstr			*clip;
 	size_t			pos;
 	bool			esc;
+	bool			line_cont;
 }					t_input;
 
 int					init_input(t_input *input, struct s_term *term);

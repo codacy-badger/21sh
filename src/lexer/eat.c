@@ -16,40 +16,62 @@
 ** I need to find more elegant way to handle operators, but for the moment,
 ** it works. I will think about it...
 */
-static int	set_operator_type(t_lexer *lexer)
+static int	get_token_type(t_lexer *lexer)
 {
-	lexer->curr_tok->type = get_operator_type(lexer->curr_tok->value->str);
-	if (is_redir(lexer->curr_tok) && !ft_iswhitespace(lexer->oldsep)
-	&& ft_strisnbr(lexer->prev_tok->value->str))
-		lexer->prev_tok->type = IO_NUMBER;
-	return (0);
+	if (!lexer->curr_tok)
+		return (END);
+	if (is_operator_start(*lexer->curr_tok->value->str))
+	{
+		lexer->curr_tok->type = get_operator_type(lexer->curr_tok->value->str);
+		if (is_redir(lexer->curr_tok) && !ft_iswhitespace(lexer->oldsep)
+		&& ft_strisnbr(lexer->prev_tok->value->str))
+			lexer->prev_tok->type = IO_NUMBER;
+	}
+	return (lexer->curr_tok->type);
 }
 
-/*
-** Each time the function is called, we reset the state:
-**  -if the current token was delimited on previous call, we set prev_tok
-**  and reset current to NULL, then reset DELIMITED.
-** We tokenize until DELIMITED or END_OF_INPUT is set:
-** -If no token has been found, in case of a blank string for example,
-**  curr_tok is NULL. We return END. (or NULL if we decide to return token).
-** -If a token has been found but is not DELIMITED (because of quotes or backslash),
-**  we also return END, we don t want the parser to process the token.
-**  The parser will stop parsing and in main(), we ll check lexer state. If
-**  LINE_CONTINUATION or quote is set, we can read a new line.
-**  On next_call, curr_tok will remain so the tokenization will continue from 
-**  the same point.
-** -If a token has been found and is DELIMITED, we set its type and return the
-**  type (or the token).
-*/
-int			eat(t_lexer *lexer)
+static void	reset_lexer(t_lexer *lexer)
 {
+	lexer->state = START;
+	lexer->str = NULL;
+	lexer->curr_tok = NULL;
+	lexer->prev_tok = NULL;
+	lexer->oldchar = 0;
+	lexer->oldsep = 0;
+	lexer->quote = 0;
+	lexer->quote_len = 0;
+}
+
+static int	init_state(t_lexer *lexer)
+{
+	lexer->state &= ~END;
+	if ((lexer->state & (START | LINE_CONT)) || lexer->quote)
+	{
+		if (lexer->state & LINE_CONT)
+		{
+			lexer->inputp->line_cont = true;
+			lexer->state &= ~LINE_CONT;
+		}
+		draw_prompt(lexer->inputp);
+		readline(lexer->inputp);
+		lexer->str = lexer->inputp->line->str;
+		if (lexer->quote)
+			lexer->quote_len = get_quote_len(lexer->str, lexer->quote);
+		lexer->state &= ~START;
+	}
 	if (lexer->state & DELIMITED)
 	{
 		lexer->prev_tok = lexer->curr_tok;
 		lexer->curr_tok = NULL;
 		lexer->state &= ~DELIMITED;
 	}
-	while (!(lexer->state & (DELIMITED | END_OF_INPUT)))
+	return (0);
+}
+
+int			eat(t_lexer *lexer)
+{
+	init_state(lexer);
+	while (!(lexer->state & (DELIMITED | END)))
 	{
 		if (end(lexer)
 		|| operator_next(lexer)
@@ -63,10 +85,9 @@ int			eat(t_lexer *lexer)
 			continue ;
 	}
 	if (lexer->curr_tok && (lexer->state & DELIMITED))
-	{
-		if (is_operator_start(*lexer->curr_tok->value->str))
-			set_operator_type(lexer);
-		return (lexer->curr_tok->type);
-	}
+		return (get_token_type(lexer));
+	else if ((lexer->state & LINE_CONT) || lexer->quote)
+		return (eat(lexer));
+	reset_lexer(lexer);
 	return (END);
 }

@@ -31,13 +31,13 @@ int		end(t_lexer *lexer)
 		{
 			lexer->quote_len--;
 			lexer->quote = NONE;
-			lexer->state |= LINE_CONT;
 			ft_dstr_remove(lexer->curr_tok->value,
 			lexer->curr_tok->value->len - 1, 1);
 			if (lexer->curr_tok->value->len == 0)
 				token_del((void **)&lexer->curr_tok, NULL);
+			lexer->state |= LINE_CONT;
 		}
-		lexer->state |= END_OF_INPUT;
+		lexer->state |= END;
 		return (1);
 	}
 	return (0);

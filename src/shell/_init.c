@@ -23,5 +23,6 @@ int		init(t_sh *shell)
 	init_sig(shell);
 	init_term(&shell->term);
 	init_input(&shell->input, &shell->term);
+	init_lexer(&shell->lexer, &shell->input);
 	return (0);
 }

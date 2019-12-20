@@ -12,18 +12,9 @@
 
 #include "shell.h"
 
-/*
-** init_lexer is called each time we read a line.
-** We unset END_OF_INPUT and LINE_CONT
-** Then, if the quote status was not reset during
-** previous tokenization (because the string wasnt correctly quoted),
-** we call get_quote_len to set the number of chars affected by quoting.
-*/
-int			init_lexer(t_lexer *lexer, t_dstr *line)
+int			init_lexer(t_lexer *lexer, t_input *input)
 {
-	lexer->str = line->str;
-	lexer->state &= ~(LINE_CONT | END_OF_INPUT);
-	if (lexer->quote)
-		lexer->quote_len = get_quote_len(lexer->str, lexer->quote);
+	lexer->inputp = input;
+	lexer->state |= START;
 	return (0);
 }

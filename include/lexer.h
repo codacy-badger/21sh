@@ -33,13 +33,13 @@
 /*
 ** different states
 */
-# define DELIMITED		1
-# define LINE_CONT		2
-# define END_OF_INPUT	4
+# define START			1
+# define DELIMITED		2
+# define LINE_CONT		4
+# define END			8
 
 enum 				e_toktype
 {
-	END,
 	WORD,
 	ASSIGNMENT_WORD,
 	NAME,
@@ -90,6 +90,7 @@ typedef struct		s_token
 */
 typedef struct		s_lexer
 {
+	struct s_input	*inputp;
 	char			*str;
 	t_token			*curr_tok;
 	t_token			*prev_tok;
@@ -100,7 +101,7 @@ typedef struct		s_lexer
 	char			state;
 }					t_lexer;
 
-int					init_lexer(t_lexer *lexer, t_dstr *line);
+int					init_lexer(t_lexer *lexer, t_input *input);
 int					eat(t_lexer *lexer);
 
 int					end(t_lexer *lexer);

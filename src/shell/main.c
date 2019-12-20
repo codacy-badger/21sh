@@ -28,23 +28,35 @@ int		main(int argc, char **argv, char **envp)
 	init(&shell);
 	while (1)
 	{
-		draw_prompt(&shell.input);
-		readline(&shell.input);
-		if (!shell.input.line)
-			continue ;
-		init_lexer(&shell.lexer, shell.input.line);
+		//draw_prompt(&shell.input);
+		//readline(&shell.input);
+		//if (!shell.input.line)
+		//	continue ;
+		//init_lexer(&shell.lexer, shell.input.line);
 
 		//parsing
+		//t_list *list;
+		//list = ft_lstnew(NULL);
 		while (eat(&shell.lexer) != END)
 		{
-			printf("[%d: %s] ->", shell.lexer.curr_tok->type,
+			//ft_lstadd(list, ft_lstnew(shell.lexer.curr_tok));
+			printf("[%d: %s] -> ", shell.lexer.curr_tok->type,
 			shell.lexer.curr_tok->value->str);
 			//token_del((void **)&shell.lexer.curr_tok, NULL);
 		}
-
+		/*
+		t_list *curr;
+		curr = list->next;
+		while (curr != list)
+		{
+			printf("[%d: %s] -> ", ((t_token *)curr->data)->type,
+			 ((t_token *)curr->data)->value->str);
+			 curr = curr->next;
+		}
+		*/
 		//go to readline if needed
-		if (shell.lexer.state & LINE_CONT || shell.lexer.quote)
-			continue ;
+		//if (shell.lexer.state & LINE_CONT || shell.lexer.quote)
+		//	continue ;
 
 		printf(" END\n");
 		//execution
