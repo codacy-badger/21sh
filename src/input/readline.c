@@ -152,7 +152,11 @@ int				readline(t_input *input)
 	t_uint8		*bufp;
 	int			ret;
 
-	input->line = ft_dstr_new("", 0, 32);
+	if (!input->line_cont)
+	{
+		input->line = ft_dstr_new("", 0, 32);
+		input->pos = 0;
+	}
 	while ((ret = read(STDIN_FILENO, buf, BUFSIZE - 1)) > 0 && (bufp = buf))
 	{
 		buf[ret] = 0;

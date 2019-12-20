@@ -224,6 +224,7 @@ char					*ft_strstr(const char *haystack, const char *needle);
 char					*ft_strsub(char const *s, unsigned int start,
 																size_t len);
 char					*ft_strjoin(const char *s1, const char *s2);
+int						ft_strquot(char *str);
 bool    				ft_strisnbr(char *str);
 
 /*

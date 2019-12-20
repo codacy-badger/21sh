@@ -12,31 +12,12 @@
 
 #include "shell.h"
 
-/*
-** END_OF_INPUT is set to tell the main while loop to stop.
-** -if the quote state is \, this is LINE_CONTINUATION. In the grammar, it
-**  is handled before tokenization, the problem is that backslash must not be
-**  quoted, so it is more processing, to check all the quotes to see if the
-**  last backslash is quoted or not... So I handle this directly here for
-**  the moment. It is possible because we dont handle NEWLINE tokens. 
-** -if the quote state is set, we don't delim the current token.
-*/
 int		end(t_lexer *lexer)
 {
 	if (*lexer->str == '\0')
 	{
-		if (!lexer->quote)
+		if (lexer->curr_tok && !lexer->quote && !(lexer->state & LINE_CONT))
 			lexer->state |= DELIMITED;
-		else if (lexer->quote == BSLASH)
-		{
-			lexer->quote_len--;
-			lexer->quote = NONE;
-			ft_dstr_remove(lexer->curr_tok->value,
-			lexer->curr_tok->value->len - 1, 1);
-			if (lexer->curr_tok->value->len == 0)
-				token_del((void **)&lexer->curr_tok, NULL);
-			lexer->state |= LINE_CONT;
-		}
 		lexer->state |= END;
 		return (1);
 	}

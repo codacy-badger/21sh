@@ -28,39 +28,24 @@ int		main(int argc, char **argv, char **envp)
 	init(&shell);
 	while (1)
 	{
-		//draw_prompt(&shell.input);
-		//readline(&shell.input);
-		//if (!shell.input.line)
-		//	continue ;
-		//init_lexer(&shell.lexer, shell.input.line);
-
 		//parsing
-		//t_list *list;
-		//list = ft_lstnew(NULL);
-		while (eat(&shell.lexer) != END)
+		while (eat(&shell.lexer) != 0)
 		{
-			//ft_lstadd(list, ft_lstnew(shell.lexer.curr_tok));
 			printf("[%d: %s] -> ", shell.lexer.curr_tok->type,
 			shell.lexer.curr_tok->value->str);
 			//token_del((void **)&shell.lexer.curr_tok, NULL);
 		}
-		/*
-		t_list *curr;
-		curr = list->next;
-		while (curr != list)
-		{
-			printf("[%d: %s] -> ", ((t_token *)curr->data)->type,
-			 ((t_token *)curr->data)->value->str);
-			 curr = curr->next;
-		}
-		*/
-		//go to readline if needed
-		//if (shell.lexer.state & LINE_CONT || shell.lexer.quote)
-		//	continue ;
-
 		printf(" END\n");
-		//execution
 		printf("\nIt will be done, master.\n");
+		
+		//store in history
+		if (shell.input.line->len > 1)
+		{
+			ft_dstr_remove(shell.input.line, shell.input.line->len - 1, 1);
+			ft_lstadd(shell.input.head, ft_lstnew(shell.input.line));
+		}
+		else
+			ft_dstr_del((void **)&shell.input.line, NULL);
 	}
 	return (0);
 }

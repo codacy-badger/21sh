@@ -40,6 +40,7 @@ SRC =		shell/main.c \
 			input/history.c \
 			lexer/_init.c \
 			lexer/token.c \
+			lexer/type.c \
 			lexer/append.c\
 			lexer/delim.c \
 			lexer/quote.c \

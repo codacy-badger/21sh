@@ -17,6 +17,8 @@ size_t  get_quote_len(char *str, char quote)
     size_t  len;
 
     len = 0;
+    if (quote == BSLASH)
+        return (1);
     while (*str && *str != quote)
     {
         len++;

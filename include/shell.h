@@ -25,9 +25,10 @@
 
 /*
 ** TODO:
-** -Improve redraw on resize.
+** -Improve redraw on resize + deal with
+**  line editing of lines with quoted newlines.
 ** -Find more elegant way to deal with
-**  operators in lexer. 
+**  operators in lexer.
 */
 
 typedef struct		s_sh

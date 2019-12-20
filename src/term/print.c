@@ -33,12 +33,20 @@ int		printstr(t_term *term, char *str)
 	nprint = 0;
 	while (*str)
 	{
-		clen = ft_charlen(*str);
-		write(STDOUT_FILENO, str, clen);
-		if (!((term->cpos + 1) % term->sizex))
-			tputs(term->caps[C_SF], 1, ft_putc);
-		incrcpos(term, 1);
-		str += clen;
+		if (*str == '\n')
+		{
+			movcnl(term);
+			str++;
+		}
+		else
+		{
+			clen = ft_charlen(*str);
+			write(STDOUT_FILENO, str, clen);
+			if (!((term->cpos + 1) % term->sizex))
+				tputs(term->caps[C_SF], 1, ft_putc);
+			incrcpos(term, 1);
+			str += clen;
+		}
 		nprint++;
 	}
 	return (nprint);
