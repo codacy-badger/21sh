@@ -45,25 +45,23 @@ static void	preprocess(t_lexer *lexer)
 	int		i;
 
 	i = 0;
-	quote = 0;
 	if (lexer->quote
 	&& (lexer->quote_len = get_quote_len(lexer->str, lexer->quote)))
+	{
 		i += lexer->quote_len;
+		//printf("|%s| %c: %zu\n", lexer->str, lexer->quote, lexer->quote_len);
+	}
 	while (lexer->str[i])
 	{
 		quote = 0;
-		if (ft_isquote(lexer->str[i]))
-		{
-			quote = lexer->str[i];
+		if (ft_isquote(lexer->str[i]) && (quote = lexer->str[i]))
 			i += get_quote_len(&lexer->str[i + 1], quote);
-		}
 		i++;
 	}
-	if (quote == BSLASH)
+	if (quote == BSLASH && (lexer->state |= LINE_CONT))
 	{
 		ft_dstr_remove(lexer->inputp->line, lexer->inputp->line->len - 2, 2);
 		lexer->inputp->pos -= 2;
-		lexer->state |= LINE_CONT;
 	}
 }
 
@@ -79,12 +77,19 @@ static void	preprocess(t_lexer *lexer)
 */
 static int	get_input(t_lexer *lexer)
 {
+	int		i;
+
 	if ((lexer->state & LINE_CONT) || lexer->quote)
+	{
+		i = lexer->str - lexer->inputp->line->str;
 		lexer->inputp->line_cont = true;
+	}
 	draw_prompt(lexer->inputp);
 	readline(lexer->inputp);
 	if (lexer->state & START)
 		lexer->str = lexer->inputp->line->str;
+	else
+		lexer->str = &lexer->inputp->line->str[i];
 	lexer->state &= ~(LINE_CONT | START);
 	preprocess(lexer);
 	return (0);
@@ -103,6 +108,8 @@ static int	init_state(t_lexer *lexer)
 		lexer->curr_tok = NULL;
 		lexer->state &= ~DELIMITED;
 	}
+	if ((lexer->state & (START | LINE_CONT)) || lexer->quote)
+		get_input(lexer);
 	return (0);
 }
 
@@ -117,8 +124,6 @@ static int	init_state(t_lexer *lexer)
 int			eat(t_lexer *lexer)
 {
 	init_state(lexer);
-	if ((lexer->state & (START | LINE_CONT)) || lexer->quote)
-		get_input(lexer);
 	while (!(lexer->state & (DELIMITED | END)))
 	{
 		if (end(lexer)

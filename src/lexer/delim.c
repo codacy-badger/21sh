@@ -53,12 +53,12 @@ int		operator_new(t_lexer *lexer)
 
 int		blank(t_lexer *lexer)
 {
-	if (!lexer->quote && ft_iswhitespace(*lexer->str))
+	if (!lexer->quote && *lexer->str == ' ')
 	{
 		lexer->oldsep = *lexer->str;
 		if (lexer->curr_tok)
 			lexer->state |= DELIMITED;
-		while (ft_iswhitespace(*lexer->str))
+		while (*lexer->str == ' ')
 		{
 			lexer->oldchar = *lexer->str;
 			lexer->str++;

@@ -1,0 +1,11 @@
+--- Makefile
++++ Makefile
+@@ -25,7 +25,7 @@ SRC =		shell/main.c \
+ 			shell/utils.c\
+ 			shell/env_utils.c\
+ 			shell/path_utils.c\
+-			signal/_init.c \
++			signal/sig_init.c \
+ 			signal/sig_action.c \
+ 			signal/sig_handle.c \
+ 			term/_init.c \

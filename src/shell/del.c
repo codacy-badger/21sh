@@ -33,7 +33,7 @@ static void	del_input(t_input *input)
 
 static void	del_term(t_term *term)
 {
-	tcsetattr(STDIN_FILENO, TCSANOW, &term->oldterm);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->oldterm);
 	return ;
 }
 

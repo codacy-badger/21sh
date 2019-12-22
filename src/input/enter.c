@@ -23,8 +23,6 @@
 
 int			enter(t_input *input)
 {
-	t_dstr	*last;
-
 	move_end(input);
 	ft_dstr_add(input->line, '\n');
 	input->pos++;
@@ -33,7 +31,7 @@ int			enter(t_input *input)
 	if (input->temp)
 		ft_dstr_del((void **)&input->temp, NULL);
 	if (input->line_cont)
-		input->line_cont = false ;
+		input->line_cont = false;
 	input->curr = input->head;
 	return (EOL);
 }

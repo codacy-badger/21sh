@@ -40,10 +40,10 @@
 ** create a new one or append to the current one.
 ** LINE_CONT is the state where line continuation is required,
 ** it is set in preprocess(), at the beginning of eat() call.
-** END is set when we reach the end of input line:
-**  -END and (LINE_CONT or quote) will recall eat()
-**  -END and DELIMITED will return the token_type
-**  -END will reset lexer and return 0
+** END is set when we reach the end of input line.
+** -DELIMITED will return the token_type.
+** -END and (LINE_CONT or quote) will recall eat()
+** -END only will reset lexer and return 0
 ** it is set in end()
 */
 # define START			1
@@ -91,16 +91,12 @@ typedef struct		s_token
 
 /*
 ** -str is a pointer to the current pos in the input string.
-** -curr_tok is the current token being delimited, when it is,
-**  we set the lexer state to DELIMITED.
-** -prev_tok is a pointer to the previous token delimited, it is
-**  useful only to set IO_NUMBER token type. IO_NUMBER can be set only
-**  when the next token is delimited.
-** -oldchar is the last char processed, it is useful when handling
-**  an operator, it avoids me to lexer->curr_tok->value->str[lexer->curr_tok->value->len].
-** -oldsep is the last separator, it is uselful for IO_NUMBER token.
+** -curr_tok is the current token being delimited.
+** -prev_tok is a pointer to the previous token delimited.
+** -oldchar is the last char processed.
+** -oldsep is the last separator.
 ** -quote is the quote state.
-** -quote len is the number of characters affected by quoting, quotes included.
+** -quote len is the number of characters affected by quoting.
 ** -state is the lexer state. 
 */
 typedef struct		s_lexer
