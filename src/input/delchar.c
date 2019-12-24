@@ -35,7 +35,7 @@ int		backspace(t_input *input)
 	ssize_t	charlen;
 	size_t 	nprint;
 
-	if (input->pos > 0)
+	if (input->pos > input->pos_min)
 	{
 		charlen = ft_charlen_rev(&input->line->str[input->pos - 1]);
 		input->pos -= charlen;

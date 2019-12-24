@@ -71,6 +71,7 @@ typedef struct		s_input
 	t_dstr			*temp;
 	t_dstr			*clip;
 	size_t			pos;
+	size_t			pos_min;
 	bool			esc;
 	bool			line_cont;
 }					t_input;

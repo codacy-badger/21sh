@@ -31,7 +31,7 @@ int		move_home(t_input *input)
 	size_t	offset;
 
 	offset = 0;
-	while (input->pos > 0)
+	while (input->pos > input->pos_min)
 	{
 		input->pos -= ft_charlen_rev(&input->line->str[input->pos - 1]);
 		offset++;
@@ -66,13 +66,13 @@ int		move_prevword(t_input *input)
 	size_t	offset;
 
 	offset = 0;
-	while (input->pos > 0
+	while (input->pos > input->pos_min
 	&& ft_iswhitespace(input->line->str[input->pos - 1]))
 	{
 		input->pos -= ft_charlen_rev(&input->line->str[input->pos - 1]);
 		offset++;
 	}
-	while (input->pos > 0
+	while (input->pos > input->pos_min
 	&& !ft_iswhitespace(input->line->str[input->pos - 1]))
 	{
 		input->pos -= ft_charlen_rev(&input->line->str[input->pos - 1]);

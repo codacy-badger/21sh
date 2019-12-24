@@ -14,7 +14,7 @@
 
 int		move_left(t_input *input)
 {
-	if (input->pos > 0)
+	if (input->pos > input->pos_min)
 	{
 		input->pos -= ft_charlen_rev(&input->line->str[input->pos - 1]);
 		movcleft(input->termp);
@@ -39,7 +39,7 @@ int		move_up(t_input *input)
 
 	offset = 0;
 	i = input->termp->sizex;
-	while (i-- && input->pos > 0)
+	while (i-- && input->pos > input->pos_min)
 	{
 		input->pos -= ft_charlen_rev(&input->line->str[input->pos - 1]);
 		offset++;

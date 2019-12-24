@@ -47,10 +47,7 @@ static void	preprocess(t_lexer *lexer)
 	i = 0;
 	if (lexer->quote
 	&& (lexer->quote_len = get_quote_len(lexer->str, lexer->quote)))
-	{
 		i += lexer->quote_len;
-		//printf("|%s| %c: %zu\n", lexer->str, lexer->quote, lexer->quote_len);
-	}
 	while (lexer->str[i])
 	{
 		quote = 0;
@@ -70,26 +67,20 @@ static void	preprocess(t_lexer *lexer)
 ** to tell readline that it must not create a new line and not reset
 ** the input index. this boolean will be reset to false by input/enter()
 ** function.
-** In case the state is START, we set lexer->str to point on the beginning
-** of the new input line, otherwise it is left unchanged, as readline will
-** append the input to the current line.
 ** We reset the state and send preprocess to check for line continuation.
 */
 static int	get_input(t_lexer *lexer)
 {
 	int		i;
 
+	i = 0;
 	if ((lexer->state & LINE_CONT) || lexer->quote)
 	{
 		i = lexer->str - lexer->inputp->line->str;
 		lexer->inputp->line_cont = true;
 	}
-	draw_prompt(lexer->inputp);
 	readline(lexer->inputp);
-	if (lexer->state & START)
-		lexer->str = lexer->inputp->line->str;
-	else
-		lexer->str = &lexer->inputp->line->str[i];
+	lexer->str = &lexer->inputp->line->str[i];
 	lexer->state &= ~(LINE_CONT | START);
 	preprocess(lexer);
 	return (0);

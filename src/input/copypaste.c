@@ -61,16 +61,16 @@ int		cut_before(t_input *input)
 	size_t	len;
 	size_t	nprint;
 
-	len = input->pos;
+	len = input->pos - input->pos_min;
 	if (len == 0)
 		return (0);
 	if (input->clip != NULL)
 		ft_dstr_del((void **)&input->clip, NULL);
-	if (!(input->clip = ft_dstr_new(input->line->str, len, len)))
+	if (!(input->clip = ft_dstr_new(&input->line->str[input->pos_min], len, len)))
 		return (-1);
 	move_home(input);
-	ft_dstr_remove(input->line, 0, len);
-	nprint = printstr(input->termp, input->line->str);
+	ft_dstr_remove(input->line, input->pos_min, len);
+	nprint = printstr(input->termp, &input->line->str[input->pos_min]);
 	clearfromc(input->termp);
 	movcto(input->termp, input->termp->cpos - nprint);
 	return (0);
