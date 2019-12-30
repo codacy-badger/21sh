@@ -133,5 +133,5 @@ int			eat(t_lexer *lexer)
 	else if ((lexer->state & LINE_CONT) || lexer->quote)
 		return (eat(lexer));
 	reset_lexer(lexer);
-	return (0);
+	return (END_OF_INPUT);
 }

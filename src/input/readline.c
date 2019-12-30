@@ -153,29 +153,21 @@ int				readline(t_input *input)
 	int			ret;
 
 	draw_prompt(input);
-	if (!input->line_cont)
-	{
-		input->line = ft_dstr_new("", 0, 32);
-		input->pos_min = 0;
+	if (!input->line_cont && (input->line = ft_dstr_new("", 0, 32)))
 		input->pos = 0;
-	}
-	else
-		input->pos_min = input->pos;
+	input->pos_min = input->pos;
 	while ((ret = read(STDIN_FILENO, buf, BUFSIZE - 1)) > 0 && (bufp = buf))
 	{
 		buf[ret] = 0;
 		while (*bufp)
 		{
-			if (ft_isctrl(*bufp))
-				ret = control(input, &bufp);
-			else if (input->esc)
-				ret = escape(input, &bufp);
-			else
-				ret = addchar(input, &bufp);
-			if (ret == CONTINUE)
-				continue ; 
-			input->oldkey = *(t_uint64 *)input->key;
-			*(t_uint64 *)input->key = 0;
+			if ((ft_isctrl(*bufp) && (ret = control(input, &bufp)) != CONTINUE)
+			|| (input->esc && (ret = escape(input, &bufp)) != CONTINUE)
+			|| ((ret = addchar(input, &bufp)) != CONTINUE))
+			{
+				input->oldkey = *(t_uint64 *)input->key;
+				*(t_uint64 *)input->key = 0;
+			}
 			if (ret == EOL)
 				return (ret);
 		}

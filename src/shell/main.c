@@ -36,7 +36,7 @@ int		main(int argc, char **argv, char **envp)
 			//token_del((void **)&shell.lexer.curr_tok, NULL);
 		}
 		printf(" END\n");
-		printf("\nIt will be done, master.\n");
+		//printf("\nIt will be done, master.\n");
 		
 		//store in history
 		if (shell.input.line->len > 1)

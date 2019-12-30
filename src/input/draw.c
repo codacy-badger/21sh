@@ -14,7 +14,6 @@
 
 int		draw_prompt(t_input *input)
 {
-	//a shell in the shell
 	printstr(input->termp, "$> ");
 	return (0);
 }

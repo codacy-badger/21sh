@@ -19,11 +19,6 @@
 **   The grammar symbols
 ** -------------------------------------------------------
 **
-**
-**
-**
-**
-**
 **%token  DLESS  DGREAT  LESSAND  GREATAND  LESSGREAT  DLESSDASH  AMPERSAND
 **         '<<'   '>>'    '<&'     '>&'      '<>'         <<-        '&'
 **		  SEMI    PIPE
@@ -32,10 +27,10 @@
 
 /*
 ** different states:
-** START is when eat is called normally, with no quotes or
-** line continuation problems.
+** START is when we start line tokenization, eat is called normally,
+** with no quotes or line continuation problems.
 ** DELIMITED is the status when a token has been delimited.
-** it is reset on next call, cause we want to know if the
+** it is reset to 0 on next call, it allows us to know if the
 ** previous token has been delimited or not, to know if we must
 ** create a new one or append to the current one.
 ** LINE_CONT is the state where line continuation is required,
@@ -43,7 +38,7 @@
 ** END is set when we reach the end of input line.
 ** -DELIMITED will return the token_type.
 ** -END and (LINE_CONT or quote) will recall eat()
-** -END only will reset lexer and return 0
+** -END only will reset lexer and return NONE
 ** it is set in end()
 */
 # define START			1
@@ -51,10 +46,9 @@
 # define LINE_CONT		4
 # define END			8
 
-//0110
-
 enum 				e_toktype
 {
+	END_OF_INPUT,
 	WORD,
 	ASSIGNMENT_WORD,
 	NAME,

@@ -41,7 +41,7 @@ enum	e_keys
 		K_PAST,
 		K_CUP,
 		K_CDOWN,
-		KEYS_SIZE
+		KEYS_NB
 };
 
 /*
@@ -62,7 +62,7 @@ enum	e_keys
 typedef struct		s_input
 {
 	struct s_term	*termp;
-	unsigned long	keys[KEYS_SIZE];
+	unsigned long	keys[KEYS_NB];
 	unsigned char	key[8];
 	unsigned long	oldkey;
 	t_list			*head;
@@ -101,5 +101,7 @@ int					cut_before(t_input *input);
 int					cut_after(t_input *input);
 int					cut_word(t_input *input);
 int					paste(t_input *input);
+
+int		compute_newcpos(t_input *input, int offset);
 
 #endif
