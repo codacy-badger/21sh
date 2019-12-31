@@ -115,7 +115,7 @@ static int		addchar(t_input *input, t_uint8 **bufp)
 {
 	static size_t	i = 0;
 	static size_t	charlen = 0;
-	size_t 			nprint;
+	size_t 			offset;
 
 	if (!charlen)
 		charlen = ft_charlen(**bufp);
@@ -125,10 +125,10 @@ static int		addchar(t_input *input, t_uint8 **bufp)
 	{
 		input->key[i] = 0;
 		ft_dstr_insert(input->line, input->pos, (char *)input->key, charlen);
-		nprint = printstr(input->termp, &input->line->str[input->pos]);
+		offset = printstr(input->termp, &input->line->str[input->pos]);
 		input->pos += charlen;
 		if (input->pos < input->line->len)
-			movcto(input->termp, input->termp->cpos - nprint + 1);
+			movcto(input->termp, input->termp->cpos - offset + 1);
 		charlen = 0;
 		i = 0;
 		return (0);

@@ -31,11 +31,12 @@ int		main(int argc, char **argv, char **envp)
 		//parsing
 		while (eat(&shell.lexer) != 0)
 		{
-			printf("[%d: %s] -> ", shell.lexer.curr_tok->type,
-			shell.lexer.curr_tok->value->str);
+			;
+			//printf("[%d: %s] -> ", shell.lexer.curr_tok->type,
+			//shell.lexer.curr_tok->value->str);
 			//token_del((void **)&shell.lexer.curr_tok, NULL);
 		}
-		printf(" END\n");
+		//printf(" END\n");
 		
 		//store in history
 		if (shell.input.line->len > 1)

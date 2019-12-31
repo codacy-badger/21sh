@@ -17,7 +17,11 @@ int		move_left(t_input *input)
 	if (input->pos > input->pos_min)
 	{
 		input->pos -= ft_charlen_rev(&input->line->str[input->pos - 1]);
-		movcleft(input->termp);
+		if (input->line->str[input->pos] == '\n')
+			cpos_to_prevline(input);
+		else
+			input->termp->cpos--;
+		movcto(input->termp, input->termp->cpos);
 	}
 	return (0);
 }
@@ -26,14 +30,20 @@ int		move_right(t_input *input)
 {
 	if (input->pos < input->line->len)
 	{
+		if (input->line->str[input->pos] == '\n')
+			cpos_to_nextline(input);
+		else
+			input->termp->cpos++;
 		input->pos += ft_charlen(input->line->str[input->pos]);
-		movcright(input->termp);
+		movcto(input->termp, input->termp->cpos);
 	}
 	return (0);
 }
 
 int		move_up(t_input *input)
 {
+	(void)input;
+	/*
 	size_t	offset;
 	size_t	i;
 
@@ -45,11 +55,14 @@ int		move_up(t_input *input)
 		offset++;
 	}
 	movcto(input->termp, input->termp->cpos - offset);
+	*/
 	return (0);
 }
 
 int		move_down(t_input *input)
 {
+	(void)input;
+	/*
 	size_t	offset;
 	size_t	i;
 
@@ -61,6 +74,7 @@ int		move_down(t_input *input)
 		offset++;
 	}
 	movcto(input->termp, input->termp->cpos + offset);
+	*/
 	return (0);
 }
 
