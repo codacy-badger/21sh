@@ -20,7 +20,7 @@ int		move_left(t_input *input)
 		if (input->line->str[input->pos] == '\n')
 			cpos_to_prevline(input);
 		else
-			input->termp->cpos--;
+			decrcpos(input->termp, 1);
 		movcto(input->termp, input->termp->cpos);
 	}
 	return (0);
@@ -33,7 +33,7 @@ int		move_right(t_input *input)
 		if (input->line->str[input->pos] == '\n')
 			cpos_to_nextline(input);
 		else
-			input->termp->cpos++;
+			incrcpos(input->termp, 1);
 		input->pos += ft_charlen(input->line->str[input->pos]);
 		movcto(input->termp, input->termp->cpos);
 	}

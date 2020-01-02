@@ -125,6 +125,7 @@ static int		addchar(t_input *input, t_uint8 **bufp)
 	{
 		input->key[i] = 0;
 		ft_dstr_insert(input->line, input->pos, (char *)input->key, charlen);
+		clearfromc(input->termp);
 		offset = printstr(input->termp, &input->line->str[input->pos]);
 		input->pos += charlen;
 		if (input->pos < input->line->len)

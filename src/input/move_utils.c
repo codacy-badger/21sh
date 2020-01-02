@@ -12,14 +12,6 @@
 
 #include "shell.h"
 
-/*
-
-$> echo "abc\n
-de£f\n
-ghijkl mno"
-
-*/
-
 int		cpos_to_prevline(t_input *input)
 {
 	size_t	pos;
@@ -34,7 +26,8 @@ int		cpos_to_prevline(t_input *input)
 	}
 	if (!pos)
 		offset += ft_strlen("$> ");
-	input->termp->cpos -= input->termp->sizex - offset;
+	decrcpos(input->termp,
+	input->termp->sizex - (offset % input->termp->sizex));
 	return (0);
 }
 
@@ -52,6 +45,7 @@ int		cpos_to_nextline(t_input *input)
 	}
 	if (!pos)
 		offset += ft_strlen("$> ");
-	input->termp->cpos += input->termp->sizex - offset;
+	incrcpos(input->termp,
+	input->termp->sizex - (offset % input->termp->sizex));
 	return (0);
 }

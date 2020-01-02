@@ -105,9 +105,7 @@ int					paste(t_input *input);
 int					draw_prompt(t_input *input);
 int					redraw(t_input *input);
 
-int		cpos_to_prevline(t_input *input);
-int		cpos_to_nextline(t_input *input);
-//int		move_cursor_left(t_input *input, int n);
-//int					update_cpos(t_input *input, int offset);
+int					cpos_to_prevline(t_input *input);
+int					cpos_to_nextline(t_input *input);
 
 #endif
