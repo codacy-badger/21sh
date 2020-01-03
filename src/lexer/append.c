@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 21:27:56 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/08 21:31:12 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/02 17:38:52 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		comment(t_lexer *lexer)
 */
 int		word_start(t_lexer *lexer)
 {
-	lexer->curr_tok = token_new(TOKEN);
+	lexer->curr_tok = token_new(WORD);
 	ft_dstr_add(lexer->curr_tok->value, *lexer->str);
 	lexer->oldchar = *lexer->str;
 	if (lexer->quote && --lexer->quote_len == 0)
