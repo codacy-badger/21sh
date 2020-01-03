@@ -12,7 +12,12 @@
 
 #include "shell.h"
 
-int		move_end(t_input *input)
+static int	ft_iswordsep(char c)
+{
+	return (ft_iswhitespace(c) || ft_isquote(c));
+}
+
+int			move_end(t_input *input)
 {
 	while (input->pos < input->line->len)
 	{
@@ -26,7 +31,7 @@ int		move_end(t_input *input)
 	return (0);
 }
 
-int		move_home(t_input *input)
+int			move_home(t_input *input)
 {
 	while (input->pos > input->pos_min)
 	{
@@ -40,10 +45,10 @@ int		move_home(t_input *input)
 	return (0);
 }
 
-int		move_nextword(t_input *input)
+int			move_nextword(t_input *input)
 {
 	while (input->pos < input->line->len
-	&& !ft_iswhitespace(input->line->str[input->pos]))
+	&& ft_iswordsep(input->line->str[input->pos]))
 	{
 		if (input->line->str[input->pos] == '\n')
 			cpos_to_nextline(input);
@@ -52,7 +57,7 @@ int		move_nextword(t_input *input)
 		input->pos += ft_charlen(input->line->str[input->pos]);
 	}
 	while (input->pos < input->line->len
-	&& ft_iswhitespace(input->line->str[input->pos]))
+	&& !ft_iswordsep(input->line->str[input->pos]))
 	{
 		if (input->line->str[input->pos] == '\n')
 			cpos_to_nextline(input);
@@ -64,10 +69,10 @@ int		move_nextword(t_input *input)
 	return (0);
 }
 
-int		move_prevword(t_input *input)
+int			move_prevword(t_input *input)
 {
 	while (input->pos > input->pos_min
-	&& ft_iswhitespace(input->line->str[input->pos - 1]))
+	&& ft_iswordsep(input->line->str[input->pos - 1]))
 	{
 		input->pos -= ft_charlen_rev(&input->line->str[input->pos - 1]);
 		if (input->line->str[input->pos] == '\n')
@@ -76,7 +81,7 @@ int		move_prevword(t_input *input)
 			decrcpos(input->termp, 1);
 	}
 	while (input->pos > input->pos_min
-	&& !ft_iswhitespace(input->line->str[input->pos - 1]))
+	&& !ft_iswordsep(input->line->str[input->pos - 1]))
 	{
 		input->pos -= ft_charlen_rev(&input->line->str[input->pos - 1]);
 		if (input->line->str[input->pos] == '\n')
