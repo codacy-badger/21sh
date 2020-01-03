@@ -6,43 +6,33 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 08:48:18 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/15 08:50:25 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/03 14:36:39 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_token	*token(t_list_head *tok_list)
-{
-	return (tok_list->data);
-}
-
-void	print_ast(t_node *ast)
+void	print_ast(t_node *ast, int indent_level)
 {
 	int i;
+	int	n;
 
 	if (ast == NULL)
 		return ;
-	printf("children:%d ", ast->nb_children);
+	n = 0;
+	while (n++ < indent_level)
+		write(1, "  ", 2);
+	if (ast == NULL)
+		printf("NULL");
 	if (ast->data != NULL)
-		printf("str:%s\n", ((t_token *)ast->data)->content->str);
+		printf("%s\n", ((t_token *)ast->data)->value->str);
 	else
-		printf("NULL\n");
+		printf("cmd\n");
 	fflush(stdout);
 	if (ast->nb_children > 0)
 	{
 		i = 0;
 		while (i < ast->nb_children)
-			print_ast(ast->child[i++]);
+			print_ast(ast->child[i++], indent_level + 1);
 	}
 }
-
-bool	all_tokens_used(t_list_head *tok_list)
-{
-	if (token(tok_list)->type == END)
-		return (true);
-	if (token(tok_list)->type == AMPERSAND || token(tok_list)->type == SEMI)
-		return (token(tok_list->next)->type == END);
-	return (false);
-}
-

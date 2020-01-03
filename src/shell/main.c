@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:37:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/02 15:16:05 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:14:30 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,7 @@ int		main(int argc, char **argv, char **envp)
 	init(&shell);
 	while (1)
 	{
-		//parsing
-		while (eat(&shell.lexer) != 0)
-		{
-			printf("[%d: %s] -> ", shell.lexer.curr_tok->type,
-			shell.lexer.curr_tok->value->str);
-			//token_del((void **)&shell.lexer.curr_tok, NULL);
-		}
-		printf(" END\n");
-		//printf("\nIt will be done, master.\n");
-		
-		//store in history
+		parse(&shell.lexer);
 		if (shell.input.line->len > 1)
 		{
 			ft_dstr_remove(shell.input.line, shell.input.line->len - 1, 1);

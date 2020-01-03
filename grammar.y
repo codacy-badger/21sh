@@ -39,14 +39,14 @@ and_or_list      : AND_IF pipeline and_or_list
 				 | EMPTY
 				 ;
 /*
-pipeline         :              command
-                 | pipeline '|' command
+_pipeline         :              command
+                 | _pipeline '|' command
                  ;
 */ 
 
-pipeline         : command pipe_list
+_pipeline         : command _pipe_list
                  ;
-pipe_list        : '|' command pipe_list
+_pipe_list        : '|' command _pipe_list
                  | EMPTY
 				 ;
 command          : cmd_prefix cmd_word cmd_suffix
@@ -85,7 +85,7 @@ cmd_suffix       : io_redirect cmd_suffix_list
 cmd_suffix_list  | io_redirect cmd_suffix_list
                  | WORD cmd_suffix_list
                  | EMPTY;
-io_redirect      :           io_file
+_io_redirect      :           io_file
                  | IO_NUMBER io_file
                  |           io_here
                  | IO_NUMBER io_here
