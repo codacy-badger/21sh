@@ -27,9 +27,6 @@ bool	is_redir(t_token *token)
 	return (LESS <= token->type && token->type <= DLESSDASH);
 }
 
-/*
-** This is horrible
-*/
 bool	is_operator_next(char *ope, char c)
 {
 	if (is_operator_part(c))

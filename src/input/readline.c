@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/08 03:24:57 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/03 19:21:25 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,48 @@ static int		escape(t_input *input, t_uint8 **bufp)
 }
 
 /*
-** We increment buf pointer by 1 and call appropriate function.
+** Variables are static in case we reach the end of the buffer 
+** and the char is not terminated.
 */
-static int		control(t_input *input, t_uint8 **bufp)
+
+static int		addchar(t_input *input, t_uint8 **bufp)
 {
-	input->key[0] = *(*bufp)++;
-	if (*input->key == 27)
+	static size_t	i = 0;
+	static size_t	charlen = 0;
+	size_t 			offset;
+
+	if (!charlen)
+		charlen = ft_charlen(**bufp);
+	while (**bufp && i < charlen)
+		input->key[i++] = *(*bufp)++;
+	if (i == charlen)
+	{
+		input->key[i] = 0;
+		ft_dstr_insert(input->line, input->pos, (char *)input->key, charlen);
+		clearfromc(input->termp);
+		offset = printstr(input->termp, &input->line->str[input->pos]);
+		input->pos += charlen;
+		if (input->pos < input->line->len)
+			movcto(input->termp, input->termp->cpos - offset + 1);
+		charlen = 0;
+		i = 0;
+		return (0);
+	}
+	return (CONTINUE);
+}
+
+/*
+** input->esc means we have started to read an escape sequence,
+** but the end of buf was reached before the end of this escape sequence.
+*/
+
+static int		process(t_input *input, t_uint8 **bufp)
+{
+	if (input->esc)
+		return (escape(input, bufp));
+	else if (ft_isprint(**bufp))
+		return (addchar(input, bufp));
+	else if ((*input->key = *(*bufp)++) == 27)
 		return (escape(input, bufp));
 	else if (*input->key == 10)
 		return (enter(input));
@@ -105,35 +141,6 @@ static int		control(t_input *input, t_uint8 **bufp)
 	else if (*input->key == 12)
 		return (redraw(input));
 	return (0);
-}
-
-/*
-** Variables are static in case we reach the end of the buffer 
-** and the char is not terminated.
-*/
-static int		addchar(t_input *input, t_uint8 **bufp)
-{
-	static size_t	i = 0;
-	static size_t	charlen = 0;
-	size_t 			nprint;
-
-	if (!charlen)
-		charlen = ft_charlen(**bufp);
-	while (**bufp && i < charlen)
-		input->key[i++] = *(*bufp)++;
-	if (i == charlen)
-	{
-		input->key[i] = 0;
-		ft_dstr_insert(input->line, input->pos, (char *)input->key, charlen);
-		nprint = printstr(input->termp, &input->line->str[input->pos]);
-		input->pos += charlen;
-		if (input->pos < input->line->len)
-			movcto(input->termp, input->termp->cpos - nprint + 1);
-		charlen = 0;
-		i = 0;
-		return (0);
-	}
-	return (CONTINUE);
 }
 
 /*
@@ -161,13 +168,10 @@ int				readline(t_input *input)
 		buf[ret] = 0;
 		while (*bufp)
 		{
-			if ((ft_isctrl(*bufp) && (ret = control(input, &bufp)) != CONTINUE)
-			|| (input->esc && (ret = escape(input, &bufp)) != CONTINUE)
-			|| ((ret = addchar(input, &bufp)) != CONTINUE))
-			{
-				input->oldkey = *(t_uint64 *)input->key;
-				*(t_uint64 *)input->key = 0;
-			}
+			if ((ret = process(input, &bufp)) == CONTINUE)
+				continue ;
+			input->oldkey = *(t_uint64 *)input->key;
+			*(t_uint64 *)input->key = 0;
 			if (ret == EOL)
 				return (ret);
 		}

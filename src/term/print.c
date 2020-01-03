@@ -26,15 +26,16 @@ int		ft_putc(int c)
 */
 int		printstr(t_term *term, char *str)
 {
-	size_t	nprint;
+	size_t	offset;
 	size_t	clen;
 
 	clen = 0;
-	nprint = 0;
+	offset = 0;
 	while (*str)
 	{
 		if (*str == '\n')
 		{
+			offset += term->sizex - term->cpos % term->sizex;
 			movcnl(term);
 			str++;
 		}
@@ -46,8 +47,8 @@ int		printstr(t_term *term, char *str)
 				tputs(term->caps[C_SF], 1, ft_putc);
 			incrcpos(term, 1);
 			str += clen;
+			offset++;
 		}
-		nprint++;
 	}
-	return (nprint);
+	return (offset);
 }

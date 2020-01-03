@@ -1,18 +1,6 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/12/08 21:48:10 by fratajcz         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = 21sh 
 CC = gcc
-CFLAGS = -Wall -Wextra #-glldb# -fsanitize=address#-Werror
+CFLAGS = -Wall -Wextra -glldb# -fsanitize=address#-Werror
 LFLAGS = -ltermcap
 DIR_SRC = src/
 DIR_OBJ = obj/
@@ -21,6 +9,9 @@ DIR_LIB = libft/
 SRC =		shell/main.c \
 			shell/_init.c \
 			shell/del.c \
+			shell/env_utils.c\
+			shell/path_utils.c\
+			shell/utils.c\
 			signal/_init.c \
 			signal/sig_action.c \
 			signal/sig_handle.c \
@@ -32,20 +23,28 @@ SRC =		shell/main.c \
 			input/_init.c \
 			input/move_basic.c \
 			input/move_spec.c \
+			input/move_utils.c \
 			input/delchar.c \
 			input/enter.c \
 			input/draw.c \
 			input/readline.c \
 			input/copypaste.c \
 			input/history.c \
+			exec/get_argv.c\
+			exec/exec.c\
+			exec/redir.c\
+			exec/pipe.c\
 			lexer/_init.c \
 			lexer/token.c \
-			lexer/type.c \
 			lexer/append.c\
 			lexer/delim.c \
 			lexer/quote.c \
 			lexer/eat.c \
-			lexer/utils.c
+			lexer/utils.c\
+			parser/parser.c\
+			parser/pipeline.c\
+			parser/redirect.c\
+			parser/utils.c
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
 LIB = $(addprefix $(DIR_LIB), libft.a)

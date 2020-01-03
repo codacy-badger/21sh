@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _init.c                                            :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/03 15:42:33 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/12/15 15:00:39 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/12/18 19:17:53 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
 
-/*
-** Think about interactive & non interactive mode...
-** assert read line works properly when read from file
-*/
+#ifndef EXEC_H
+# define EXEC_H
 
-int		init(t_sh *shell)
-{
-	int		ret;
-	extern char	**environ;
+# include "shell.h"
 
-	ft_bzero(shell, sizeof(*shell));
-	init_sig(shell);
-	init_term(&shell->term);
-	init_input(&shell->input, &shell->term);
-	init_lexer(&shell->lexer, &shell->input);
-	shell->env = env_dup(environ);
-	return (0);
-}
+//int				set_redirections(t_node *cmd, int stdin_fd, int stdout_fd);
+int				exec_pipe(t_node *ast, t_env *env);
+int				exec_with_io(t_node *cmd, t_env *env, int stdin_fd, 
+				int stdout_fd);
+int				exec_command(t_node *cmd, t_env *env);
+int				set_redirections(t_node *cmd);
+char			**get_argv(t_node *cmd, t_env *env);
+
+#endif

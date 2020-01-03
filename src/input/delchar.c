@@ -14,16 +14,14 @@
 
 int		delete(t_input *input)
 {
-	ssize_t	charlen;
-	size_t 	nprint;
+	size_t 	offset;
 
 	if (input->line->str[input->pos])
 	{
-		charlen = ft_charlen(input->line->str[input->pos]);
-		ft_dstr_remove(input->line, input->pos, charlen);
-		nprint = printstr(input->termp, &input->line->str[input->pos]);
-		nprint += printstr(input->termp, " ");
-		movcto(input->termp, input->termp->cpos - nprint);
+		clearfromc(input->termp);
+		ft_dstr_remove(input->line, input->pos, ft_charlen(input->line->str[input->pos]));
+		offset = printstr(input->termp, &input->line->str[input->pos]);
+		movcto(input->termp, input->termp->cpos - offset);
 	}
 	else
 		tputs(input->termp->caps[C_BL], 1, ft_putc);
@@ -32,18 +30,15 @@ int		delete(t_input *input)
 
 int		backspace(t_input *input)
 {
-	ssize_t	charlen;
-	size_t 	nprint;
+	size_t 	offset;
 
 	if (input->pos > input->pos_min)
 	{
-		charlen = ft_charlen_rev(&input->line->str[input->pos - 1]);
-		input->pos -= charlen;
-		ft_dstr_remove(input->line, input->pos, charlen);
-		movcleft(input->termp);
-		nprint = printstr(input->termp, &input->line->str[input->pos]);
-		nprint += printstr(input->termp, " ");
-		movcto(input->termp, input->termp->cpos - nprint);
+		move_left(input);
+		clearfromc(input->termp);
+		ft_dstr_remove(input->line, input->pos, ft_charlen(input->line->str[input->pos]));
+		offset = printstr(input->termp, &input->line->str[input->pos]);
+		movcto(input->termp, input->termp->cpos - offset);
 	}
 	else
 		tputs(input->termp->caps[C_BL], 1, ft_putc);

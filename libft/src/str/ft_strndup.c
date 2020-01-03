@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _init.c                                            :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/03 15:42:33 by fratajcz         ###   ########.fr       */
+/*   Created: 2019/12/15 10:37:44 by fratajcz          #+#    #+#             */
+/*   Updated: 2019/12/15 10:38:02 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include <string.h>
+#include "../../inc/libft.h"
 
-/*
-** Think about interactive & non interactive mode...
-** assert read line works properly when read from file
-*/
-
-int		init(t_sh *shell)
+char	*ft_strndup(const char *s1, size_t n)
 {
-	int		ret;
-	extern char	**environ;
+	size_t	len;
+	char	*new;
 
-	ft_bzero(shell, sizeof(*shell));
-	init_sig(shell);
-	init_term(&shell->term);
-	init_input(&shell->input, &shell->term);
-	init_lexer(&shell->lexer, &shell->input);
-	shell->env = env_dup(environ);
-	return (0);
+	len = ft_strnlen(s1, n);
+	if (!(new = ft_strnew(len)))
+		return (NULL);
+	ft_memcpy(new, s1, len);
+	new[len] = '\0';
+	return (new);
 }

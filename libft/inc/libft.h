@@ -6,7 +6,7 @@
 /*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:27:46 by nbousset          #+#    #+#             */
-/*   Updated: 2019/11/25 20:53:29 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:32:07 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 */
 # define PTR	0
 # define CPY	1
+# define ALLOC_ERROR	3
+
 
 typedef unsigned char	t_uint8;
 typedef unsigned short	t_uint16;
@@ -130,6 +132,21 @@ void					ft_list_split(t_list_head *head, t_list_head **a, t_list_head **b);
 void					ft_list_sort(t_list_head **head, int (*cmp)(void *a, void *b));
 
 /*
+** --------------------------------Struct node-------------------------------
+*/
+
+typedef struct s_node 
+{
+	void			*data;
+	int				nb_children;
+	int				capacity;
+	struct s_node	**child;
+} t_node;
+
+t_node					*ft_node_new(void *data);
+int						ft_node_add_child(t_node *parent, t_node *child);
+
+/*
 ** -----------------------------Struct hashtable-----------------------------
 */
 
@@ -226,6 +243,10 @@ char					*ft_strsub(char const *s, unsigned int start,
 char					*ft_strjoin(const char *s1, const char *s2);
 int						ft_strquot(char *str);
 bool    				ft_strisnbr(char *str);
+char					*ft_strcat(char *s1, const char *s2);
+size_t					ft_strnlen(const char *s, size_t maxlen);
+char					*ft_strndup(const char *s1, size_t n);
+
 
 /*
 ** -----------------------------Array-----------------------------

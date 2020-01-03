@@ -12,19 +12,33 @@
 
 #include "shell.h"
 
-int		end(t_lexer *lexer)
+static int	delim_token(t_lexer *lexer)
+{
+	if (lexer->curr_tok)
+	{
+		if (is_operator_start(*lexer->curr_tok->value->str))
+			lexer->curr_tok->type = get_operator_type(lexer->curr_tok->value->str);
+		else if ((*lexer->str == '<' || *lexer->str == '>')
+		&& ft_strisnbr(lexer->curr_tok->value->str))
+			lexer->curr_tok->type = IO_NUMBER;
+		lexer->state |= DELIMITED;
+	}
+	return (0);
+}
+
+int			end(t_lexer *lexer)
 {
 	if (*lexer->str == '\0')
 	{
 		if (lexer->curr_tok && !lexer->quote && !(lexer->state & LINE_CONT))
-			lexer->state |= DELIMITED;
+			delim_token(lexer);
 		lexer->state |= END;
 		return (1);
 	}
 	return (0);
 }
 
-int		operator_end(t_lexer *lexer)
+int			operator_end(t_lexer *lexer)
 {
 	if (lexer->curr_tok && !lexer->quote
 	&& (is_operator_start(*lexer->curr_tok->value->str)
@@ -32,33 +46,33 @@ int		operator_end(t_lexer *lexer)
 	&& (!is_operator_part(*lexer->str)
 	|| !is_operator_next(lexer->curr_tok->value->str, *lexer->str)))
 	{
-		lexer->oldsep = *lexer->str;
-		lexer->state |= DELIMITED;
+		delim_token(lexer);
 		return (1);
 	}
 	return (0);
 }
 
-int		operator_new(t_lexer *lexer)
+int			operator_new(t_lexer *lexer)
 {
 	if (lexer->curr_tok && !lexer->quote
 	&& is_operator_start(*lexer->str))
 	{
-		lexer->oldsep = *lexer->str;
-		lexer->state |= DELIMITED;
+		if ((*lexer->str == '<' || *lexer->str == '>')
+		&& ft_strisnbr(lexer->curr_tok->value->str))
+			lexer->curr_tok->type = IO_NUMBER;
+		delim_token(lexer);
 		return (1);
 	}
 	return (0);
 }
 
-int		blank(t_lexer *lexer)
+int			blank(t_lexer *lexer)
 {
-	if (!lexer->quote && *lexer->str == ' ')
+	if (!lexer->quote && ft_iswhitespace(*lexer->str))
 	{
-		lexer->oldsep = *lexer->str;
 		if (lexer->curr_tok)
-			lexer->state |= DELIMITED;
-		while (*lexer->str == ' ')
+			delim_token(lexer);
+		while (ft_iswhitespace(*lexer->str))
 		{
 			lexer->oldchar = *lexer->str;
 			lexer->str++;

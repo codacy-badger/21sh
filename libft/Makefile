@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/11/25 20:34:32 by fratajcz         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = libft.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
@@ -40,6 +28,9 @@ SRC =	mem/ft_memalloc.c \
 		str/ft_strsub.c \
 		str/ft_strjoin.c \
 		str/ft_strisnbr.c \
+		str/ft_strndup.c\
+		str/ft_strcat.c\
+		str/ft_strnlen.c\
 		array/ft_strarray_dup.c \
 		array/ft_strarray_realloc.c \
 		array/ft_strarray_del.c \
@@ -98,6 +89,7 @@ SRC =	mem/ft_memalloc.c \
 		struct/list/ft_list_empty.c \
 		struct/list/ft_list_foreach.c \
 		struct/list/ft_list_foreach_rev.c \
+		struct/node/node.c\
 		struct/hash/ft_htnew.c \
 		struct/hash/ft_hentrynew_cpy.c \
 		struct/hash/ft_hentrynew_ptr.c \

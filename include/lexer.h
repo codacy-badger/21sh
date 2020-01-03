@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 14:56:00 by fratajcz         ###   ########.fr       */
+/*   Updated: 2019/12/15 11:00:15 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 **		  SEMI    PIPE
 **		   ';'	   '|'
 */
+struct	s_token;
+struct s_lexer;
 
 /*
 ** different states:
@@ -88,7 +90,6 @@ typedef struct		s_token
 ** -curr_tok is the current token being delimited.
 ** -prev_tok is a pointer to the previous token delimited.
 ** -oldchar is the last char processed.
-** -oldsep is the last separator.
 ** -quote is the quote state.
 ** -quote len is the number of characters affected by quoting.
 ** -state is the lexer state. 
@@ -100,7 +101,6 @@ typedef struct		s_lexer
 	t_token			*curr_tok;
 	t_token			*prev_tok;
 	char			oldchar;
-	char			oldsep;
 	char			quote;
 	size_t			quote_len;
 	char			state;

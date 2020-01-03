@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/05 21:51:40 by ferfi            ###   ########.fr       */
+/*   Updated: 2019/12/17 18:39:46 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct		s_term
 {
 	struct termios	oldterm;
 	struct termios	newterm;
+	struct winsize	win;
 	char			*caps[CAPS_SIZE];
 	size_t			sizex;
 	size_t			sizey;

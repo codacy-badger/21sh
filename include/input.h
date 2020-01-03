@@ -56,6 +56,8 @@ enum	e_keys
 ** -temp is the current line backup for history.
 ** -clip is the clipboard.
 ** -pos is the index in the current line being edited.
+** -pos_min is the minimum index we can reach, in case of line continuation
+**  for example it is the beginning of the line.
 ** -esc is a boolean for readline, in case we are reading an
 **  escape sequence.
 */
@@ -78,8 +80,6 @@ typedef struct		s_input
 
 int					init_input(t_input *input, struct s_term *term);
 int					readline(t_input *input);
-int					draw_prompt(t_input *input);
-int					redraw(t_input *input);
 
 int					backspace(t_input *input);
 int					delete(t_input *input);
@@ -102,6 +102,10 @@ int					cut_after(t_input *input);
 int					cut_word(t_input *input);
 int					paste(t_input *input);
 
-int		compute_newcpos(t_input *input, int offset);
+int					draw_prompt(t_input *input);
+int					redraw(t_input *input);
+
+int					cpos_to_prevline(t_input *input);
+int					cpos_to_nextline(t_input *input);
 
 #endif
