@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/03 15:54:46 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/03 18:18:44 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ t_ast	*get_ast(t_lexer *lexer)
 	ast->run_in_background = (lexer->curr_tok->type == AMPERSAND);
 	if (lexer->curr_tok->type == AMPERSAND || lexer->curr_tok->type == SEMI)
 	{
+		//may cause lexer to crash?
+		token_del((void **)&lexer->curr_tok, NULL);
 		eat(lexer);
-		token_del((void **)&lexer->prev_tok, NULL);
 		if (lexer->curr_tok != NULL && !ft_strequ(lexer->curr_tok->value->str, "\n"))
 			ast->next = get_ast(lexer);
 	}
@@ -76,20 +77,41 @@ int		traverse_ast(t_node *node, t_env *env)
 **	one node can have an infinite number of children.
 */
 
-int		parse(t_lexer *lexer, t_env *env)
+int		parse(t_lexer *lexer, t_env *env, t_term *term)
 {
-	t_ast *ast;
+	t_ast	*ast;
+	t_ast	*tmp;
+	bool	error;
 
-	eat(lexer);
+	if ((lexer->state & START))
+		eat(lexer);
 	ast = get_ast(lexer);
-	//if (eat(lexer) != 0)
-	//	error
-	if (ast == NULL)
-		return (PARSE_ERROR);
-	while (ast != NULL && ast->node != NULL)
+	error = false;
+	if (!(lexer->state & START) && !(lexer->state & END))
 	{
-		traverse_ast(ast->node, env);
-		ast = ast->next;
+		error = true;
+		while (eat(lexer) != END_OF_INPUT)
+			;
 	}
+	if (ast == NULL)
+		error = true;
+	while (ast != NULL)
+	{
+		if (ast->node == NULL)
+			error = true;
+		if (!error)
+		{
+			tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->oldterm);
+			traverse_ast(ast->node, env);
+			tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->newterm);
+		}
+		free_ast_nodes(ast->node);
+		tmp = ast;
+		ast = ast->next;
+		free(tmp);
+	}
+	free(ast);
+	if (error)
+		write(2, "parse error\n", 12);
 	return (0);
 }
