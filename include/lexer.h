@@ -90,7 +90,6 @@ typedef struct		s_token
 ** -curr_tok is the current token being delimited.
 ** -prev_tok is a pointer to the previous token delimited.
 ** -oldchar is the last char processed.
-** -oldsep is the last separator.
 ** -quote is the quote state.
 ** -quote len is the number of characters affected by quoting.
 ** -state is the lexer state. 
@@ -102,7 +101,6 @@ typedef struct		s_lexer
 	t_token			*curr_tok;
 	t_token			*prev_tok;
 	char			oldchar;
-	char			oldsep;
 	char			quote;
 	size_t			quote_len;
 	char			state;

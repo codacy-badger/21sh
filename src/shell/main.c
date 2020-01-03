@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:37:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/03 18:49:23 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/03 19:21:35 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int		main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		parse(&shell.lexer, &shell.env, &shell.term);
-	//	tcsetattr(STDIN_FILENO, TCSAFLUSH, &shell.term.oldterm);
-	//	tcsetattr(STDIN_FILENO, TCSAFLUSH, &shell.term.newterm);
 		if (shell.input.line->len > 1)
 		{
 			ft_dstr_remove(shell.input.line, shell.input.line->len - 1, 1);

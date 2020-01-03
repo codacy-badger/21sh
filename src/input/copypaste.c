@@ -70,8 +70,8 @@ int		cut_before(t_input *input)
 		return (-1);
 	move_home(input);
 	ft_dstr_remove(input->line, input->pos_min, len);
-	nprint = printstr(input->termp, &input->line->str[input->pos_min]);
 	clearfromc(input->termp);
+	nprint = printstr(input->termp, &input->line->str[input->pos_min]);
 	movcto(input->termp, input->termp->cpos - nprint);
 	return (0);
 }
@@ -84,6 +84,7 @@ int		paste(t_input *input)
 		return (0);
 	ft_dstr_insert(input->line, input->pos, input->clip->str, input->clip->len);
 	input->pos += input->clip->len;
+	clearfromc(input->termp);
 	printstr(input->termp, input->clip->str);
 	nprint = printstr(input->termp, &input->line->str[input->pos]);
 	movcto(input->termp, input->termp->cpos - nprint);

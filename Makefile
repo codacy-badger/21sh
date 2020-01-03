@@ -23,6 +23,7 @@ SRC =		shell/main.c \
 			input/_init.c \
 			input/move_basic.c \
 			input/move_spec.c \
+			input/move_utils.c \
 			input/delchar.c \
 			input/enter.c \
 			input/draw.c \
@@ -35,7 +36,6 @@ SRC =		shell/main.c \
 			exec/pipe.c\
 			lexer/_init.c \
 			lexer/token.c \
-			lexer/type.c \
 			lexer/append.c\
 			lexer/delim.c \
 			lexer/quote.c \
