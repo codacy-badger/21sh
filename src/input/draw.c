@@ -14,6 +14,7 @@
 
 int		draw_prompt(t_input *input)
 {
+	getcpos(input->termp);
 	printstr(input->termp, "$> ");
 	return (0);
 }

@@ -79,35 +79,6 @@ static int		escape(t_input *input, t_uint8 **bufp)
 }
 
 /*
-** We increment buf pointer by 1 and call appropriate function.
-*/
-static int		control(t_input *input, t_uint8 **bufp)
-{
-	input->key[0] = *(*bufp)++;
-	if (*input->key == 27)
-		return (escape(input, bufp));
-	else if (*input->key == 10)
-		return (enter(input));
-	else if (*input->key == 127)
-		return (backspace(input));
-	else if (*input->key == 14)
-		return (move_nextword(input));
-	else if (*input->key == 24)
-		return (move_prevword(input));
-	else if (*input->key == 21)
-		return (cut_before(input));
-	else if (*input->key == 11)
-		return (cut_after(input));
-	else if (*input->key == 23)
-		return (cut_word(input));
-	else if (*input->key == 25)
-		return (paste(input));
-	else if (*input->key == 12)
-		return (redraw(input));
-	return (0);
-}
-
-/*
 ** Variables are static in case we reach the end of the buffer 
 ** and the char is not terminated.
 */
@@ -138,6 +109,39 @@ static int		addchar(t_input *input, t_uint8 **bufp)
 }
 
 /*
+** input->esc means we have started to read an escape sequence,
+** but the end of buf was reached before the end of this escape sequence.
+*/
+static int		process(t_input *input, t_uint8 **bufp)
+{
+	if (input->esc)
+		return (escape(input, bufp));
+	else if (ft_isprint(**bufp))
+		return (addchar(input, bufp));
+	else if ((*input->key = *(*bufp)++) == 27)
+		return (escape(input, bufp));
+	else if (*input->key == 10)
+		return (enter(input));
+	else if (*input->key == 127)
+		return (backspace(input));
+	else if (*input->key == 14)
+		return (move_nextword(input));
+	else if (*input->key == 24)
+		return (move_prevword(input));
+	else if (*input->key == 21)
+		return (cut_before(input));
+	else if (*input->key == 11)
+		return (cut_after(input));
+	else if (*input->key == 23)
+		return (cut_word(input));
+	else if (*input->key == 25)
+		return (paste(input));
+	else if (*input->key == 12)
+		return (redraw(input));
+	return (0);
+}
+
+/*
 ** We create a new line and add it to the list.
 ** We read in a buffer of BUFSIZE (2bytes minimum).
 ** We process each char in the buffer then continue to read.
@@ -162,13 +166,10 @@ int				readline(t_input *input)
 		buf[ret] = 0;
 		while (*bufp)
 		{
-			if ((ft_isctrl(*bufp) && (ret = control(input, &bufp)) != CONTINUE)
-			|| (input->esc && (ret = escape(input, &bufp)) != CONTINUE)
-			|| ((ret = addchar(input, &bufp)) != CONTINUE))
-			{
-				input->oldkey = *(t_uint64 *)input->key;
-				*(t_uint64 *)input->key = 0;
-			}
+			if ((ret = process(input, &bufp)) == CONTINUE)
+				continue ;
+			input->oldkey = *(t_uint64 *)input->key;
+			*(t_uint64 *)input->key = 0;
 			if (ret == EOL)
 				return (ret);
 		}
