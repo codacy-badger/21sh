@@ -12,16 +12,16 @@
 
 #include "shell.h"
 
-static void	reset_lexer(t_lexer *lexer)
+static int	reset_lexer(t_lexer *lexer)
 {
 	lexer->state = START;
 	lexer->str = NULL;
 	lexer->curr_tok = NULL;
 	lexer->prev_tok = NULL;
 	lexer->oldchar = 0;
-	lexer->oldsep = 0;
 	lexer->quote = 0;
 	lexer->quote_len = 0;
+	return (END_OF_INPUT);
 }
 
 /*
@@ -128,10 +128,9 @@ int			eat(t_lexer *lexer)
 		|| word_start(lexer))
 			continue ;
 	}
-	if (lexer->state & DELIMITED)
-		return (get_token_type(lexer));
-	else if ((lexer->state & LINE_CONT) || lexer->quote)
+	if ((lexer->state & LINE_CONT) || lexer->quote)
 		return (eat(lexer));
-	reset_lexer(lexer);
-	return (END_OF_INPUT);
+	else if (lexer->state & DELIMITED)
+		return (lexer->curr_tok->type);
+	return (reset_lexer(lexer));
 }
