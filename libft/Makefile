@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: nbousset <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/04/12 15:55:49 by nbousset          #+#    #+#              #
-#    Updated: 2019/12/15 10:38:44 by fratajcz         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = libft.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
@@ -91,8 +79,8 @@ SRC =	mem/ft_memalloc.c \
 		struct/lst/ft_lstnew.c \
 		struct/lst/ft_lstadd.c \
 		struct/lst/ft_lstdel.c \
-		struct/list/ft_list_new_head.c \
 		struct/list/ft_list_first_head.c \
+		struct/list/ft_list_new_head.c \
 		struct/list/ft_list_add.c \
 		struct/list/ft_list_add_tail.c \
 		struct/list/ft_list_del.c \

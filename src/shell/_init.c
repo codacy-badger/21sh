@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/17 20:16:33 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:42:33 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,9 @@ int		init(t_sh *shell)
 
 	ft_bzero(shell, sizeof(*shell));
 	init_sig(shell);
-	if ((ret = init_term(&shell->term)) != 0)
-		return (ret);
-	if ((ret = init_input(&shell->input, &shell->term)) != 0)
-		return (ret);
-	if ((ret = lexer_init(&shell->lexer)) != 0)
-		return (ret);
+	init_term(&shell->term);
+	init_input(&shell->input, &shell->term);
+	init_lexer(&shell->lexer, &shell->input);
 	shell->env = env_dup(environ);
-	return (ret);
+	return (0);
 }

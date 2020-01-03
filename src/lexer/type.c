@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_add_char.c                                   :+:      :+:    :+:   */
+/*   type.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,23 +12,16 @@
 
 #include "shell.h"
 
-/*
-** when we arrive here with **str == '\\',
-** the BSLASH status is set, we need to add the backslash to the token,
-** keep the BSLASH status set for the next char to be escaped, then
-** when the next char is added we know we must reset qstatus
-*/
-
-int		token_add_char(t_lexer *lexer, char **str)
+int		get_token_type(t_lexer *lexer)
 {
-	static bool	esc_reset = false;
-
-	if (esc_reset)
-		lexer->qstatus = NONE;
-	if (ft_dstr_add(lexer->curr_tok->content, **str) < 0)
-		return (-1);
-	if (**str == BSLASH)
-		esc_reset = true;
-	lexer->prev = *(*str)++;
-	return (0);
+	if (!lexer->curr_tok)
+		return (END);
+	if (is_operator_start(*lexer->curr_tok->value->str))
+	{
+		lexer->curr_tok->type = get_operator_type(lexer->curr_tok->value->str);
+		if (is_redir(lexer->curr_tok) && !ft_iswhitespace(lexer->oldsep)
+		&& ft_strisnbr(lexer->prev_tok->value->str))
+			lexer->prev_tok->type = IO_NUMBER;
+	}
+	return (lexer->curr_tok->type);
 }

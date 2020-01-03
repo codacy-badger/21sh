@@ -20,18 +20,18 @@
 ** -We add the current line to history if its not empty, else we delete it.
 ** -We reset the history cursor and the pos.
 */
-int		enter(t_input *input)
+
+int			enter(t_input *input)
 {
 	move_end(input);
+	ft_dstr_add(input->line, '\n');
+	input->pos++;
 	if (input->termp->cpos % input->termp->sizex)
 		movcnl(input->termp);
 	if (input->temp)
 		ft_dstr_del((void **)&input->temp, NULL);
-	if (input->line->len > 0)
-		ft_lstadd(input->head, ft_lstnew(input->line));
-	else
-		ft_dstr_del((void **)&input->line, NULL);
+	if (input->line_cont)
+		input->line_cont = false;
 	input->curr = input->head;
-	input->pos = 0;
 	return (EOL);
 }

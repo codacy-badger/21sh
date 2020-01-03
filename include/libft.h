@@ -6,7 +6,7 @@
 /*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:27:46 by nbousset          #+#    #+#             */
-/*   Updated: 2019/12/17 18:37:37 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:30:00 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,8 @@ typedef struct			s_list_head
 	void				*data;
 }						t_list_head;
 
-t_list_head				*ft_list_new_head(void *data);
 t_list_head				*ft_list_first_head(void *data);
+t_list_head				*ft_list_new_head(void *data);
 void					ft_list_add(void *data, t_list_head *head);
 void					ft_list_add_tail(void *data, t_list_head *head);
 void					ft_list_del(t_list_head *head);
@@ -241,6 +241,7 @@ char					*ft_strstr(const char *haystack, const char *needle);
 char					*ft_strsub(char const *s, unsigned int start,
 																size_t len);
 char					*ft_strjoin(const char *s1, const char *s2);
+int						ft_strquot(char *str);
 bool    				ft_strisnbr(char *str);
 char					*ft_strcat(char *s1, const char *s2);
 size_t					ft_strnlen(const char *s, size_t maxlen);

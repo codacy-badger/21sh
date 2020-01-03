@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 04:05:12 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/18 18:45:04 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:41:37 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,18 @@
 **	filename         : WORD
 */
 
-static t_node	*filename(t_list_head **token_list)
+static t_node	*filename(t_lexer *lexer)
 {
 	t_node *node;
 
+	if (lexer->curr_tok== NULL)
+		return (NULL);
 	node = NULL;
 	//expand filename here ?
-	if (token(*token_list)->type == WORD)
+	if (lexer->curr_tok->type == WORD)
 	{
-		node = ft_node_new(token(*token_list));
-		(*token_list) = (*token_list)->next;
+		node = ft_node_new(lexer->curr_tok);
+		eat(lexer);
 	}
 	return (node);
 }
@@ -51,29 +53,37 @@ static t_node	*filename(t_list_head **token_list)
 **	command's root node, where the data is set to NULL but the node exists)
 */
 
-static t_node	*io_file(t_list_head **token_list, t_token *io_number)
+static t_node	*io_file(t_lexer *lexer, t_token *io_number)
 {
 	t_node		*node;
 	t_node		*tmp;
 
+	if (lexer->curr_tok == NULL)
+		return (NULL);
 	node = NULL;
-	if (is_operator_redir(token(*token_list)))
+	if (is_redir(lexer->curr_tok))
 	{
-		node = ft_node_new(token(*token_list));
-		(*token_list) = (*token_list)->next;
+		node = ft_node_new(lexer->curr_tok);
+		eat(lexer);
+		//(*token_list) = (*token_list)->next;
 		tmp = ft_node_new(io_number);
 		ft_node_add_child(node, tmp);
-		ft_node_add_child(node, filename(token_list));
+		ft_node_add_child(node, filename(lexer));
 	}
 	return (node);
 }
 
-t_node			*io_redirect(t_list_head **token_list)
+t_node			*io_redirect(t_lexer *lexer)
 {
-	if (token(*token_list)->type == IO_NUMBER)
+	t_token *io_number;
+
+	if (lexer->curr_tok == NULL)
+		return (NULL);
+	if (lexer->curr_tok->type == IO_NUMBER)
 	{
-		(*token_list) = (*token_list)->next;
-		return (io_file(token_list, token((*token_list)->prev)));
+		io_number = lexer->curr_tok;
+		eat(lexer);
+		return (io_file(lexer, io_number));
 	}
-	return (io_file(token_list, NULL));
+	return (io_file(lexer, NULL));
 }

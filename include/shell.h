@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/17 18:37:59 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:30:25 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,13 @@
 # include "parser.h"
 # include "exec.h"
 
-# define ALLOC_ERROR	3
+/*
+** TODO:
+** -Improve redraw on resize + deal with
+**  line editing of lines with quoted newlines.
+** -Find more elegant way to deal with
+**  operators in lexer.
+*/
 
 typedef struct		s_env
 {

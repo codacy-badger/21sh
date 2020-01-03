@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 23:49:26 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/18 19:17:53 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:36:53 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 typedef struct s_token t_token;
 typedef struct s_env t_env;
+typedef struct s_lexer t_lexer;
 
 typedef struct s_ast 
 {
@@ -26,12 +27,10 @@ typedef struct s_ast
 } t_ast;
 
 
-int		parse(t_list_head *tok_list, t_env *env);
-t_token	*token(t_list_head *tok_list);
-void	print_ast(t_node *ast);
-bool	all_tokens_used(t_list_head *tok_list);
-t_node	*io_redirect(t_list_head **tok_list);
-t_node	*pipeline(t_list_head **tok_list);
 t_token	*node_token(t_node *node);
+int		parse(t_lexer *lexer, t_env *env);
+void	print_ast(t_node *ast, int indent_level);
+t_node	*io_redirect(t_lexer *lexer);
+t_node	*pipeline(t_lexer *lexer);
 
 #endif

@@ -17,31 +17,47 @@
 
 /* -------------------------------------------------------
 **   The grammar symbols
-**   -------------------------------------------------------
-**
-**
-**
-**
-**
+** -------------------------------------------------------
 **
 **%token  DLESS  DGREAT  LESSAND  GREATAND  LESSGREAT  DLESSDASH  AMPERSAND
-**         '<<'   '>>'    '<&'     '>&'      '<>'       '<<-'        '&'
+**         '<<'   '>>'    '<&'     '>&'      '<>'         <<-        '&'
 **		  SEMI    PIPE
 **		   ';'	   '|'
 */
 struct	s_token;
 struct s_lexer;
 
-# define FUNC_NB	9
+/*
+** different states:
+** START is when we start line tokenization, eat is called normally,
+** with no quotes or line continuation problems.
+** DELIMITED is the status when a token has been delimited.
+** it is reset to 0 on next call, it allows us to know if the
+** previous token has been delimited or not, to know if we must
+** create a new one or append to the current one.
+** LINE_CONT is the state where line continuation is required,
+** it is set in preprocess(), at the beginning of eat() call.
+** END is set when we reach the end of input line.
+** -DELIMITED will return the token_type.
+** -END and (LINE_CONT or quote) will recall eat()
+** -END only will reset lexer and return NONE
+** it is set in end()
+*/
+# define START			1
+# define DELIMITED		2
+# define LINE_CONT		4
+# define END			8
 
-enum 				e_tok_type
+enum 				e_toktype
 {
-	START,
-	END,
+	END_OF_INPUT,
 	WORD,
 	ASSIGNMENT_WORD,
 	NAME,
+	TOKEN,
 	IO_NUMBER,
+	LESS,
+	GREAT,
 	DLESS,
 	DGREAT,
 	LESSAND,
@@ -53,10 +69,9 @@ enum 				e_tok_type
 	PIPE,
 	AND_IF,
 	OR_IF,
-	NEWLINE
 };
 
-enum				e_qstatus
+enum				e_qstate
 {
 	NONE = 0,
 	BSLASH = '\\',
@@ -66,71 +81,54 @@ enum				e_qstatus
 
 typedef struct		s_token
 {
-	t_dstr			*content;
-	bool			delimited;
-	enum e_tok_type	type;
+	t_dstr			*value;
+	int				type;
 }					t_token;
 
 /*
-** qstatus is the current quote status of the lexer:
-** backslash, quote, dquote.
-**
-** In tok_quote, we set qstatus and we return 0
-** so the while loop will not "continue" (it would cause 
-** an infinite loop because the pointer is still on the quote).
-** Like this tok_word_next() || tok_word_start() will do their jobs
-** adding the chars to current token.
-** The functions like tok_ope_start will not enter in their
-** if statements if is the qstatus is != 0;
-**
-** dont need tok_end() anymore, maybe to handle eof, removed it.
+** -str is a pointer to the current pos in the input string.
+** -curr_tok is the current token being delimited.
+** -prev_tok is a pointer to the previous token delimited.
+** -oldchar is the last char processed.
+** -oldsep is the last separator.
+** -quote is the quote state.
+** -quote len is the number of characters affected by quoting.
+** -state is the lexer state. 
 */
-
-/*
-** Need void * to avoid chicken and egg problems
-*/
-typedef int			(*t_lex_func)(void *, char **);
-
 typedef struct		s_lexer
 {
-	t_list_head		*tokens;
-	t_lex_func		ftable[FUNC_NB];
+	struct s_input	*inputp;
+	char			*str;
 	t_token			*curr_tok;
 	t_token			*prev_tok;
-	char			prev_sep;
-	enum e_qstatus	qstatus;
-	char			prev;
+	char			oldchar;
+	char			oldsep;
+	char			quote;
+	size_t			quote_len;
+	char			state;
 }					t_lexer;
 
-int     			lexer_init(t_lexer *lexer);
-int					tokenize(t_lexer *lexer, t_input *input);
-int					token_add_char(t_lexer *lexer, char **str);
-int    				token_add(t_lexer *lexer, int type);
-void				token_delim(t_lexer *lexer, char **str);
-t_token 			*token_new(int type);
-void				token_del(void *tok, void *priv);
+int					init_lexer(t_lexer *lexer, t_input *input);
+int					eat(t_lexer *lexer);
 
-/*
-** Tokenization functions
-*/
-int     			tok_ope_next(void *lex, char **str);
-int     			tok_ope_end(void *lex, char **str);
-int         		tok_quote(void *lex, char **str);
-//					tok_$
-int     			tok_ope_start(void *lex, char **str);
-int					tok_eol(void *lex, char **str);
-int     			tok_blank(void *lex, char **str);
-int     			tok_word_next(void *lex, char **str);
-int         		tok_hash(void *lex, char **str);
-int					tok_word_start(void *lex, char **str);
+int					end(t_lexer *lexer);
+int					operator_next(t_lexer *lexer);
+int					operator_end(t_lexer *lexer);
+int     			quote(t_lexer *lexer);
+int					operator_new(t_lexer *lexer);
+int					blank(t_lexer *lexer);
+int					word_next(t_lexer *lexer);
+int					comment(t_lexer *lexer);
+int					word_start(t_lexer *lexer);
 
-/*
-** Utils
-*/
+t_token				*token_new(int type);
+void				token_del(void **tok, void *priv);
 bool    			is_operator_start(char c);
 bool    			is_operator_part(char c);
 bool    			is_operator_next(char *ope, char c);
-bool   				is_operator_redir(t_token *token);
-int     			get_operator_type(char *ope);
+bool				is_redir(t_token *token);
+int					get_token_type(t_lexer *lexer);
+int					get_operator_type(char *ope);
+size_t  			get_quote_len(char *str, char quote);
 
 #endif 

@@ -6,26 +6,37 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:37:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/18 11:30:04 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:48:45 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int		main(void)
+/*
+** If you want to check the leaks, you can uncomment the token_del() line,
+** but don't put redirections operators in the input in this case,
+** cause I use the previous token to set IO_NUMBER type, so if its deleted, it segfaults.
+*/
+int		main(int argc, char **argv, char **envp)
 {
 	struct s_sh	shell;
 
+	(void)argc;
+	(void)argv;
+	(void)envp;
 	init(&shell);
 	while (1)
 	{
-		draw_prompt(&shell.input);
-		readline(&shell.input);
-		tokenize(&shell.lexer, &shell.input);
-		tcsetattr(STDIN_FILENO, TCSAFLUSH, &shell.term.oldterm);
-		parse((&shell.lexer)->tokens->next->next, &shell.env);
-		tcsetattr(STDIN_FILENO, TCSAFLUSH, &shell.term.newterm);
-		//printf("|%s|\nlen: %zu, i: %zu\n\r", shell->input.line->str, shell->input.line->len, shell->input.line->i);
+		parse(&shell.lexer, &shell.env);
+	//	tcsetattr(STDIN_FILENO, TCSAFLUSH, &shell.term.oldterm);
+	//	tcsetattr(STDIN_FILENO, TCSAFLUSH, &shell.term.newterm);
+		if (shell.input.line->len > 1)
+		{
+			ft_dstr_remove(shell.input.line, shell.input.line->len - 1, 1);
+			ft_lstadd(shell.input.head, ft_lstnew(shell.input.line));
+		}
+		else
+			ft_dstr_del((void **)&shell.input.line, NULL);
 	}
 	return (0);
 }

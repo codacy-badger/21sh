@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   get_argv.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 09:08:47 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/17 10:54:03 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:52:42 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,12 @@ char			**get_argv(t_node *cmd, t_env *env)
 	int		j;
 
 	argv = malloc((get_argc(cmd) + 1) * sizeof(char *));
-	if (argv == NULL)
-		return (NULL);
 	i = -1;
 	j = 0;
 	while (++i < cmd->nb_children)
 	{
 		if (node_token(cmd->child[i])->type == WORD)
-			argv[j++] = ft_strdup(node_token(cmd->child[i])->content->str);
+			argv[j++] = ft_strdup(node_token(cmd->child[i])->value->str);
 	}
 	argv[j] = NULL;
 	cmd_path = get_executable_path(argv[0], env);
