@@ -42,7 +42,7 @@ t_ast	*get_ast(t_lexer *lexer)
 		//may cause lexer to crash?
 		token_del((void **)&lexer->curr_tok, NULL);
 		eat(lexer);
-		if (lexer->curr_tok != NULL && !ft_strequ(lexer->curr_tok->value->str, "\n"))
+		if (lexer->curr_tok != NULL)
 			ast->next = get_ast(lexer);
 	}
 	return (ast);
