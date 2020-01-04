@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/03 19:21:25 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/04 16:17:56 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,10 @@ static int		process(t_input *input, t_uint8 **bufp)
 		return (paste(input));
 	else if (*input->key == 12)
 		return (redraw(input));
+	else if (*input->key == 3)
+		return (ctrl_c(input));
+	else if (*input->key == 4)
+		return (ctrl_d(input));
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/17 15:36:30 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/04 16:16:03 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,8 @@ int					redraw(t_input *input);
 
 int					cpos_to_prevline(t_input *input);
 int					cpos_to_nextline(t_input *input);
+
+int					ctrl_c(t_input *input);
+int					ctrl_d(t_input *input);
 
 #endif
