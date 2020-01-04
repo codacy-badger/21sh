@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/03 18:18:44 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/04 16:10:16 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int		parse(t_lexer *lexer, t_env *env, t_term *term)
 
 	if ((lexer->state & START))
 		eat(lexer);
+	if (lexer->curr_tok == NULL)
+		return (0);
 	ast = get_ast(lexer);
 	error = false;
 	if (!(lexer->state & START) && !(lexer->state & END))
