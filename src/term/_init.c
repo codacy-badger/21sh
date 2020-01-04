@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/17 18:41:26 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/04 15:39:03 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int			init_term(struct s_term *term)
 		exit(1);
 	tcgetattr(STDIN_FILENO, &(term->oldterm));
 	term->newterm = term->oldterm;
-	term->newterm.c_lflag &= ~(ECHO | ICANON /*| ISIG*/);
+	term->newterm.c_lflag &= ~(ECHO | ICANON | ISIG);
 	term->newterm.c_cc[VMIN] = 1;
 	term->newterm.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->newterm);
