@@ -6,13 +6,16 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/04 16:10:16 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/05 16:48:35 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 #define PARSE_ERROR 20
+
+int		g_parse_error;
+char	*g_error_near = NULL;
 
 t_token	*node_token(t_node *node)
 {
@@ -28,6 +31,8 @@ t_ast	*get_ast(t_lexer *lexer)
 {
 	t_ast	*ast;
 
+	if (g_parse_error != 0)
+		return (NULL);
 	ast = malloc(sizeof(t_ast));
 	ast->next = NULL;
 	ast->node = and_or(lexer);
@@ -81,27 +86,27 @@ int		parse(t_lexer *lexer, t_env *env, t_term *term)
 {
 	t_ast	*ast;
 	t_ast	*tmp;
-	bool	error;
 
 	if ((lexer->state & START))
 		eat(lexer);
 	if (lexer->curr_tok == NULL)
 		return (0);
+	g_parse_error = 0;
 	ast = get_ast(lexer);
-	error = false;
 	if (!(lexer->state & START) && !(lexer->state & END))
 	{
-		error = true;
+		g_parse_error = (g_parse_error == 0) ? 1 : g_parse_error;
+		token_del((void **)&lexer->curr_tok, NULL);
 		while (eat(lexer) != END_OF_INPUT)
-			;
+			token_del((void **)&lexer->curr_tok, NULL);
 	}
-	if (ast == NULL)
-		error = true;
+	if (ast == NULL && g_parse_error == 0)
+		g_parse_error = 2;
 	while (ast != NULL)
 	{
-		if (ast->node == NULL)
-			error = true;
-		if (!error)
+		if (ast->node == NULL && g_parse_error == 0)
+			g_parse_error = 3;
+		if (g_parse_error == 0)
 		{
 			tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->oldterm);
 			traverse_ast(ast->node, env);
@@ -112,8 +117,9 @@ int		parse(t_lexer *lexer, t_env *env, t_term *term)
 		ast = ast->next;
 		free(tmp);
 	}
-	free(ast);
-	if (error)
-		write(2, "parse error\n", 12);
+	if (g_parse_error > 0)
+		printf("21sh: parse error near '%s' errno:%d\n", g_error_near, g_parse_error);
+	free(g_error_near);
+	g_error_near = NULL;
 	return (0);
 }

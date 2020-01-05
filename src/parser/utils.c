@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 08:48:18 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/03 16:46:48 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/04 17:17:50 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	print_ast(t_node *ast, int indent_level)
 	while (n++ < indent_level)
 		write(1, "  ", 2);
 	if (ast == NULL)
-		printf("NULL");
+		printf("NULL NODE");
 	if (ast->data != NULL)
 		printf("%s\n", ((t_token *)ast->data)->value->str);
 	else
-		printf("cmd\n");
+		printf("NULL DATA\n");
 	fflush(stdout);
 	if (ast->nb_children > 0)
 	{

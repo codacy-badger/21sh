@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/15 11:00:15 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/04 16:34:06 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 **
 **%token  DLESS  DGREAT  LESSAND  GREATAND  LESSGREAT  DLESSDASH  AMPERSAND
 **         '<<'   '>>'    '<&'     '>&'      '<>'         <<-        '&'
-**		  SEMI    PIPE
-**		   ';'	   '|'
+**		  SEMI    PIPE    LESS   GREAT
+**		   ';'	   '|'     '<'    '>'
 */
 struct	s_token;
 struct s_lexer;
