@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/18 18:05:54 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/05 22:25:06 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void		exec_pipes(t_node *pipe, t_env *env, int pipe_count)
 	i = -1;
 	while (++i < pipe_count + 1)
 		waitpid(pid[i], &status[i], 0);
-	exit(WEXITSTATUS(status));
+	exit(WEXITSTATUS(*status));
 }
 
 static int		get_pipe_count(t_node *pipe)
