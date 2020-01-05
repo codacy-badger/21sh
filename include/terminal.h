@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/17 18:39:46 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/05 18:48:11 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct		s_term
 }					t_term;
 
 int					init_term(struct s_term *term);
+
+void				reset_term(struct termios *old_termios);
 
 int					getwinsize(t_term *term);
 int					getcpos(t_term *term);

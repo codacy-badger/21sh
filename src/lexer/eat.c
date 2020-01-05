@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize.c                                         :+:      :+:    :+:   */
+/*   eat.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/08 21:32:58 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/05 18:54:29 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static int	reset_lexer(t_lexer *lexer)
+int			reset_lexer(t_lexer *lexer)
 {
+	static t_lexer	*lexer_ptr;
+
+	if (lexer_ptr == NULL && lexer == NULL)
+		return (12);
+	if (lexer_ptr == NULL)
+		lexer_ptr = lexer;
+	if (lexer == NULL)
+		lexer = lexer_ptr;
 	lexer->state = START;
 	lexer->str = NULL;
-	lexer->curr_tok = NULL;
-	lexer->prev_tok = NULL;
 	lexer->oldchar = 0;
 	lexer->quote = 0;
 	lexer->quote_len = 0;
@@ -39,6 +45,7 @@ static int	reset_lexer(t_lexer *lexer)
 ** In this case we remove the backslash and the newline from the input
 ** string and set LINE_CONT.
 */
+
 static void	preprocess(t_lexer *lexer)
 {
 	char	quote;
@@ -95,7 +102,6 @@ static int	init_state(t_lexer *lexer)
 	lexer->state &= ~END;
 	if (lexer->state & DELIMITED)
 	{
-		lexer->prev_tok = lexer->curr_tok;
 		lexer->curr_tok = NULL;
 		lexer->state &= ~DELIMITED;
 	}

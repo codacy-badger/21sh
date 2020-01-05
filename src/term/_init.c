@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/04 15:39:03 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/05 18:47:52 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,22 @@ static void	init_caps(struct s_term *term)
 	term->caps[C_BL] = tgetstr("bl", NULL);
 }
 
+void		reset_term(struct termios *old_termios)
+{
+	static struct termios	*old_termios_ptr;
+
+	if (old_termios_ptr == NULL && old_termios == NULL)
+		return ;
+	if (old_termios_ptr == NULL)
+	{
+		old_termios_ptr = old_termios;
+		return ;
+	}
+	if (old_termios == NULL)
+		old_termios = old_termios_ptr;
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, old_termios);
+}
+
 int			init_term(struct s_term *term)
 {
 	if (tgetent(NULL, getenv("TERM")) <= 0)
@@ -40,6 +56,7 @@ int			init_term(struct s_term *term)
 	if (!isatty(STDIN_FILENO))
 		exit(1);
 	tcgetattr(STDIN_FILENO, &(term->oldterm));
+	reset_term(&(term->oldterm));
 	term->newterm = term->oldterm;
 	term->newterm.c_lflag &= ~(ECHO | ICANON | ISIG);
 	term->newterm.c_cc[VMIN] = 1;
