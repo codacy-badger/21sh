@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 23:49:26 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/03 18:16:44 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/05 22:22:11 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,24 @@ typedef struct s_env t_env;
 typedef struct s_lexer t_lexer;
 typedef struct s_term t_term;
 
-typedef struct s_ast 
+typedef struct	s_ast 
 {
 	t_node			*node;
 	struct s_ast	*next;
 	bool			run_in_background;
 } t_ast;
+
+enum			e_parse_error
+{
+	SILENT_ABORT = -1,
+	NOERR = 0,
+	TOKENS_LEFT,
+	NULL_AST,
+	NULL_AST_NODE,
+	NO_REDIR_FILENAME,
+	NO_CMD_BEFORE_PIPE,
+	NO_CMD_AFTER_PIPE
+};
 
 
 t_token	*node_token(t_node *node);

@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 04:05:12 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/05 16:58:27 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/05 22:22:36 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_node	*filename(t_lexer *lexer)
 {
 	t_node *node;
 
-	if (lexer->curr_tok == NULL || g_parse_error != 0)
+	if (lexer->curr_tok == NULL || g_parse_error != NOERR)
 		return (NULL);
 	node = NULL;
 	//expand filename here ?
@@ -61,7 +61,7 @@ static t_node	*io_file(t_lexer *lexer, t_token *io_number)
 	t_node		*node;
 	t_node		*filename_node;
 
-	if (lexer->curr_tok == NULL || g_parse_error != 0)
+	if (lexer->curr_tok == NULL || g_parse_error != NOERR)
 		return (NULL);
 	node = NULL;
 	if (is_redir(lexer->curr_tok))
@@ -73,7 +73,7 @@ static t_node	*io_file(t_lexer *lexer, t_token *io_number)
 		{
 			if (g_parse_error == 0)
 			{
-				g_parse_error = 4;
+				g_parse_error = NO_REDIR_FILENAME;
 				g_error_near = ft_strdup(node_token(node)->value->str);
 			}
 			free_ast_nodes(node);
@@ -89,7 +89,7 @@ t_node			*io_redirect(t_lexer *lexer)
 {
 	t_token *io_number;
 
-	if (lexer->curr_tok == NULL || g_parse_error != 0)
+	if (lexer->curr_tok == NULL || g_parse_error != NOERR)
 		return (NULL);
 	if (lexer->curr_tok->type == IO_NUMBER)
 	{

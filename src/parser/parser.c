@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/05 16:48:35 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/05 22:22:09 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,22 +91,22 @@ int		parse(t_lexer *lexer, t_env *env, t_term *term)
 		eat(lexer);
 	if (lexer->curr_tok == NULL)
 		return (0);
-	g_parse_error = 0;
+	g_parse_error = NOERR;
 	ast = get_ast(lexer);
 	if (!(lexer->state & START) && !(lexer->state & END))
 	{
-		g_parse_error = (g_parse_error == 0) ? 1 : g_parse_error;
+		g_parse_error = (g_parse_error == NOERR) ? TOKENS_LEFT : g_parse_error;
 		token_del((void **)&lexer->curr_tok, NULL);
 		while (eat(lexer) != END_OF_INPUT)
 			token_del((void **)&lexer->curr_tok, NULL);
 	}
-	if (ast == NULL && g_parse_error == 0)
-		g_parse_error = 2;
+	if (ast == NULL && g_parse_error == NOERR)
+		g_parse_error = NULL_AST;
 	while (ast != NULL)
 	{
-		if (ast->node == NULL && g_parse_error == 0)
-			g_parse_error = 3;
-		if (g_parse_error == 0)
+		if (ast->node == NULL && g_parse_error == NOERR)
+			g_parse_error = NULL_AST_NODE;
+		if (g_parse_error == NOERR)
 		{
 			tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->oldterm);
 			traverse_ast(ast->node, env);

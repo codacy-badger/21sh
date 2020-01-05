@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 04:37:16 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/05 17:00:59 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/05 22:22:44 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_node	*command(t_lexer *lexer)
 	t_node		*redirect;
 	t_node		*word;
 
-	if (lexer->curr_tok == NULL || g_parse_error != 0)
+	if (lexer->curr_tok == NULL || g_parse_error != NOERR)
 		return (NULL);
 	command = ft_node_new(NULL);
 	while ((redirect = io_redirect(lexer))
@@ -65,7 +65,7 @@ static t_node	*pipe_list(t_lexer *lexer, t_node *left_command)
 	t_node	*right_command;
 	t_node	*right_pipe;
 
-	if (lexer->curr_tok == NULL || g_parse_error != 0)
+	if (lexer->curr_tok == NULL || g_parse_error != NOERR)
 		return (NULL);
 	left_pipe = NULL;
 	if (lexer->curr_tok->type == PIPE)
@@ -74,9 +74,9 @@ static t_node	*pipe_list(t_lexer *lexer, t_node *left_command)
 		eat(lexer);
 		ft_node_add_child(left_pipe, left_command);
 		right_command = command(lexer);
-		if (right_command == NULL && g_parse_error == 0)
+		if (right_command == NULL && g_parse_error == NOERR)
 		{
-			g_parse_error = 6;
+			g_parse_error = NO_CMD_AFTER_PIPE;
 			g_error_near = ft_strdup("|");
 		}
 		right_pipe = pipe_list(lexer, right_command);
@@ -108,12 +108,12 @@ t_node			*pipeline(t_lexer *lexer)
 	t_node *left_command;
 	t_node *pipe;
 
-	if (g_parse_error != 0)
+	if (g_parse_error != NOERR)
 		return (NULL);
 	left_command = command(lexer);
-	if (left_command == NULL && g_parse_error == 0)
+	if (left_command == NULL && g_parse_error == NOERR)
 	{
-		g_parse_error = 5;
+		g_parse_error = NO_CMD_BEFORE_PIPE;
 		if (lexer->curr_tok)
 			g_error_near = ft_strdup(lexer->curr_tok->value->str);
 	}

@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 16:14:22 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/05 18:48:18 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/05 22:16:09 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ int		ctrl_c(t_input *input)
 {
 	write(1, "^C\n", 3);
 	input->pos = 0;
+	input->pos_min = 0;
 	ft_dstr_del((void **)&input->line, NULL);
 	reset_lexer(NULL);
 	input->line = ft_dstr_new("", 0, 32);
 	input->line_cont = false;
-	g_parse_error = -1;
+	g_parse_error = SILENT_ABORT;
 	return (EOL);
 }
 
