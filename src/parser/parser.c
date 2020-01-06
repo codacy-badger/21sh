@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/05 22:22:09 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/06 11:12:30 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int		parse(t_lexer *lexer, t_env *env, t_term *term)
 			tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->oldterm);
 			traverse_ast(ast->node, env);
 			tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->newterm);
+			tputs(term->caps[C_KS], 1, ft_putc);
 		}
 		free_ast_nodes(ast->node);
 		tmp = ast;

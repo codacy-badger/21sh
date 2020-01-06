@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/05 18:47:52 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/06 11:10:04 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	init_caps(struct s_term *term)
 {
-	tputs(tgetstr("ks", NULL), 1, ft_putc);
 	term->caps[C_UP] = tgetstr("up", NULL);
 	term->caps[C_DO] = tgetstr("do", NULL);
 	term->caps[C_LE] = tgetstr("le", NULL);
@@ -31,6 +30,7 @@ static void	init_caps(struct s_term *term)
 	term->caps[C_CM] = tgetstr("cm", NULL);
 	term->caps[C_CL] = tgetstr("cl", NULL);
 	term->caps[C_BL] = tgetstr("bl", NULL);
+	term->caps[C_KS] = tgetstr("ks", NULL);
 }
 
 void		reset_term(struct termios *old_termios)
@@ -63,6 +63,7 @@ int			init_term(struct s_term *term)
 	term->newterm.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->newterm);
 	init_caps(term);
+	tputs(term->caps[C_KS], 1, ft_putc);
 	getwinsize(term);
 	getcpos(term);
 	return (0);
