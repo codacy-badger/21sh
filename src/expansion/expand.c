@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 17:08:22 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/08 17:24:39 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/08 17:30:14 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 ** see POSIX Shell Command Language 2.6 Word Expansions
 **
 **
-** returns the position in the string where we should start looking for param
+** Returns the position in the string where we should start looking for param
 ** expansions because we don't want to expand any $ that was in $HOME.
+** We don't check quote status in this function because the only case where a
+** '~' should be expanded is if it's at the start of the word.
 */
 
 int		tilde_expand(t_dstr *str, char *home_dir)
@@ -35,7 +37,6 @@ int		tilde_expand(t_dstr *str, char *home_dir)
 	}
 	return (0);
 }
-
 
 /*
 ** return an argv-like array containing all words in the command (no operators)

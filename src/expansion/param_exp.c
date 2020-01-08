@@ -6,13 +6,13 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 16:36:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/08 17:21:24 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/08 18:12:27 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-char	*get_var_name(char *str)
+static char	*get_var_name(char *str)
 {
 	int	i;
 
@@ -26,21 +26,54 @@ char	*get_var_name(char *str)
 	return (ft_strsub(str, 0, i));
 }
 
-int		param_expand(t_dstr *str, int start, t_env *env)
+static bool	should_expand(char *str, int i, char quote_status)
+{
+	if (str[i] != '$')
+		return (false);
+	if (quote_status == SQUOTE)
+		return (false);
+	if (i != 0 && str[i - 1] == BSLASH)
+		return (false);
+	return (true);
+}
+
+static bool	is_quote_stop(char *str, int i, char quote_status)
+{
+	if (str[i] != quote_status)
+		return (false);
+	if (quote_status == DQUOTE && i != 0 && str[i - 1] == BSLASH)
+		return (false);
+	return (true);
+}
+
+static bool	is_quote_start(char *str, int i, char quote_status)
+{
+	return ((str[i] == SQUOTE || str[i] == DQUOTE) && quote_status == NONE);
+}
+
+int			param_expand(t_dstr *str, int start, t_env *env)
 {
 	char	*var_name;
 	char	*var_value;
 	int		i;
+	char	quote_status;
 
-	i = start;
-	while (str->str[i])
+	i = 0;
+	quote_status = NONE;
+	while (str->str[++i])
 	{
-		if (str->str[i] == '$' && (var_name = get_var_name(str->str + i + 1)))
+		if (is_quote_stop(str->str, i, quote_status))
+			quote_status = NONE;
+		else if (is_quote_start(str->str, i, quote_status))
+			quote_status = str->str[i];
+		if (should_expand(str->str, i, quote_status)
+				&& (var_name = get_var_name(str->str + i + 1)))
 		{
-				var_value = get_env_var(var_name, env);
-				ft_dstr_remove(str, i, ft_strlen(var_name) + 1);
-				ft_dstr_insert(str, i, var_value, ft_strlen(var_value));
-				i += ft_strlen(var_value) - 1;
+			var_value = get_env_var(var_name, env);
+			ft_dstr_remove(str, i, ft_strlen(var_name) + 1);
+			ft_dstr_insert(str, i, var_value, ft_strlen(var_value));
+			i += ft_strlen(var_value) - 1;
+			free(var_name);
 		}
 		i++;
 	}
