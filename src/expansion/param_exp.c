@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 16:36:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/08 18:18:29 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/08 18:34:28 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int			param_expand(t_dstr *str, int start, t_env *env)
 	int		i;
 	char	quote_status;
 
-	i = 0;
+	i = start;
 	quote_status = NONE;
-	while (str->str[++i])
+	while (str->str[i])
 	{
 		if (is_quote_stop(str->str, i, quote_status))
 			quote_status = NONE;
