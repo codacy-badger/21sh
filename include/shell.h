@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/03 15:30:25 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/08 16:45:47 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include "lexer.h"
 # include "parser.h"
 # include "exec.h"
+# include "expansion.h"
 
 /*
 ** TODO:

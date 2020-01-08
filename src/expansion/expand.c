@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 17:08:22 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/07 18:50:55 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/08 17:24:39 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,34 @@
 
 /*
 ** see POSIX Shell Command Language 2.6 Word Expansions
+**
+**
+** returns the position in the string where we should start looking for param
+** expansions because we don't want to expand any $ that was in $HOME.
 */
 
-void	tilde_expand(t_dstr *str)
+int		tilde_expand(t_dstr *str, char *home_dir)
 {
-	
+	char	*new;
+
+	if (home_dir == NULL)
+		return (0);
+	if (str->str[0] == '~' && (str->str[1] == '\0' || str->str[1] == '/'))
+	{
+		new = ft_strjoin(home_dir, str->str + 1);
+		free(str->str);
+		str->str = new;
+		return (ft_strlen(home_dir));
+	}
+	return (0);
 }
 
-void	param_expand(t_dstr *str)
-{
-
-}
 
 /*
 ** return an argv-like array containing all words in the command (no operators)
 */
 
+/*
 char	**field_split(t_node *command)
 {
 
@@ -39,6 +51,7 @@ void	*remove_quotes(char **argv)
 {
 	
 }
+*/
 
 /*
 ** If the complete expansion appropriate for a word results in an empty field, 
@@ -48,28 +61,34 @@ void	*remove_quotes(char **argv)
 ** any case ? would be easier to implement.
 */
 
+/*
 void	*remove_empty_fields(char **argv)
 {
 
 }
+*/
 
 char	**expand(t_node *command, t_env *env)
 {
 	int		i;
+	int		pos;
 	char	**argv;
+	char	*home_dir;
 
+	argv = NULL;
 	i = 0;
+	home_dir = get_env_var("HOME", env);
 	while (i < command->nb_children)
 	{
 		if (node_token(command->child[i])->type == WORD)
 		{
-			tilde_expand(node_token(command->child[i])->value);
-			param_expand(node_token(command->child[i])->value);
+			pos = tilde_expand(node_token(command->child[i])->value, home_dir);
+			param_expand(node_token(command->child[i])->value, pos, env);
 		}
 		i++;
 	}
-	argv = field_split(command);
-	remove_quotes(argv);
-	remove_empty_fields(argv);
+//	argv = field_split(command);
+//	remove_quotes(argv);
+//	remove_empty_fields(argv);
 	return (argv);
 }

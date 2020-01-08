@@ -45,7 +45,10 @@ SRC =		shell/main.c \
 			parser/parser.c\
 			parser/pipeline.c\
 			parser/redirect.c\
-			parser/utils.c
+			parser/utils.c\
+			expansion/expand.c\
+			expansion/param_exp.c
+
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
 LIB = $(addprefix $(DIR_LIB), libft.a)

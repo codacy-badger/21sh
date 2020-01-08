@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/06 11:12:30 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/08 16:13:58 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ int		traverse_ast(t_node *node, t_env *env)
 	if (node == NULL)
 		return (1);
 	if (node->data == NULL)
+	{
+		expand(node, env);
 		return (exec_command(node, env));
+	}
 	else if (((t_token *)node->data)->type == PIPE)
 		return (exec_pipe(node, env));
 	i = 0;
