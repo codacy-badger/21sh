@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 16:36:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/08 18:12:27 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/08 18:18:29 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,6 @@ static bool	should_expand(char *str, int i, char quote_status)
 	if (i != 0 && str[i - 1] == BSLASH)
 		return (false);
 	return (true);
-}
-
-static bool	is_quote_stop(char *str, int i, char quote_status)
-{
-	if (str[i] != quote_status)
-		return (false);
-	if (quote_status == DQUOTE && i != 0 && str[i - 1] == BSLASH)
-		return (false);
-	return (true);
-}
-
-static bool	is_quote_start(char *str, int i, char quote_status)
-{
-	return ((str[i] == SQUOTE || str[i] == DQUOTE) && quote_status == NONE);
 }
 
 int			param_expand(t_dstr *str, int start, t_env *env)

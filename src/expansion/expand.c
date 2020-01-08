@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 17:08:22 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/08 17:30:14 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/08 18:21:33 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,6 @@ int		tilde_expand(t_dstr *str, char *home_dir)
 }
 
 /*
-** return an argv-like array containing all words in the command (no operators)
-*/
-
-/*
-char	**field_split(t_node *command)
-{
-
-}
-
-void	*remove_quotes(char **argv)
-{
-	
-}
-*/
-
-/*
 ** If the complete expansion appropriate for a word results in an empty field, 
 ** that empty field shall be deleted from the list of fields that form the
 ** completely expanded command, unless the original word contained single-quote
@@ -85,11 +69,9 @@ char	**expand(t_node *command, t_env *env)
 		{
 			pos = tilde_expand(node_token(command->child[i])->value, home_dir);
 			param_expand(node_token(command->child[i])->value, pos, env);
+			remove_quotes(node_token(command->child[i])->value);
 		}
 		i++;
 	}
-//	argv = field_split(command);
-//	remove_quotes(argv);
-//	remove_empty_fields(argv);
 	return (argv);
 }

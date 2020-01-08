@@ -47,7 +47,8 @@ SRC =		shell/main.c \
 			parser/redirect.c\
 			parser/utils.c\
 			expansion/expand.c\
-			expansion/param_exp.c
+			expansion/param_exp.c\
+			expansion/quotes.c
 
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
