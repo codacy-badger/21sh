@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 20:33:11 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/17 15:37:38 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/09 13:59:33 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 int		draw_prompt(t_input *input)
 {
 	getcpos(input->termp);
-	printstr(input->termp, "$> ");
+	if (input->line_cont)
+		printstr(input->termp, "> ");
+	else
+		printstr(input->termp, "$> ");
 	return (0);
 }
 

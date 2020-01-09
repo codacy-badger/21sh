@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 23:14:17 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/08 01:21:51 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/09 13:57:47 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int				history_down(t_input *input)
 {
 	t_dstr	*target;
 
-	if (input->curr == input->head)
+	if (input->curr == input->head || input->line_cont)
 		return (0);
 	move_home(input);
 	if (input->line)
@@ -74,7 +74,7 @@ int			history_up(t_input *input)
 {
 	t_dstr	*target;
 
-	if (input->curr->prev == input->head)
+	if (input->curr->prev == input->head || input->line_cont)
 		return (0);
 	move_home(input);
 	if (!input->temp)
