@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 17:08:22 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/09 13:41:17 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/09 14:40:26 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int		tilde_expand(t_dstr *str, char *home_dir)
 
 	if (home_dir == NULL)
 		return (0);
-	if (str->str[0] == '~' && (str->str[1] == '\0' || str->str[1] == '/'))
+	if (str->str[0] == '~' &&
+			(str->str[1] == '\0' || str->str[1] == '/' || str->str[1] == ':'))
 	{
 		new = ft_strjoin(home_dir, str->str + 1);
 		free(str->str);
