@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end.c                                              :+:      :+:    :+:   */
+/*   delim.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/08 21:32:58 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/09 13:22:50 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	delim_token(t_lexer *lexer)
 	{
 		if (is_operator_start(*lexer->curr_tok->value->str))
 			lexer->curr_tok->type = get_operator_type(lexer->curr_tok->value->str);
-		else if ((*lexer->str == '<' || *lexer->str == '>')
+		else if ((lexer->str[lexer->i] == '<' || lexer->str[lexer->i] == '>')
 		&& ft_strisnbr(lexer->curr_tok->value->str))
 			lexer->curr_tok->type = IO_NUMBER;
 		lexer->state |= DELIMITED;
@@ -28,10 +28,17 @@ static int	delim_token(t_lexer *lexer)
 
 int			end(t_lexer *lexer)
 {
-	if (*lexer->str == '\0')
+	if (lexer->str[lexer->i] == '\0')
 	{
-		if (lexer->curr_tok && !lexer->quote && !(lexer->state & LINE_CONT))
+		if (lexer->curr_tok && !lexer->quote && lexer->str[lexer->i - 2] != '\\')
 			delim_token(lexer);
+		if (lexer->quote != SQUOTE && lexer->str[lexer->i - 2] == '\\')
+		{
+			lexer->state |= LINE_CONT;
+			ft_dstr_remove(lexer->inputp->line, lexer->i - 2, 2);
+			lexer->inputp->pos -= 2;
+			lexer->i -= 2;
+		}
 		lexer->state |= END;
 		return (1);
 	}
@@ -42,9 +49,9 @@ int			operator_end(t_lexer *lexer)
 {
 	if (lexer->curr_tok && !lexer->quote
 	&& (is_operator_start(*lexer->curr_tok->value->str)
-	&& is_operator_part(lexer->oldchar))
-	&& (!is_operator_part(*lexer->str)
-	|| !is_operator_next(lexer->curr_tok->value->str, *lexer->str)))
+	&& (lexer->i != 0 ? is_operator_part(lexer->str[lexer->i - 1]) : 0))
+	&& (!is_operator_part(lexer->str[lexer->i])
+	|| !is_operator_next(lexer->curr_tok->value->str, lexer->str[lexer->i])))
 	{
 		delim_token(lexer);
 		return (1);
@@ -55,9 +62,9 @@ int			operator_end(t_lexer *lexer)
 int			operator_new(t_lexer *lexer)
 {
 	if (lexer->curr_tok && !lexer->quote
-	&& is_operator_start(*lexer->str))
+	&& is_operator_start(lexer->str[lexer->i]))
 	{
-		if ((*lexer->str == '<' || *lexer->str == '>')
+		if ((lexer->str[lexer->i] == '<' || lexer->str[lexer->i] == '>')
 		&& ft_strisnbr(lexer->curr_tok->value->str))
 			lexer->curr_tok->type = IO_NUMBER;
 		delim_token(lexer);
@@ -68,15 +75,12 @@ int			operator_new(t_lexer *lexer)
 
 int			blank(t_lexer *lexer)
 {
-	if (!lexer->quote && ft_iswhitespace(*lexer->str))
+	if (!lexer->quote && ft_iswhitespace(lexer->str[lexer->i]))
 	{
 		if (lexer->curr_tok)
 			delim_token(lexer);
-		while (ft_iswhitespace(*lexer->str))
-		{
-			lexer->oldchar = *lexer->str;
-			lexer->str++;
-		}
+		while (ft_iswhitespace(lexer->str[lexer->i]))
+			lexer->i++;
 		return (1);
 	}
 	return (0);

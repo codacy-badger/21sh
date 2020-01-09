@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/05 22:23:54 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/09 12:33:15 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ int			reset_lexer(t_lexer *lexer)
 		lexer = lexer_ptr;
 	lexer->state = START;
 	lexer->str = NULL;
-	lexer->oldchar = 0;
 	lexer->quote = 0;
-	lexer->quote_len = 0;
+	lexer->i = 0;
 	return (END_OF_INPUT);
 }
 
@@ -35,5 +34,6 @@ int			init_lexer(t_lexer *lexer, t_input *input)
 	reset_lexer(lexer);
 	lexer->inputp = input;
 	lexer->state |= START;
+	lexer->i = 0;
 	return (0);
 }

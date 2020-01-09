@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/05 18:30:43 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/09 13:12:30 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,9 @@ typedef struct		s_lexer
 {
 	struct s_input	*inputp;
 	char			*str;
+	int				i;
 	t_token			*curr_tok;
-	char			oldchar;
 	char			quote;
-	size_t			quote_len;
 	char			state;
 }					t_lexer;
 
@@ -109,6 +108,7 @@ int					reset_lexer(t_lexer *lexer);
 int					eat(t_lexer *lexer);
 
 int					end(t_lexer *lexer);
+int					backslash(t_lexer *lexer);
 int					operator_next(t_lexer *lexer);
 int					operator_end(t_lexer *lexer);
 int     			quote(t_lexer *lexer);
