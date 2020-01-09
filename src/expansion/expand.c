@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 17:08:22 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/08 18:21:33 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/09 13:41:17 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	*remove_empty_fields(char **argv)
 }
 */
 
-char	**expand(t_node *command, t_env *env)
+void	expand(t_node *command, t_env *env)
 {
 	int		i;
 	int		pos;
@@ -73,5 +73,4 @@ char	**expand(t_node *command, t_env *env)
 		}
 		i++;
 	}
-	return (argv);
 }

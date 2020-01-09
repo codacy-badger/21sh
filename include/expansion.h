@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 16:11:34 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/08 18:21:07 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/09 13:41:25 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "shell.h"
 
-char	**expand(t_node *command, t_env *env);
+void	expand(t_node *command, t_env *env);
 int		param_expand(t_dstr *str, int start, t_env *env);
 
 bool	is_quote_start(char *str, int i, char quote_status);
