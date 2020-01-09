@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/09 13:12:07 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/09 19:26:04 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int			eat(t_lexer *lexer)
 	while (!(lexer->state & (DELIMITED | END)))
 	{
 		if (end(lexer)
-		|| backslash(lexer)
 		|| operator_next(lexer)
 		|| operator_end(lexer)
 		|| quote(lexer)

@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/09 13:52:33 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/09 19:26:57 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,16 @@ int			end(t_lexer *lexer)
 {
 	if (lexer->str[lexer->i] == '\0')
 	{
-		if (lexer->curr_tok && !lexer->quote
-				&& (lexer->i >= 2 ? lexer->str[lexer->i - 2] != '\\' : 1))
-			delim_token(lexer);
-		if (lexer->quote != SQUOTE && lexer->i >= 2
-				&& lexer->str[lexer->i - 2] == '\\')
+		if (lexer->state & LINE_CONT)
 		{
-			lexer->state |= LINE_CONT;
 			ft_dstr_remove(lexer->inputp->line, lexer->i - 2, 2);
 			lexer->inputp->pos -= 2;
 			lexer->i -= 2;
+			lexer->state |= END;
+			return (1);
 		}
+		if (lexer->curr_tok && !lexer->quote)
+			delim_token(lexer);
 		lexer->state |= END;
 		return (1);
 	}
