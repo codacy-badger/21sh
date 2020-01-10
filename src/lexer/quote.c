@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 12:05:06 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/09 19:20:11 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/10 17:54:36 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ int		quote(t_lexer *lexer)
 	is_bslash = (lexer->quote == BSLASH);
 	if (quote_stop(lexer->str, lexer->i, &lexer->quote))
 	{
-		if (is_bslash && lexer->str[lexer->i] == '\n'
-				&& lexer->str[lexer->i + 1] == '\0')
+		if (is_bslash && lexer->str[lexer->i] == '\n')
 		{
-			lexer->state |= LINE_CONT;
 			ft_dstr_remove(lexer->curr_tok->value,
 					lexer->curr_tok->value->len - 1, 1);
 			lexer->i++;

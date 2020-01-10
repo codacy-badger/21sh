@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/04 16:17:56 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/10 17:35:30 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,16 +157,20 @@ static int		process(t_input *input, t_uint8 **bufp)
 **	 if we have "\033[Dabcde", this was stored in an long, the esc sequence
 **	 was not recognized by c == key, so it was not handled.
 */
-int				readline(t_input *input)
+
+char			*readline(t_input *input, const char *prompt)
 {
 	t_uint8		buf[BUFSIZE];
 	t_uint8		*bufp;
 	int			ret;
 
-	draw_prompt(input);
-	if (!input->line_cont && (input->line = ft_dstr_new("", 0, 32)))
-		input->pos = 0;
-	input->pos_min = input->pos;
+	draw_prompt(input, prompt);
+	input->last_prompt = prompt;
+	if (input->line)
+		ft_dstr_del((void **)&input->line, NULL);
+	input->line = ft_dstr_new("", 0, 32);
+	input->pos = 0;
+	input->pos_min = 0;
 	while ((ret = read(STDIN_FILENO, buf, BUFSIZE - 1)) > 0 && (bufp = buf))
 	{
 		buf[ret] = 0;
@@ -177,8 +181,8 @@ int				readline(t_input *input)
 			input->oldkey = *(t_uint64 *)input->key;
 			*(t_uint64 *)input->key = 0;
 			if (ret == EOL)
-				return (ret);
+				return (input->line->str);
 		}
 	}
-	return (ret);
+	return (input->line->str);
 }

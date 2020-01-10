@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:37:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/03 19:21:35 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/10 17:39:45 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,6 @@ int		main(int argc, char **argv, char **envp)
 		//	printf("[%s] -> ", shell.lexer.curr_tok->value->str);
 		//printf("END\n");
 		parse(&shell.lexer, &shell.env, &shell.term);
-		if (shell.input.line->len > 1)
-		{
-			ft_dstr_remove(shell.input.line, shell.input.line->len - 1, 1);
-			ft_lstadd(shell.input.head, ft_lstnew(shell.input.line));
-		}
-		else
-			ft_dstr_del((void **)&shell.input.line, NULL);
 	}
 	return (0);
 }

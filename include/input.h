@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/04 16:16:03 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/10 17:13:34 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct		s_input
 	t_dstr			*line;
 	t_dstr			*temp;
 	t_dstr			*clip;
+	const char		*last_prompt;
 	size_t			pos;
 	size_t			pos_min;
 	bool			esc;
@@ -79,7 +80,7 @@ typedef struct		s_input
 }					t_input;
 
 int					init_input(t_input *input, struct s_term *term);
-int					readline(t_input *input);
+char				*readline(t_input *input, const char *prompt);
 
 int					backspace(t_input *input);
 int					delete(t_input *input);
@@ -102,7 +103,7 @@ int					cut_after(t_input *input);
 int					cut_word(t_input *input);
 int					paste(t_input *input);
 
-int					draw_prompt(t_input *input);
+int					draw_prompt(t_input *input, const char *prompt);
 int					redraw(t_input *input);
 
 int					cpos_to_prevline(t_input *input);

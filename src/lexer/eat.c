@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/09 19:26:04 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/10 18:01:03 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,60 +14,29 @@
 
 static int	get_input(t_lexer *lexer)
 {
-	int		i;
-	int 	count;
+	char		*str;
+	char		*tmp;
+	const char	*prompt;
 
-	i = 0;
-	count = 0;
-	if ((lexer->state & LINE_CONT) || lexer->quote)
+	prompt = lexer->quote ? "> " : "$> ";
+	str = readline(lexer->inputp, prompt);
+	if (str == NULL)
+		return (0);
+	if (lexer->quote)
 	{
-		i = lexer->str - lexer->inputp->line->str;
-		lexer->inputp->line_cont = true;
-	}
-	readline(lexer->inputp);
-	lexer->str = &lexer->inputp->line->str[i];
-	lexer->state &= ~(LINE_CONT | START);
-	if (lexer->docdelim)
-	{
-		i = lexer->inputp->line->len - 1;
-		while (lexer->inputp->line->str[--i] == BSLASH)
-			count++;
-		if (count % 2)
-		{
-			lexer->state |= LINE_CONT;
-			ft_dstr_remove(lexer->inputp->line, lexer->inputp->line->len - 2, 2);
-			lexer->inputp->pos -= 2;
-		}
+		tmp = ft_strjoin(lexer->str, str);
+		free(lexer->str);
+		lexer->str = tmp;
 	}
 	else
-		lexer->len = lexer->inputp->line->len;
+		lexer->str = ft_strdup(str);
+	lexer->state &= ~(START);
+	lexer->len += lexer->inputp->line->len;
 	return (0);
 }
 
 static int	get_heredoc(t_lexer *lexer)
 {
-	char	*oldstr;
-	size_t	cmpi;
-	size_t	cmplen;
-	size_t	delimlen;
-
-	delimlen = ft_strlen(lexer->docdelim);
-	oldstr = lexer->str;
-	lexer->docptr = lexer->docptr ? lexer->docptr : &lexer->str[lexer->len];
-	while (!(lexer->state & DELIMITED))
-	{
-		cmpi = lexer->docptr - lexer->inputp->line->str;
-		while ((!*(lexer->docptr = &lexer->inputp->line->str[cmpi])
-		|| (lexer->state & LINE_CONT)) && (lexer->inputp->line_cont = true))
-			get_input(lexer);
-		if (!((cmplen = ft_strchr(lexer->docptr, '\n') - lexer->docptr) == delimlen
-		&& ft_strnequ(lexer->docptr, lexer->docdelim, cmplen)
-		&& (lexer->state |= DELIMITED)))
-			ft_dstr_insert(lexer->curr_tok->value, lexer->curr_tok->value->len,
-			lexer->docptr, cmplen + 1);
-		lexer->docptr += cmplen + 1;
-	}
-	return ((lexer->str = oldstr) && (lexer->docdelim = NULL));
 }
 
 /*
@@ -83,9 +52,9 @@ static int	init_state(t_lexer *lexer)
 		lexer->curr_tok = NULL;
 		lexer->state &= ~DELIMITED;
 	}
-	if ((lexer->state & (START | LINE_CONT)) || lexer->quote)
+	if (lexer->state & START || lexer->quote)
 		get_input(lexer);
-	else if (lexer->docdelim && (lexer->curr_tok = token_new(WORD))) //check
+	else if (lexer->docdelim)
 		get_heredoc(lexer);
 	return (0);
 }
@@ -102,7 +71,7 @@ static int	init_state(t_lexer *lexer)
 int			eat(t_lexer *lexer)
 {
 	init_state(lexer);
-	while (!(lexer->state & (DELIMITED | END)))
+	while (!(lexer->state & (DELIMITED | END)) && lexer->str)
 	{
 		if (end(lexer)
 		|| operator_next(lexer)
