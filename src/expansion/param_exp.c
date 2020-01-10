@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 16:36:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/09 18:22:29 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/10 12:50:54 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ static bool	should_expand(char *str, int i, char quote_status)
 {
 	if (str[i] != '$')
 		return (false);
-	if (quote_status == SQUOTE)
-		return (false);
-	if (i != 0 && str[i - 1] == BSLASH)
+	if (quote_status == SQUOTE || quote_status == BSLASH)
 		return (false);
 	return (true);
 }
