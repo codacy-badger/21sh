@@ -27,6 +27,16 @@ int		main(int argc, char **argv, char **envp)
 	init(&shell);
 	while (1)
 	{
+		//shell.lexer.docdelim = ft_strdup("EOF");
+        //while (eat(&shell.lexer) && *shell.lexer.curr_tok->value->str != ';')
+		//	printf("[%s] -> ", shell.lexer.curr_tok->value->str);
+		//printf("[%s] -> ", shell.lexer.curr_tok->value->str);
+		//eat(&shell.lexer);
+		//printf("[%s] -> ", shell.lexer.curr_tok->value->str);
+		//shell.lexer.docdelim = ft_strdup("EOF2");
+		//while (eat(&shell.lexer) != END_OF_INPUT)
+		//	printf("[%s] -> ", shell.lexer.curr_tok->value->str);
+		//printf("END\n");
 		parse(&shell.lexer, &shell.env, &shell.term);
 		if (shell.input.line->len > 1)
 		{

@@ -28,7 +28,7 @@ static int	delim_token(t_lexer *lexer)
 
 int			end(t_lexer *lexer)
 {
-	if (lexer->str[lexer->i] == '\0')
+	if (lexer->str[lexer->i] == '\0' || lexer->i == lexer->len - 1)
 	{
 		if (lexer->state & LINE_CONT)
 		{
@@ -50,7 +50,7 @@ int			operator_end(t_lexer *lexer)
 {
 	if (lexer->curr_tok && !lexer->quote
 	&& (is_operator_start(*lexer->curr_tok->value->str)
-	&& (lexer->i != 0 ? is_operator_part(lexer->str[lexer->i - 1]) : 0))
+	&& (lexer->i > 0 ? is_operator_part(lexer->str[lexer->i - 1]) : 0))
 	&& (!is_operator_part(lexer->str[lexer->i])
 	|| !is_operator_next(lexer->curr_tok->value->str, lexer->str[lexer->i])))
 	{

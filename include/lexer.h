@@ -25,7 +25,7 @@
 **		   ';'	   '|'     '<'    '>'
 */
 struct	s_token;
-struct s_lexer;
+struct	s_lexer;
 
 /*
 ** different states:
@@ -97,9 +97,12 @@ typedef struct		s_lexer
 {
 	struct s_input	*inputp;
 	char			*str;
-	int				i;
+	size_t			i;
+	size_t			len;
 	t_token			*curr_tok;
 	char			quote;
+	char			*docdelim;
+	char			*docptr;
 	char			state;
 }					t_lexer;
 

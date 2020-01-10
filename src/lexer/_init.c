@@ -25,6 +25,8 @@ int			reset_lexer(t_lexer *lexer)
 	lexer->state = START;
 	lexer->str = NULL;
 	lexer->quote = 0;
+	lexer->docptr = NULL;
+	lexer->len = 0;
 	lexer->i = 0;
 	return (END_OF_INPUT);
 }

@@ -28,9 +28,10 @@ SRC =	mem/ft_memalloc.c \
 		str/ft_strsub.c \
 		str/ft_strjoin.c \
 		str/ft_strisnbr.c \
-		str/ft_strndup.c\
-		str/ft_strcat.c\
-		str/ft_strnlen.c\
+		str/ft_strndup.c \
+		str/ft_strcat.c \
+		str/ft_strnlen.c \
+		str/ft_strnequ.c \
 		array/ft_strarray_dup.c \
 		array/ft_strarray_realloc.c \
 		array/ft_strarray_del.c \

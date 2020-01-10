@@ -19,7 +19,6 @@
 
 int		init(t_sh *shell)
 {
-	int		ret;
 	extern char	**environ;
 
 	ft_bzero(shell, sizeof(*shell));

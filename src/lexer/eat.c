@@ -12,19 +12,13 @@
 
 #include "shell.h"
 
-/*
-** In case of line continuation or quotes, we set a boolean in input,
-** to tell readline that it must not create a new line and not reset
-** the input index. this boolean will be reset to false by input/enter()
-** function.
-** We reset the state and send preprocess to check for line continuation.
-*/
-
 static int	get_input(t_lexer *lexer)
 {
 	int		i;
+	int 	count;
 
 	i = 0;
+	count = 0;
 	if ((lexer->state & LINE_CONT) || lexer->quote)
 	{
 		i = lexer->str - lexer->inputp->line->str;
@@ -33,7 +27,47 @@ static int	get_input(t_lexer *lexer)
 	readline(lexer->inputp);
 	lexer->str = &lexer->inputp->line->str[i];
 	lexer->state &= ~(LINE_CONT | START);
+	if (lexer->docdelim)
+	{
+		i = lexer->inputp->line->len - 1;
+		while (lexer->inputp->line->str[--i] == BSLASH)
+			count++;
+		if (count % 2)
+		{
+			lexer->state |= LINE_CONT;
+			ft_dstr_remove(lexer->inputp->line, lexer->inputp->line->len - 2, 2);
+			lexer->inputp->pos -= 2;
+		}
+	}
+	else
+		lexer->len = lexer->inputp->line->len;
 	return (0);
+}
+
+static int	get_heredoc(t_lexer *lexer)
+{
+	char	*oldstr;
+	size_t	cmpi;
+	size_t	cmplen;
+	size_t	delimlen;
+
+	delimlen = ft_strlen(lexer->docdelim);
+	oldstr = lexer->str;
+	lexer->docptr = lexer->docptr ? lexer->docptr : &lexer->str[lexer->len];
+	while (!(lexer->state & DELIMITED))
+	{
+		cmpi = lexer->docptr - lexer->inputp->line->str;
+		while ((!*(lexer->docptr = &lexer->inputp->line->str[cmpi])
+		|| (lexer->state & LINE_CONT)) && (lexer->inputp->line_cont = true))
+			get_input(lexer);
+		if (!((cmplen = ft_strchr(lexer->docptr, '\n') - lexer->docptr) == delimlen
+		&& ft_strnequ(lexer->docptr, lexer->docdelim, cmplen)
+		&& (lexer->state |= DELIMITED)))
+			ft_dstr_insert(lexer->curr_tok->value, lexer->curr_tok->value->len,
+			lexer->docptr, cmplen + 1);
+		lexer->docptr += cmplen + 1;
+	}
+	return ((lexer->str = oldstr) && (lexer->docdelim = NULL));
 }
 
 /*
@@ -51,6 +85,8 @@ static int	init_state(t_lexer *lexer)
 	}
 	if ((lexer->state & (START | LINE_CONT)) || lexer->quote)
 		get_input(lexer);
+	else if (lexer->docdelim && (lexer->curr_tok = token_new(WORD))) //check
+		get_heredoc(lexer);
 	return (0);
 }
 
@@ -79,9 +115,11 @@ int			eat(t_lexer *lexer)
 		|| word_start(lexer))
 			continue ;
 	}
-	if ((lexer->state & LINE_CONT) || lexer->quote)
+	if (lexer->state & DELIMITED)
+		return (*lexer->curr_tok->value->str
+		? lexer->curr_tok->type : eat(lexer));
+	else if ((lexer->state & LINE_CONT) || lexer->quote)
 		return (eat(lexer));
-	else if (lexer->state & DELIMITED)
-		return (lexer->curr_tok->type);
+	lexer->curr_tok = NULL;
 	return (reset_lexer(lexer));
 }

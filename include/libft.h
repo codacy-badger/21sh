@@ -246,6 +246,7 @@ bool    				ft_strisnbr(char *str);
 char					*ft_strcat(char *s1, const char *s2);
 size_t					ft_strnlen(const char *s, size_t maxlen);
 char					*ft_strndup(const char *s1, size_t n);
+int						ft_strnequ(char const *s1, char const *s2, size_t n);
 
 
 /*
