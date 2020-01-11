@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/11 18:38:56 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 20:17:01 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,9 @@ int			eat(t_lexer *lexer)
 	else if (lexer->quote)
 		return (eat(lexer));
 	lexer->curr_tok = NULL;
+	lexer->str[lexer->i] = '\0';
+	if (lexer->str[0] != 0 && lexer->str[0] != ' ')
+		ft_lstadd(lexer->inputp->head,
+				ft_lstnew(ft_dstr_new(lexer->str, ft_strlen(lexer->str), 0)));
 	return (reset_lexer(lexer));
 }

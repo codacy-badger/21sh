@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   eol.c                                              :+:      :+:    :+:   */
+/*   enter.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/27 16:53:55 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:55:30 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int			enter(t_input *input)
 		movcnl(input->termp);
 	if (input->temp)
 		ft_dstr_del((void **)&input->temp, NULL);
-	if (input->line_cont)
-		input->line_cont = false;
 	input->curr = input->head;
 	return (EOL);
 }
