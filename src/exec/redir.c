@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/11 16:24:51 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 20:52:44 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	get_input_fd(t_node *op_node)
 		return (ft_atoi(node_token(op_node->child[0])->value->str));
 }
 
-static int	get_output_fd(t_node *op_node, int flags, t_lexer *lexer)
+static int	get_output_fd(t_node *op_node, int flags)
 {
 	int		type;
 	int		fd;
@@ -75,7 +75,7 @@ static int	get_output_fd(t_node *op_node, int flags, t_lexer *lexer)
 	{
 		tmp_file = ft_mktemp(ft_strdup("/tmp/21sh_XXXXXX"));
 		fd = open(tmp_file, O_WRONLY);
-		dprintf(fd, "%s", node_token(op_node->child[1])->value->str);
+		ft_putstr_fd(node_token(op_node->child[1])->value->str, fd);
 		close(fd);
 		fd = open(tmp_file, O_RDONLY);
 		return (fd);
@@ -88,7 +88,7 @@ static int	get_output_fd(t_node *op_node, int flags, t_lexer *lexer)
 	return (open(node_token(op_node->child[1])->value->str, flags, RIGHTS));
 }
 
-int			set_redirections(t_node *cmd, t_lexer *lexer)
+int			set_redirections(t_node *cmd)
 {
 	int			i;
 	int			output_fd;
@@ -101,7 +101,7 @@ int			set_redirections(t_node *cmd, t_lexer *lexer)
 		flags = get_flags(node_token(cmd->child[i])->type);
 		if (flags == COMMAND)
 			continue;
-		output_fd = get_output_fd(cmd->child[i], flags, lexer);
+		output_fd = get_output_fd(cmd->child[i], flags);
 		if (output_fd == CLOSE)
 			continue;
 		if (output_fd == -1)

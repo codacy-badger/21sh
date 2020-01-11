@@ -6,14 +6,13 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/07 20:16:56 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 20:53:53 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 int				g_last_exit_st;
-static t_lexer	*g_lexer;
 
 static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid,
 		int input_fd)
@@ -26,7 +25,7 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid,
 	*pid = (argv != NULL) ? fork() : -1;
 	if (*pid == 0)
 	{
-		set_redirections(cmd, g_lexer);
+		set_redirections(cmd);
 		dup2(fildes[1], 1);
 		dup2(input_fd, 0);
 		close(fildes[1]);
@@ -54,7 +53,7 @@ static void		exec_last_pipe(t_node *cmd, t_env *env, int *pid, int input_fd)
 		*pid = -1;
 	if (*pid == 0)
 	{
-		set_redirections(cmd, g_lexer);
+		set_redirections(cmd);
 		dup2(input_fd, 0);
 		close(input_fd);
 		execve(argv[0], argv, env->env);
@@ -107,7 +106,7 @@ static int		get_pipe_count(t_node *pipe)
 	return (pipe_count);
 }
 
-int				exec_pipe(t_node *pipe, t_env *env, t_lexer *lexer)
+int				exec_pipe(t_node *pipe, t_env *env)
 {
 	int			pid;
 	int			pipe_count;
@@ -117,7 +116,6 @@ int				exec_pipe(t_node *pipe, t_env *env, t_lexer *lexer)
 	if (pid == 0)
 	{
 		pipe_count = get_pipe_count(pipe);
-		g_lexer = lexer;
 		exec_pipes(pipe, env, pipe_count);
 	}
 	wait(&status);

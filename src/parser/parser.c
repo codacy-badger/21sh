@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/11 18:46:03 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 20:54:23 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_ast	*get_ast(t_lexer *lexer)
 **	for now, this function actually always stops at the first call.
 */
 
-int		traverse_ast(t_node *node, t_env *env, t_lexer *lexer)
+int		traverse_ast(t_node *node, t_env *env)
 {
 	int		i;
 
@@ -69,13 +69,13 @@ int		traverse_ast(t_node *node, t_env *env, t_lexer *lexer)
 	if (node->data == NULL)
 	{
 		expand(node, env);
-		return (exec_command(node, env, lexer));
+		return (exec_command(node, env));
 	}
 	else if (((t_token *)node->data)->type == PIPE)
-		return (exec_pipe(node, env, lexer));
+		return (exec_pipe(node, env));
 	i = 0;
 	while (i < node->nb_children)
-		traverse_ast(node->child[i++], env, lexer);
+		traverse_ast(node->child[i++], env);
 	return (1);
 }
 
@@ -116,7 +116,7 @@ int		parse(t_lexer *lexer, t_env *env, t_term *term)
 			if (g_parse_error != SILENT_ABORT)
 			{
 				tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->oldterm);
-				traverse_ast(ast->node, env, lexer);
+				traverse_ast(ast->node, env);
 				tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->newterm);
 				tputs(term->caps[C_KS], 1, ft_putc);
 			}

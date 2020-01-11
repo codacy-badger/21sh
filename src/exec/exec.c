@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 09:52:31 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/07 20:18:45 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 20:53:12 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	interrupt_fork(int sig)
 	g_last_exit_st = 130;
 }
 
-int		exec_command(t_node *cmd, t_env *env, t_lexer *lexer)
+int		exec_command(t_node *cmd, t_env *env)
 {
 	pid_t		pid;
 	int			status;
@@ -36,7 +36,7 @@ int		exec_command(t_node *cmd, t_env *env, t_lexer *lexer)
 	signal(SIGINT, interrupt_fork);
 	if (pid == 0)
 	{
-		set_redirections(cmd, lexer);
+		set_redirections(cmd);
 		if ((execve(argv[0], argv, env->env) == -1))
 		{
 			perror("21sh");
