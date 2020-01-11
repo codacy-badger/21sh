@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 04:05:12 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/05 22:22:36 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/07 19:10:56 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,39 @@ static t_node	*io_file(t_lexer *lexer, t_token *io_number)
 	return (node);
 }
 
+/*
+**	the IO_NUMBER is added as child 0 of the heredoc node, and the delimiter
+**	is added as child 1. If there is no IO_NUMBER, child 0 has NULL data.
+**	example:				cat 1 << EOF
+**
+**                              <<
+**                             /  \
+**                            1   EOF
+*/
+
+static t_node	*io_here(t_lexer *lexer, t_token *io_number)
+{
+	t_node	*node;
+	t_token	*delim;
+
+	if (g_parse_error != NOERR)
+		return (NULL);
+	node = NULL;
+	node = ft_node_new(lexer->curr_tok);
+	eat(lexer);
+	if (lexer->curr_tok == NULL || lexer->curr_tok->type != WORD)
+	{
+		g_parse_error = HEREDOC_NO_DELIM;
+		g_error_near = ft_strdup(node_token(node)->value->str);
+		free_ast_nodes(node);
+		return (NULL);
+	}
+	ft_node_add_child(node, ft_node_new(io_number));
+	ft_node_add_child(node, ft_node_new(lexer->curr_tok));
+	eat(lexer);
+	return (node);
+}
+
 t_node			*io_redirect(t_lexer *lexer)
 {
 	t_token *io_number;
@@ -95,7 +128,13 @@ t_node			*io_redirect(t_lexer *lexer)
 	{
 		io_number = lexer->curr_tok;
 		eat(lexer);
+		if (lexer->curr_tok && (lexer->curr_tok->type == DLESS ||
+					lexer->curr_tok->type == DLESSDASH))
+			return (io_here(lexer, io_number));
 		return (io_file(lexer, io_number));
 	}
+	if (lexer->curr_tok && (lexer->curr_tok->type == DLESS ||
+				lexer->curr_tok->type == DLESSDASH))
+		return (io_here(lexer, NULL));
 	return (io_file(lexer, NULL));
 }

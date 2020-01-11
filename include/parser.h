@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 23:49:26 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/05 22:22:11 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/07 15:12:48 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ enum			e_parse_error
 	NULL_AST_NODE,
 	NO_REDIR_FILENAME,
 	NO_CMD_BEFORE_PIPE,
-	NO_CMD_AFTER_PIPE
+	NO_CMD_AFTER_PIPE,
+	HEREDOC_NO_DELIM
 };
 
 
