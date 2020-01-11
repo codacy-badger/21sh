@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/11 13:24:53 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:38:56 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int	get_input(t_lexer *lexer)
 	const char	*prompt;
 
 	prompt = lexer->quote ? "> " : "$> ";
+	lexer->inputp->first_line = (lexer->quote == NONE);
 	str = readline(lexer->inputp, prompt);
 	if (str == NULL)
 		return (0);

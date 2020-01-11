@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/11 14:05:13 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:46:03 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,13 @@ int		parse(t_lexer *lexer, t_env *env, t_term *term)
 		if (g_parse_error == NOERR)
 		{
 			get_all_heredocs(lexer->inputp, &g_heredocs);
-			tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->oldterm);
-			traverse_ast(ast->node, env, lexer);
-			tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->newterm);
-			tputs(term->caps[C_KS], 1, ft_putc);
+			if (g_parse_error != SILENT_ABORT)
+			{
+				tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->oldterm);
+				traverse_ast(ast->node, env, lexer);
+				tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->newterm);
+				tputs(term->caps[C_KS], 1, ft_putc);
+			}
 		}
 		free_ast_nodes(ast->node);
 		tmp = ast;

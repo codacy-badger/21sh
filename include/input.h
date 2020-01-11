@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/10 17:13:34 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:31:36 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct		s_input
 	size_t			pos_min;
 	bool			esc;
 	bool			line_cont;
+	bool			first_line;
 }					t_input;
 
 int					init_input(t_input *input, struct s_term *term);

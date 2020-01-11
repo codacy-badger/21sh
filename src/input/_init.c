@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_init.c                                       :+:      :+:    :+:   */
+/*   _init.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 01:23:20 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/08 03:24:45 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:32:41 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ int			init_input(struct s_input *input, struct s_term *term)
 	input->curr = input->head;
 	input->temp = NULL;
 	input->esc = false;
+	input->first_line = true;
 	return (0);
 }
