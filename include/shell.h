@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/08 16:45:47 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 16:18:56 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,7 @@ t_env				env_dup(char **env);
 char				*get_env_var(char *var_name, t_env *env);
 
 char				*get_executable_path(char *command, t_env *env);
+
+char				*ft_mktemp(char *template);
 
 #endif

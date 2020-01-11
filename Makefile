@@ -46,6 +46,7 @@ SRC =		shell/main.c \
 			parser/pipeline.c\
 			parser/redirect.c\
 			parser/utils.c\
+			parser/heredoc.c\
 			expansion/expand.c\
 			expansion/param_exp.c\
 			expansion/quotes.c

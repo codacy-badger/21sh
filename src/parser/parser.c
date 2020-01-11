@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/08 16:13:58 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 14:05:13 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 int		g_parse_error;
 char	*g_error_near = NULL;
+t_node	g_heredocs = (t_node){NULL, 0, 0, NULL};
 
 t_token	*node_token(t_node *node)
 {
@@ -59,7 +60,7 @@ t_ast	*get_ast(t_lexer *lexer)
 **	for now, this function actually always stops at the first call.
 */
 
-int		traverse_ast(t_node *node, t_env *env)
+int		traverse_ast(t_node *node, t_env *env, t_lexer *lexer)
 {
 	int		i;
 
@@ -68,13 +69,13 @@ int		traverse_ast(t_node *node, t_env *env)
 	if (node->data == NULL)
 	{
 		expand(node, env);
-		return (exec_command(node, env));
+		return (exec_command(node, env, lexer));
 	}
 	else if (((t_token *)node->data)->type == PIPE)
-		return (exec_pipe(node, env));
+		return (exec_pipe(node, env, lexer));
 	i = 0;
 	while (i < node->nb_children)
-		traverse_ast(node->child[i++], env);
+		traverse_ast(node->child[i++], env, lexer);
 	return (1);
 }
 
@@ -111,8 +112,9 @@ int		parse(t_lexer *lexer, t_env *env, t_term *term)
 			g_parse_error = NULL_AST_NODE;
 		if (g_parse_error == NOERR)
 		{
+			get_all_heredocs(lexer->inputp, &g_heredocs);
 			tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->oldterm);
-			traverse_ast(ast->node, env);
+			traverse_ast(ast->node, env, lexer);
 			tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->newterm);
 			tputs(term->caps[C_KS], 1, ft_putc);
 		}

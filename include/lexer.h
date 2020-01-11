@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/09 13:12:30 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:21:55 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ struct	s_lexer;
 */
 # define START			1
 # define DELIMITED		2
-# define LINE_CONT		4
-# define END			8
+# define END			4
 
 enum 				e_toktype
 {

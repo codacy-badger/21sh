@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/10 18:01:03 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 13:24:53 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,6 @@ static int	get_input(t_lexer *lexer)
 	return (0);
 }
 
-static int	get_heredoc(t_lexer *lexer)
-{
-}
-
 /*
 ** If the previous token was delimited, we set curr_tok to NULL,
 ** otherwise we ll append to the curr_tok
@@ -54,8 +50,6 @@ static int	init_state(t_lexer *lexer)
 	}
 	if (lexer->state & START || lexer->quote)
 		get_input(lexer);
-	else if (lexer->docdelim)
-		get_heredoc(lexer);
 	return (0);
 }
 
@@ -73,7 +67,7 @@ int			eat(t_lexer *lexer)
 	init_state(lexer);
 	while (!(lexer->state & (DELIMITED | END)) && lexer->str)
 	{
-		if (end(lexer)
+		end(lexer)
 		|| operator_next(lexer)
 		|| operator_end(lexer)
 		|| quote(lexer)
@@ -81,13 +75,12 @@ int			eat(t_lexer *lexer)
 		|| blank(lexer)
 		|| word_next(lexer)
 		|| comment(lexer)
-		|| word_start(lexer))
-			continue ;
+		|| word_start(lexer);
 	}
 	if (lexer->state & DELIMITED)
 		return (*lexer->curr_tok->value->str
 		? lexer->curr_tok->type : eat(lexer));
-	else if ((lexer->state & LINE_CONT) || lexer->quote)
+	else if (lexer->quote)
 		return (eat(lexer));
 	lexer->curr_tok = NULL;
 	return (reset_lexer(lexer));

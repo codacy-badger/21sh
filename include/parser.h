@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 23:49:26 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/07 15:12:48 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:26:24 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct s_token t_token;
 typedef struct s_env t_env;
 typedef struct s_lexer t_lexer;
 typedef struct s_term t_term;
+typedef struct s_input t_input;
 
 typedef struct	s_ast 
 {
@@ -47,5 +48,6 @@ void	print_ast(t_node *ast, int indent_level);
 t_node	*io_redirect(t_lexer *lexer);
 t_node	*pipeline(t_lexer *lexer);
 void	free_ast_nodes(t_node *node);
+void	get_all_heredocs(t_input *input, t_node *heredoc_list);
 
 #endif

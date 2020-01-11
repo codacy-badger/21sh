@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/07 20:27:57 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 16:24:51 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 #define RIGHTS 420
 #define CLOSE  -2
-#define HEREDOC -2
 #define COMMAND INT32_MAX
 
 static bool	str_is_nbr(const char *str)
@@ -38,8 +37,10 @@ static int	get_flags(int node_type)
 		return (O_CREAT | O_WRONLY | O_TRUNC);
 	if (node_type == DGREAT)
 		return (O_CREAT | O_WRONLY | O_APPEND);
-	if (node_type == LESS || node_type == LESSAND || node_type == DLESS)
+	if (node_type == LESS || node_type == LESSAND)
 		return (O_RDONLY);
+	if (node_type == DLESS)
+		return (O_RDWR | O_CREAT);
 	return (COMMAND);
 }
 
@@ -60,7 +61,9 @@ static int	get_input_fd(t_node *op_node)
 
 static int	get_output_fd(t_node *op_node, int flags, t_lexer *lexer)
 {
-	int	type;
+	int		type;
+	int		fd;
+	char	*tmp_file;
 
 	type = node_token(op_node)->type;
 	if (ft_strequ(node_token(op_node->child[1])->value->str, "-"))
@@ -70,8 +73,12 @@ static int	get_output_fd(t_node *op_node, int flags, t_lexer *lexer)
 	}
 	if (type == DLESS)
 	{
-		get_and_output_heredoc(lexer, op_node);
-		return (HEREDOC);
+		tmp_file = ft_mktemp(ft_strdup("/tmp/21sh_XXXXXX"));
+		fd = open(tmp_file, O_WRONLY);
+		dprintf(fd, "%s", node_token(op_node->child[1])->value->str);
+		close(fd);
+		fd = open(tmp_file, O_RDONLY);
+		return (fd);
 	}
 	if (type == GREATAND || type == LESSAND)
 	{
@@ -95,7 +102,7 @@ int			set_redirections(t_node *cmd, t_lexer *lexer)
 		if (flags == COMMAND)
 			continue;
 		output_fd = get_output_fd(cmd->child[i], flags, lexer);
-		if (output_fd == CLOSE || output_fd == HEREDOC)
+		if (output_fd == CLOSE)
 			continue;
 		if (output_fd == -1)
 			return (1);

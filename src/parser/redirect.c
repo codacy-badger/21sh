@@ -6,14 +6,15 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 04:05:12 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/07 19:10:56 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/11 13:47:43 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-extern int	g_parse_error;
-extern char	*g_error_near;
+extern int		g_parse_error;
+extern char		*g_error_near;
+extern t_node	g_heredocs;
 
 /*
 **	filename         : WORD
@@ -114,6 +115,7 @@ static t_node	*io_here(t_lexer *lexer, t_token *io_number)
 	}
 	ft_node_add_child(node, ft_node_new(io_number));
 	ft_node_add_child(node, ft_node_new(lexer->curr_tok));
+	ft_node_add_child(&g_heredocs, node);
 	eat(lexer);
 	return (node);
 }
