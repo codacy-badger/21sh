@@ -19,7 +19,7 @@ char	**ft_strarray_dup(char **array)
 	size_t	i;
 
 	size = ft_strarray_len(array);
-	if (!(dup = (char **)ft_memalloc(sizeof(char *) * (size + 1))))
+	if (!(dup = (char **)ft_xmalloc(sizeof(char *) * (size + 1))))
 		return (NULL);
 	i = 0;
 	while (i < size)

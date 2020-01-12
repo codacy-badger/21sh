@@ -19,9 +19,9 @@ t_htable	*ft_htnew(t_uint32 size)
 
 	if (size == 0)
 		return (NULL);
-	if (!(htable = ft_memalloc(sizeof(t_htable))))
+	if (!(htable = ft_xmalloc(sizeof(t_htable))))
 		return (NULL);
-	if (!(htable->table = (t_hentry **)ft_memalloc(sizeof(t_hentry *) * size)))
+	if (!(htable->table = (t_hentry **)ft_xmalloc(sizeof(t_hentry *) * size)))
 	{
 		ft_memdel((void *)&htable);
 		return (NULL);

@@ -16,7 +16,7 @@ t_list	*ft_lstnew(void *data)
 {
 	t_list	*new;
 
-	if (!(new = (t_list *)ft_memalloc(sizeof(*new))))
+	if (!(new = (t_list *)ft_xmalloc(sizeof(*new))))
 		return (NULL);
 	new->data = data;
 	new->prev = new;

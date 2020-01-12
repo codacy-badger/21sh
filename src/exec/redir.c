@@ -105,10 +105,16 @@ int			set_redirections(t_node *cmd)
 		if (output_fd == CLOSE)
 			continue;
 		if (output_fd == -1)
+		{
+			write(STDERR_FILENO, "21sh: Could not open file.\n", 27);
 			return (1);
+		}
 		if (node_token(cmd->child[i])->type == LESSAND
 				&& fstat(output_fd, &buf) == -1)
+		{
+			write(STDERR_FILENO, "21sh: Bad file descriptor.\n", 27);
 			return (1);
+		}
 		dup2(output_fd, get_input_fd(cmd->child[i]));
 	}
 	return (0);

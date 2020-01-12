@@ -16,7 +16,7 @@ static char	**alloc_array(size_t size)
 {
 	char	**array;
 
-	if (!(array = (char **)ft_memalloc(sizeof(char *) * size)))
+	if (!(array = (char **)ft_xmalloc(sizeof(char *) * size)))
 		return (NULL);
 	return (array);
 }
@@ -29,7 +29,7 @@ static char	*entry_to_str(t_hentry *entry)
 
 	key_len = ft_strlen(entry->key);
 	val_len = ft_strlen(entry->value);
-	if (!(str = (char *)ft_memalloc(key_len + val_len + 2)))
+	if (!(str = (char *)ft_xmalloc(key_len + val_len + 2)))
 		return (NULL);
 	ft_memcpy(str, entry->key, key_len);
 	str[key_len] = ':';

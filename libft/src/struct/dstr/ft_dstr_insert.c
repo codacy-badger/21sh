@@ -31,8 +31,6 @@ int		ft_dstr_insert(t_dstr *dstr, size_t i, char *str, size_t len)
 		dstr->size = ft_next_power_of_two(new_len + 1);
 		dstr->str = (char *)ft_memrealloc(dstr->str, dstr->len, dstr->size);
 		free(tmp);
-		if (!dstr->str)
-			return (-1);
 	}
 	ptr = dstr->str + i;
 	ft_memmove(ptr + len, ptr, ft_strlen(ptr) + 1);

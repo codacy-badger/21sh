@@ -18,7 +18,7 @@ void	*ft_memrealloc(void *ptr, size_t old_size, size_t new_size)
 
 	if (new_size < old_size)
 		old_size = new_size;
-	if (!(new = ft_memalloc(new_size)))
+	if (!(new = ft_xmalloc(new_size)))
 		return (NULL);
 	if (ptr)
 		ft_memcpy(new, ptr, old_size);

@@ -34,7 +34,7 @@ t_ast	*get_ast(t_lexer *lexer)
 
 	if (g_parse_error != 0)
 		return (NULL);
-	ast = malloc(sizeof(t_ast));
+	ast = ft_xmalloc(sizeof(t_ast));
 	ast->next = NULL;
 	ast->node = and_or(lexer);
 	if (lexer->curr_tok == NULL)

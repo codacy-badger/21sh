@@ -26,7 +26,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 		return (ft_strdup(s1));
 	size1 = ft_strlen(s1);
 	size2 = ft_strlen(s2);
-	if (!(s3 = ft_memalloc(size1 + size2 + 1)))
+	if (!(s3 = ft_xmalloc(size1 + size2 + 1)))
 		return (NULL);
 	ft_memcpy(s3, s1, size1);
 	ft_memcpy(&s3[size1], s2, size2);

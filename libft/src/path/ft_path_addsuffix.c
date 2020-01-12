@@ -29,7 +29,7 @@ char	*ft_path_addsuffix(const char *path, const char *suffix, char free_old)
 		new_len++;
 		sep = 1;
 	}
-	if (!(new_path = (char *)ft_memalloc(new_len + 1)))
+	if (!(new_path = (char *)ft_xmalloc(new_len + 1)))
 		return (NULL);
 	ft_memcpy((void *)new_path, (void *)path, old_len);
 	if (sep)

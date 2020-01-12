@@ -26,8 +26,6 @@ int		ft_dstr_add(t_dstr *dstr, char c)
 		dstr->size *= 2;
 		dstr->str = (char *)ft_memrealloc(dstr->str, dstr->len, dstr->size);
 		free(tmp);
-		if (!dstr->str)
-			return (-1);
 	}
 	dstr->str[dstr->len] = c;
 	dstr->len++;

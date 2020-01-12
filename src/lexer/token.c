@@ -26,7 +26,7 @@ t_token	*token_new(int type)
 {
 	t_token	*token;
 
-	if (!(token = (t_token *)ft_memalloc(sizeof(*token))))
+	if (!(token = (t_token *)ft_xmalloc(sizeof(*token))))
 		return (NULL);
 	token->value = ft_dstr_new("", 0, 16);
 	token->type = type;

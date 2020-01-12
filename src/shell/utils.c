@@ -51,7 +51,6 @@ void	free_arr(char **arr)
 char	*ft_mktemp(char *template)
 {
 	char				*xxxxxx;
-	char				*ret;
 	static const char	letters[] = LETTERS;
 	static uint64_t		v;
 	int					fd;

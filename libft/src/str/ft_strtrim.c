@@ -28,7 +28,7 @@ char	*ft_strtrim(char *str)
 	while (start < (end - 1) && ft_iswhitespace(*(end - 1)))
 		end--;
 	len = end - start;
-	if (!(trim = (char *)ft_memalloc(len + 1)))
+	if (!(trim = (char *)ft_xmalloc(len + 1)))
 		return (NULL);
 	ft_memcpy(trim, start, len);
 	return (trim);

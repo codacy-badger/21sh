@@ -18,9 +18,9 @@ t_hentry	*ft_hentrynew_ptr(const char *key, const void *value)
 
 	if (!key)
 		return (NULL);
-	if (!(entry = ft_memalloc(sizeof(*entry))))
+	if (!(entry = ft_xmalloc(sizeof(*entry))))
 		return (NULL);
-	if (!(entry->key = ft_memalloc(ft_strlen(key) + 1)))
+	if (!(entry->key = ft_xmalloc(ft_strlen(key) + 1)))
 	{
 		ft_memdel((void *)&entry);
 		return (NULL);

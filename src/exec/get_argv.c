@@ -35,7 +35,7 @@ char			**get_argv(t_node *cmd, t_env *env)
 	int		i;
 	int		j;
 
-	argv = malloc((get_argc(cmd) + 1) * sizeof(char *));
+	argv = ft_xmalloc((get_argc(cmd) + 1) * sizeof(char *));
 	i = -1;
 	j = 0;
 	while (++i < cmd->nb_children)

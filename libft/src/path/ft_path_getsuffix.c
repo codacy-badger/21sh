@@ -32,7 +32,7 @@ char	*ft_path_getsuffix(const char *path, char alloc)
 	}
 	if (alloc)
 	{
-		if (!(suffix = (char *)ft_memalloc(len + 1)))
+		if (!(suffix = (char *)ft_xmalloc(len + 1)))
 			return (NULL);
 		ft_memcpy(suffix, &(path[i + 1]), len);
 	}

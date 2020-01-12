@@ -48,7 +48,7 @@ char		**split_path(char const *path)
 	if (path == NULL)
 		return (NULL);
 	nb_words = get_nb_words(path);
-	if (!(arr = malloc(sizeof(char *) * (nb_words + 1))))
+	if (!(arr = ft_xmalloc(sizeof(char *) * (nb_words + 1))))
 		return (NULL);
 	i = 0;
 	while (i < nb_words)
@@ -73,7 +73,7 @@ char		*append_filename(char *path, char *filename)
 	int		i;
 
 	len_path = ft_strlen(path);
-	ret = malloc(len_path + ft_strlen(filename) + 2);
+	ret = ft_xmalloc(len_path + ft_strlen(filename) + 2);
 	if (ret == NULL)
 		exit(0);
 	i = 0;

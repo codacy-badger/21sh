@@ -20,7 +20,7 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 	i = 0;
 	if (!s)
 		return (NULL);
-	if ((sub = (char *)ft_memalloc(len + 1)) == NULL)
+	if ((sub = (char *)ft_xmalloc(len + 1)) == NULL)
 		return (NULL);
 	while (i < len)
 	{

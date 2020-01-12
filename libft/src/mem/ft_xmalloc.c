@@ -21,5 +21,6 @@ void	*ft_xmalloc(size_t size)
 		write(2, "21sh: Dynamic memory allocation error.\n", 39);
 		exit(1);
 	}
+	ft_bzero(ptr, size);
 	return (ptr);
 }

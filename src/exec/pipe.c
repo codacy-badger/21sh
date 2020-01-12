@@ -70,8 +70,8 @@ static void		exec_pipes(t_node *pipe, t_env *env, int pipe_count)
 	int			i;
 	int			input_fd;
 
-	pid = malloc((pipe_count + 1) * sizeof(int *));
-	status = malloc((pipe_count + 1) * sizeof(int *));
+	pid = ft_xmalloc((pipe_count + 1) * sizeof(int *));
+	status = ft_xmalloc((pipe_count + 1) * sizeof(int *));
 	i = -1;
 	input_fd = 0;
 	while (++i < pipe_count + 1)

@@ -16,7 +16,7 @@ int		ft_dstr_clear(t_dstr *dstr, size_t size)
 {
 	free(dstr->str);
 	dstr->size = ft_next_power_of_two(size);
-	if (!(dstr->str = (char *)ft_memalloc(dstr->size)))
+	if (!(dstr->str = (char *)ft_xmalloc(dstr->size)))
 		return (-1);
 	dstr->len = 0;
 	return (0);

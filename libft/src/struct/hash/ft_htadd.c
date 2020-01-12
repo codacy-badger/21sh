@@ -23,7 +23,7 @@ static int	ft_hentry_overwrite(t_hentry *entry, const char *value)
 		if (!value)
 			return (-1);
 		ft_memdel((void **)&entry->value);
-		if (!(entry->value = ft_memalloc(ft_strlen(value) + 1)))
+		if (!(entry->value = ft_xmalloc(ft_strlen(value) + 1)))
 			return (-1);
 		ft_strcpy(entry->value, value);
 	}

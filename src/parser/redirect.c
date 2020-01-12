@@ -99,7 +99,6 @@ static t_node	*io_file(t_lexer *lexer, t_token *io_number)
 static t_node	*io_here(t_lexer *lexer, t_token *io_number)
 {
 	t_node	*node;
-	t_token	*delim;
 
 	if (g_parse_error != NOERR)
 		return (NULL);

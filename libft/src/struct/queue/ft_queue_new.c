@@ -16,9 +16,9 @@ t_queue	*ft_queue_new(const void *content, size_t content_size)
 {
 	t_queue	*elem;
 
-	if (!(elem = (t_queue *)ft_memalloc(sizeof(*elem))))
+	if (!(elem = (t_queue *)ft_xmalloc(sizeof(*elem))))
 		return (NULL);
-	if (!(elem->content = ft_memalloc(content_size)))
+	if (!(elem->content = ft_xmalloc(content_size)))
 		return (NULL);
 	if (content)
 	{

@@ -18,14 +18,14 @@ t_hentry	*ft_hentrynew_cpy(const char *key, const void *value, size_t size)
 
 	if (!key || !value)
 		return (NULL);
-	if (!(entry = (t_hentry *)ft_memalloc(sizeof(*entry))))
+	if (!(entry = (t_hentry *)ft_xmalloc(sizeof(*entry))))
 		return (NULL);
-	if (!(entry->key = (char *)ft_memalloc(ft_strlen(key) + 1)))
+	if (!(entry->key = (char *)ft_xmalloc(ft_strlen(key) + 1)))
 	{
 		ft_memdel((void **)&entry);
 		return (NULL);
 	}
-	if (!(entry->value = ft_memalloc(size + 1)))
+	if (!(entry->value = ft_xmalloc(size + 1)))
 	{
 		ft_memdel((void **)&entry->key);
 		ft_memdel((void **)&entry);

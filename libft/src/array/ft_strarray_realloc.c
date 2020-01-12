@@ -19,7 +19,7 @@ char	**ft_strarray_realloc(char **array, size_t new_size)
 	size_t	i;
 
 	size = ft_strarray_len(array);
-	if (!(new_array = (char **)ft_memalloc(sizeof(char *) * (new_size + 1))))
+	if (!(new_array = (char **)ft_xmalloc(sizeof(char *) * (new_size + 1))))
 		return (NULL);
 	i = 0;
 	while (i < size)

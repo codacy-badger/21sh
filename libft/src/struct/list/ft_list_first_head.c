@@ -16,7 +16,7 @@ t_list_head	*ft_list_first_head(void *data)
 {
 	t_list_head *new;
 
-	if ((new = (t_list_head *)ft_memalloc(sizeof(t_list_head))) == NULL)
+	if ((new = (t_list_head *)ft_xmalloc(sizeof(t_list_head))) == NULL)
 		return (NULL);
 	new->data = data;
 	new->prev = new;

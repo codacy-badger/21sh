@@ -21,7 +21,7 @@ t_env	env_dup(char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	new = malloc(((i + 1) * 1.125 + 6) * sizeof(char *));
+	new = ft_xmalloc(((i + 1) * 1.125 + 6) * sizeof(char *));
 	new_struct.size = i + 1;
 	new_struct.capacity = (i + 1) * 1.125 + 6;
 	i = 0;
@@ -69,7 +69,7 @@ void	add_env_var(char *var, char *value, t_env *env)
 	else
 	{
 		i = -1;
-		new = malloc((env->capacity * 1.125 + 6) * sizeof(char *));
+		new = ft_xmalloc((env->capacity * 1.125 + 6) * sizeof(char *));
 		env->capacity = env->capacity * 1.125 + 6;
 		while (++i < env->size - 1)
 			new[i] = env->env[i];

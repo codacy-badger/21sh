@@ -16,9 +16,9 @@ t_stack	*ft_stack_new(const void *content, size_t content_size)
 {
 	t_stack	*elem;
 
-	if (!(elem = (t_stack *)ft_memalloc(sizeof(*elem))))
+	if (!(elem = (t_stack *)ft_xmalloc(sizeof(*elem))))
 		return (NULL);
-	if (!(elem->content = ft_memalloc(content_size)))
+	if (!(elem->content = ft_xmalloc(content_size)))
 		return (NULL);
 	if (content)
 	{

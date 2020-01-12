@@ -19,9 +19,9 @@ t_buff			*ft_buff_new(size_t buff_size, int fd,
 
 	if (buff_size == 0)
 		return (NULL);
-	if (!(buff = (t_buff *)ft_memalloc(sizeof(t_buff))))
+	if (!(buff = (t_buff *)ft_xmalloc(sizeof(t_buff))))
 		return (NULL);
-	if (!(buff->bytes = (unsigned char *)ft_memalloc(buff_size)))
+	if (!(buff->bytes = (unsigned char *)ft_xmalloc(buff_size)))
 	{
 		ft_memdel((void *)&buff);
 		return (NULL);
