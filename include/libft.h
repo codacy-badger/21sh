@@ -212,6 +212,7 @@ int						ft_dstr_clear(t_dstr *dstr, size_t size);
 ** -----------------------------Memory-----------------------------
 */
 
+void					*ft_xmalloc(size_t size);
 void					*ft_memalloc(size_t size);
 void					*ft_memrealloc(void *ptr, size_t old_size,
 														size_t new_size);

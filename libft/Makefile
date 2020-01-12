@@ -4,7 +4,8 @@ CFLAGS = -Wall -Wextra -Werror
 DIR_SRC = src/
 DIR_OBJ = obj/
 DIR_INC = inc/
-SRC =	mem/ft_memalloc.c \
+SRC =	mem/ft_xmalloc.c \
+		mem/ft_memalloc.c \
 		mem/ft_memrealloc.c \
 		mem/ft_bzero.c \
 		mem/ft_memcpy.c \
