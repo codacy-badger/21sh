@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/04 16:14:22 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/11 18:39:31 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/12 16:12:48 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int		ctrl_c(t_input *input)
 	input->pos_min = 0;
 	free(input->line->str);
 	input->line->str = NULL;
+	input->curr = input->head;
 	reset_lexer(NULL);
 	g_parse_error = SILENT_ABORT;
 	return (EOL);
