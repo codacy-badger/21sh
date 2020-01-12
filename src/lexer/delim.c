@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/10 18:01:33 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/12 14:26:46 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,12 @@ int			operator_new(t_lexer *lexer)
 
 int			blank(t_lexer *lexer)
 {
-	if (!lexer->quote && ft_iswhitespace(lexer->str[lexer->i]))
+	if (!lexer->quote
+			&& (lexer->str[lexer->i] == ' ' || lexer->str[lexer->i] == '\t'))
 	{
 		if (lexer->curr_tok)
 			delim_token(lexer);
-		while (ft_iswhitespace(lexer->str[lexer->i]))
+		while (lexer->str[lexer->i] == ' ' || lexer->str[lexer->i] == '\t')
 			lexer->i++;
 		return (1);
 	}
