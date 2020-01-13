@@ -36,8 +36,9 @@ int		exec_command(t_node *cmd, t_env *env)
 	signal(SIGINT, interrupt_fork);
 	if (pid == 0)
 	{
-		if (set_redirections(cmd) == 1
-		|| execve(argv[0], argv, env->env) == -1)
+		if (set_redirections(cmd) == 1)
+			exit(1);
+		if (execve(argv[0], argv, env->env) == -1)
 		{
 			perror("21sh");
 			exit(g_last_exit_st);

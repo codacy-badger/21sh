@@ -21,18 +21,24 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid,
 	int		fildes[2];
 
 	argv = get_argv(cmd, env);
-	pipe(fildes);
+	if (pipe(fildes) == -1)
+	{
+		write(STDERR_FILENO, "21sh: Failed to create pipe.\n", ft_strlen("21sh: Failed to create pipe.\n")); //
+		return (-1);
+	}
 	*pid = (argv != NULL) ? fork() : -1;
 	if (*pid == 0)
 	{
-		set_redirections(cmd);
-		dup2(fildes[1], 1);
-		dup2(input_fd, 0);
-		close(fildes[1]);
-		close(fildes[0]);
-		if (input_fd != 0)
-			close(input_fd);
-		execve(argv[0], argv, env->env);
+		if (set_redirections(cmd) == 0)
+		{
+			dup2(fildes[1], 1);
+			dup2(input_fd, 0);
+			close(fildes[1]);
+			close(fildes[0]);
+			if (input_fd != 0)
+				close(input_fd);
+			execve(argv[0], argv, env->env);
+		}
 		exit(0);
 	}
 	close(fildes[1]);
@@ -53,10 +59,12 @@ static void		exec_last_pipe(t_node *cmd, t_env *env, int *pid, int input_fd)
 		*pid = -1;
 	if (*pid == 0)
 	{
-		set_redirections(cmd);
-		dup2(input_fd, 0);
-		close(input_fd);
-		execve(argv[0], argv, env->env);
+		if (set_redirections(cmd) == 0)
+		{
+			dup2(input_fd, 0);
+			close(input_fd);
+			execve(argv[0], argv, env->env);
+		}
 		exit(0);
 	}
 	close(input_fd);
@@ -76,11 +84,9 @@ static void		exec_pipes(t_node *pipe, t_env *env, int pipe_count)
 	input_fd = 0;
 	while (++i < pipe_count + 1)
 	{
-		if (pipe->child[1]->data == NULL)
-		{
-			input_fd = exec_pipe_cmd(pipe->child[0], env, &pid[i++], input_fd);
+		if (pipe->child[1]->data == NULL
+		&& (input_fd = exec_pipe_cmd(pipe->child[0], env, &pid[i++], input_fd)) != -1)
 			exec_last_pipe(pipe->child[1], env, &pid[i], input_fd);
-		}
 		else
 			input_fd = exec_pipe_cmd(pipe->child[0], env, &pid[i], input_fd);
 		pipe = pipe->child[1];

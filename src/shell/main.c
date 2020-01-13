@@ -17,13 +17,12 @@
 ** but don't put redirections operators in the input in this case,
 ** cause I use the previous token to set IO_NUMBER type, so if its deleted, it segfaults.
 */
-int		main(int argc, char **argv, char **envp)
+int		main(int argc, char **argv)
 {
 	struct s_sh	shell;
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
 	init(&shell);
 	while (1)
 	{
