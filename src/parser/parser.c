@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/11 20:54:23 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/12 18:29:45 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int		parse(t_lexer *lexer, t_env *env, t_term *term)
 			g_parse_error = NULL_AST_NODE;
 		if (g_parse_error == NOERR)
 		{
-			get_all_heredocs(lexer->inputp, &g_heredocs);
+			get_all_heredocs(lexer->inputp, &g_heredocs, env);
 			if (g_parse_error != SILENT_ABORT)
 			{
 				tcsetattr(STDIN_FILENO, TCSAFLUSH, &term->oldterm);
