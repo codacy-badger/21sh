@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 20:03:18 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/13 19:14:14 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/13 19:26:26 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 extern int	g_parse_error;
 
-static void	append_heredoc_to_hist(t_list *hist_head, t_dstr *heredoc,
-		char *delim)
+static void	append_line_to_hist(t_list *hist_head, char *line)
 {
-	t_dstr *hist;
+	t_dstr	*hist;
 
 	hist = hist_head->prev->data;
 	ft_dstr_add(hist, '\n');
-	ft_dstr_insert(hist, hist->len, heredoc->str, heredoc->len);
-	ft_dstr_insert(hist, hist->len, delim, ft_strlen(delim));
+	ft_dstr_insert(hist, hist->len, line, ft_strlen(line));
 	if (hist->str[hist->len - 1] == '\n')
+	{
 		hist->str[hist->len - 1] = '\0';
+		hist->len--;
+	}
 }
 
 static void	remove_bslash(t_dstr *str)
@@ -61,6 +62,7 @@ static char	*get_heredoc(t_input *input, char *delim, t_env *env)
 	while (1)
 	{
 		str = readline(input, "h> ");
+		append_line_to_hist(input->head, str);
 		if (ft_strequ(str, delim_cmp) || g_parse_error == SILENT_ABORT)
 			break ;
 		ft_dstr_insert(heredoc, heredoc->len, str, ft_strlen(str));
@@ -69,7 +71,6 @@ static char	*get_heredoc(t_input *input, char *delim, t_env *env)
 		ft_dstr_del((void **)&heredoc, NULL);
 	else
 	{
-		append_heredoc_to_hist(input->head, heredoc, delim);
 		param_expand(heredoc, 0, env);
 		remove_bslash(heredoc);
 	}
