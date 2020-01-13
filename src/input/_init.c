@@ -6,7 +6,7 @@
 /*   By: fratajcz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 01:23:20 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/11 18:32:41 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/13 16:48:31 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ int			init_input(struct s_input *input, struct s_term *term)
 	input->temp = NULL;
 	input->esc = false;
 	input->first_line = true;
+	input->multiline = false;
 	return (0);
 }

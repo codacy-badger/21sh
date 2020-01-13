@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 20:03:18 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/13 16:06:15 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/13 19:01:32 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static void	append_heredoc_to_hist(t_list *hist_head, t_dstr *heredoc,
 	ft_dstr_add(hist, '\n');
 	ft_dstr_insert(hist, hist->len, heredoc->str, heredoc->len);
 	ft_dstr_insert(hist, hist->len, delim, ft_strlen(delim));
+	if (hist->str[hist->len - 1] == '\n')
+		hist->str[hist->len - 1] = '\0';
 }
 
 static void	remove_bslash(t_dstr *str)
@@ -47,7 +49,7 @@ static void	remove_bslash(t_dstr *str)
 	}
 }
 
-char		*get_heredoc(t_input *input, char *delim, t_env *env)
+static char	*get_heredoc(t_input *input, char *delim, t_env *env)
 {
 	char	*str;
 	t_dstr	*heredoc;
@@ -59,7 +61,7 @@ char		*get_heredoc(t_input *input, char *delim, t_env *env)
 	while (1)
 	{
 		str = readline(input, "h> ");
-		if (ft_strequ(str, delim_cmp) || g_parse_error == SILENT_ABORT)
+		if (ft_strequ(str, delim_cmp) || g_parse_error == SILENT_ABORT || ft_strequ(str, delim))
 			break ;
 		ft_dstr_insert(heredoc, heredoc->len, str, ft_strlen(str));
 	}

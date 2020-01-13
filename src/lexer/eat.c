@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/12 15:33:58 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/13 19:03:15 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,14 @@ static int	init_state(t_lexer *lexer)
 	return (0);
 }
 
+static void	delete_nl(char *str)
+{
+	char *nl;
+
+	if (str != NULL && (nl = ft_strchr(str, '\n')))
+		*nl = '\0';
+}
+
 /*
 ** We set appropriate states, we get input if needed,
 ** we tokenize until a token has been delimited or end is reached.
@@ -84,8 +92,7 @@ int			eat(t_lexer *lexer)
 	else if (lexer->quote)
 		return (eat(lexer));
 	lexer->curr_tok = NULL;
-	if (lexer->str)
-		lexer->str[lexer->i] = '\0';
+	delete_nl(lexer->str);
 	if (lexer->str && lexer->str[0] != 0 && lexer->str[0] != ' ')
 		ft_lstadd(lexer->inputp->head,
 				ft_lstnew(ft_dstr_new(lexer->str, ft_strlen(lexer->str), 1)));

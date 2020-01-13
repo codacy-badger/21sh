@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/13 16:46:45 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/13 18:53:09 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,25 @@ static void		readline_init(t_input *input, const char *prompt)
 	input->pos_min = 0;
 }
 
+static char		*readline_return(t_input *input)
+{
+	char *nl;
+
+	if (input->line->str == NULL)
+		return (NULL);
+	if (input->multiline)
+		input->line->str[0] = input->char_after_nl;
+	if ((nl = ft_strchr(input->line->str, '\n')) && *(nl + 1) != '\0')
+	{
+		input->multiline = true;
+		input->char_after_nl = *(nl + 1);
+		*(nl + 1) = '\0';
+	}
+	else
+		input->multiline = false;
+	return (input->line->str);
+}
+
 /*
 ** We create a new line
 ** We read in a buffer of BUFSIZE (2bytes minimum).
@@ -108,8 +127,12 @@ char			*readline(t_input *input, const char *prompt)
 	t_uint8		buf[BUFSIZE];
 	t_uint8		*bufp;
 	int			ret;
-	char		*nl;
 
+	if (input->multiline)
+	{
+		ft_dstr_remove(input->line, 1, ft_strlen(input->line->str));
+		return (readline_return(input));
+	}
 	readline_init(input, prompt);
 	while ((ret = read(STDIN_FILENO, buf, BUFSIZE - 1)) > 0)
 	{
@@ -122,8 +145,8 @@ char			*readline(t_input *input, const char *prompt)
 			input->oldkey = *(t_uint64 *)input->key;
 			*(t_uint64 *)input->key = 0;
 			if (ret == EOL)
-				return (input->line->str);
+				return (readline_return(input));
 		}
 	}
-	return (input->line->str);
+	return (readline_return(input));
 }
