@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/11 20:08:44 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/13 16:44:16 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,7 @@ int					cpos_to_nextline(t_input *input);
 
 int					ctrl_c(t_input *input);
 int					ctrl_d(t_input *input);
+
+int					escape(t_input *input, t_uint8 **bufp);
 
 #endif

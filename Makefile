@@ -31,6 +31,7 @@ SRC =		shell/main.c \
 			input/copypaste.c \
 			input/history.c \
 			input/ctrl_c_d.c\
+			input/escape.c\
 			exec/get_argv.c\
 			exec/exec.c\
 			exec/redir.c\
