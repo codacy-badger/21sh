@@ -6,13 +6,24 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 20:03:18 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/13 15:54:27 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/13 16:06:15 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 extern int	g_parse_error;
+
+static void	append_heredoc_to_hist(t_list *hist_head, t_dstr *heredoc,
+		char *delim)
+{
+	t_dstr *hist;
+
+	hist = hist_head->prev->data;
+	ft_dstr_add(hist, '\n');
+	ft_dstr_insert(hist, hist->len, heredoc->str, heredoc->len);
+	ft_dstr_insert(hist, hist->len, delim, ft_strlen(delim));
+}
 
 static void	remove_bslash(t_dstr *str)
 {
@@ -47,19 +58,20 @@ char		*get_heredoc(t_input *input, char *delim, t_env *env)
 	input->first_line = false;
 	while (1)
 	{
-		str = readline(input, "> ");
+		str = readline(input, "h> ");
 		if (ft_strequ(str, delim_cmp) || g_parse_error == SILENT_ABORT)
 			break ;
 		ft_dstr_insert(heredoc, heredoc->len, str, ft_strlen(str));
 	}
-	free(delim_cmp);
 	if (g_parse_error == SILENT_ABORT)
 		ft_dstr_del((void **)&heredoc, NULL);
 	else
 	{
+		append_heredoc_to_hist(input->head, heredoc, delim);
 		param_expand(heredoc, 0, env);
 		remove_bslash(heredoc);
 	}
+	free(delim_cmp);
 	free(heredoc);
 	return (heredoc ? heredoc->str : NULL);
 }
