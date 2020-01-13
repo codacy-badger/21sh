@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 20:03:18 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/13 19:01:32 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/13 19:14:14 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static char	*get_heredoc(t_input *input, char *delim, t_env *env)
 	while (1)
 	{
 		str = readline(input, "h> ");
-		if (ft_strequ(str, delim_cmp) || g_parse_error == SILENT_ABORT || ft_strequ(str, delim))
+		if (ft_strequ(str, delim_cmp) || g_parse_error == SILENT_ABORT)
 			break ;
 		ft_dstr_insert(heredoc, heredoc->len, str, ft_strlen(str));
 	}
