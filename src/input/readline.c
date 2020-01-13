@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/13 16:42:52 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/13 16:46:45 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,19 @@ static int		process(t_input *input, t_uint8 **bufp)
 	return (0);
 }
 
+static void		readline_init(t_input *input, const char *prompt)
+{
+	draw_prompt(input, prompt);
+	input->last_prompt = prompt;
+	if (input->line)
+		ft_dstr_del((void **)&input->line, NULL);
+	input->line = ft_dstr_new("", 0, 32);
+	input->pos = 0;
+	input->pos_min = 0;
+}
+
 /*
-** We create a new line and add it to the list.
+** We create a new line
 ** We read in a buffer of BUFSIZE (2bytes minimum).
 ** We process each char in the buffer then continue to read.
 ** It allows better perf on reading from a file,
@@ -99,15 +110,10 @@ char			*readline(t_input *input, const char *prompt)
 	int			ret;
 	char		*nl;
 
-	draw_prompt(input, prompt);
-	input->last_prompt = prompt;
-	if (input->line)
-		ft_dstr_del((void **)&input->line, NULL);
-	input->line = ft_dstr_new("", 0, 32);
-	input->pos = 0;
-	input->pos_min = 0;
-	while ((ret = read(STDIN_FILENO, buf, BUFSIZE - 1)) > 0 && (bufp = buf))
+	readline_init(input, prompt);
+	while ((ret = read(STDIN_FILENO, buf, BUFSIZE - 1)) > 0)
 	{
+		bufp = buf;
 		buf[ret] = 0;
 		while (*bufp)
 		{
