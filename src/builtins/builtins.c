@@ -6,13 +6,24 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 13:07:29 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/14 13:21:26 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/14 13:31:33 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 extern int g_last_exit_st;
+
+int		builtin_unsetenv(char **argv, t_env *env)
+{
+	int i;
+
+	i = 1;
+	while (argv[i])
+		remove_env_var(argv[i++], env);
+	free_arr(argv);
+	return (0);
+}
 
 void	builtin_exit(char **argv)
 {
