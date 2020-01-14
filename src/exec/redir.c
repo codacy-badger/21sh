@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/11 20:52:44 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/14 16:44:04 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,6 @@
 #define RIGHTS 420
 #define CLOSE  -2
 #define COMMAND INT32_MAX
-
-static bool	str_is_nbr(const char *str)
-{
-	while (*str)
-	{
-		if (*str < '0' || *str > '9')
-			return (false);
-		str++;
-	}
-	return (true);
-}
 
 static int	get_flags(int node_type)
 {

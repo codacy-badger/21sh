@@ -20,7 +20,10 @@ int				exec_with_io(t_node *cmd, t_env *env, int stdin_fd,
 				int stdout_fd);
 int				exec_command(t_node *cmd, t_env *env);
 int				exec_command_argv(char **argv, t_env *env);
+
 int				set_redirections(t_node *cmd);
+
 char			**get_argv(t_node *cmd, t_env *env);
+bool			str_is_nbr(const char *str)
 
 #endif

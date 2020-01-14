@@ -1,16 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_argv.c                                         :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 09:08:47 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/14 12:40:13 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/14 16:43:30 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+bool			str_is_nbr(const char *str)
+{
+	while (*str)
+	{
+		if (*str < '0' || *str > '9')
+			return (false);
+		str++;
+	}
+	return (true);
+}
 
 int				get_argc(t_node *cmd)
 {
