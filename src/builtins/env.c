@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 17:03:57 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/14 12:41:03 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/14 13:04:35 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ int		print_env(t_env *env, char **argv)
 		ft_putstr_fd(env->env[i++], 1);
 		write(1, "\n", 1);
 	}
-	free(argv[0]);
-	free(argv);
+	free_arr(argv);
 	free_arr(env->env);
 	return (0);
 }
@@ -90,11 +89,10 @@ int		finish_env(char **argv, int i, t_env *new_env)
 	}
 	else
 	{
-		exec_command(argv + i, new_env);
+		exec_command_argv(argv + i, new_env);
 		ret = g_last_exit_st;
 	}
-	free(argv[0]);
-	free(argv);
+	free_arr(argv);
 	free_arr(new_env->env);
 	return (ret);
 }
@@ -105,6 +103,7 @@ int		builtin_env(char **argv, t_env *env)
 	int				argc;
 	t_env			new_env;
 	int				i;
+	char			*cmd_path;
 
 	options = 0;
 	argc = 0;
@@ -112,15 +111,16 @@ int		builtin_env(char **argv, t_env *env)
 		argc++;
 	if (!get_env_options(argc, argv, &options))
 	{
-		free(argv[0]);
-		free(argv);
+		free_arr(argv);
 		return (1);
 	}
 	new_env = (options & EMPTY_ENV) ? env_dup(argv + argc) : env_dup(env->env);
 	i = modify_env(argv, &new_env, &options);
 	if (argv[i] == NULL)
 		return (print_env(&new_env, argv));
-	argv[i] = (options & NEW_PATH) ? get_executable_path(argv[i], &new_env)
+	cmd_path = (options & NEW_PATH) ? get_executable_path(argv[i], &new_env)
 		: get_executable_path(argv[i], env);
+	free(argv[i]);
+	argv[i] = cmd_path;
 	return (finish_env(argv, i, &new_env));
 }
