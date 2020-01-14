@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/11 16:18:56 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/14 12:46:19 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "parser.h"
 # include "exec.h"
 # include "expansion.h"
+# include "builtins.h"
 
 /*
 ** TODO:
@@ -63,8 +64,14 @@ void				free_arr(char **arr);
 
 t_env				env_dup(char **env);
 char				*get_env_var(char *var_name, t_env *env);
+void				add_env_var(char *var, char *value, t_env *env);
+void				replace_env_var(char *var, char *value, t_env *env);
+void				remove_env_var(char *name, t_env *env);
+void				set_env_var(char *var, char *value, t_env *env);
 
 char				*get_executable_path(char *command, t_env *env);
+char				get_opt(int argc, char *argv[]);
+bool				is_builtin(char *str);
 
 char				*ft_mktemp(char *template);
 

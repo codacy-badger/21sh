@@ -10,9 +10,11 @@ SRC =		shell/main.c \
 			shell/_init.c \
 			shell/del.c \
 			shell/env_utils.c\
+			shell/env_utils2.c\
 			shell/path_utils.c\
 			shell/utils.c\
-			signal/_init.c \
+			shell/get_opt.c\
+			signal/_init.c\
 			signal/sig_action.c \
 			signal/sig_handle.c \
 			term/_init.c \
@@ -50,7 +52,8 @@ SRC =		shell/main.c \
 			parser/heredoc.c\
 			expansion/expand.c\
 			expansion/param_exp.c\
-			expansion/quotes.c
+			expansion/quotes.c\
+			builtins/env.c\
 
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
