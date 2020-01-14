@@ -6,13 +6,31 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 13:07:29 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/14 13:31:33 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/14 13:40:53 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 extern int g_last_exit_st;
+
+int		builtin_setenv(char **argv, t_env *env)
+{
+	if (argv[1] == NULL)
+		return (builtin_env(argv, env));
+	if (argv[2] && argv[3])
+		write(2, "setenv: Too many arguments.\n", 28);
+	else if (!is_valid_var_name(argv[1]))
+		write(2, "setenv: Invalid variable name\n", 30);
+	else
+	{
+		set_env_var(argv[1], argv[2], env);
+		free_arr(argv);
+		return (0);
+	}
+	free_arr(argv);
+	return (1);
+}
 
 int		builtin_unsetenv(char **argv, t_env *env)
 {

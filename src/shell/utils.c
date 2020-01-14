@@ -6,13 +6,26 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 09:58:50 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/11 16:36:04 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/14 13:42:23 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 #define LETTERS "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+bool	is_valid_var_name(char *str)
+{
+	if (!ft_isalpha(*str))
+		return (false);
+	while (*str)
+	{
+		if (!ft_isalnum(*str) && *str != '_')
+			return (false);
+		str++;
+	}
+	return (true);
+}
 
 char	*ft_strjoin_triple(char *s1, char *s2, char *s3)
 {
