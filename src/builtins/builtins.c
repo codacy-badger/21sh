@@ -6,13 +6,30 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 13:07:29 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/14 13:40:53 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/14 13:47:41 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 extern int g_last_exit_st;
+
+int		builtin_echo(char **argv)
+{
+	int i;
+
+	i = 1;
+	while (argv[i])
+	{
+		ft_putstr_fd(argv[i], 1);
+		if (argv[i + 1] != NULL)
+			write(1, " ", 1);
+		i++;
+	}
+	write(1, "\n", 1);
+	free_arr(argv);
+	return (0);
+}
 
 int		builtin_setenv(char **argv, t_env *env)
 {
