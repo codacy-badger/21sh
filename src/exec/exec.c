@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 09:52:31 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/14 13:02:20 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/14 13:16:16 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static int		exec_builtin(char **argv, t_env *env, t_node *cmd)
 	//set_redir_builtin(cmd)
 	if (ft_strequ(argv[0], "env"))
 		builtin_env(argv, env);
+	else if (ft_strequ(argv[0], "exit"))
+		builtin_exit(argv);
 	return (0);
 }
 

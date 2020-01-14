@@ -54,6 +54,7 @@ SRC =		shell/main.c \
 			expansion/param_exp.c\
 			expansion/quotes.c\
 			builtins/env.c\
+			builtins/builtins.c
 
 
 OBJ = $(addprefix $(DIR_OBJ), $(SRC:.c=.o))
