@@ -23,7 +23,7 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid,
 	argv = get_argv(cmd, env);
 	if (pipe(fildes) == -1)
 	{
-		write(STDERR_FILENO, "21sh: Failed to create pipe.\n", ft_strlen("21sh: Failed to create pipe.\n")); //
+		write(STDERR_FILENO, "21sh: Failed to create pipe.\n", 29); //
 		return (-1);
 	}
 	*pid = (argv != NULL) ? fork() : -1;
