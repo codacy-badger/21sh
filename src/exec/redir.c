@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/14 16:44:04 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/14 17:51:07 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	get_output_fd(t_node *op_node, int flags)
 	return (open(node_token(op_node->child[1])->value->str, flags, RIGHTS));
 }
 
-int			set_redirections(t_node *cmd)
+int			set_redirections(t_node *cmd, bool backup)
 {
 	int			i;
 	int			output_fd;
@@ -104,7 +104,7 @@ int			set_redirections(t_node *cmd)
 			write(STDERR_FILENO, "21sh: Bad file descriptor.\n", 27);
 			return (1);
 		}
-		dup2(output_fd, get_input_fd(cmd->child[i]));
+		dup2_and_backup(output_fd, get_input_fd(cmd->child[i]), backup);
 	}
 	return (0);
 }
