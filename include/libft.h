@@ -6,7 +6,7 @@
 /*   By: nbousset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:27:46 by nbousset          #+#    #+#             */
-/*   Updated: 2020/01/11 20:51:47 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/14 14:41:41 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,7 @@ char					*ft_strcpy(char *dst, const char *src);
 int						ft_strcmp(const char *s1, const char *s2);
 char					ft_strequ(const char *s1, const char *s2);
 char					*ft_strchr(const char *str, int c);
+char					*ft_strrchr(const char *s, int c);
 char					*ft_strtrim(char *str);
 char					*ft_strtok(char *str, const char *sep);
 int						ft_strbrkt(char *str, int len);
@@ -247,9 +248,9 @@ bool    				ft_strisnbr(char *str);
 char					*ft_strcat(char *s1, const char *s2);
 size_t					ft_strnlen(const char *s, size_t maxlen);
 char					*ft_strndup(const char *s1, size_t n);
-int						ft_strnequ(char const *s1, char const *s2, size_t n);
 
 void					ft_putstr_fd(const char *str, int fd);
+void					ft_putendl(char const *s);
 
 
 /*

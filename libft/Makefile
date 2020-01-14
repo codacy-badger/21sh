@@ -34,6 +34,8 @@ SRC =	mem/ft_xmalloc.c \
 		str/ft_strnlen.c \
 		str/ft_strnequ.c \
 		str/ft_putstr_fd.c \
+		str/ft_putendl.c\
+		str/ft_strrchr.c\
 		array/ft_strarray_dup.c \
 		array/ft_strarray_realloc.c \
 		array/ft_strarray_del.c \
