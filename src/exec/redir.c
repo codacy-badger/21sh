@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/15 13:41:02 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/15 14:48:38 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,14 @@ static int	set_redir(t_node *op_node, bool backup)
 		return (write(STDERR_FILENO, "21sh: Bad file descriptor\n", 26));
 	input_fd = get_input_fd(op_node);
 	if (input_fd > 255)
-		return (write(STDERR_FILENO, "21sh: Bad file descriptor\n", 26));
-	dup2_and_backup(output_fd, input_fd, backup);
-	if (output_fd != input_fd)
+	{
 		close(output_fd);
+		return (write(STDERR_FILENO, "21sh: Bad file descriptor\n", 26));
+	}
+	if (output_fd == input_fd)
+		move_fd(&output_fd);
+	dup2_and_backup(output_fd, input_fd, backup);
+	close(output_fd);
 	return (0);
 }
 

@@ -28,6 +28,7 @@ int				exec_command_argv(char **argv, t_env *env);
 
 int				set_redirections(t_node *cmd, bool backup);
 bool			is_valid_fd(int fd);
+void			move_fd(int *fd);
 int				dup2_and_backup(int fildes1, int fildes2, bool backup);
 int				restore_fds(void);
 

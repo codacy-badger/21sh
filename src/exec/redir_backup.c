@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:48:51 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/15 14:25:08 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/15 14:51:51 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,12 @@ t_fd_backup	*fd_used_for_backup(int fildes)
 	if (g_backups == NULL)
 		return (NULL);
 	cur = g_backups->next;
-	while (!ft_list_is_last(cur, g_backups))
+	while (cur != g_backups)
 	{
 		if (((t_fd_backup *)cur->data)->backup == fildes)
 			return (cur->data);
 		cur = cur->next;
 	}
-	if (((t_fd_backup *)cur->data)->backup == fildes)
-		return (cur->data);
 	return (NULL);
 }
 
@@ -39,13 +37,13 @@ bool		is_valid_fd(int fd)
 	return (fd < 256 && !fd_used_for_backup(fd) && fstat(fd, &buf) != -1);
 }
 
-static void	move_backup(t_fd_backup *backup)
+void		move_fd(int *fd)
 {
-	int	new_backup_fd;
+	int	new;
 
-	new_backup_fd = dup(backup->backup);
-	close(backup->backup);
-	backup->backup = new_backup_fd;
+	new = dup(*fd);
+	close(*fd);
+	*fd = new;
 }
 
 int			dup2_and_backup(int fd_from, int fd_to, bool backup)
@@ -59,7 +57,7 @@ int			dup2_and_backup(int fd_from, int fd_to, bool backup)
 		g_backups = ft_list_first_head(NULL);
 	backup_store = ft_xmalloc(sizeof(t_fd_backup));
 	if ((backup_to_move = fd_used_for_backup(fd_to)) != NULL)
-		move_backup(backup_to_move);
+		move_fd(&backup_to_move->backup);
 	backup_store->orig_number = fd_to;
 	backup_store->backup = dup(fd_to);
 	ft_list_add(backup_store, g_backups);
@@ -88,6 +86,7 @@ int			restore_fds(void)
 		else
 			dup2(backup->backup, backup->orig_number);
 		free(cur->data);
+		close(backup->backup);
 		tmp = cur;
 		cur = cur->next;
 		ft_list_del(tmp);
