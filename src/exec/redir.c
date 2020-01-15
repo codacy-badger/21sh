@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/15 14:59:42 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:52:00 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int	set_redir(t_node *op_node, bool backup)
 
 	type = node_token(op_node)->type;
 	flags = get_flags(type);
-	if (flags == CMD || (output_fd = get_output_fd(op_node, flags) == CLOSE))
+	if (flags == CMD || ((output_fd = get_output_fd(op_node, flags)) == CLOSE))
 		return (0);
 	if (output_fd == -1)
 		return (write(STDERR_FILENO, "21sh: Could not open file\n", 26));
