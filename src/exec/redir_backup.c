@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:48:51 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/14 17:52:36 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/15 13:51:19 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ bool	fd_used_for_backup(int fildes)
 		cur = cur->next;
 	}
 	return (((t_fd_backup *)cur->data)->backup == fildes);
+}
+
+bool	is_valid_fd(int fd)
+{
+	struct stat	buf;
+
+	return (fd < 256 && !fd_used_for_backup(fd) && fstat(fd, &buf) != -1);
 }
 
 int		dup2_and_backup(int fildes1, int fildes2, bool backup)

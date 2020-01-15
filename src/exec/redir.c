@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/14 17:51:07 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/15 13:41:02 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,34 +77,43 @@ static int	get_output_fd(t_node *op_node, int flags)
 	return (open(node_token(op_node->child[1])->value->str, flags, RIGHTS));
 }
 
+static int	set_redir(t_node *op_node, bool backup)
+{
+	int		flags;
+	int		output_fd;
+	int		input_fd;
+	int		type;
+
+	type = node_token(op_node)->type;
+	flags = get_flags(type);
+	if (flags == COMMAND)
+		return (0);
+	output_fd = get_output_fd(op_node, flags);
+	if (output_fd == CLOSE)
+		return (0);
+	if (output_fd == -1)
+		return (write(STDERR_FILENO, "21sh: Could not open file\n", 26));
+	if ((type == LESSAND || type == GREATAND) && !is_valid_fd(output_fd))
+		return (write(STDERR_FILENO, "21sh: Bad file descriptor\n", 26));
+	input_fd = get_input_fd(op_node);
+	if (input_fd > 255)
+		return (write(STDERR_FILENO, "21sh: Bad file descriptor\n", 26));
+	dup2_and_backup(output_fd, input_fd, backup);
+	if (output_fd != input_fd)
+		close(output_fd);
+	return (0);
+}
+
 int			set_redirections(t_node *cmd, bool backup)
 {
 	int			i;
-	int			output_fd;
-	int			flags;
-	struct stat	buf;
 
-	i = -1;
-	while (++i < cmd->nb_children)
+	i = 0;
+	while (i < cmd->nb_children)
 	{
-		flags = get_flags(node_token(cmd->child[i])->type);
-		if (flags == COMMAND)
-			continue;
-		output_fd = get_output_fd(cmd->child[i], flags);
-		if (output_fd == CLOSE)
-			continue;
-		if (output_fd == -1)
-		{
-			write(STDERR_FILENO, "21sh: Could not open file.\n", 27);
+		if (set_redir(cmd->child[i], backup) > 0)
 			return (1);
-		}
-		if (node_token(cmd->child[i])->type == LESSAND
-				&& fstat(output_fd, &buf) == -1)
-		{
-			write(STDERR_FILENO, "21sh: Bad file descriptor.\n", 27);
-			return (1);
-		}
-		dup2_and_backup(output_fd, get_input_fd(cmd->child[i]), backup);
+		i++;
 	}
 	return (0);
 }
