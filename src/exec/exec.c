@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 09:52:31 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/15 13:05:30 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/15 14:53:49 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ static void		interrupt_fork(int sig)
 
 static int		exec_builtin(char **argv, t_env *env, t_node *cmd)
 {
-	set_redirections(cmd, true);
+	if (set_redirections(cmd, true) > 0)
+	{
+		free_arr(argv);
+		restore_fds();
+		return (1);
+	}
 	if (ft_strequ(argv[0], "env"))
 		builtin_env(argv, env);
 	else if (ft_strequ(argv[0], "exit"))
