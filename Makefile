@@ -37,7 +37,7 @@ SRC =		shell/main.c \
 			exec/utils.c\
 			exec/exec.c\
 			exec/redir.c\
-			exec/redir_backup.c\
+			exec/redir_utils.c\
 			exec/pipe.c\
 			lexer/_init.c \
 			lexer/token.c \

@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/15 14:48:38 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/15 14:59:42 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 #define RIGHTS 420
 #define CLOSE  -2
-#define COMMAND INT32_MAX
+#define CMD INT32_MAX
 
 static int	get_flags(int node_type)
 {
@@ -30,7 +30,7 @@ static int	get_flags(int node_type)
 		return (O_RDONLY);
 	if (node_type == DLESS)
 		return (O_RDWR | O_CREAT);
-	return (COMMAND);
+	return (CMD);
 }
 
 static int	get_input_fd(t_node *op_node)
@@ -86,10 +86,7 @@ static int	set_redir(t_node *op_node, bool backup)
 
 	type = node_token(op_node)->type;
 	flags = get_flags(type);
-	if (flags == COMMAND)
-		return (0);
-	output_fd = get_output_fd(op_node, flags);
-	if (output_fd == CLOSE)
+	if (flags == CMD || (output_fd = get_output_fd(op_node, flags) == CLOSE))
 		return (0);
 	if (output_fd == -1)
 		return (write(STDERR_FILENO, "21sh: Could not open file\n", 26));
