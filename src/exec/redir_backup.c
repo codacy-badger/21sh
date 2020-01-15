@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:48:51 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/15 13:51:19 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/15 14:25:08 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,64 @@
 
 static t_list_head *g_backups = NULL;
 
-bool	fd_used_for_backup(int fildes)
+t_fd_backup	*fd_used_for_backup(int fildes)
 {
 	t_list_head *cur;
 
+	if (g_backups == NULL)
+		return (NULL);
 	cur = g_backups->next;
 	while (!ft_list_is_last(cur, g_backups))
 	{
 		if (((t_fd_backup *)cur->data)->backup == fildes)
-			return (true);
+			return (cur->data);
 		cur = cur->next;
 	}
-	return (((t_fd_backup *)cur->data)->backup == fildes);
+	if (((t_fd_backup *)cur->data)->backup == fildes)
+		return (cur->data);
+	return (NULL);
 }
 
-bool	is_valid_fd(int fd)
+bool		is_valid_fd(int fd)
 {
 	struct stat	buf;
 
 	return (fd < 256 && !fd_used_for_backup(fd) && fstat(fd, &buf) != -1);
 }
 
-int		dup2_and_backup(int fildes1, int fildes2, bool backup)
+static void	move_backup(t_fd_backup *backup)
+{
+	int	new_backup_fd;
+
+	new_backup_fd = dup(backup->backup);
+	close(backup->backup);
+	backup->backup = new_backup_fd;
+}
+
+int			dup2_and_backup(int fd_from, int fd_to, bool backup)
 {
 	t_fd_backup *backup_store;
+	t_fd_backup *backup_to_move;
 
 	if (backup == false)
-		return (dup2(fildes1, fildes2));
+		return (dup2(fd_from, fd_to));
 	if (g_backups == NULL)
 		g_backups = ft_list_first_head(NULL);
 	backup_store = ft_xmalloc(sizeof(t_fd_backup));
-	backup_store->orig_number = fildes2;
-	backup_store->backup = dup(fildes2);
+	if ((backup_to_move = fd_used_for_backup(fd_to)) != NULL)
+		move_backup(backup_to_move);
+	backup_store->orig_number = fd_to;
+	backup_store->backup = dup(fd_to);
 	ft_list_add(backup_store, g_backups);
-	return (dup2(fildes1, fildes2));
+	return (dup2(fd_from, fd_to));
 }
 
-int		restore_fds(void)
+/*
+** if backup->backup == -1, it means the fd didn't exist before being redirected
+** so we close it. (ex: ls 5> file opens file at fd 5)
+*/
+
+int			restore_fds(void)
 {
 	t_list_head *cur;
 	t_list_head *tmp;
@@ -62,7 +83,10 @@ int		restore_fds(void)
 	while (!ft_list_empty(g_backups))
 	{
 		backup = cur->data;
-		dup2(backup->backup, backup->orig_number);
+		if (backup->backup == -1)
+			close(backup->orig_number);
+		else
+			dup2(backup->backup, backup->orig_number);
 		free(cur->data);
 		tmp = cur;
 		cur = cur->next;
