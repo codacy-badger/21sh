@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/13 18:53:09 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/16 12:02:15 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** and the char is not terminated.
 */
 
-static int		addchar(t_input *input, t_uint8 **bufp)
+int		addchar(t_input *input, t_uint8 **bufp)
 {
 	static size_t	i = 0;
 	static size_t	charlen = 0;
@@ -78,6 +78,8 @@ static int		process(t_input *input, t_uint8 **bufp)
 		return (ctrl_c(input));
 	else if (*input->key == 4)
 		return (ctrl_d(input));
+	else if (*input->key == '\t')
+		return (rl_complete(input));
 	return (0);
 }
 
