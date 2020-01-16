@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/15 17:52:00 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/16 13:45:14 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ static int	set_redir(t_node *op_node, bool backup)
 	if (output_fd == input_fd)
 		move_fd(&output_fd);
 	dup2_and_backup(output_fd, input_fd, backup);
-	close(output_fd);
+	if (type != LESSAND && type != GREATAND)
+		close(output_fd);
 	return (0);
 }
 
