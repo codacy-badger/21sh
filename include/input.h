@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/16 15:15:08 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/16 16:47:09 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,6 @@ int					rl_complete(t_input *input);
 void				rl_put_match(t_input *input, char *partial, char *match);
 void				rl_print_match_list(t_list_head *comp_list, t_input *input);
 t_list_head			*comp_get_command_list(char *partial, t_env *env);
-t_list_head			*comp_get_file_list(char *partial);
+t_list_head			*comp_get_file_list(char *partial, bool dironly);
 
 #endif

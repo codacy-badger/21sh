@@ -6,7 +6,7 @@
 /*   By: fratajcz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 19:22:51 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/16 15:20:34 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/16 18:22:49 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,11 @@ int			rl_complete(t_input *input)
 			&& input->line->str[input->pos] != ' ')
 		return (0);
 	partial = comp_get_partial_word(input);
-	comp_list = comp_get_command_list(partial, g_env);
+	comp_list = comp_get_file_list(partial, false);
 	lcp = NULL;
 	if (g_nb_comp_match == 0)
 	{
+		free_comp_list(comp_list);
 		free(partial);
 		return (0);
 	}
