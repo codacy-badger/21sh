@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/13 19:18:29 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/16 20:02:16 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	get_input(t_lexer *lexer)
 	else
 		lexer->str = ft_strdup(str);
 	lexer->state &= ~(START);
-	lexer->len += lexer->inputp->line->len;
+	lexer->len = ft_strlen(lexer->str);
 	return (0);
 }
 
