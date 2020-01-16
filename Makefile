@@ -1,6 +1,6 @@
 NAME = 21sh 
 CC = gcc
-CFLAGS = -Wall -Wextra -glldb# -fsanitize=address#-Werror
+CFLAGS = -Wall -Wextra  #-fsanitize=address#-Werror
 LFLAGS = -ltermcap
 DIR_SRC = src/
 DIR_OBJ = obj/
@@ -34,7 +34,9 @@ SRC =		shell/main.c \
 			input/history.c \
 			input/ctrl_c_d.c\
 			input/escape.c\
+			input/complete.c\
 			exec/utils.c\
+			exec/get_argv.c\
 			exec/exec.c\
 			exec/redir.c\
 			exec/redir_utils.c\
