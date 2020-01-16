@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/16 12:05:12 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/16 15:15:08 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define BUFSIZE	256
 # define CONTINUE	1
 # define EOL		10
+
+typedef struct s_env t_env;
 
 enum	e_keys
 {
@@ -79,6 +81,7 @@ typedef struct		s_input
 	bool			first_line;
 	bool			multiline;
 	char			char_after_nl;
+	bool			first_tab_press;
 }					t_input;
 
 int					init_input(t_input *input, struct s_term *term);
@@ -118,5 +121,9 @@ int					ctrl_d(t_input *input);
 int					escape(t_input *input, t_uint8 **bufp);
 
 int					rl_complete(t_input *input);
+void				rl_put_match(t_input *input, char *partial, char *match);
+void				rl_print_match_list(t_list_head *comp_list, t_input *input);
+t_list_head			*comp_get_command_list(char *partial, t_env *env);
+t_list_head			*comp_get_file_list(char *partial);
 
 #endif

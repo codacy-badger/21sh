@@ -6,14 +6,14 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/16 12:02:15 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/16 15:39:06 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 /*
-** Variables are static in case we reach the end of the buffer 
+** Variables are static in case we reach the end of the buffer
 ** and the char is not terminated.
 */
 
@@ -50,35 +50,37 @@ int		addchar(t_input *input, t_uint8 **bufp)
 
 static int		process(t_input *input, t_uint8 **bufp)
 {
+	if (**bufp != '\t')
+		input->first_tab_press = true;
 	if (input->esc)
 		return (escape(input, bufp));
-	else if (ft_isprint(**bufp))
+	if (ft_isprint(**bufp))
 		return (addchar(input, bufp));
-	else if ((*input->key = *(*bufp)++) == 27)
+	if ((*input->key = *(*bufp)++) == 27)
 		return (escape(input, bufp));
-	else if (*input->key == 10)
+	if (*input->key == 10)
 		return (enter(input));
-	else if (*input->key == 127)
+	if (*input->key == 127)
 		return (backspace(input));
-	else if (*input->key == 14)
+	if (*input->key == 14)
 		return (move_nextword(input));
-	else if (*input->key == 24)
+	if (*input->key == 24)
 		return (move_prevword(input));
-	else if (*input->key == 21)
+	if (*input->key == 21)
 		return (cut_before(input));
-	else if (*input->key == 11)
+	if (*input->key == 11)
 		return (cut_after(input));
-	else if (*input->key == 23)
+	if (*input->key == 23)
 		return (cut_word(input));
-	else if (*input->key == 25)
+	if (*input->key == 25)
 		return (paste(input));
-	else if (*input->key == 12)
+	if (*input->key == 12)
 		return (redraw(input));
-	else if (*input->key == 3)
+	if (*input->key == 3)
 		return (ctrl_c(input));
-	else if (*input->key == 4)
+	if (*input->key == 4)
 		return (ctrl_d(input));
-	else if (*input->key == '\t')
+	if (*input->key == '\t')
 		return (rl_complete(input));
 	return (0);
 }

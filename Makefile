@@ -35,6 +35,9 @@ SRC =		shell/main.c \
 			input/ctrl_c_d.c\
 			input/escape.c\
 			input/complete.c\
+			input/comp_cmd.c\
+			input/comp_files.c\
+			input/comp_line_edit.c\
 			exec/utils.c\
 			exec/get_argv.c\
 			exec/exec.c\
