@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:04:39 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/17 13:57:35 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/17 15:00:18 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char		*get_dir_to_search(char *partial)
 		i--;
 	if (i == 0 && partial[0] != '/')
 		return (ft_strdup("."));
+	if (i == 0 && partial[0] == '/')
+		return (ft_strdup("/"));
 	return (ft_strndup(partial, i));
 }
 
@@ -99,7 +101,10 @@ t_list_head	*comp_get_file_list(char *partial, bool dironly)
 	g_nb_comp_match = 0;
 	dir = get_dir_to_search(partial);
 	if ((dirp = opendir(dir)) == NULL)
+	{
+		free(dir);
 		return (NULL);
+	}
 	if (ft_strequ(dir, ".") && (ft_strstr(partial, "./") != partial))
 		comp_list = get_matches_in_cwd(dirp, partial, dironly);
 	else
