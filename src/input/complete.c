@@ -6,7 +6,7 @@
 /*   By: fratajcz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 19:22:51 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/17 13:54:33 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/17 14:10:01 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,30 +67,31 @@ t_list_head	*comp_get_list(t_input *input, char *partial)
 		return (comp_get_file_list(partial, false));
 }
 
-int			rl_complete(t_input *input)
+int			rl_complete(t_input *inpt)
 {
-	t_list_head *comp_list;
-	char		*lcp;
-	char		*partial;
+	static t_list_head	*comp_list = NULL;
+	char				*lcp;
+	char				*partial;
 
-	if (input->line->str[input->pos] != '\0'
-			&& input->line->str[input->pos] != ' ')
+	if (inpt->line->str[inpt->pos] != '\0' && inpt->line->str[inpt->pos] != ' ')
 		return (0);
-	partial = comp_get_partial_word(input);
-	comp_list = comp_get_list(input, partial);
+	partial = comp_get_partial_word(inpt);
+	if (comp_list != NULL && inpt->first_tab_press)
+		free_comp_list(&comp_list);
+	if (comp_list == NULL)
+		comp_list = comp_get_list(inpt, partial);
 	lcp = NULL;
 	if (g_nb_comp_match == 1)
-		rl_put_match(input, partial, comp_list->next->data);
+		rl_put_match(inpt, partial, comp_list->next->data);
 	else if (g_nb_comp_match > 1)
 	{
-		if (input->first_tab_press && (lcp = get_lcp(comp_list, partial)))
-			rl_put_match(input, partial, lcp);
-		if (!input->first_tab_press)
-			rl_print_match_list(comp_list, input);
-		input->first_tab_press = (lcp == NULL) ? !input->first_tab_press : true;
+		if (inpt->first_tab_press && (lcp = get_lcp(comp_list, partial)))
+			rl_put_match(inpt, partial, lcp);
+		if (!inpt->first_tab_press)
+			rl_print_match_list(comp_list, inpt);
+		inpt->first_tab_press = (lcp == NULL) ? !inpt->first_tab_press : true;
 		free(lcp);
 	}
 	free(partial);
-	free_comp_list(comp_list);
 	return (0);
 }

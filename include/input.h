@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/17 13:45:40 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/17 14:06:37 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,6 @@ void				rl_print_match_list(t_list_head *comp_list, t_input *input);
 t_list_head			*comp_get_command_list(char *partial, t_env *env);
 t_list_head			*comp_get_file_list(char *partial, bool dironly);
 bool				is_cd(char *str, int i);
-void				free_comp_list(t_list_head *comp_list);
+void				free_comp_list(t_list_head **comp_list);
 
 #endif
