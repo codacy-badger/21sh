@@ -6,7 +6,7 @@
 /*   By: fratajcz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 19:22:51 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/17 16:11:32 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:41:00 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ extern	t_env	*g_env;
 
 typedef	int	(*t_cmp_func) (void *a, void *b);
 
-char		*get_lcp(t_list_head *comp_list, char *partial)
+char	*get_lcp(t_list_head *comp_list, char *partial)
 {
 	char	*first;
 	char	*last;
@@ -40,7 +40,7 @@ char		*get_lcp(t_list_head *comp_list, char *partial)
 	return (ft_strndup(first, i));
 }
 
-char		*comp_get_partial_word(t_input *input)
+char	*comp_get_partial_word(t_input *input)
 {
 	int		i;
 
@@ -77,7 +77,7 @@ int			rl_complete(t_input *inpt)
 	char				*lcp;
 	char				*partial;
 
-	if (inpt->line->str[inpt->pos] != '\0' && inpt->line->str[inpt->pos] != ' ')
+	if (inpt->line->str[inpt->pos] != '\0')
 		return (0);
 	partial = comp_get_partial_word(inpt);
 	if (comp_list != NULL && inpt->first_tab_press)
