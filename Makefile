@@ -38,6 +38,7 @@ SRC =		shell/main.c \
 			input/comp_cmd.c\
 			input/comp_files.c\
 			input/comp_line_edit.c\
+			input/comp_utils.c\
 			exec/utils.c\
 			exec/exec.c\
 			exec/redir.c\
