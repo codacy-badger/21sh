@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:04:39 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/16 18:22:14 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/17 13:57:35 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ t_list_head	*get_matches_in_cwd(DIR *dirp, char *partial,
 	comp_list = ft_list_first_head("");
 	while ((dp = readdir(dirp)))
 	{
-		if (ft_strstr(dp->d_name, partial) == dp->d_name)
+		if (ft_strstr(dp->d_name, partial) == dp->d_name
+				&& !ft_strequ(dp->d_name, ".") && !ft_strequ(dp->d_name, ".."))
 		{
 			if (is_dir(dp->d_name))
 			{
