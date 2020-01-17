@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 13:45:05 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/17 14:06:30 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/17 15:59:50 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,3 +45,18 @@ bool	is_cd(char *str, int i)
 	}
 	return (false);
 }
+
+bool		is_dir(char *path)
+{
+	struct stat	b;
+
+	return (stat(path, &b) == 0 && S_ISDIR(b.st_mode));
+}
+
+bool		is_exec(char *path)
+{
+	struct stat	b;
+
+	return (stat(path, &b) == 0 && (b.st_mode & S_IXUSR));
+}
+

@@ -6,7 +6,7 @@
 /*   By: fratajcz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 19:22:51 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/17 14:10:01 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:11:32 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,15 @@ t_list_head	*comp_get_list(t_input *input, char *partial)
 	while (i > 0 && input->line->str[i] == ' ')
 		i--;
 	if (i == 0 || input->line->str[i] == '|' || input->line->str[i] == ';')
+	{
+		if (ft_strchr(partial, '/'))
+			return (comp_get_file_list(partial, EXECONLY));
 		return (comp_get_command_list(partial, g_env));
+	}
 	else if (is_cd(input->line->str, i))
-		return (comp_get_file_list(partial, true));
+		return (comp_get_file_list(partial, DIRONLY));
 	else
-		return (comp_get_file_list(partial, false));
+		return (comp_get_file_list(partial, FILES));
 }
 
 int			rl_complete(t_input *inpt)
@@ -88,7 +92,7 @@ int			rl_complete(t_input *inpt)
 		if (inpt->first_tab_press && (lcp = get_lcp(comp_list, partial)))
 			rl_put_match(inpt, partial, lcp);
 		if (!inpt->first_tab_press)
-			rl_print_match_list(comp_list, inpt);
+			rl_print_match_list(comp_list, partial, inpt);
 		inpt->first_tab_press = (lcp == NULL) ? !inpt->first_tab_press : true;
 		free(lcp);
 	}

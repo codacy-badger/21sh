@@ -6,20 +6,13 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:04:39 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/17 15:00:18 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:09:35 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 extern int	g_nb_comp_match;
-
-bool		is_dir(char *path)
-{
-	struct stat	b;
-
-	return (stat(path, &b) == 0 && S_ISDIR(b.st_mode));
-}
 
 char		*get_dir_to_search(char *partial)
 {
@@ -36,7 +29,7 @@ char		*get_dir_to_search(char *partial)
 }
 
 t_list_head	*get_matches_in_cwd(DIR *dirp, char *partial,
-		bool dironly)
+		int flags)
 {
 	struct dirent	*dp;
 	t_list_head		*comp_list;
@@ -52,7 +45,7 @@ t_list_head	*get_matches_in_cwd(DIR *dirp, char *partial,
 				ft_list_add_tail(ft_strjoin(dp->d_name, "/"), comp_list);
 				g_nb_comp_match++;
 			}
-			else if (!dironly)
+			else if (!(flags & DIRONLY) && ((flags & EXECONLY) ? is_exec(dp->d_name) : 1))
 			{
 				ft_list_add_tail(ft_strdup(dp->d_name), comp_list);
 				g_nb_comp_match++;
@@ -63,7 +56,7 @@ t_list_head	*get_matches_in_cwd(DIR *dirp, char *partial,
 }
 
 t_list_head	*get_matches_in_dir(DIR *dirp, char *dir, char *partial,
-		bool dironly)
+		int flags)
 {
 	struct dirent	*dp;
 	char			*path;
@@ -81,7 +74,7 @@ t_list_head	*get_matches_in_dir(DIR *dirp, char *dir, char *partial,
 				ft_list_add_tail(ft_strjoin(path, "/"), comp_list);
 				g_nb_comp_match++;
 			}
-			else if (!dironly)
+			else if (!(flags & DIRONLY) && ((flags & EXECONLY) ? is_exec(path) : 1))
 			{
 				ft_list_add_tail(ft_strdup(path), comp_list);
 				g_nb_comp_match++;
@@ -92,7 +85,7 @@ t_list_head	*get_matches_in_dir(DIR *dirp, char *dir, char *partial,
 	return (comp_list);
 }
 
-t_list_head	*comp_get_file_list(char *partial, bool dironly)
+t_list_head	*comp_get_file_list(char *partial, int flags)
 {
 	char			*dir;
 	DIR				*dirp;
@@ -106,9 +99,9 @@ t_list_head	*comp_get_file_list(char *partial, bool dironly)
 		return (NULL);
 	}
 	if (ft_strequ(dir, ".") && (ft_strstr(partial, "./") != partial))
-		comp_list = get_matches_in_cwd(dirp, partial, dironly);
+		comp_list = get_matches_in_cwd(dirp, partial, flags);
 	else
-		comp_list = get_matches_in_dir(dirp, dir, partial, dironly);
+		comp_list = get_matches_in_dir(dirp, dir, partial, flags);
 	free(dir);
 	closedir(dirp);
 	return (comp_list);
