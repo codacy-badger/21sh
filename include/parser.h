@@ -21,14 +21,14 @@ typedef struct s_lexer t_lexer;
 typedef struct s_term t_term;
 typedef struct s_input t_input;
 
-typedef struct	s_ast 
+typedef struct		s_ast 
 {
 	t_node			*node;
 	struct s_ast	*next;
 	bool			run_in_background;
-} t_ast;
+} 					t_ast;
 
-enum			e_parse_error
+enum				e_parse_error
 {
 	SILENT_ABORT = -1,
 	NOERR = 0,

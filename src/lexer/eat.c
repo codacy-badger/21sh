@@ -21,8 +21,8 @@ static int	get_input(t_lexer *lexer)
 	prompt = lexer->quote ? "> " : "$> ";
 	lexer->inputp->first_line = (lexer->quote == NONE);
 	str = readline(lexer->inputp, prompt);
-	if (str == NULL)
-		return (0);
+	if (str == NULL && !lexer->inputp->interactive)
+		builtin_exit(NULL);
 	if (lexer->quote)
 	{
 		tmp = ft_strjoin(lexer->str, str);
@@ -93,7 +93,8 @@ int			eat(t_lexer *lexer)
 		return (eat(lexer));
 	lexer->curr_tok = NULL;
 	delete_last_nl(lexer);
-	if (lexer->str && lexer->str[0] != 0 && lexer->str[0] != ' ')
+	if (lexer->inputp->interactive
+	&& lexer->str && lexer->str[0] != 0 && lexer->str[0] != ' ')
 		ft_lstadd(lexer->inputp->head,
 				ft_lstnew(ft_dstr_new(lexer->str, ft_strlen(lexer->str), 1)));
 	return (reset_lexer(lexer));

@@ -91,4 +91,5 @@ int			restore_fds(void)
 		cur = cur->next;
 		ft_list_del(tmp);
 	}
+	return (0);
 }

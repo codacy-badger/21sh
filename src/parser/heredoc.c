@@ -61,7 +61,8 @@ static char	*get_heredoc(t_input *input, char *delim, t_env *env)
 	input->first_line = false;
 	while ((str = readline(input, "> ")))
 	{
-		append_line_to_hist(input->head, str);
+		if (input->interactive)
+			append_line_to_hist(input->head, str);
 		if (ft_strequ(str, delim_cmp) || g_parse_error == SILENT_ABORT)
 			break ;
 		ft_dstr_insert(heredoc, heredoc->len, str, ft_strlen(str));

@@ -79,6 +79,7 @@ typedef struct		s_input
 	bool			first_line;
 	bool			multiline;
 	char			char_after_nl;
+	bool			interactive;
 }					t_input;
 
 int					init_input(t_input *input, struct s_term *term);

@@ -53,8 +53,6 @@ int			init_term(struct s_term *term)
 {
 	if (tgetent(NULL, getenv("TERM")) <= 0)
 		exit(1);
-	if (!isatty(STDIN_FILENO))
-		exit(1);
 	tcgetattr(STDIN_FILENO, &(term->oldterm));
 	reset_term(&(term->oldterm));
 	term->newterm = term->oldterm;
