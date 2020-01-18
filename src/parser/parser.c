@@ -56,8 +56,10 @@ t_node	*and_or_list(t_lexer *lexer, t_node *left_pipeline)
 		while ((right_pipeline = pipeline(lexer)) == NULL)
 		{
 			g_parse_error = NOERR;
+			lexer->and_or = true;
 			eat(lexer);
 		}
+		lexer->and_or = false;
 		ft_node_add_child(and_or, right_pipeline);
 		and_or = and_or_list(lexer, and_or);
 	}
@@ -76,12 +78,9 @@ t_node	*and_or(t_lexer *lexer)
 		g_parse_error = NO_CMD_BEFORE_AND_OR;
 		if (lexer->curr_tok)
 			g_error_near = ft_strdup(lexer->curr_tok->value->str);
-		eat(lexer);
 		return (NULL);
 	}
-	if (left_pipeline)
-		return (and_or_list(lexer, left_pipeline));
-	return (left_pipeline);
+	return (and_or_list(lexer, left_pipeline));
 }
 
 t_ast	*get_ast(t_lexer *lexer)
@@ -149,7 +148,7 @@ int		traverse_ast(t_node *node, t_env *env)
 	{
 		if (traverse_ast(node->child[0], env) != 0) 
 			return (traverse_ast(node->child[1], env));
-		return (1);
+		return (0);
 	}
 	i = 0;
 	while (i < node->nb_children)
@@ -175,7 +174,7 @@ int		parse(t_lexer *lexer, t_env *env, t_term *term)
 		return (0);
 	g_parse_error = NOERR;
 	ast = get_ast(lexer);
-	if (!(lexer->state & START) && !(lexer->state & END))
+	if ((!(lexer->state & START) && !(lexer->state & END)) || g_parse_error)
 	{
 		g_parse_error = (g_parse_error == NOERR) ? TOKENS_LEFT : g_parse_error;
 		token_del((void **)&lexer->curr_tok, NULL);

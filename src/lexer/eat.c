@@ -18,7 +18,7 @@ static int	get_input(t_lexer *lexer)
 	char		*tmp;
 	const char	*prompt;
 
-	prompt = lexer->quote ? "> " : "$> ";
+	prompt = (lexer->quote || lexer->and_or) ? "> " : "$> ";
 	lexer->inputp->first_line = (lexer->quote == NONE);
 	str = readline(lexer->inputp, prompt);
 	if (str == NULL)
@@ -49,7 +49,7 @@ static int	init_state(t_lexer *lexer)
 		lexer->curr_tok = NULL;
 		lexer->state &= ~DELIMITED;
 	}
-	if (lexer->state & START || lexer->quote)
+	if ((lexer->state & START) || lexer->quote)
 		get_input(lexer);
 	return (0);
 }

@@ -33,7 +33,7 @@ static void	init_keys(struct s_input *input)
 	input->keys[K_PRVW] = 24; // ^X
 	input->keys[K_NXTW] = 14; // ^N
 	input->keys[K_CUTW] = 23;// ^W
-	input->keys[K_CUTA] = 11;// ^K			
+	input->keys[K_CUTA] = 11;// ^K	
 	input->keys[K_CUTB] = 21; // ^U
 	input->keys[K_PAST] = 25; // ^Y
 }
