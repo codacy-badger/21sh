@@ -67,7 +67,7 @@ int				exec_command_argv(char **argv, t_env *env)
 	wait(&status);
 	g_last_exit_st = WIFEXITED(status) ? WEXITSTATUS(status)
 		: g_last_exit_st;
-	return (0);
+	return (g_last_exit_st);
 }
 
 int				exec_command(t_node *cmd, t_env *env)
@@ -96,5 +96,5 @@ int				exec_command(t_node *cmd, t_env *env)
 	free_arr(argv);
 	wait(&status);
 	g_last_exit_st = WIFEXITED(status) ? WEXITSTATUS(status) : g_last_exit_st;
-	return (0);
+	return (g_last_exit_st);
 }

@@ -21,9 +21,9 @@ extern char	*g_error_near;
 **	ls -l 2 > test -a -f
 **
 **                                 NULL
-**                          /   /   |   \   \
-**                         ls  -l   >   -a  -f
-**                                 / \
+**                          /   /   |   \   \   \   \    \
+**                         ls  -l   >   -a  -f  &&  NULL  ||
+**                                 / \               |
 **                                2   test
 */
 
