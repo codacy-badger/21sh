@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/19 14:47:01 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/19 17:22:14 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ int		parse(t_lexer *lexer, t_env *env, t_term *term)
 		return (0);
 	g_parse_error = NOERR;
 	ast = get_ast(lexer);
-	if ((!(lexer->state & START) && !(lexer->state & END)))
+	if ((!(lexer->state & START) && !(lexer->state & END)) || g_parse_error == NO_CMD_BEFORE_AND_OR)
 	{
 		g_parse_error = (g_parse_error == NOERR) ? TOKENS_LEFT : g_parse_error;
 		token_del((void **)&lexer->curr_tok, NULL);
