@@ -103,6 +103,7 @@ typedef struct		s_lexer
 	char			*docdelim;
 	char			*docptr;
 	char			state;
+	bool			and_or;
 }					t_lexer;
 
 int					init_lexer(t_lexer *lexer, t_input *input);

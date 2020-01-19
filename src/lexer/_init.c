@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/16 19:49:38 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/19 14:28:45 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int			reset_lexer(t_lexer *lexer)
 	token_del((void **)&lexer->curr_tok, NULL);
 	lexer->str = NULL;
 	lexer->quote = 0;
+	lexer->and_or = false;
 	lexer->docptr = NULL;
 	lexer->len = 0;
 	lexer->i = 0;

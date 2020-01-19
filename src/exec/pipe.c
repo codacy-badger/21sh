@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/16 18:35:17 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/19 14:26:28 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,5 @@ int				exec_pipe(t_node *pipe, t_env *env)
 	wait(&status);
 	if (WIFEXITED(status))
 		g_last_exit_st = WEXITSTATUS(status);
-	return (0);
+	return (g_last_exit_st);
 }

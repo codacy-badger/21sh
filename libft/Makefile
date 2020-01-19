@@ -94,6 +94,7 @@ SRC =	mem/ft_xmalloc.c \
 		struct/list/ft_list_empty.c \
 		struct/list/ft_list_foreach.c \
 		struct/list/ft_list_foreach_rev.c \
+		struct/list/ft_list_sort.c \
 		struct/node/node.c\
 		struct/hash/ft_htnew.c \
 		struct/hash/ft_hentrynew_cpy.c \

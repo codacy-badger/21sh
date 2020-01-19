@@ -6,7 +6,7 @@
 /*   By: fratajcz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 01:23:20 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/13 16:48:31 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/16 15:15:37 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	init_keys(struct s_input *input)
 	input->keys[K_PRVW] = 24; // ^X
 	input->keys[K_NXTW] = 14; // ^N
 	input->keys[K_CUTW] = 23;// ^W
-	input->keys[K_CUTA] = 11;// ^K			
+	input->keys[K_CUTA] = 11;// ^K	
 	input->keys[K_CUTB] = 21; // ^U
 	input->keys[K_PAST] = 25; // ^Y
 }
@@ -48,5 +48,6 @@ int			init_input(struct s_input *input, struct s_term *term)
 		input->curr = input->head;
 	}
 	input->first_line = true;
+	input->first_tab_press = true;
 	return (0);
 }

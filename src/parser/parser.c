@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/12 18:29:45 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/19 17:22:14 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,67 @@ t_node	g_heredocs = (t_node){NULL, 0, 0, NULL};
 
 t_token	*node_token(t_node *node)
 {
-	return (node->data);
+	return ((t_token *)node->data);
+}
+
+/*
+**	and_or         : pipeline and_or_list
+**
+**	returns and_or in this format :
+**	ex:           ls && cat || ls && cat:
+**
+**                            "&&"
+**                            /  \
+**						   "||"   cat
+**                         /  \
+**						"&&"   ls
+**                      /  \
+**                    ls   cat
+**
+*/
+
+t_node	*and_or_list(t_lexer *lexer, t_node *left_pipeline)
+{
+	t_node	*and_or;
+	t_node	*right_pipeline;
+
+	and_or = NULL;
+	if (lexer->curr_tok == NULL || g_parse_error != NOERR)
+		return (left_pipeline);
+	if (lexer->curr_tok->type == AND_IF
+	|| lexer->curr_tok->type == OR_IF)
+	{
+		and_or = ft_node_new(lexer->curr_tok);
+		eat(lexer);
+		ft_node_add_child(and_or, left_pipeline);
+		while ((right_pipeline = pipeline(lexer)) == NULL
+				&& g_parse_error != SILENT_ABORT)
+		{
+			lexer->and_or = true;
+			eat(lexer);
+		}
+		lexer->and_or = false;
+		ft_node_add_child(and_or, right_pipeline);
+		and_or = and_or_list(lexer, and_or);
+	}
+	return (and_or ? and_or : left_pipeline);
 }
 
 t_node	*and_or(t_lexer *lexer)
 {
-	return (pipeline(lexer));
+	t_node	*left_pipeline;
+
+	if (g_parse_error != NOERR)
+		return (NULL);
+	left_pipeline = pipeline(lexer);
+	if (left_pipeline == NULL)
+	{
+		g_parse_error = NO_CMD_BEFORE_AND_OR;
+		if (lexer->curr_tok)
+			g_error_near = ft_strdup(lexer->curr_tok->value->str);
+		return (NULL);
+	}
+	return (and_or_list(lexer, left_pipeline));
 }
 
 t_ast	*get_ast(t_lexer *lexer)
@@ -45,7 +100,6 @@ t_ast	*get_ast(t_lexer *lexer)
 	ast->run_in_background = (lexer->curr_tok->type == AMPERSAND);
 	if (lexer->curr_tok->type == AMPERSAND || lexer->curr_tok->type == SEMI)
 	{
-		//may cause lexer to crash?
 		token_del((void **)&lexer->curr_tok, NULL);
 		eat(lexer);
 		if (lexer->curr_tok != NULL)
@@ -59,20 +113,43 @@ t_ast	*get_ast(t_lexer *lexer)
 **	if we encounter a command or a pipe node, stop traversing and execute it.
 **	for now, this function actually always stops at the first call.
 */
+/*
+**	ex:           ls && cat || ls && cat:
+**
+**                            "&&"
+**                            /  \
+**						   "||"   cat
+**                         /  \
+**						"&&"   ls
+**                      /  \
+**                    ls   cat
+*/
 
 int		traverse_ast(t_node *node, t_env *env)
 {
-	int		i;
+	int			i;
 
 	if (node == NULL)
 		return (1);
-	if (node->data == NULL)
+	else if (node->data == NULL)
 	{
 		expand(node, env);
 		return (exec_command(node, env));
 	}
 	else if (((t_token *)node->data)->type == PIPE)
 		return (exec_pipe(node, env));
+	else if (((t_token *)node->data)->type == AND_IF)
+	{
+		if (traverse_ast(node->child[0], env) == 0)
+			return (traverse_ast(node->child[1], env));
+		return (1);
+	}
+	else if (((t_token *)node->data)->type == OR_IF)
+	{
+		if (traverse_ast(node->child[0], env) != 0) 
+			return (traverse_ast(node->child[1], env));
+		return (0);
+	}
 	i = 0;
 	while (i < node->nb_children)
 		traverse_ast(node->child[i++], env);
@@ -97,7 +174,7 @@ int		parse(t_lexer *lexer, t_env *env, t_term *term)
 		return (0);
 	g_parse_error = NOERR;
 	ast = get_ast(lexer);
-	if (!(lexer->state & START) && !(lexer->state & END))
+	if ((!(lexer->state & START) && !(lexer->state & END)) || g_parse_error == NO_CMD_BEFORE_AND_OR)
 	{
 		g_parse_error = (g_parse_error == NOERR) ? TOKENS_LEFT : g_parse_error;
 		token_del((void **)&lexer->curr_tok, NULL);
