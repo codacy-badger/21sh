@@ -6,7 +6,7 @@
 /*   By: fratajcz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 19:22:51 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/17 16:41:00 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/19 14:16:10 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ extern	t_env	*g_env;
 
 typedef	int	(*t_cmp_func) (void *a, void *b);
 
-char	*get_lcp(t_list_head *comp_list, char *partial)
+char		*get_lcp(t_list_head *comp_list, char *partial)
 {
 	char	*first;
 	char	*last;
@@ -40,7 +40,7 @@ char	*get_lcp(t_list_head *comp_list, char *partial)
 	return (ft_strndup(first, i));
 }
 
-char	*comp_get_partial_word(t_input *input)
+char		*comp_get_partial_word(t_input *input)
 {
 	int		i;
 

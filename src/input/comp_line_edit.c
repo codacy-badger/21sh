@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:07:57 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/17 17:49:52 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/19 14:15:37 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void		rl_print_match_list(t_list_head *comp_list, char *partial,
 		skip_len = 0;
 	cur = comp_list->next;
 	write(1, "\n", 1);
-	print_list_cols(comp_list, get_max_len(comp_list) - skip_len, skip_len, input->termp);
+	print_list_cols(comp_list, get_max_len(comp_list) - skip_len,
+			skip_len, input->termp);
 	draw_prompt(input, input->last_prompt);
 	printstr(input->termp, input->line->str);
 }
