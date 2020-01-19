@@ -40,14 +40,14 @@ static void	init_keys(struct s_input *input)
 
 int			init_input(struct s_input *input, struct s_term *term)
 {
-	init_keys(input);
-	input->termp = term;
-	input->head = ft_lstnew(NULL);
-	input->curr = input->head;
-	input->temp = NULL;
-	input->esc = false;
+	if (input->interactive)
+	{
+		init_keys(input);
+		input->termp = term;
+		input->head = ft_lstnew(NULL);
+		input->curr = input->head;
+	}
 	input->first_line = true;
-	input->multiline = false;
 	input->first_tab_press = true;
 	return (0);
 }

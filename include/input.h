@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/17 16:11:19 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/19 19:40:01 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ typedef struct		s_input
 	size_t			pos_min;
 	bool			esc;
 	bool			first_line;
-	bool			multiline;
 	char			char_after_nl;
+	bool			multiline;
+	bool			interactive;
 	bool			first_tab_press;
 }					t_input;
 

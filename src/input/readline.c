@@ -31,11 +31,14 @@ int		addchar(t_input *input, t_uint8 **bufp)
 	{
 		input->key[i] = 0;
 		ft_dstr_insert(input->line, input->pos, (char *)input->key, charlen);
-		clearfromc(input->termp);
-		offset = printstr(input->termp, &input->line->str[input->pos]);
+		if (input->interactive)
+		{
+			clearfromc(input->termp);
+			offset = printstr(input->termp, &input->line->str[input->pos]);
+			if (input->pos + charlen < input->line->len)
+				movcto(input->termp, input->termp->cpos - offset + 1);
+		}
 		input->pos += charlen;
-		if (input->pos < input->line->len)
-			movcto(input->termp, input->termp->cpos - offset + 1);
 		charlen = 0;
 		i = 0;
 		return (0);
@@ -50,6 +53,8 @@ int		addchar(t_input *input, t_uint8 **bufp)
 
 static int		process(t_input *input, t_uint8 **bufp)
 {
+	if (!input->interactive)
+		return (addchar(input, bufp));
 	if (**bufp != '\t')
 		input->first_tab_press = true;
 	if (input->esc)
@@ -87,8 +92,11 @@ static int		process(t_input *input, t_uint8 **bufp)
 
 static void		readline_init(t_input *input, const char *prompt)
 {
-	draw_prompt(input, prompt);
-	input->last_prompt = prompt;
+	if (input->interactive)
+	{
+		draw_prompt(input, prompt);
+		input->last_prompt = prompt;
+	}
 	if (input->line)
 		ft_dstr_del((void **)&input->line, NULL);
 	input->line = ft_dstr_new("", 0, 32);
@@ -152,5 +160,5 @@ char			*readline(t_input *input, const char *prompt)
 				return (readline_return(input));
 		}
 	}
-	return (readline_return(input));
+	return ((ret == 0 && !*input->line->str) ? NULL : readline_return(input));
 }

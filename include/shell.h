@@ -54,7 +54,7 @@ typedef struct		s_sh
 	struct s_env	env;
 }					t_sh;
 
-int					init(t_sh *shell);
+int					init(t_sh *shell, int argc, char **argv);
 void				del(t_sh *shell);
 
 void				init_sig(t_sh *shell);

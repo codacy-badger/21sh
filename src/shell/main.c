@@ -24,10 +24,9 @@ int		main(int argc, char **argv)
 {
 	struct s_sh	shell;
 
-	(void)argc;
-	(void)argv;
-	init(&shell);
-	g_env = &shell.env;
+
+  init(&shell, --argc, ++argv);
+  g_env = &shell.env;
 	while (1)
 	{
 		parse(&shell.lexer, &shell.env, &shell.term);

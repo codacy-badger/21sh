@@ -64,6 +64,8 @@ void	builtin_exit(char **argv)
 {
 	int i;
 
+	if (!argv)
+		exit(g_last_exit_st);
 	if (argv[1] == NULL)
 	{
 		free_arr(argv);
