@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/21 17:22:49 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/21 18:20:24 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid,
 	char	**argv;
 	int		fildes[2];
 
+	if (input_fd == -1)
+		return (-1);
+	expand(cmd, env);
 	argv = get_argv(cmd, env);
 	if (pipe(fildes) == -1)
 	{
@@ -56,9 +59,10 @@ static void		exec_last_pipe(t_node *cmd, t_env *env, int *pid, int input_fd)
 	char	**argv;
 	int		ret;
 
+	expand(cmd, env);
 	argv = get_argv(cmd, env);
 	ret = 0;
-	if (argv != NULL)
+	if (argv != NULL && input_fd != -1)
 		*pid = fork();
 	else
 		*pid = -1;
@@ -92,9 +96,11 @@ static void		exec_pipes(t_node *pipe, t_env *env, int pipe_count)
 	input_fd = 0;
 	while (++i < pipe_count + 1)
 	{
-		if (pipe->child[1]->data == NULL
-		&& (input_fd = exec_pipe_cmd(pipe->child[0], env, &pid[i++], input_fd)) != -1)
+		if (pipe->child[1]->data == NULL)
+		{
+			input_fd = exec_pipe_cmd(pipe->child[0], env, &pid[i++], input_fd);
 			exec_last_pipe(pipe->child[1], env, &pid[i], input_fd);
+		}
 		else
 			input_fd = exec_pipe_cmd(pipe->child[0], env, &pid[i], input_fd);
 		pipe = pipe->child[1];

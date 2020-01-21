@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 20:03:18 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/13 22:43:38 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/21 18:15:28 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,7 @@ static char	*get_heredoc(t_input *input, char *delim, t_env *env)
 	if (g_parse_error == SILENT_ABORT)
 		ft_dstr_del((void **)&heredoc, NULL);
 	else
-	{
-		param_expand(heredoc, 0, env);
 		remove_bslash(heredoc);
-	}
 	free(delim_cmp);
 	str = heredoc ? heredoc->str : NULL;
 	free(heredoc);

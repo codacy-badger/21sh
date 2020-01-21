@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/16 13:45:14 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/21 18:17:05 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static int	get_input_fd(t_node *op_node)
 		return (ft_atoi(node_token(op_node->child[0])->value->str));
 }
 
+extern t_env *g_env;
+
 static int	get_output_fd(t_node *op_node, int flags)
 {
 	int		type;
@@ -64,16 +66,15 @@ static int	get_output_fd(t_node *op_node, int flags)
 	{
 		tmp_file = ft_mktemp(ft_strdup("/tmp/21sh_XXXXXX"));
 		fd = open(tmp_file, O_WRONLY);
+		param_expand(node_token(op_node->child[1])->value, 0, g_env);
 		ft_putstr_fd(node_token(op_node->child[1])->value->str, fd);
 		close(fd);
 		fd = open(tmp_file, O_RDONLY);
 		return (fd);
 	}
-	if (type == GREATAND || type == LESSAND)
-	{
-		if (str_is_nbr(node_token(op_node->child[1])->value->str))
-			return (ft_atoi(node_token(op_node->child[1])->value->str));
-	}
+	if ((type == GREATAND || type == LESSAND)
+			&& (str_is_nbr(node_token(op_node->child[1])->value->str)))
+		return (ft_atoi(node_token(op_node->child[1])->value->str));
 	return (open(node_token(op_node->child[1])->value->str, flags, RIGHTS));
 }
 
