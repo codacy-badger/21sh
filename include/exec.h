@@ -25,6 +25,7 @@ int				exec_with_io(t_node *cmd, t_env *env, int stdin_fd,
 				int stdout_fd);
 int				exec_command(t_node *cmd, t_env *env);
 int				exec_command_argv(char **argv, t_env *env);
+int				exec_builtin(char **argv, t_env *env, t_node *cmd);
 
 int				set_redirections(t_node *cmd, bool backup);
 bool			is_valid_fd(int fd);

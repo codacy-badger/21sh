@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/19 14:26:28 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/21 17:22:49 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid,
 	argv = get_argv(cmd, env);
 	if (pipe(fildes) == -1)
 	{
-		write(STDERR_FILENO, "21sh: Failed to create pipe.\n", 29); //
+		write(STDERR_FILENO, "21sh: Failed to create pipe.\n", 29);
 		return (-1);
 	}
 	*pid = (argv != NULL) ? fork() : -1;
@@ -36,7 +36,12 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid,
 		if (input_fd != 0)
 			close(input_fd);
 		if (set_redirections(cmd, false) == 0)
-			execve(argv[0], argv, env->env);
+		{
+			if (is_builtin(argv[0]))
+				exec_builtin(argv, env, cmd);
+			else
+				execve(argv[0], argv, env->env);
+		}
 		exit(0);
 	}
 	close(fildes[1]);
@@ -48,9 +53,11 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid,
 
 static void		exec_last_pipe(t_node *cmd, t_env *env, int *pid, int input_fd)
 {
-	char **argv;
+	char	**argv;
+	int		ret;
 
 	argv = get_argv(cmd, env);
+	ret = 0;
 	if (argv != NULL)
 		*pid = fork();
 	else
@@ -60,8 +67,13 @@ static void		exec_last_pipe(t_node *cmd, t_env *env, int *pid, int input_fd)
 		dup2(input_fd, 0);
 		close(input_fd);
 		if (set_redirections(cmd, false) == 0)
-			execve(argv[0], argv, env->env);
-		exit(0);
+		{
+			if (is_builtin(argv[0]))
+				ret = exec_builtin(argv, env, cmd);
+			else
+				execve(argv[0], argv, env->env);
+		}
+		exit(ret);
 	}
 	close(input_fd);
 	free_arr(argv);
