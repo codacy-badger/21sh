@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 23:49:26 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/12 18:29:35 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/21 17:42:19 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ enum				e_parse_error
 	NO_CMD_BEFORE_PIPE,
 	NO_CMD_AFTER_PIPE,
 	NO_CMD_BEFORE_AND_OR,
-	HEREDOC_NO_DELIM
+	HEREDOC_NO_DELIM,
+	NO_CMD_BEFORE_SEP
 };
 
 

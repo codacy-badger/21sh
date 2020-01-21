@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/21 17:10:07 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/21 17:49:18 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ t_node	*and_or(t_lexer *lexer)
 			if (lexer->curr_tok)
 				g_error_near = ft_strdup(lexer->curr_tok->value->str);
 		}
-		if (lexer->curr_tok)
 		return (NULL);
 	}
 	return (and_or_list(lexer, left_pipeline));
@@ -93,6 +92,14 @@ t_ast	*get_ast(t_lexer *lexer)
 
 	if (g_parse_error != 0)
 		return (NULL);
+	if (lexer->curr_tok->type == AMPERSAND || lexer->curr_tok->type == SEMI)
+	{
+		g_error_near = ft_strdup(lexer->curr_tok->value->str);
+		token_del((void **)&lexer->curr_tok, NULL);
+		eat(lexer);
+		g_parse_error = NO_CMD_BEFORE_SEP;
+		return (NULL);
+	}
 	ast = ft_xmalloc(sizeof(t_ast));
 	ast->next = NULL;
 	ast->node = and_or(lexer);
@@ -178,7 +185,7 @@ int		parse(t_lexer *lexer, t_env *env, t_term *term)
 		return (0);
 	g_parse_error = NOERR;
 	ast = get_ast(lexer);
-	if ((!(lexer->state & START) && !(lexer->state & END)) || g_parse_error == NO_CMD_BEFORE_AND_OR || g_parse_error == NO_CMD_BEFORE_PIPE)
+	if (!(lexer->state & START) && (!(lexer->state & END) || lexer->curr_tok != NULL))
 	{
 		g_parse_error = (g_parse_error == NOERR) ? TOKENS_LEFT : g_parse_error;
 		token_del((void **)&lexer->curr_tok, NULL);
