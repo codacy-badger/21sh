@@ -28,6 +28,6 @@ int		ft_dstr_add(t_dstr *dstr, char c)
 		free(tmp);
 	}
 	dstr->str[dstr->len] = c;
-	dstr->len++;
+	dstr->str[++dstr->len] = 0;
 	return (1);
 }

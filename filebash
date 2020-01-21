@@ -1,0 +1,4 @@
+export X=2; export Y=5; echo "X=$X, Y=$Y";
+test $X = 2 && test $Y = 5 || echo 'wrong values' && bc << EOF > result.txt
+($X + $Y) * 2
+EOF

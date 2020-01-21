@@ -91,6 +91,7 @@ void		get_all_heredocs(t_input *input, t_node *heredoc_list, t_env *env)
 				node_token(heredoc->child[1])->value->str, env);
 		free(node_token(heredoc->child[1])->value->str);
 		node_token(heredoc->child[1])->value->str = heredoc_str;
+		node_token(heredoc->child[1])->value->len = ft_strlen(heredoc_str);
 		i++;
 	}
 	i = 0;
