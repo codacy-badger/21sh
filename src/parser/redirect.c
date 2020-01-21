@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 04:05:12 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/11 13:47:43 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/21 17:04:58 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ static t_node	*io_file(t_lexer *lexer, t_token *io_number)
 				g_parse_error = NO_REDIR_FILENAME;
 				g_error_near = ft_strdup(node_token(node)->value->str);
 			}
+			token_del((void **)&io_number, NULL);
 			free_ast_nodes(node);
 			return (NULL);
 		}

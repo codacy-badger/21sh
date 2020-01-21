@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/19 17:22:14 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/21 17:10:07 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,13 @@ t_node	*and_or(t_lexer *lexer)
 	left_pipeline = pipeline(lexer);
 	if (left_pipeline == NULL)
 	{
-		g_parse_error = NO_CMD_BEFORE_AND_OR;
+		if (g_parse_error == 0)
+		{
+			g_parse_error = NO_CMD_BEFORE_AND_OR;
+			if (lexer->curr_tok)
+				g_error_near = ft_strdup(lexer->curr_tok->value->str);
+		}
 		if (lexer->curr_tok)
-			g_error_near = ft_strdup(lexer->curr_tok->value->str);
 		return (NULL);
 	}
 	return (and_or_list(lexer, left_pipeline));
@@ -109,21 +113,21 @@ t_ast	*get_ast(t_lexer *lexer)
 }
 
 /*
-**	depth first tree traversal
-**	if we encounter a command or a pipe node, stop traversing and execute it.
-**	for now, this function actually always stops at the first call.
-*/
+ **	depth first tree traversal
+ **	if we encounter a command or a pipe node, stop traversing and execute it.
+ **	for now, this function actually always stops at the first call.
+ */
 /*
-**	ex:           ls && cat || ls && cat:
-**
-**                            "&&"
-**                            /  \
-**						   "||"   cat
-**                         /  \
-**						"&&"   ls
-**                      /  \
-**                    ls   cat
-*/
+ **	ex:           ls && cat || ls && cat:
+ **
+ **                            "&&"
+ **                            /  \
+ **						   "||"   cat
+ **                         /  \
+ **						"&&"   ls
+ **                      /  \
+ **                    ls   cat
+ */
 
 int		traverse_ast(t_node *node, t_env *env)
 {
@@ -157,11 +161,11 @@ int		traverse_ast(t_node *node, t_env *env)
 }
 
 /*
-**	gets the list of ASTs for the input, then executes all of them sequentially.
-**	ex: the input "ls ; cat; wc" gets a list of 3 asts
-**	asts are trees containing t_tokens in their "data" fields.
-**	one node can have an infinite number of children.
-*/
+ **	gets the list of ASTs for the input, then executes all of them sequentially.
+ **	ex: the input "ls ; cat; wc" gets a list of 3 asts
+ **	asts are trees containing t_tokens in their "data" fields.
+ **	one node can have an infinite number of children.
+ */
 
 int		parse(t_lexer *lexer, t_env *env, t_term *term)
 {
@@ -174,7 +178,7 @@ int		parse(t_lexer *lexer, t_env *env, t_term *term)
 		return (0);
 	g_parse_error = NOERR;
 	ast = get_ast(lexer);
-	if ((!(lexer->state & START) && !(lexer->state & END)) || g_parse_error == NO_CMD_BEFORE_AND_OR)
+	if ((!(lexer->state & START) && !(lexer->state & END)) || g_parse_error == NO_CMD_BEFORE_AND_OR || g_parse_error == NO_CMD_BEFORE_PIPE)
 	{
 		g_parse_error = (g_parse_error == NOERR) ? TOKENS_LEFT : g_parse_error;
 		token_del((void **)&lexer->curr_tok, NULL);
