@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 09:08:47 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/14 16:43:30 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/18 16:11:59 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ char			**get_argv(t_node *cmd, t_env *env)
 			argv[j++] = ft_strdup(node_token(cmd->child[i])->value->str);
 	}
 	argv[j] = NULL;
+	if (argv[0] == NULL)
+	{
+		free(argv);
+		return (NULL);
+	}
 	if (is_builtin(argv[0]))
 		return (argv);
 	cmd_path = get_executable_path(argv[0], env);
