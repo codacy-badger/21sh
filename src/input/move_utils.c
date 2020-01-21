@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_spec.c                                        :+:      :+:    :+:   */
+/*   move_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 01:20:41 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/12/06 01:21:39 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/19 16:53:40 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		cpos_to_prevline(t_input *input)
 		offset++;
 	}
 	if (!pos)
-		offset += ft_strlen("$> ");
+		offset += ft_strlen(input->last_prompt);
 	decrcpos(input->termp,
 	input->termp->sizex - (offset % input->termp->sizex));
 	return (0);
@@ -44,7 +44,7 @@ int		cpos_to_nextline(t_input *input)
 		offset++;
 	}
 	if (!pos)
-		offset += ft_strlen("$> ");
+		offset += ft_strlen(input->last_prompt);
 	incrcpos(input->termp,
 	input->termp->sizex - (offset % input->termp->sizex));
 	return (0);
