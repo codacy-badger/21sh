@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 13:50:00 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/14 16:28:13 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/22 15:45:18 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ bool	get_curpath_in_cdpath(char *dir, char **curpath, t_env *env
 	int			i;
 
 	if (ft_strequ(dir, ".") || ft_strequ(dir, "..")
-			|| (ft_strstr(dir, "./") == dir) || !(ft_strstr(dir, "../") == dir)
+			|| (ft_strstr(dir, "./") == dir) || (ft_strstr(dir, "../") == dir)
 			|| (tmp = get_env_var("CDPATH", env)) == NULL)
 		return (false);
 	cdpath = split_path(tmp);
@@ -142,7 +142,7 @@ int		builtin_cd(char **argv, t_env *env)
 	dir = get_cd_dir(argv, &options, env);
 	if (!(options & HAS_ARG) && !(dir = get_home_dir(env)))
 		return (1);
-	if (!get_curpath_in_cdpath(dir, &curpath, env, &options))
+	if (dir[0] == '/' || !get_curpath_in_cdpath(dir, &curpath, env, &options))
 		curpath = ft_strdup(dir);
 	if (curpath[0] != '/' && !(options & CD_P))
 		append_curpath_to_pwd(&curpath, env);
