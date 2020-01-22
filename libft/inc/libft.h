@@ -21,10 +21,9 @@
 /*
 ** Type of structs content, PTR points to the content, CPY copy the content.
 */
-# define PTR	0
-# define CPY	1
+# define PTR			0
+# define CPY			1
 # define ALLOC_ERROR	3
-
 
 typedef unsigned char	t_uint8;
 typedef unsigned short	t_uint16;
@@ -101,7 +100,8 @@ typedef struct			s_list
 }						t_list;
 
 t_list					*ft_lstnew(void *data);
-void					ft_lstdel(t_list *head, void (*del)(void **, void *), void *priv);
+void					ft_lstdel(t_list *head,
+						void (*del)(void **, void *), void *priv);
 void					ft_lstadd(t_list *head, t_list *new);
 
 /*
@@ -121,27 +121,32 @@ void					ft_list_add(void *data, t_list_head *head);
 void					ft_list_add_tail(void *data, t_list_head *head);
 void					ft_list_del(t_list_head *head);
 void					ft_list_replace(t_list_head *old, t_list_head *new);
-int						ft_list_is_first(const t_list_head *list, const t_list_head *head);
-int						ft_list_is_last(const t_list_head *list, const t_list_head *head);
+int						ft_list_is_first(const t_list_head *list,
+						const t_list_head *head);
+int						ft_list_is_last(const t_list_head *list,
+						const t_list_head *head);
 int						ft_list_empty(const t_list_head *head);
-void					ft_list_foreach(t_list_head *head, void (*f)(void *a, void *priv),
+void					ft_list_foreach(t_list_head *head,
+						void (*f)(void *a, void *priv),
 						void *priv);
 void					ft_list_foreach_rev(t_list_head *head,
 						void (*f)(void *a, void *priv), void *priv);
-void					ft_list_split(t_list_head *head, t_list_head **a, t_list_head **b);
-void					ft_list_sort(t_list_head **head, int (*cmp)(void *a, void *b));
+void					ft_list_split(t_list_head *head,
+						t_list_head **a, t_list_head **b);
+void					ft_list_sort(t_list_head **head,
+						int (*cmp)(void *a, void *b));
 
 /*
 ** --------------------------------Struct node-------------------------------
 */
 
-typedef struct s_node 
+typedef struct			s_node
 {
-	void			*data;
-	int				nb_children;
-	int				capacity;
-	struct s_node	**child;
-} t_node;
+	void				*data;
+	int					nb_children;
+	int					capacity;
+	struct s_node		**child;
+}						t_node;
 
 t_node					*ft_node_new(void *data);
 int						ft_node_add_child(t_node *parent, t_node *child);
@@ -204,7 +209,8 @@ typedef struct			s_dstr
 t_dstr					*ft_dstr_new(char *str, size_t len, size_t size);
 void					ft_dstr_del(void **ptr, void *priv);
 int						ft_dstr_add(t_dstr *dstr, char c);
-int						ft_dstr_insert(t_dstr *dstr, size_t i, char *str, size_t len);
+int						ft_dstr_insert(t_dstr *dstr, size_t i, char *str,
+						size_t len);
 int						ft_dstr_remove(t_dstr *dstr, size_t i, size_t len);
 int						ft_dstr_clear(t_dstr *dstr, size_t size);
 
@@ -244,14 +250,13 @@ char					*ft_strsub(char const *s, unsigned int start,
 																size_t len);
 char					*ft_strjoin(const char *s1, const char *s2);
 int						ft_strquot(char *str);
-bool    				ft_strisnbr(char *str);
+bool					ft_strisnbr(char *str);
 char					*ft_strcat(char *s1, const char *s2);
 size_t					ft_strnlen(const char *s, size_t maxlen);
 char					*ft_strndup(const char *s1, size_t n);
 
 void					ft_putstr_fd(const char *str, int fd);
 void					ft_putendl(char const *s);
-
 
 /*
 ** -----------------------------Array-----------------------------

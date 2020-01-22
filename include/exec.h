@@ -1,3 +1,5 @@
+/* ************************************************************************** */
+/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
@@ -7,7 +9,6 @@
 /*   Updated: 2020/01/14 12:00:57 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef EXEC_H
 # define EXEC_H
@@ -20,8 +21,9 @@ typedef struct	s_fd_backup
 	int			orig_number;
 }				t_fd_backup;
 
+int				execute(t_node *node, t_env *env);
 int				exec_pipe(t_node *ast, t_env *env);
-int				exec_with_io(t_node *cmd, t_env *env, int stdin_fd, 
+int				exec_with_io(t_node *cmd, t_env *env, int stdin_fd,
 				int stdout_fd);
 int				exec_command(t_node *cmd, t_env *env);
 int				exec_command_argv(char **argv, t_env *env);

@@ -17,26 +17,26 @@
 # include <termios.h>
 # include <term.h>
 
-enum	e_caps
+enum				e_caps
 {
-		C_UP,
-		C_DO,
-		C_LE,
-		C_ND,
-		C_HO,
-		C_CE,
-		C_CD,
-		C_DC,
-		C_SC,
-		C_RC,
-		C_CR,
-		C_SF,
-		C_SR,
-		C_CM,
-		C_CL,
-		C_BL,
-		C_KS,
-		CAPS_SIZE
+	C_UP,
+	C_DO,
+	C_LE,
+	C_ND,
+	C_HO,
+	C_CE,
+	C_CD,
+	C_DC,
+	C_SC,
+	C_RC,
+	C_CR,
+	C_SF,
+	C_SR,
+	C_CM,
+	C_CL,
+	C_BL,
+	C_KS,
+	CAPS_SIZE
 };
 
 typedef struct		s_term
@@ -68,4 +68,4 @@ void				clearfromc(t_term *term);
 int					printstr(t_term *term, char *str);
 int					ft_putc(int c);
 
-#endif 
+#endif

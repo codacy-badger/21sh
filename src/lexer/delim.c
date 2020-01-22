@@ -17,7 +17,8 @@ static int	delim_token(t_lexer *lexer)
 	if (lexer->curr_tok)
 	{
 		if (is_operator_start(*lexer->curr_tok->value->str))
-			lexer->curr_tok->type = get_operator_type(lexer->curr_tok->value->str);
+			lexer->curr_tok->type =
+			get_operator_type(lexer->curr_tok->value->str);
 		else if ((lexer->str[lexer->i] == '<' || lexer->str[lexer->i] == '>')
 		&& ft_strisnbr(lexer->curr_tok->value->str))
 			lexer->curr_tok->type = IO_NUMBER;

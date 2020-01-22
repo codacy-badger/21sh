@@ -17,14 +17,14 @@ extern int		g_last_exit_st;
 
 #define ERROR "21sh: an error has occured\n"
 
-static void		interrupt_fork(int sig)
+static void	interrupt_fork(int sig)
 {
 	if (sig == SIGINT)
 		write(1, "\n", 1);
 	g_last_exit_st = 130;
 }
 
-int		exec_builtin(char **argv, t_env *env, t_node *cmd)
+int			exec_builtin(char **argv, t_env *env, t_node *cmd)
 {
 	if (set_redirections(cmd, true) > 0)
 	{
@@ -48,7 +48,7 @@ int		exec_builtin(char **argv, t_env *env, t_node *cmd)
 	return (0);
 }
 
-int				exec_command_argv(char **argv, t_env *env)
+int			exec_command_argv(char **argv, t_env *env)
 {
 	pid_t		pid;
 	int			status;
@@ -70,7 +70,7 @@ int				exec_command_argv(char **argv, t_env *env)
 	return (g_last_exit_st);
 }
 
-int				exec_command(t_node *cmd, t_env *env)
+int			exec_command(t_node *cmd, t_env *env)
 {
 	pid_t		pid;
 	int			status;
@@ -97,4 +97,32 @@ int				exec_command(t_node *cmd, t_env *env)
 	wait(&status);
 	g_last_exit_st = WIFEXITED(status) ? WEXITSTATUS(status) : g_last_exit_st;
 	return (g_last_exit_st);
+}
+
+int			execute(t_node *node, t_env *env)
+{
+	int			i;
+
+	i = 0;
+	if (node == NULL)
+		return (1);
+	else if (node->data == NULL && expand(node, env) == 0)
+		return (exec_command(node, env));
+	else if (((t_token *)node->data)->type == PIPE)
+		return (exec_pipe(node, env));
+	else if (((t_token *)node->data)->type == AND_IF)
+	{
+		if (execute(node->child[0], env) == 0)
+			return (execute(node->child[1], env));
+		return (1);
+	}
+	else if (((t_token *)node->data)->type == OR_IF)
+	{
+		if (execute(node->child[0], env) != 0)
+			return (execute(node->child[1], env));
+		return (0);
+	}
+	while (i < node->nb_children)
+		execute(node->child[i++], env);
+	return (1);
 }

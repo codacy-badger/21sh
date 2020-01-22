@@ -46,17 +46,16 @@ bool	is_cd(char *str, int i)
 	return (false);
 }
 
-bool		is_dir(char *path)
+bool	is_dir(char *path)
 {
 	struct stat	b;
 
 	return (stat(path, &b) == 0 && S_ISDIR(b.st_mode));
 }
 
-bool		is_exec(char *path)
+bool	is_exec(char *path)
 {
 	struct stat	b;
 
 	return (stat(path, &b) == 0 && (b.st_mode & S_IXUSR));
 }
-

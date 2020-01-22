@@ -28,7 +28,6 @@ int			reset_lexer(t_lexer *lexer)
 	lexer->str = NULL;
 	lexer->quote = 0;
 	lexer->and_or = false;
-	lexer->docptr = NULL;
 	lexer->len = 0;
 	lexer->i = 0;
 	return (END_OF_INPUT);

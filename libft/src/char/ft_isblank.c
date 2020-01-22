@@ -14,5 +14,5 @@
 
 bool	ft_isblank(char c)
 {
-    return (c == ' ' || c == '\t');
+	return (c == ' ' || c == '\t');
 }

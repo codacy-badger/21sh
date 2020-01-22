@@ -7,22 +7,22 @@ DIR_OBJ = obj/
 DIR_INC = include/
 DIR_LIB = libft/
 SRC =		shell/main.c \
-			shell/_init.c \
+			shell/init.c \
 			shell/del.c \
 			shell/env_utils.c\
 			shell/env_utils2.c\
 			shell/path_utils.c\
 			shell/utils.c\
 			shell/get_opt.c\
-			signal/_init.c\
+			signal/init.c\
 			signal/sig_action.c \
 			signal/sig_handle.c \
-			term/_init.c \
+			term/init.c \
 			term/print.c \
 			term/cursor.c \
 			term/clear.c \
 			term/window.c \
-			input/_init.c \
+			input/init.c \
 			input/move_basic.c \
 			input/move_spec.c \
 			input/move_utils.c \
@@ -44,7 +44,7 @@ SRC =		shell/main.c \
 			exec/redir.c\
 			exec/redir_utils.c\
 			exec/pipe.c\
-			lexer/_init.c \
+			lexer/init.c \
 			lexer/token.c \
 			lexer/append.c\
 			lexer/delim.c \

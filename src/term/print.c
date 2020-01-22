@@ -19,11 +19,6 @@ int		ft_putc(int c)
 	return (1);
 }
 
-/*
-** On gnome-terminal, some wide chars like emojis take 2 columns on display
-** to avoid overlapping, so cursor position must be increased by 2 instead of one
-** in such a case.
-*/
 int		printstr(t_term *term, char *str)
 {
 	size_t	offset;

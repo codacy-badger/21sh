@@ -12,11 +12,7 @@
 
 #include "../../../inc/libft.h"
 
-/*
-** add a new entry before the specified list head
-*/
-
-void    ft_list_add_tail(void *data, t_list_head *head)
+void	ft_list_add_tail(void *data, t_list_head *head)
 {
 	t_list_head *new;
 

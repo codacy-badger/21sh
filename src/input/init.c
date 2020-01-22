@@ -12,30 +12,39 @@
 
 #include "shell.h"
 
+static void	init_keycaps(struct s_input *input)
+{
+	char	*str;
+
+	if ((str = tgetstr("kD", NULL)))
+		input->keys[K_DEL] = *(int *)str;
+	if ((str = tgetstr("kl", NULL)))
+		input->keys[K_LEFT] = *(int *)str;
+	if ((str = tgetstr("kr", NULL)))
+		input->keys[K_RIGHT] = *(int *)str;
+	if ((str = tgetstr("ku", NULL)))
+		input->keys[K_UP] = *(int *)str;
+	if ((str = tgetstr("kd", NULL)))
+		input->keys[K_DOWN] = *(int *)str;
+	if ((str = tgetstr("kh", NULL)))
+		input->keys[K_HOME] = *(int *)str;
+}
+
 static void	init_keys(struct s_input *input)
 {
-	char	*s;
-
-	input->keys[K_DEL] = (s = tgetstr("kD", NULL)) ? *(int *)s : 0;
-	input->keys[K_LEFT] = (s = tgetstr("kl", NULL)) ? *(int *)s : 0;
-	input->keys[K_RIGHT] = (s = tgetstr("kr", NULL)) ? *(int *)s : 0;
-	input->keys[K_UP] = (s = tgetstr("ku", NULL)) ? *(int *)s : 0;
-	input->keys[K_DOWN] = (s = tgetstr("kd", NULL)) ? *(int *)s : 0;
-	input->keys[K_HOME] = (s = tgetstr("kh", NULL)) ? *(int *)s : 0;
-	input->keys[K_CUP] = 71696882162459;
-	input->keys[K_CDOWN] = 72796393790235;
+	init_keycaps(input);
 	input->keys[K_END] = 4607771;
 	input->keys[K_BSP] = 127;
 	input->keys[K_ESC] = 27;
 	input->keys[K_SPC] = 32;
 	input->keys[K_ENTER] = 10;
 	input->keys[K_REDRAW] = 12;
-	input->keys[K_PRVW] = 24; // ^X
-	input->keys[K_NXTW] = 14; // ^N
-	input->keys[K_CUTW] = 23;// ^W
-	input->keys[K_CUTA] = 11;// ^K	
-	input->keys[K_CUTB] = 21; // ^U
-	input->keys[K_PAST] = 25; // ^Y
+	input->keys[K_PRVW] = 24;
+	input->keys[K_NXTW] = 14;
+	input->keys[K_CUTW] = 23;
+	input->keys[K_CUTA] = 11;
+	input->keys[K_CUTB] = 21;
+	input->keys[K_PAST] = 25;
 }
 
 int			init_input(struct s_input *input, struct s_term *term)
