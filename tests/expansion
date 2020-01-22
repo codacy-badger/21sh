@@ -1,0 +1,47 @@
+echo '$'
+$
+echo
+
+echo '$ ls'
+$ ls
+echo
+
+echo '$USER'
+$USER
+echo
+
+echo '$ls $arg $amrg2'
+$ls $arg $arg2
+echo
+
+echo 'echo $INVALIDVAR'
+echo $INVALIDVARASDASD
+echo
+
+echo '$loop'
+$loop
+echo
+
+echo '$USER$'
+$USER$
+echo
+
+echo '$USER$USER$USER$USER'
+$USER$USER$USER$USER
+echo
+
+echo 'echo ~'
+echo ~
+echo
+
+echo 'echo $USER~$USER'
+echo $USER~$USER$
+echo
+
+echo 'echo $USER~$USER$'
+echo $USER~$USER$
+echo
+
+echo 'echo ~/bonjour'
+echo ~/bonjour
+echo
