@@ -21,8 +21,12 @@ rm -rf testing_dotdots
 rm -rf test_cdpath1 test_cdpath2
 
 
+./21sh tests/env > tests/env.21sh 2>&1
+bash tests/env > tests/env.bash 2>&1
+
 sed -i "" -E  "s/.*:.*: (.*:)/21sh: \1/g" tests/*.bash
 sed -i "" -E "s/(.+)\/$/\1/g" tests/cd.21sh #remove / at the end of line for $PWD
 diff -u tests/exp.21sh tests/exp.bash && echo "Expansions: success"
 diff -u tests/cd.21sh tests/cd.bash && echo "cd: success"
+diff -u tests/env.21sh tests/env.bash && echo "env: success"
 
