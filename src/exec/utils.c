@@ -6,11 +6,17 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 09:08:47 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/23 12:49:45 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/23 19:18:13 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+void			kill_all_forks(void)
+{
+	write(2, "21sh: too many processes, aborting\n", 35);
+	kill(0, SIGABRT);
+}
 
 bool			str_is_nbr(const char *str)
 {
@@ -75,7 +81,7 @@ char			**get_argv(t_node *cmd, t_env *env)
 		}
 	}
 	free_arr(argv);
-	set_redirections(cmd, true);
+	set_redir(cmd, true);
 	restore_fds();
 	return (NULL);
 }

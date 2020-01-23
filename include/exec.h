@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 15:00:39 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/14 12:00:57 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/23 19:18:03 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int				exec_command(t_node *cmd, t_env *env);
 int				exec_command_argv(char **argv, t_env *env);
 int				exec_builtin(char **argv, t_env *env, t_node *cmd);
 
-int				set_redirections(t_node *cmd, bool backup);
+int				set_redir(t_node *cmd, bool backup);
 bool			is_valid_fd(int fd);
 void			move_fd(int *fd);
 int				dup2_and_backup(int fildes1, int fildes2, bool backup);
@@ -37,5 +37,6 @@ int				restore_fds(void);
 
 char			**get_argv(t_node *cmd, t_env *env);
 bool			str_is_nbr(const char *str);
+void			kill_all_forks(void);
 
 #endif

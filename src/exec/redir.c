@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/21 18:17:05 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/23 19:28:11 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	get_output_fd(t_node *op_node, int flags)
 	return (open(node_token(op_node->child[1])->value->str, flags, RIGHTS));
 }
 
-static int	set_redir(t_node *op_node, bool backup)
+static int	set_one_redir(t_node *op_node, bool backup)
 {
 	int		flags;
 	int		output_fd;
@@ -107,14 +107,14 @@ static int	set_redir(t_node *op_node, bool backup)
 	return (0);
 }
 
-int			set_redirections(t_node *cmd, bool backup)
+int			set_redir(t_node *cmd, bool backup)
 {
 	int			i;
 
 	i = 0;
 	while (i < cmd->nb_children)
 	{
-		if (set_redir(cmd->child[i], backup) > 0)
+		if (set_one_redir(cmd->child[i], backup) > 0)
 			return (1);
 		i++;
 	}

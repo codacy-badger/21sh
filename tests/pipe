@@ -37,3 +37,13 @@ les
 amiches
 EOF
 echo
+
+echo "> test | ls"
+> test | ls; rm test
+echo
+
+echo 'echo 1>&2 1 | echo 2 > /var/root/log | echo 3'
+echo 1>&2 1 | echo 2 > /var/root/log | echo 3
+echo
+
+

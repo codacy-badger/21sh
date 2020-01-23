@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 09:52:31 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/21 18:15:35 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/23 19:18:35 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	interrupt_fork(int sig)
 
 int			exec_builtin(char **argv, t_env *env, t_node *cmd)
 {
-	if (set_redirections(cmd, true) > 0)
+	if (set_redir(cmd, true) > 0)
 	{
 		free_arr(argv);
 		restore_fds();
@@ -84,7 +84,7 @@ int			exec_command(t_node *cmd, t_env *env)
 	signal(SIGINT, interrupt_fork);
 	if (pid == 0)
 	{
-		if (set_redirections(cmd, false) > 0)
+		if (set_redir(cmd, false) > 0)
 			exit(1);
 		if (execve(argv[0], argv, env->env) == -1)
 		{
