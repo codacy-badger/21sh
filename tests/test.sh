@@ -24,12 +24,19 @@ rm -rf test_cdpath1 test_cdpath2
 ./21sh tests/env > tests/env.21sh 2>&1
 bash tests/env > tests/env.bash 2>&1
 
+
+./21sh tests/setenv > tests/setenv.21sh 2>&1
+tcsh tests/setenv > tests/setenv.tcsh 2>&1
+
 sed -i "" -E  "s/.*:.*: (.*:)/21sh: \1/g" tests/*.bash
 sed -i "" -E "s/(.+)\/$/\1/g" tests/cd.21sh #remove / at the end of line for $PWD
-sed -i "" -E "/TERMINFO=.*/d" tests/env.21sh tests/env.bash
-sed -i "" -E "/_=.*/d" tests/env.21sh tests/env.bash
+sed -i "" -E "/TERMINFO=/d" tests/env.21sh tests/env.bash
+sed -i "" -E "/_=/d" tests/env.21sh tests/env.bash
 sed -i "" -E "s/21sh:(.*): command not found/env:\1: No such file or directory/g" tests/env.21sh
+sed -i "" -E "/_=|HOSTTYPE=|VENDOR=|OSTYPE=|MACHTYPE=|GROUP=|HOST=/d" tests/setenv.tcsh
+sed -i "" -E "/_=/d" tests/setenv.21sh
 diff -u tests/exp.21sh tests/exp.bash && echo "Expansions: success"
 diff -u tests/cd.21sh tests/cd.bash && echo "cd: success"
 diff -u tests/env.21sh tests/env.bash && echo "env: success"
+diff -u tests/setenv.21sh tests/setenv.tcsh && echo "setenv: success"
 
