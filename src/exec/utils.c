@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 09:08:47 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/18 16:11:59 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/23 12:49:45 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char		**words_to_array(t_node *cmd)
 			array[j++] = ft_strdup(node_token(cmd->child[i])->value->str);
 	}
 	array[j] = NULL;
-	return (j == 0 ? NULL : array);
+	return (array);
 }
 
 char			**get_argv(t_node *cmd, t_env *env)
@@ -63,7 +63,7 @@ char			**get_argv(t_node *cmd, t_env *env)
 	char	*cmd_path;
 
 	cmd_path = NULL;
-	if ((argv = words_to_array(cmd)))
+	if ((argv = words_to_array(cmd)) && argv[0] != NULL)
 	{
 		if (is_builtin(argv[0]))
 			return (argv);
@@ -75,5 +75,7 @@ char			**get_argv(t_node *cmd, t_env *env)
 		}
 	}
 	free_arr(argv);
+	set_redirections(cmd, true);
+	restore_fds();
 	return (NULL);
 }
