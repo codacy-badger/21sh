@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:46:27 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/23 18:09:09 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@ void	sig_action(t_sh *shell, int sig)
 		sh = shell;
 		return ;
 	}
+	if (sig == SIGINT || sig == SIGTSTP || sig == SIGCONT)
+		;
 	else if (sig == SIGWINCH)
 	{
 		signal(sig, SIG_DFL);
 		getwinsize(&sh->term);
-		redraw(&sh->input);
 		signal(sig, sig_handle);
 	}
 	else if ((1 <= sig && sig <= 15) || sig == 17
@@ -33,7 +34,7 @@ void	sig_action(t_sh *shell, int sig)
 	{
 		del(sh);
 		signal(sig, SIG_DFL);
-		kill(getpid(), sig);
+		kill(0, sig);
 	}
 	return ;
 }
