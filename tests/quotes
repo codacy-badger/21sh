@@ -1,0 +1,83 @@
+echo 'echo "bonjour"'
+echo "bonjour"
+echo
+
+echo "multiline quotes"
+echo "
+bonjour
+les
+amiches
+"
+echo 'line continuation with \ in dquotes'
+echo "bonjour\
+les amiches"
+
+echo 'line continuation with \ in squotes'
+echo 'bonjour\
+les amiches'
+
+echo 'line continuation with \'
+echo bonjour\
+lol
+
+echo 'echo 'bonjour "lol$HOME\''
+echo 'bonjour "lol$HOME\'
+echo
+
+echo 'escape a dquote inside dquotes'
+echo "bonjour lol $HOME\""
+echo
+
+echo 'escape a $ inside dquotes'
+echo "bonjour lol \$HOME\""
+echo
+
+echo 'echo 'bonjour"$HOME"''
+echo 'bonjour"$HOME"'
+echo
+
+echo 'echo "$HOME"'
+echo "$HOME"
+echo
+
+echo 'echo "\$HOME"'
+echo "\$HOME"
+echo
+
+echo '\ in dquotes'
+echo "\'$H\OME'"
+echo
+
+echo 'echo '\test''
+echo '\test'
+echo
+
+echo 'echo "$HO\ME"'
+echo "$HO\ME"
+echo
+
+echo 'echo \lol\\\lol'
+echo \lol\\\lol
+echo
+
+echo 'multiple \ with no line cont'
+echo lol\\\\\\\\
+ls
+echo
+
+echo 'multiple \ with line cont'
+echo lol\\\\\\\\\
+ls
+echo
+
+echo 'echo '"''$HOME"''
+echo '"''$HOME"'
+echo
+
+echo 'echo \"\''test''
+echo \"\''test'
+echo
+
+echo 'echo \\t\t\t\test'
+echo \\t\t\t\test
+echo
