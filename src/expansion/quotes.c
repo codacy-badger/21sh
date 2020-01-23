@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 18:17:30 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/09 18:34:06 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/23 13:41:24 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ bool	quote_start(char *str, int i, char *quote_status)
 	return (false);
 }
 
+static bool is_escapable(char c)
+{
+	return (c == '$' || c == '`' || c == '"' || c == '\\');
+}
+
 /*
 ** We never want to remove a character after a backslash so it's ok to increment
 ** i directly after we delete a backslash. However, we must be careful not to
@@ -69,7 +74,11 @@ void	remove_quotes(t_dstr *str)
 	{
 		if (quote_start(str->str, i, &quote_status))
 		{
-			ft_dstr_remove(str, i, 1);
+			if (g_dquote && quote_status == BSLASH
+					&& !is_escapable(str->str[i + 1]))
+				i++;
+			else 
+				ft_dstr_remove(str, i, 1);
 			continue;
 		}
 		is_bslash = (quote_status == BSLASH);
