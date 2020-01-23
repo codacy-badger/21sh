@@ -1,0 +1,39 @@
+echo "ls | cat"
+ls | cat
+echo
+
+echo "ls | ls | ls | ls"
+ls | ls | ls | ls
+echo
+
+echo "ls | ls | ls | cat"
+ls | ls | ls | cat
+echo
+
+echo "sleep 0.1 | ls"
+sleep 0.1 | ls
+echo
+
+echo "ls | wc | cat"
+ls | wc | cat
+echo
+
+echo "echo bonjour | cat"
+echo bonjour | cat
+echo
+
+echo "echo bonjour 1>&2 | cat -e"
+echo bonjour 1>&2 | cat -e
+echo
+
+echo "echo bonjour 1>&2 | cat -e > tmp; cat tmp; rm tmp"
+echo bonjour 1>&2 | cat -e > tmp; cat tmp; rm tmp
+echo
+
+echo "cat << EOF | wc | cat"
+cat << EOF | wc | cat
+bonjour
+les
+amiches
+EOF
+echo

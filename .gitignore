@@ -5,3 +5,6 @@ libft/libft.a
 libft/obj
 **/tags
 **/.DS_Store
+tests/*.21sh
+tests/*.bash
+tests/*.tcsh
