@@ -1,0 +1,42 @@
+cat << EOF
+basic
+heredoc
+test
+EOF
+
+cat << EOF1 ; ls ; cat -e << EOF2
+bonjour
+test multiple heredocs in one line
+EOF2
+aurevoir
+lol
+EOF1
+tist
+tust
+EOF2
+
+cat << EOF > test; cat test; rm test
+bonjour
+test
+heredoc redirections
+EOF
+
+cat << EOF
+tests expansions in heredocs
+$USER\$USER
+"$USER"
+'$USER'
+EOF
+
+cat << EOF
+testing\
+EOF
+line continuation\\\\\
+in heredocs\\\\\\
+lol
+EOF
+
+cat << EOF
+testing line cont combined with expansion\
+$HOME
+EOF

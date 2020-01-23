@@ -38,6 +38,9 @@ bash tests/redir > tests/redir.bash 2>&1
 ./21sh tests/quotes > tests/quotes.21sh 2>&1
 bash tests/quotes > tests/quotes.bash 2>&1
 
+./21sh tests/heredoc > tests/heredoc.21sh 2>&1
+bash tests/heredoc > tests/heredoc.bash 2>&1
+
 
 sed -i "" -E  "s/.*:.*: (.*:)/21sh: \1/g" tests/*.bash
 sed -i "" -E "s/(.+)\/$/\1/g" tests/cd.21sh #remove / at the end of line for $PWD
@@ -59,3 +62,4 @@ diff -u tests/setenv.21sh tests/setenv.tcsh && echo "setenv: success"
 diff -u tests/pipe.21sh tests/pipe.bash && echo "pipe: success"
 diff -u tests/redir.21sh tests/redir.bash && echo "redir: success"
 diff -u tests/quotes.21sh tests/quotes.bash && echo "quotes: success"
+diff -u tests/heredoc.21sh tests/heredoc.bash && echo "heredoc: success"
