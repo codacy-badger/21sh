@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:46:45 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/21 17:49:18 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/23 11:51:23 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ t_node		*and_or_list(t_lexer *lexer, t_node *left_pipeline)
 		{
 			lexer->and_or = true;
 			eat(lexer);
+			g_parse_error = (g_parse_error == NO_CMD_BEFORE_PIPE) ?
+							0 : g_parse_error;
 		}
 		lexer->and_or = false;
 		ft_node_add_child(and_or, right_pipeline);
