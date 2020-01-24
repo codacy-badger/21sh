@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/16 20:02:16 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 18:51:32 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ static void	delete_last_nl(t_lexer *lexer)
 {
 	char *nl;
 
-	if (lexer->str != NULL && (nl = ft_strchr(lexer->str + lexer->i - 1, '\n')))
+	if (lexer->str != NULL && lexer->i > 0 && 
+			(nl = ft_strchr(lexer->str + lexer->i - 1, '\n')))
 		*nl = '\0';
 }
 

@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/24 13:52:49 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 18:30:33 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static int	get_output_fd(t_node *op_node, int flags)
 		ft_putstr_fd(node_token(op_node->child[1])->value->str, fd);
 		close(fd);
 		fd = open(tmp_file, O_RDONLY);
+		free(tmp_file);
 		return (fd);
 	}
 	if ((type == GREATAND || type == LESSAND)
