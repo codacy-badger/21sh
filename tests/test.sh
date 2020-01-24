@@ -1,3 +1,13 @@
+#this script needs GNU csplit to work on macOS, run
+#brew install coreutils
+#to install it
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	CSPLIT=gcsplit
+else
+	CSPLIT=csplit
+fi
+
 export DIR_21SH=$PWD
 export ls=ls
 export arg=-a
@@ -50,7 +60,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	sed -i '' -E "s/21sh:(.*): command not found/env:\1: No such file or directory/g" tests/env.21sh
 	sed -i '' -E "/_=|HOSTTYPE=|VENDOR=|OSTYPE=|MACHTYPE=|GROUP=|HOST=/d" tests/setenv.bash
 	sed -i '' -E "/_=/d" tests/setenv.21sh
-	sed -i '' -E "s/\/var\/root\/log: Permission denied/Could not open file/g" tests/pipe.bash
+	sed -i '' -E "s/norights: Permission denied/Could not open file/g" tests/pipe.bash
 	sed -i '' -E "s/\/bin\/ls:/ls:/g" tests/redir.21sh
 	sed -i '' -E "s/21sh: .*: Bad file descriptor/21sh: Bad file descriptor/g" tests/redir.bash
 	sed -i '' -E "s/21sh: .*: No such file or directory/21sh: Could not open file/g" tests/redir.bash
@@ -76,13 +86,13 @@ mkdir -p tests/bash tests/21sh
 for file in tests/*.21sh
 do
 	name=$(basename $(echo $file | cut -d '.' -f 1))
-	csplit --silent --suppress-matched "$file" '/~~~/' '{*}'\
+	$CSPLIT --silent --suppress-matched "$file" '/~~~/' '{*}'\
 		--prefix "tests/21sh/$name "
 done
 for file in tests/*.bash
 do
 	name=$(basename $(echo $file | cut -d '.' -f 1))
-	csplit --silent --suppress-matched "$file" '/~~~/' '{*}'\
+	$CSPLIT --silent --suppress-matched "$file" '/~~~/' '{*}'\
 		--prefix "tests/bash/$name "
 done
 

@@ -34,8 +34,8 @@ echo 'ls -% 2>&1 | cat -e'
 ls -% 2>&1 | cat -e
 echo '~~~'
 
-echo 'ls >> tmp; ls -l >> tmp; ls -% 2>>tmp'
-ls >> tmp; ls -l >> tmp; ls -% 2>>tmp
+echo 'ls >> tmp; ls -a >> tmp; ls -% 2>>tmp'
+ls >> tmp; ls -a >> tmp; ls -% 2>>tmp
 echo '~~~'
 
 echo 'cat < tmp'
