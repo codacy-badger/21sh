@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 15:07:57 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/19 14:15:37 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 17:42:14 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	print_list_cols(t_list_head *comp_list, int max_width,
 		i = 0;
 		while (i < nb_col && cur != comp_list)
 		{
-			printf("%-*s", max_width, cur->data + skip_len);
+			printf("%-*s", max_width, (char *)cur->data + skip_len);
 			cur = cur->next;
 			i++;
 		}
@@ -78,7 +78,6 @@ static void	print_list_cols(t_list_head *comp_list, int max_width,
 void		rl_print_match_list(t_list_head *comp_list, char *partial,
 		t_input *input)
 {
-	t_list_head *cur;
 	char		*last_slash;
 	int			skip_len;
 
@@ -86,7 +85,6 @@ void		rl_print_match_list(t_list_head *comp_list, char *partial,
 		skip_len = last_slash - partial + 1;
 	else
 		skip_len = 0;
-	cur = comp_list->next;
 	write(1, "\n", 1);
 	print_list_cols(comp_list, get_max_len(comp_list) - skip_len,
 			skip_len, input->termp);

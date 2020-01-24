@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:09:52 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/14 14:36:19 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 17:41:36 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include <sys/uio.h>
 # include <sys/stat.h>
 # include <signal.h>

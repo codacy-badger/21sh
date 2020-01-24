@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 17:03:57 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/24 15:28:23 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 17:39:59 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		modify_env(char **argv, t_env *env, int *options)
 	return (i);
 }
 
-int		print_env(t_env *env, char **argv)
+int		print_env(t_env *env)
 {
 	int i;
 
@@ -112,7 +112,7 @@ int		builtin_env(char **argv, t_env *env)
 	new_env = (options & EMPTY_ENV) ? env_dup(argv + argc) : env_dup(env->env);
 	i = modify_env(argv, &new_env, &options);
 	if (argv[i] == NULL)
-		return (print_env(&new_env, argv));
+		return (print_env(&new_env));
 	cmd_path = (options & NEW_PATH) ? get_executable_path(argv[i], &new_env)
 		: get_executable_path(argv[i], env);
 	free(argv[i]);
