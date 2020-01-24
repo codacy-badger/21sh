@@ -100,7 +100,7 @@ for file in tests/bash/*
 do
 	file=`basename "$file"`
 	if diff -u -U 10 "tests/21sh/$file" "tests/bash/$file"; then
-		echo "$file" ✔️
+		echo "$file" ✅
 	else
 		echo "$file" ❌
 	fi
