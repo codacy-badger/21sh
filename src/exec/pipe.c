@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/23 19:47:18 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 13:34:16 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void		exec_last_pipe(t_node *cmd, t_env *env, int *pid, int input_fd)
 	{
 		dup2(input_fd, 0);
 		close(input_fd);
-		if (set_redir(cmd, false) == 0)
+		if (set_redir(cmd, false) != 0)
 			exit(1);
 		if (argv != NULL && is_builtin(argv[0]))
 			ret = exec_builtin(argv, env, cmd);
