@@ -6,17 +6,13 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/23 19:28:11 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 13:52:49 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-/*
-**RIGHTS -> S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
-*/
-
-#define RIGHTS 420
+#define RIGHTS 0666
 #define CLOSE  -2
 #define CMD INT32_MAX
 
