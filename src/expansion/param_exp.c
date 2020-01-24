@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 16:36:33 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/23 16:18:37 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 14:39:13 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int			param_expand(t_dstr *str, int start, t_env *env)
 			i += ft_strlen(var_value) - 1;
 			free(var_name);
 		}
-		quote_stop(str->str, i, &quote_status);
+		if (i >= 0)
+			quote_stop(str->str, i, &quote_status);
 	}
 	return (0);
 }
