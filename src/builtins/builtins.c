@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 13:07:29 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/14 13:47:41 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 15:29:16 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int		builtin_echo(char **argv)
 		i++;
 	}
 	write(1, "\n", 1);
-	free_arr(argv);
 	return (0);
 }
 
@@ -42,10 +41,8 @@ int		builtin_setenv(char **argv, t_env *env)
 	else
 	{
 		set_env_var(argv[1], argv[2], env);
-		free_arr(argv);
 		return (0);
 	}
-	free_arr(argv);
 	return (1);
 }
 
@@ -56,7 +53,6 @@ int		builtin_unsetenv(char **argv, t_env *env)
 	i = 1;
 	while (argv[i])
 		remove_env_var(argv[i++], env);
-	free_arr(argv);
 	return (0);
 }
 
@@ -67,23 +63,20 @@ void	builtin_exit(char **argv)
 	if (!argv)
 		exit(g_last_exit_st);
 	if (argv[1] == NULL)
-	{
-		free_arr(argv);
 		exit(g_last_exit_st);
-	}
 	i = 0;
 	while (argv[1][i])
 	{
 		if (!ft_isdigit(argv[1][i++]))
 		{
 			write(2, "21sh: exit: numeric argument required\n", 38);
-			return (free_arr(argv));
+			return ;
 		}
 	}
 	if (argv[2] != NULL)
 	{
 		write(2, "21sh: exit: too many arguments\n", 31);
-		return (free_arr(argv));
+		return ;
 	}
 	i = ft_atoi(argv[1]);
 	exit(i);

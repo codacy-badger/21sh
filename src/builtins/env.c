@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 17:03:57 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/14 13:04:35 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 15:28:23 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int		print_env(t_env *env, char **argv)
 		ft_putstr_fd(env->env[i++], 1);
 		write(1, "\n", 1);
 	}
-	free_arr(argv);
 	free_arr(env->env);
 	return (0);
 }
@@ -92,7 +91,6 @@ int		finish_env(char **argv, int i, t_env *new_env)
 		exec_command_argv(argv + i, new_env);
 		ret = g_last_exit_st;
 	}
-	free_arr(argv);
 	free_arr(new_env->env);
 	return (ret);
 }
@@ -110,10 +108,7 @@ int		builtin_env(char **argv, t_env *env)
 	while (argv[argc])
 		argc++;
 	if (!get_env_options(argc, argv, &options))
-	{
-		free_arr(argv);
 		return (1);
-	}
 	new_env = (options & EMPTY_ENV) ? env_dup(argv + argc) : env_dup(env->env);
 	i = modify_env(argv, &new_env, &options);
 	if (argv[i] == NULL)

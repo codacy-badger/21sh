@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 13:50:00 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/22 15:45:18 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 15:29:40 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ int		builtin_cd(char **argv, t_env *env)
 		curpath = ft_strdup(dir);
 	if (curpath[0] != '/' && !(options & CD_P))
 		append_curpath_to_pwd(&curpath, env);
-	free_arr(argv);
 	if (curpath == NULL)
 		return (1);
 	return (finish_cd(curpath, dir, options, env));

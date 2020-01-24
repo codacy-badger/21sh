@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 09:52:31 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/23 19:18:35 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 15:32:22 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	interrupt_fork(int sig)
 	g_last_exit_st = 130;
 }
 
-int			exec_builtin(char **argv, t_env *env, t_node *cmd)
+int			exec_builtin(char **argv, t_env *env, t_node *cmd, bool free_argv)
 {
 	if (set_redir(cmd, true) > 0)
 	{
@@ -45,6 +45,8 @@ int			exec_builtin(char **argv, t_env *env, t_node *cmd)
 	else if (ft_strequ(argv[0], "cd"))
 		builtin_cd(argv, env);
 	restore_fds();
+	if (free_argv)
+		free_arr(argv);
 	return (0);
 }
 
@@ -79,7 +81,7 @@ int			exec_command(t_node *cmd, t_env *env)
 	if ((argv = get_argv(cmd, env)) == NULL)
 		return (1);
 	if (is_builtin(argv[0]))
-		return (exec_builtin(argv, env, cmd));
+		return (exec_builtin(argv, env, cmd, true));
 	pid = fork();
 	signal(SIGINT, interrupt_fork);
 	if (pid == 0)

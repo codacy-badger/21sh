@@ -6,13 +6,14 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/24 13:34:16 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 15:32:42 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 int				g_last_exit_st;
+t_list_head		*g_argv_list;
 
 static int		set_pipe_redir(int input_fd, int fildes[2])
 {
@@ -31,6 +32,7 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid, int input_fd)
 	int		fildes[2];
 
 	argv = get_argv(cmd, env);
+	ft_list_add(argv, g_argv_list);
 	if (pipe(fildes) == -1 || input_fd == -1)
 		return (-1);
 	*pid = fork();
@@ -41,7 +43,7 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid, int input_fd)
 		if (set_pipe_redir(input_fd, fildes) != 0 || set_redir(cmd, false) != 0)
 			exit(1);
 		if (argv != NULL && is_builtin(argv[0]))
-			exec_builtin(argv, env, cmd);
+			exec_builtin(argv, env, cmd, false);
 		else if (argv != NULL)
 			execve(argv[0], argv, env->env);
 		exit(0);
@@ -49,7 +51,6 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid, int input_fd)
 	close(fildes[1]);
 	if (input_fd != 0)
 		close(input_fd);
-	free_arr(argv);
 	return (fildes[0]);
 }
 
@@ -59,6 +60,7 @@ static void		exec_last_pipe(t_node *cmd, t_env *env, int *pid, int input_fd)
 	int		ret;
 
 	argv = get_argv(cmd, env);
+	ft_list_add(argv, g_argv_list);
 	ret = 0;
 	if (input_fd == -1)
 		return ;
@@ -72,12 +74,36 @@ static void		exec_last_pipe(t_node *cmd, t_env *env, int *pid, int input_fd)
 		if (set_redir(cmd, false) != 0)
 			exit(1);
 		if (argv != NULL && is_builtin(argv[0]))
-			ret = exec_builtin(argv, env, cmd);
+			ret = exec_builtin(argv, env, cmd, false);
 		else if (argv != NULL)
 			execve(argv[0], argv, env->env);
 	}
 	close(input_fd);
-	free_arr(argv);
+}
+
+void			cleanup_and_exit_fork(int *pid, int *status, int pipe_count)
+{
+	int			i;
+	int			last_status;
+	t_list_head	*cur;
+	t_list_head	*tmp;
+
+	i = -1;
+	while (++i < pipe_count + 1)
+		waitpid(pid[i], &status[i], 0);
+	cur = g_argv_list->next;
+	while (cur != g_argv_list)
+	{
+		tmp = cur;
+		cur = cur->next;
+		free_arr(tmp->data);
+		ft_list_del(tmp);
+	}
+	free(g_argv_list);
+	last_status = status[i - 1];
+	free(status);
+	free(pid);
+	exit(WEXITSTATUS(last_status));
 }
 
 static void		exec_pipes(t_node *pipe, t_env *env, int pipe_count)
@@ -89,6 +115,7 @@ static void		exec_pipes(t_node *pipe, t_env *env, int pipe_count)
 
 	pid = ft_xmalloc((pipe_count + 1) * sizeof(int *));
 	status = ft_xmalloc((pipe_count + 1) * sizeof(int *));
+	g_argv_list = ft_list_first_head(NULL);
 	input_fd = 0;
 	i = -1;
 	while (++i < pipe_count + 1)
@@ -102,10 +129,7 @@ static void		exec_pipes(t_node *pipe, t_env *env, int pipe_count)
 		}
 		pipe = pipe->child[1];
 	}
-	i = -1;
-	while (++i < pipe_count + 1)
-		waitpid(pid[i], &status[i], 0);
-	exit(WEXITSTATUS(status[i - 1]));
+	cleanup_and_exit_fork(pid, status, pipe_count);
 }
 
 int				exec_pipe(t_node *pipe, t_env *env)
