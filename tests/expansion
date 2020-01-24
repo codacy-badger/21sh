@@ -1,47 +1,47 @@
 echo '$'
 $
-echo
+echo ~~~
 
 echo '$ ls'
 $ ls
-echo
+echo ~~~
 
 echo '$USER'
 $USER
-echo
+echo ~~~
 
 echo '$ls $arg $amrg2'
 $ls $arg $arg2
-echo
+echo ~~~
 
 echo 'echo $INVALIDVAR'
 echo $INVALIDVARASDASD
-echo
+echo ~~~
 
 echo '$loop'
 $loop
-echo
+echo ~~~
 
 echo '$USER$'
 $USER$
-echo
+echo ~~~
 
 echo '$USER$USER$USER$USER'
 $USER$USER$USER$USER
-echo
+echo ~~~
 
 echo 'echo ~'
 echo ~
-echo
+echo ~~~
 
 echo 'echo $USER~$USER'
 echo $USER~$USER$
-echo
+echo ~~~
 
 echo 'echo $USER~$USER$'
 echo $USER~$USER$
-echo
+echo ~~~
 
 echo 'echo ~/bonjour'
 echo ~/bonjour
-echo
+echo ~~~

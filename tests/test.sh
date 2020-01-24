@@ -26,7 +26,7 @@ bash tests/env > tests/env.bash 2>&1
 
 
 ./21sh tests/setenv > tests/setenv.21sh 2>&1
-tcsh tests/setenv > tests/setenv.tcsh 2>&1
+tcsh tests/setenv > tests/setenv.bash 3>&1
 
 
 ./21sh tests/pipe > tests/pipe.21sh 2>&1
@@ -42,24 +42,58 @@ bash tests/quotes > tests/quotes.bash 2>&1
 bash tests/heredoc > tests/heredoc.bash 2>&1
 
 
-sed -i "" -E  "s/.*:.*: (.*:)/21sh: \1/g" tests/*.bash
-sed -i "" -E "s/(.+)\/$/\1/g" tests/cd.21sh #remove / at the end of line for $PWD
-sed -i "" -E "/TERMINFO=/d" tests/env.21sh tests/env.bash
-sed -i "" -E "/_=/d" tests/env.21sh tests/env.bash
-sed -i "" -E "s/21sh:(.*): command not found/env:\1: No such file or directory/g" tests/env.21sh
-sed -i "" -E "/_=|HOSTTYPE=|VENDOR=|OSTYPE=|MACHTYPE=|GROUP=|HOST=/d" tests/setenv.tcsh
-sed -i "" -E "/_=/d" tests/setenv.21sh
-sed -i "" -E "s/\/bin\/ls:/ls:/g" tests/redir.21sh
-sed -i "" -E "s/\/var\/root\/log: Permission denied/Could not open file/g" tests/pipe.bash
-sed -i "" -E "s/21sh: .*: Bad file descriptor/21sh: Bad file descriptor/g" tests/redir.bash
-sed -i "" -E "s/21sh: .*: No such file or directory/21sh: Could not open file/g" tests/redir.bash
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	sed -i '' -E  's/.*:.*: (.*:)/21sh: \1/g' tests/*.bash
+	sed -i '' -E "s/(.+)\/$/\1/g" tests/cd.21sh #remove / at the end of line for $PWD
+	sed -i '' -E "/TERMINFO=/d" tests/env.21sh tests/env.bash
+	sed -i '' -E "/_=/d" tests/env.21sh tests/env.bash
+	sed -i '' -E "s/21sh:(.*): command not found/env:\1: No such file or directory/g" tests/env.21sh
+	sed -i '' -E "/_=|HOSTTYPE=|VENDOR=|OSTYPE=|MACHTYPE=|GROUP=|HOST=/d" tests/setenv.bash
+	sed -i '' -E "/_=/d" tests/setenv.21sh
+	sed -i '' -E "s/\/var\/root\/log: Permission denied/Could not open file/g" tests/pipe.bash
+	sed -i '' -E "s/\/bin\/ls:/ls:/g" tests/redir.21sh
+	sed -i '' -E "s/21sh: .*: Bad file descriptor/21sh: Bad file descriptor/g" tests/redir.bash
+	sed -i '' -E "s/21sh: .*: No such file or directory/21sh: Could not open file/g" tests/redir.bash
+else
+	sed -i -E  's/.*:.*: (.*:)/21sh: \1/g' tests/*.bash
+	sed -i -E "s/(.+)\/$/\1/g" tests/cd.21sh #remove / at the end of line for $PWD
+	sed -i -E "/TERMINFO=/d" tests/env.21sh tests/env.bash
+	sed -i -E "/_=/d" tests/env.21sh tests/env.bash
+	sed -i -E "s/21sh:(.*): command not found/env:\1: No such file or directory/g" tests/env.21sh
+	sed -i -E "s/‘//g" tests/env.bash
+	sed -i -E "s/’//g" tests/env.bash
+	sed -i -E "/_=|HOSTTYPE=|VENDOR=|OSTYPE=|MACHTYPE=|GROUP=|HOST=/d" tests/setenv.bash
+	sed -i -E "/_=|HOSTTYPE=/d" tests/setenv.21sh
+	sed -i -E "s/norights: Permission denied/Could not open file/g" tests/pipe.bash
+	sed -i -E "s/\/bin\/ls/ls/g" tests/redir.21sh
+	sed -i -E "s/21sh: .*: Bad file descriptor/21sh: Bad file descriptor/g" tests/redir.bash
+	sed -i -E "s/21sh: .*: No such file or directory/21sh: Could not open file/g" tests/redir.bash
+fi
 
 
-diff -u tests/exp.21sh tests/exp.bash && echo "Expansions: success"
-diff -u tests/cd.21sh tests/cd.bash && echo "cd: success"
-diff -u tests/env.21sh tests/env.bash && echo "env: success"
-diff -u tests/setenv.21sh tests/setenv.tcsh && echo "setenv: success"
-diff -u tests/pipe.21sh tests/pipe.bash && echo "pipe: success"
-diff -u tests/redir.21sh tests/redir.bash && echo "redir: success"
-diff -u tests/quotes.21sh tests/quotes.bash && echo "quotes: success"
-diff -u tests/heredoc.21sh tests/heredoc.bash && echo "heredoc: success"
+mkdir -p tests/bash tests/21sh
+
+for file in tests/*.21sh
+do
+	name=$(basename $(echo $file | cut -d '.' -f 1))
+	csplit --silent --suppress-matched "$file" '/~~~/' '{*}'\
+		--prefix "tests/21sh/$name "
+done
+for file in tests/*.bash
+do
+	name=$(basename $(echo $file | cut -d '.' -f 1))
+	csplit --silent --suppress-matched "$file" '/~~~/' '{*}'\
+		--prefix "tests/bash/$name "
+done
+
+for file in tests/bash/*
+do
+	file=`basename "$file"`
+	if diff -u -U 10 "tests/21sh/$file" "tests/bash/$file"; then
+		echo "$file" ✔️
+	else
+		echo "$file" ❌
+	fi
+done
+
+rm -rf tests/*21sh tests/*bash

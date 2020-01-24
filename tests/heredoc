@@ -3,6 +3,7 @@ basic
 heredoc
 test
 EOF
+echo ~~~
 
 cat << EOF1 ; ls ; cat -e << EOF2
 bonjour
@@ -14,12 +15,14 @@ EOF1
 tist
 tust
 EOF2
+echo ~~~
 
 cat << EOF > test; cat test; rm test
 bonjour
 test
 heredoc redirections
 EOF
+echo ~~~
 
 cat << EOF
 tests expansions in heredocs
@@ -27,6 +30,7 @@ $USER\$USER
 "$USER"
 '$USER'
 EOF
+echo ~~~
 
 cat << EOF
 testing\
@@ -35,6 +39,7 @@ line continuation\\\\\
 in heredocs\\\\\\
 lol
 EOF
+echo ~~~
 
 cat << EOF
 testing line cont combined with expansion\

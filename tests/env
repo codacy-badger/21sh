@@ -1,39 +1,38 @@
 echo "env bonjour=kikoo env"
 env bonjour=kikoo env
-echo
+echo ~~~
 
 echo "env bonjour=kikoo kikoo=bonjour foo=bar jj=aa env"
 env bonjour=kikoo kikoo=bonjour foo=bar jj=aa env
-echo
+echo ~~~
 
 echo "env -i env"
 env -i env
-echo
+echo ~~~
 
 echo "env -i bonjour=salut env"
 env -i bonjour=salut env
-echo
+echo ~~~
 
 echo "env -i bonjour=salut jj=gg env"
 env -i bonjour=salut jj=gg env
-echo
+echo ~~~
 
 echo "env -i ls /"
 env -i ls /
-echo
+echo ~~~
 
 echo "env kkk=lkjlkj"
 env kkk=lkjlkj
-echo
+echo ~~~
 
 echo "env kkkk=lkjlkj assa=ljooo lkjlkj=lkjlj kkk="
 env kkkk=lkjlkj assa=ljooo lkjlkj=lkjlj kkk=
-echo
+echo ~~~
 
 echo "env kkkk=lkjlkj assa=ljooo lkjlkj=lkjlj kkk= cd"
 env kkkk=lkjlkj assa=ljooo lkjlkj=lkjlj kkk= cd
-echo
+echo ~~~
 
 echo "env kkk=lkljlkj assssa=lkjo commandenulle"
 env kkk=lkljlkj assssa=lkjo commandenulle
-echo

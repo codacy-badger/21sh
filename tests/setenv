@@ -1,23 +1,23 @@
 echo "setenv test"
 setenv test
 setenv
-echo
+echo '~~~'
 
 echo "setenv test bonjour"
 setenv test bonjour
 setenv
-echo
+echo '~~~'
 
 echo "setenv test"
 setenv test
 setenv
-echo
+echo '~~~'
 
 echo "setenv test x 2"
 setenv test
 setenv test
 setenv
-echo
+echo '~~~'
 
 echo "setenv x 1000"
 setenv test1 test1
