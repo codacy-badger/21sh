@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redir_backup.c                                     :+:      :+:    :+:   */
+/*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:48:51 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/15 14:51:51 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 14:31:27 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int			restore_fds(void)
 			close(backup->orig_number);
 		else
 			dup2(backup->backup, backup->orig_number);
-		free(cur->data);
 		close(backup->backup);
+		free(cur->data);
 		tmp = cur;
 		cur = cur->next;
 		ft_list_del(tmp);
