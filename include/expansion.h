@@ -16,10 +16,11 @@
 # include "shell.h"
 
 int		expand(t_node *command, t_env *env);
-int		param_expand(t_dstr *str, int start, t_env *env);
+int		param_expand(t_dstr *str, int start, t_env *env, bool heredoc);
 
 bool	quote_start(char *str, int i, char *quote_status);
 bool	quote_stop(char *str, int i, char *quote_status);
 void	remove_quotes(t_dstr *str);
+void	remove_bslash(t_dstr *str);
 
 #endif

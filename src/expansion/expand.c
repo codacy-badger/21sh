@@ -60,7 +60,7 @@ int		expand(t_node *command, t_env *env)
 		if (node_token(command->child[i])->type == WORD)
 		{
 			pos = tilde_expand(node_token(command->child[i])->value, home_dir);
-			param_expand(node_token(command->child[i])->value, pos, env);
+			param_expand(node_token(command->child[i])->value, pos, env, false);
 			remove_quotes(node_token(command->child[i])->value);
 		}
 		i++;

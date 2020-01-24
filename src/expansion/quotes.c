@@ -93,3 +93,25 @@ void	remove_quotes(t_dstr *str)
 		i++;
 	}
 }
+
+void	remove_bslash(t_dstr *str)
+{
+	int i;
+
+	i = 0;
+	while (str->str[i])
+	{
+		if (str->str[i] == '\\')
+		{
+			if (str->str[i + 1] == '\n')
+			{
+				ft_dstr_remove(str, i, 2);
+				continue;
+			}
+			if (str->str[i + 1] == '$' || str->str[i + 1] == '\\'
+					|| str->str[i + 1] == '\'' || str->str[i + 1] == '"')
+				ft_dstr_remove(str, i, 1);
+		}
+		i++;
+	}
+}

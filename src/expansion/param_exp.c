@@ -26,16 +26,16 @@ static char	*get_var_name(char *str)
 	return (ft_strsub(str, 0, i));
 }
 
-static bool	should_expand(char *str, int i, char quote_status)
+static bool	should_expand(char *str, int i, char quote_status, bool heredoc)
 {
 	if (str[i] != '$')
 		return (false);
-	if (quote_status == SQUOTE || quote_status == BSLASH)
+	if ((quote_status == SQUOTE && !heredoc) || quote_status == BSLASH)
 		return (false);
 	return (true);
 }
 
-int			param_expand(t_dstr *str, int start, t_env *env)
+int			param_expand(t_dstr *str, int start, t_env *env, bool heredoc)
 {
 	char	*var_name;
 	char	*var_value;
@@ -48,7 +48,7 @@ int			param_expand(t_dstr *str, int start, t_env *env)
 	{
 		if (quote_start(str->str, i, &quote_status))
 			continue ;
-		if (should_expand(str->str, i, quote_status)
+		if (should_expand(str->str, i, quote_status, heredoc)
 				&& (var_name = get_var_name(str->str + i + 1)))
 		{
 			var_value = get_env_var(var_name, env);
