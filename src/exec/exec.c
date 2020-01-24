@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 09:52:31 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/24 15:32:22 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 15:57:28 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,29 @@ static void	interrupt_fork(int sig)
 	g_last_exit_st = 130;
 }
 
-int			exec_builtin(char **argv, t_env *env, t_node *cmd, bool free_argv)
+int			exec_builtin(t_argv *argv, t_env *env, t_node *cmd, bool free_av)
 {
 	if (set_redir(cmd, true) > 0)
 	{
-		free_arr(argv);
+		free_argv(argv);
 		restore_fds();
 		return (1);
 	}
-	if (ft_strequ(argv[0], "env"))
-		builtin_env(argv, env);
-	else if (ft_strequ(argv[0], "exit"))
-		builtin_exit(argv);
-	else if (ft_strequ(argv[0], "unsetenv"))
-		builtin_unsetenv(argv, env);
-	else if (ft_strequ(argv[0], "setenv"))
-		builtin_setenv(argv, env);
-	else if (ft_strequ(argv[0], "echo"))
-		builtin_echo(argv);
-	else if (ft_strequ(argv[0], "cd"))
-		builtin_cd(argv, env);
+	if (ft_strequ(argv->argv[0], "env"))
+		builtin_env(argv->argv, env);
+	else if (ft_strequ(argv->argv[0], "exit"))
+		builtin_exit(argv->argv);
+	else if (ft_strequ(argv->argv[0], "unsetenv"))
+		builtin_unsetenv(argv->argv, env);
+	else if (ft_strequ(argv->argv[0], "setenv"))
+		builtin_setenv(argv->argv, env);
+	else if (ft_strequ(argv->argv[0], "echo"))
+		builtin_echo(argv->argv);
+	else if (ft_strequ(argv->argv[0], "cd"))
+		builtin_cd(argv->argv, env);
 	restore_fds();
-	if (free_argv)
-		free_arr(argv);
+	if (free_av)
+		free_argv(argv);
 	return (0);
 }
 
@@ -76,11 +76,11 @@ int			exec_command(t_node *cmd, t_env *env)
 {
 	pid_t		pid;
 	int			status;
-	char		**argv;
+	t_argv		*argv;
 
 	if ((argv = get_argv(cmd, env)) == NULL)
 		return (1);
-	if (is_builtin(argv[0]))
+	if (is_builtin(argv->argv[0]))
 		return (exec_builtin(argv, env, cmd, true));
 	pid = fork();
 	signal(SIGINT, interrupt_fork);
@@ -88,14 +88,14 @@ int			exec_command(t_node *cmd, t_env *env)
 	{
 		if (set_redir(cmd, false) > 0)
 			exit(1);
-		if (execve(argv[0], argv, env->env) == -1)
+		if (execve(argv->cmd_path, argv->argv, env->env) == -1)
 		{
 			perror("21sh");
 			exit(g_last_exit_st);
 		}
 		exit(0);
 	}
-	free_arr(argv);
+	free_argv(argv);
 	wait(&status);
 	g_last_exit_st = WIFEXITED(status) ? WEXITSTATUS(status) : g_last_exit_st;
 	return (g_last_exit_st);

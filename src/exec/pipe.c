@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:52:04 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/24 15:32:42 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 16:07:50 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int		set_pipe_redir(int input_fd, int fildes[2])
 
 static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid, int input_fd)
 {
-	char	**argv;
+	t_argv	*argv;
 	int		fildes[2];
 
 	argv = get_argv(cmd, env);
@@ -42,10 +42,10 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid, int input_fd)
 	{
 		if (set_pipe_redir(input_fd, fildes) != 0 || set_redir(cmd, false) != 0)
 			exit(1);
-		if (argv != NULL && is_builtin(argv[0]))
+		if (argv != NULL && is_builtin(argv->argv[0]))
 			exec_builtin(argv, env, cmd, false);
 		else if (argv != NULL)
-			execve(argv[0], argv, env->env);
+			execve(argv->cmd_path, argv->argv, env->env);
 		exit(0);
 	}
 	close(fildes[1]);
@@ -56,7 +56,7 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid, int input_fd)
 
 static void		exec_last_pipe(t_node *cmd, t_env *env, int *pid, int input_fd)
 {
-	char	**argv;
+	t_argv	*argv;
 	int		ret;
 
 	argv = get_argv(cmd, env);
@@ -73,10 +73,10 @@ static void		exec_last_pipe(t_node *cmd, t_env *env, int *pid, int input_fd)
 		close(input_fd);
 		if (set_redir(cmd, false) != 0)
 			exit(1);
-		if (argv != NULL && is_builtin(argv[0]))
+		if (argv != NULL && is_builtin(argv->argv[0]))
 			ret = exec_builtin(argv, env, cmd, false);
 		else if (argv != NULL)
-			execve(argv[0], argv, env->env);
+			execve(argv->cmd_path, argv->argv, env->env);
 	}
 	close(input_fd);
 }
@@ -96,7 +96,8 @@ void			cleanup_and_exit_fork(int *pid, int *status, int pipe_count)
 	{
 		tmp = cur;
 		cur = cur->next;
-		free_arr(tmp->data);
+		if (tmp->data != NULL)
+			free_argv(tmp->data);
 		ft_list_del(tmp);
 	}
 	free(g_argv_list);

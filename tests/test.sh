@@ -61,7 +61,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	sed -i '' -E "/_=|HOSTTYPE=|VENDOR=|OSTYPE=|MACHTYPE=|GROUP=|HOST=/d" tests/setenv.bash
 	sed -i '' -E "/_=/d" tests/setenv.21sh
 	sed -i '' -E "s/norights: Permission denied/Could not open file/g" tests/pipe.bash
-	sed -i '' -E "s/\/bin\/ls:/ls:/g" tests/redir.21sh
 	sed -i '' -E "s/21sh: .*: Bad file descriptor/21sh: Bad file descriptor/g" tests/redir.bash
 	sed -i '' -E "s/21sh: .*: No such file or directory/21sh: Could not open file/g" tests/redir.bash
 else
@@ -75,7 +74,6 @@ else
 	sed -i -E "/_=|HOSTTYPE=|VENDOR=|OSTYPE=|MACHTYPE=|GROUP=|HOST=/d" tests/setenv.bash
 	sed -i -E "/_=|HOSTTYPE=/d" tests/setenv.21sh
 	sed -i -E "s/norights: Permission denied/Could not open file/g" tests/pipe.bash
-	sed -i -E "s/\/bin\/ls/ls/g" tests/redir.21sh
 	sed -i -E "s/21sh: .*: Bad file descriptor/21sh: Bad file descriptor/g" tests/redir.bash
 	sed -i -E "s/21sh: .*: No such file or directory/21sh: Could not open file/g" tests/redir.bash
 fi

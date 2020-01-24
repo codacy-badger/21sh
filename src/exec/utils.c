@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 09:08:47 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/23 19:18:13 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/24 15:53:32 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,20 @@ static char		**words_to_array(t_node *cmd)
 	return (array);
 }
 
-char			**get_argv(t_node *cmd, t_env *env)
+t_argv			*get_argv(t_node *cmd, t_env *env)
 {
-	char	**argv;
-	char	*cmd_path;
+	t_argv	*argv;
 
-	cmd_path = NULL;
-	if ((argv = words_to_array(cmd)) && argv[0] != NULL)
+	argv = ft_xmalloc(sizeof(t_argv));
+	argv->cmd_path = NULL;
+	if ((argv->argv = words_to_array(cmd)) && argv->argv[0] != NULL)
 	{
-		if (is_builtin(argv[0]))
+		if (is_builtin(argv->argv[0]))
 			return (argv);
-		else if ((cmd_path = get_executable_path(argv[0], env)))
-		{
-			free(argv[0]);
-			argv[0] = cmd_path;
+		if ((argv->cmd_path = get_executable_path(argv->argv[0], env)))
 			return (argv);
-		}
 	}
-	free_arr(argv);
+	free_argv(argv);
 	set_redir(cmd, true);
 	restore_fds();
 	return (NULL);
