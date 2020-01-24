@@ -38,8 +38,8 @@ amiches
 EOF
 echo '~~~'
 
-echo "> test | ls"
-> test | ls; rm test
+echo "> test | echo blabla; rm test"
+> test | echo blabla; rm test
 echo '~~~'
 
 echo 'echo 1>&2 1 | echo 2 > noright | echo 3'
