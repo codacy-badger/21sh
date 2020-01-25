@@ -12,16 +12,6 @@
 
 #include "shell.h"
 
-/*
-static void	lexer_del(t_lexer *lexer)
-{
-	ft_list_foreach(lexer->tokens, &token_del, NULL);
-	while (!ft_list_empty(lexer->tokens))
-		ft_list_del(lexer->tokens->next);
-	ft_list_del(lexer->tokens);
-}
-*/
-
 static void	del_input(t_input *input)
 {
 	while (input->head->next != input->head)

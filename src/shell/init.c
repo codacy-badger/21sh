@@ -12,11 +12,6 @@
 
 #include "shell.h"
 
-/*
-** Think about interactive & non interactive mode...
-** assert read line works properly when read from file
-*/
-
 static int	parse_args(t_sh *shell, int argc, char **argv)
 {
 	int		fd;
@@ -35,7 +30,7 @@ static int	parse_args(t_sh *shell, int argc, char **argv)
 	return (0);
 }
 
-int		init(t_sh *shell, int argc, char **argv)
+int			init(t_sh *shell, int argc, char **argv)
 {
 	extern char	**environ;
 

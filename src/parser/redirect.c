@@ -27,7 +27,6 @@ static t_node	*filename(t_lexer *lexer)
 	if (lexer->curr_tok == NULL || g_parse_error != NOERR)
 		return (NULL);
 	node = NULL;
-	//expand filename here ?
 	if (lexer->curr_tok->type == WORD)
 	{
 		node = ft_node_new(lexer->curr_tok);
@@ -65,9 +64,8 @@ static t_node	*io_file(t_lexer *lexer, t_token *io_number)
 	if (lexer->curr_tok == NULL || g_parse_error != NOERR)
 		return (NULL);
 	node = NULL;
-	if (is_redir(lexer->curr_tok))
+	if (is_redir(lexer->curr_tok) && (node = ft_node_new(lexer->curr_tok)))
 	{
-		node = ft_node_new(lexer->curr_tok);
 		eat(lexer);
 		filename_node = filename(lexer);
 		if (filename_node == NULL)

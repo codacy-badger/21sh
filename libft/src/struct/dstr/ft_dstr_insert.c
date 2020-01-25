@@ -12,10 +12,6 @@
 
 #include "../../../inc/libft.h"
 
-/*
-** i is the index in the dstr where you want to insert.
-** str is the address of the string to insert, len is the length of that string,
-*/
 int		ft_dstr_insert(t_dstr *dstr, size_t i, char *str, size_t len)
 {
 	char	*tmp;

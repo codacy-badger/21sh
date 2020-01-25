@@ -74,8 +74,6 @@ char		*append_filename(char *path, char *filename)
 
 	len_path = ft_strlen(path);
 	ret = ft_xmalloc(len_path + ft_strlen(filename) + 2);
-	if (ret == NULL)
-		exit(0);
 	i = 0;
 	while (path[i])
 	{
@@ -106,9 +104,8 @@ char		*get_executable_path(char *command, t_env *env)
 	ret = get_env_var("PATH", env);
 	path = split_path(ret);
 	i = -1;
-	while (path && path[++i])
+	while (path && path[++i] && (ret = append_filename(path[i], command)))
 	{
-		ret = append_filename(path[i], command);
 		if (stat(ret, &b) == 0 && S_IXUSR & b.st_mode && !S_ISDIR(b.st_mode))
 			break ;
 		free(ret);

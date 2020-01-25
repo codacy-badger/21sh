@@ -50,7 +50,7 @@ static void	remove_bslash(t_dstr *str)
 	}
 }
 
-static char	*get_heredoc(t_input *input, char *delim, t_env *env)
+static char	*get_heredoc(t_input *input, char *delim)
 {
 	char	*str;
 	t_dstr	*heredoc;
@@ -77,7 +77,7 @@ static char	*get_heredoc(t_input *input, char *delim, t_env *env)
 	return (str);
 }
 
-void		get_all_heredocs(t_input *input, t_node *heredoc_list, t_env *env)
+void		get_all_heredocs(t_input *input, t_node *heredoc_list)
 {
 	int		i;
 	char	*heredoc_str;
@@ -88,7 +88,7 @@ void		get_all_heredocs(t_input *input, t_node *heredoc_list, t_env *env)
 	{
 		heredoc = heredoc_list->child[i];
 		heredoc_str = get_heredoc(input,
-				node_token(heredoc->child[1])->value->str, env);
+				node_token(heredoc->child[1])->value->str);
 		free(node_token(heredoc->child[1])->value->str);
 		node_token(heredoc->child[1])->value->str = heredoc_str;
 		node_token(heredoc->child[1])->value->len = ft_strlen(heredoc_str);

@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	WORD_EXPANSION_H
+#ifndef WORD_EXPANSION_H
 # define WORD_EXPANSION_H
 
-#include "shell.h"
+# include "shell.h"
 
-void	expand(t_node *command, t_env *env);
+int		expand(t_node *command, t_env *env);
 int		param_expand(t_dstr *str, int start, t_env *env);
 
 bool	quote_start(char *str, int i, char *quote_status);

@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dstr_remove.c                                   :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 23:03:42 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/13 23:39:07 by fratajcz         ###   ########.fr       */
+/*   Created: 2020/01/14 12:28:09 by fratajcz          #+#    #+#             */
+/*   Updated: 2020/01/14 16:16:00 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/libft.h"
+#ifndef ENV_H
+# define ENV_H
 
-int		ft_dstr_remove(t_dstr *dstr, size_t i, size_t len)
+# include "shell.h"
+
+struct s_env		*g_env;
+
+typedef struct		s_env
 {
-	char	*ptr;
+	char			**env;
+	int				size;
+	int				capacity;
+}					t_env;
 
-	if (!dstr)
-		return (0);
-	ptr = dstr->str + i + len;
-	ft_memmove(ptr - len, ptr, ft_strlen(ptr) + 1);
-	dstr->len -= len;
-	ft_bzero(dstr->str + dstr->len, len);
-	return (len);
-}
+#endif

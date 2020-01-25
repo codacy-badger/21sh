@@ -13,7 +13,7 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-#include "shell.h"
+# include "shell.h"
 
 int		builtin_env(char **argv, t_env *env);
 int		builtin_unsetenv(char **argv, t_env *env);

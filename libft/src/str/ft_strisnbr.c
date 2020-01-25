@@ -12,14 +12,14 @@
 
 #include "../../inc/libft.h"
 
-bool    ft_strisnbr(char *str)
+bool	ft_strisnbr(char *str)
 {
-    if (!str || !*str)
-        return (false);
-    while (*str)
-    {
-        if (!ft_isdigit(*str++))
-            return (false);
-    }
-    return (true);
+	if (!str || !*str)
+		return (false);
+	while (*str)
+	{
+		if (!ft_isdigit(*str++))
+			return (false);
+	}
+	return (true);
 }

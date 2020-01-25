@@ -12,11 +12,6 @@
 
 #include "shell.h"
 
-/*
-** update term->cpos
-** This is weird, it works but cant find general formula for
-** wrapping on the same line when we reach 0 or size
-*/
 void	setcpos(t_term *term, size_t value)
 {
 	term->cpos = value;

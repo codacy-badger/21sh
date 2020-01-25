@@ -79,7 +79,6 @@ void		rl_print_match_list(t_list_head *comp_list, char *partial,
 		t_input *input)
 {
 	t_list_head *cur;
-	char		backup;
 	char		*last_slash;
 	int			skip_len;
 

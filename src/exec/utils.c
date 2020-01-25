@@ -39,36 +39,41 @@ int				get_argc(t_node *cmd)
 	return (argc);
 }
 
+static char		**words_to_array(t_node *cmd)
+{
+	char	**array;
+	int		i;
+	int		j;
+
+	i = -1;
+	j = 0;
+	array = ft_xmalloc((get_argc(cmd) + 1) * sizeof(char *));
+	while (++i < cmd->nb_children)
+	{
+		if (node_token(cmd->child[i])->type == WORD)
+			array[j++] = ft_strdup(node_token(cmd->child[i])->value->str);
+	}
+	array[j] = NULL;
+	return (j == 0 ? NULL : array);
+}
+
 char			**get_argv(t_node *cmd, t_env *env)
 {
 	char	**argv;
 	char	*cmd_path;
-	int		i;
-	int		j;
 
-	argv = ft_xmalloc((get_argc(cmd) + 1) * sizeof(char *));
-	i = -1;
-	j = 0;
-	while (++i < cmd->nb_children)
+	cmd_path = NULL;
+	if ((argv = words_to_array(cmd)))
 	{
-		if (node_token(cmd->child[i])->type == WORD)
-			argv[j++] = ft_strdup(node_token(cmd->child[i])->value->str);
+		if (is_builtin(argv[0]))
+			return (argv);
+		else if ((cmd_path = get_executable_path(argv[0], env)))
+		{
+			free(argv[0]);
+			argv[0] = cmd_path;
+			return (argv);
+		}
 	}
-	argv[j] = NULL;
-	if (argv[0] == NULL)
-	{
-		free(argv);
-		return (NULL);
-	}
-	if (is_builtin(argv[0]))
-		return (argv);
-	cmd_path = get_executable_path(argv[0], env);
-	if (cmd_path == NULL)
-	{
-		free_arr(argv);
-		return (NULL);
-	}
-	free(argv[0]);
-	argv[0] = cmd_path;
-	return (argv);
+	free_arr(argv);
+	return (NULL);
 }

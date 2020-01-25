@@ -23,6 +23,7 @@
 # include <limits.h>
 # include <dirent.h>
 # include "libft.h"
+# include "env.h"
 # include "terminal.h"
 # include "input.h"
 # include "lexer.h"
@@ -30,21 +31,6 @@
 # include "exec.h"
 # include "expansion.h"
 # include "builtins.h"
-
-/*
-** TODO:
-** -Improve redraw on resize + deal with
-**  line editing of lines with quoted newlines.
-** -Find more elegant way to deal with
-**  operators in lexer.
-*/
-
-typedef struct		s_env
-{
-	char			**env;
-	int				size;
-	int				capacity;
-}					t_env;
 
 typedef struct		s_sh
 {

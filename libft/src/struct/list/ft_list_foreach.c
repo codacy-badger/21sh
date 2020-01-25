@@ -12,7 +12,7 @@
 
 #include "../../../inc/libft.h"
 
-void    ft_list_foreach(t_list_head *head, void (*f)(void *a, void *priv),
+void	ft_list_foreach(t_list_head *head, void (*f)(void *a, void *priv),
 		void *priv)
 {
 	t_list_head			*cur;

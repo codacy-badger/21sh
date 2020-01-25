@@ -36,7 +36,9 @@ bool	is_operator_next(char *ope, char c)
 		else if (c == '>')
 			return (ft_strequ(ope, "<") || ft_strequ(ope, ">"));
 		else if (c == '&')
-			return (ft_strequ(ope, "<") || ft_strequ(ope, ">") || ft_strequ(ope, "&"));
+			return (ft_strequ(ope, "<")
+			|| ft_strequ(ope, ">")
+			|| ft_strequ(ope, "&"));
 		else if (c == '|')
 			return (ft_strequ(ope, "|"));
 		else if (c == '-')
@@ -47,31 +49,21 @@ bool	is_operator_next(char *ope, char c)
 
 int		get_operator_type(char *ope)
 {
-	if (ft_strequ(ope, "<"))
-		return (LESS);
-	else if (ft_strequ(ope, ">"))
-		return (GREAT);
-	else if (ft_strequ(ope, "<<"))
-		return (DLESS);
-	else if (ft_strequ(ope, ">>"))
-		return (DGREAT);
-	else if (ft_strequ(ope, "<&"))
-		return (LESSAND);
-	else if (ft_strequ(ope, ">&"))
-		return (GREATAND);
-	else if (ft_strequ(ope, "<>"))
-		return (LESSGREAT);
-	else if (ft_strequ(ope, "<<-"))
-		return (DLESSDASH);
-	else if (ft_strequ(ope, "&"))
-		return (AMPERSAND);
-	else if (ft_strequ(ope, "&&"))
-		return (AND_IF);
-	else if (ft_strequ(ope, "|"))
-		return (PIPE);
-	else if (ft_strequ(ope, "||"))
-		return (OR_IF);
-	else if (ft_strequ(ope, ";"))
-		return (SEMI);
+	int		ret;
+
+	if ((ft_strequ(ope, "<") && (ret = LESS))
+	|| (ft_strequ(ope, ">") && (ret = GREAT))
+	|| (ft_strequ(ope, "<<") && (ret = DLESS))
+	|| (ft_strequ(ope, ">>") && (ret = DGREAT))
+	|| (ft_strequ(ope, "<&") && (ret = LESSAND))
+	|| (ft_strequ(ope, ">&") && (ret = GREATAND))
+	|| (ft_strequ(ope, "<>") && (ret = LESSGREAT))
+	|| (ft_strequ(ope, "<<-") && (ret = DLESSDASH))
+	|| (ft_strequ(ope, "&") && (ret = AMPERSAND))
+	|| (ft_strequ(ope, "&&") && (ret = AND_IF))
+	|| (ft_strequ(ope, "|") && (ret = PIPE))
+	|| (ft_strequ(ope, "||") && (ret = OR_IF))
+	|| (ft_strequ(ope, ";") && (ret = SEMI)))
+		return (ret);
 	return (0);
 }

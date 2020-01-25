@@ -40,21 +40,14 @@ int		tilde_expand(t_dstr *str, char *home_dir)
 }
 
 /*
-** If the complete expansion appropriate for a word results in an empty field, 
+** If the complete expansion appropriate for a word results in an empty field,
 ** that empty field shall be deleted from the list of fields that form the
 ** completely expanded command, unless the original word contained single-quote
 ** or double-quote characters. -> bash does not seem to keep the empty field in
 ** any case ? would be easier to implement.
 */
 
-/*
-void	*remove_empty_fields(char **argv)
-{
-
-}
-*/
-
-void	expand(t_node *command, t_env *env)
+int		expand(t_node *command, t_env *env)
 {
 	int		i;
 	int		pos;
@@ -74,4 +67,5 @@ void	expand(t_node *command, t_env *env)
 		}
 		i++;
 	}
+	return (0);
 }

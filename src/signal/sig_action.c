@@ -21,8 +21,6 @@ void	sig_action(t_sh *shell, int sig)
 		sh = shell;
 		return ;
 	}
-	if (sig == SIGINT)
-		;
 	else if (sig == SIGWINCH)
 	{
 		signal(sig, SIG_DFL);
@@ -30,18 +28,12 @@ void	sig_action(t_sh *shell, int sig)
 		redraw(&sh->input);
 		signal(sig, sig_handle);
 	}
-	else if (sig == SIGTSTP)
-		;
-	else if (sig == SIGCONT)
-		;
-	//else if (sig == SIGSEGV)
-	//	;
 	else if ((1 <= sig && sig <= 15) || sig == 17
 			|| (21 <= sig && sig <= 22) || (24 <= sig && sig <= 27))
 	{
 		del(sh);
 		signal(sig, SIG_DFL);
-		kill(getpid(), sig); //ioctl
+		kill(getpid(), sig);
 	}
 	return ;
 }

@@ -12,7 +12,7 @@
 
 #include "../../../inc/libft.h"
 
-t_node	*ft_node_new(void *data)
+t_node		*ft_node_new(void *data)
 {
 	t_node *node;
 

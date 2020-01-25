@@ -12,18 +12,6 @@
 
 #include "shell.h"
 
-/*
-** -input->head is the head of the list, curr is the pointer, pointing on head
-**  when we are on current line. The lines are added to head in enter() function
-**  when eol is received.
-** -temp is the current line backup, its set the first time we move up, and reset
-**  to NULL when we go back on the current line. Its freed in enter() function if
-**  it hasnt been reset to NULL.
-** -In the case we have identical lines one after the other, we skip them.
-** -I don t skip lines beginning by ' ', cause its complicated. But we could just
-**  decide to not store them in history.
-*/
-
 static char		*str(t_list *list)
 {
 	return (((t_dstr *)list->data)->str);
@@ -70,7 +58,7 @@ int				history_down(t_input *input)
 	return (0);
 }
 
-int			history_up(t_input *input)
+int				history_up(t_input *input)
 {
 	t_dstr	*target;
 

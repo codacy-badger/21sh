@@ -14,12 +14,13 @@
 
 int		delete(t_input *input)
 {
-	size_t 	offset;
+	size_t	offset;
 
 	if (input->line->str[input->pos])
 	{
 		clearfromc(input->termp);
-		ft_dstr_remove(input->line, input->pos, ft_charlen(input->line->str[input->pos]));
+		ft_dstr_remove(input->line, input->pos,
+							ft_charlen(input->line->str[input->pos]));
 		offset = printstr(input->termp, &input->line->str[input->pos]);
 		movcto(input->termp, input->termp->cpos - offset);
 	}
@@ -30,13 +31,14 @@ int		delete(t_input *input)
 
 int		backspace(t_input *input)
 {
-	size_t 	offset;
+	size_t	offset;
 
 	if (input->pos > input->pos_min)
 	{
 		move_left(input);
 		clearfromc(input->termp);
-		ft_dstr_remove(input->line, input->pos, ft_charlen(input->line->str[input->pos]));
+		ft_dstr_remove(input->line, input->pos,
+							ft_charlen(input->line->str[input->pos]));
 		offset = printstr(input->termp, &input->line->str[input->pos]);
 		movcto(input->termp, input->termp->cpos - offset);
 	}

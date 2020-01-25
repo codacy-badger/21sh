@@ -17,7 +17,7 @@
 ** and the char is not terminated.
 */
 
-int		addchar(t_input *input, t_uint8 **bufp)
+int			addchar(t_input *input, t_uint8 **bufp)
 {
 	static size_t	i = 0;
 	static size_t	charlen = 0;
@@ -47,11 +47,10 @@ int		addchar(t_input *input, t_uint8 **bufp)
 }
 
 /*
-** input->esc means we have started to read an escape sequence,
-** but the end of buf was reached before the end of this escape sequence.
+** functions table ?
 */
 
-static int		process(t_input *input, t_uint8 **bufp)
+static int	process(t_input *input, t_uint8 **bufp)
 {
 	if (!input->interactive)
 		return (addchar(input, bufp));
@@ -90,7 +89,7 @@ static int		process(t_input *input, t_uint8 **bufp)
 	return (0);
 }
 
-static void		readline_init(t_input *input, const char *prompt)
+static void	readline_init(t_input *input, const char *prompt)
 {
 	if (input->interactive)
 	{
@@ -104,7 +103,7 @@ static void		readline_init(t_input *input, const char *prompt)
 	input->pos_min = 0;
 }
 
-static char		*readline_return(t_input *input)
+static char	*readline_return(t_input *input)
 {
 	char *nl;
 
@@ -134,7 +133,7 @@ static char		*readline_return(t_input *input)
 **	 was not recognized by c == key, so it was not handled.
 */
 
-char			*readline(t_input *input, const char *prompt)
+char		*readline(t_input *input, const char *prompt)
 {
 	t_uint8		buf[BUFSIZE];
 	t_uint8		*bufp;

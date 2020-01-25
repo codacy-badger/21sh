@@ -9,6 +9,7 @@
 /*   Updated: 2020/01/13 23:39:36 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "shell.h"
 
 int		cut_word(t_input *input)
@@ -66,7 +67,8 @@ int		cut_before(t_input *input)
 		return (0);
 	if (input->clip != NULL)
 		ft_dstr_del((void **)&input->clip, NULL);
-	if (!(input->clip = ft_dstr_new(&input->line->str[input->pos_min], len, len)))
+	if (!(input->clip = ft_dstr_new(&input->line->str[input->pos_min],
+															len, len)))
 		return (-1);
 	move_home(input);
 	ft_dstr_remove(input->line, input->pos_min, len);
