@@ -15,17 +15,6 @@
 int				g_last_exit_st;
 t_list_head		*g_argv_list;
 
-static int		set_pipe_redir(int input_fd, int fildes[2])
-{
-	if (dup2(fildes[1], 1) == -1 || dup2(input_fd, 0) == -1)
-		return (-1);
-	close(fildes[1]);
-	close(fildes[0]);
-	if (input_fd != 0)
-		close(input_fd);
-	return (0);
-}
-
 static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid, int input_fd)
 {
 	t_argv	*argv;
@@ -35,8 +24,7 @@ static int		exec_pipe_cmd(t_node *cmd, t_env *env, int *pid, int input_fd)
 	ft_list_add(argv, g_argv_list);
 	if (pipe(fildes) == -1 || input_fd == -1)
 		return (-1);
-	*pid = fork();
-	if (*pid == -1)
+	if ((*pid = fork()) == -1)
 		kill_all_forks();
 	if (*pid == 0)
 	{

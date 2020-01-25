@@ -40,7 +40,7 @@ SRC =		shell/main.c \
 			input/comp_line_edit.c\
 			input/comp_utils.c\
 			exec/utils.c\
-			exec/utils2.c\
+			exec/argv.c\
 			exec/exec.c\
 			exec/redir.c\
 			exec/redir_utils.c\

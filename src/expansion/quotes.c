@@ -14,7 +14,7 @@
 
 static bool g_dquote = false;
 
-bool	quote_stop(char *str, int i, char *quote_status)
+bool		quote_stop(char *str, int i, char *quote_status)
 {
 	if (*quote_status == BSLASH)
 	{
@@ -30,7 +30,7 @@ bool	quote_stop(char *str, int i, char *quote_status)
 	return (true);
 }
 
-bool	quote_start(char *str, int i, char *quote_status)
+bool		quote_start(char *str, int i, char *quote_status)
 {
 	if (str[i] == BSLASH)
 	{
@@ -51,7 +51,7 @@ bool	quote_start(char *str, int i, char *quote_status)
 	return (false);
 }
 
-static bool is_escapable(char c)
+static bool	is_escapable(char c)
 {
 	return (c == '$' || c == '`' || c == '"' || c == '\\');
 }
@@ -62,34 +62,25 @@ static bool is_escapable(char c)
 ** increment i after deleting a backslash at the end of a word.
 */
 
-void	remove_quotes(t_dstr *str)
+void		remove_quotes(t_dstr *str)
 {
 	char	quote_status;
-	int		i;
 	bool	is_bslash;
+	int		i;
 
 	quote_status = NONE;
 	i = 0;
 	while (str->str[i])
 	{
-		if (quote_start(str->str, i, &quote_status))
-		{
-			if (g_dquote && quote_status == BSLASH
-					&& !is_escapable(str->str[i + 1]))
-				i++;
-			else 
-				ft_dstr_remove(str, i, 1);
-			continue;
-		}
+		if (quote_start(str->str, i, &quote_status)
+		&& ((g_dquote && quote_status == BSLASH
+		&& !is_escapable(str->str[i + 1]) && ++i)
+		|| ft_dstr_remove(str, i, 1)))
+			continue ;
 		is_bslash = (quote_status == BSLASH);
-		if (quote_stop(str->str, i, &quote_status))
-		{
-			if (is_bslash)
-				i++;
-			else
-				ft_dstr_remove(str, i, 1);
-			continue;
-		}
+		if (quote_stop(str->str, i, &quote_status)
+		&& ((is_bslash && ++i) || ft_dstr_remove(str, i, 1)))
+			continue ;
 		i++;
 	}
 }

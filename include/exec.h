@@ -44,7 +44,9 @@ int				restore_fds(void);
 
 t_argv			*get_argv(t_node *cmd, t_env *env);
 void			free_argv(t_argv *argv);
-bool			str_is_nbr(const char *str);
+
 void			kill_all_forks(void);
+int				set_pipe_redir(int input_fd, int fildes[2]);
+
 
 #endif

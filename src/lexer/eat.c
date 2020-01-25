@@ -58,8 +58,8 @@ static void	delete_last_nl(t_lexer *lexer)
 {
 	char *nl;
 
-	if (lexer->str != NULL && lexer->i > 0 && 
-			(nl = ft_strchr(lexer->str + lexer->i - 1, '\n')))
+	if (lexer->str != NULL && lexer->len &&
+			(nl = lexer->str + lexer->len - 1))
 		*nl = '\0';
 }
 

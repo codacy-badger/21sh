@@ -70,7 +70,7 @@ static int	get_output_fd(t_node *op_node, int flags)
 		return (fd);
 	}
 	if ((type == GREATAND || type == LESSAND)
-			&& (str_is_nbr(node_token(op_node->child[1])->value->str)))
+	&& (ft_strisnbr(node_token(op_node->child[1])->value->str)))
 		return (ft_atoi(node_token(op_node->child[1])->value->str));
 	return (open(node_token(op_node->child[1])->value->str, flags, RIGHTS));
 }

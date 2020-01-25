@@ -14,7 +14,7 @@
 
 int		quote(t_lexer *lexer)
 {
-	int	is_bslash;
+	bool	is_bslash;
 
 	if (quote_start(lexer->str, lexer->i, &lexer->quote))
 	{
