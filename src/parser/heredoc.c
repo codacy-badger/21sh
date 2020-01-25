@@ -28,26 +28,38 @@ static void	append_line_to_hist(t_list *hist_head, char *line)
 	}
 }
 
-static void	remove_bslash(t_dstr *str)
+static int	remove_bslash_nl(t_dstr *str)
 {
 	int i;
+	int	count;
 
-	i = 0;
-	while (str->str[i])
+	count = 0;
+	i = str->len - 2;
+	while (str->str[i] == '\\')
 	{
-		if (str->str[i] == '\\')
-		{
-			if (str->str[i + 1] == '\n')
-			{
-				ft_dstr_remove(str, i, 2);
-				continue;
-			}
-			if (str->str[i + 1] == '$' || str->str[i + 1] == '\\'
-					|| str->str[i + 1] == '\'' || str->str[i + 1] == '"')
-				ft_dstr_remove(str, i, 1);
-		}
-		i++;
+		count++;
+		i--;
 	}
+	if (count % 2)
+	{
+		ft_dstr_remove(str, str->len - 2, 2);
+		return (1);
+	}
+	return (0);
+}
+
+static char	*find_cmp(const char *s)
+{
+	int		i;
+
+	i = ft_strlen(s) - 2;
+	while (i >= 0)
+	{
+		if (s[i] == '\n')
+			return ((char *)&s[i]);
+		i--;
+	}
+	return (NULL);
 }
 
 static char	*get_heredoc(t_input *input, char *delim)
@@ -55,6 +67,7 @@ static char	*get_heredoc(t_input *input, char *delim)
 	char	*str;
 	t_dstr	*heredoc;
 	char	*delim_cmp;
+	char	*cmp;
 
 	delim_cmp = ft_strjoin(delim, "\n");
 	heredoc = ft_dstr_new("", 0, 32);
@@ -63,14 +76,14 @@ static char	*get_heredoc(t_input *input, char *delim)
 	{
 		if (input->interactive)
 			append_line_to_hist(input->head, str);
-		if (ft_strequ(str, delim_cmp) || g_parse_error == SILENT_ABORT)
-			break ;
 		ft_dstr_insert(heredoc, heredoc->len, str, ft_strlen(str));
+		if ((!remove_bslash_nl(heredoc) && ((cmp = find_cmp(heredoc->str))
+		&& ft_strequ(++cmp, delim_cmp))) || g_parse_error == SILENT_ABORT)
+			break ;
 	}
+	ft_bzero(cmp, ft_strlen(delim) + 1);
 	if (g_parse_error == SILENT_ABORT)
 		ft_dstr_del((void **)&heredoc, NULL);
-	else
-		remove_bslash(heredoc);
 	free(delim_cmp);
 	str = heredoc ? heredoc->str : NULL;
 	free(heredoc);

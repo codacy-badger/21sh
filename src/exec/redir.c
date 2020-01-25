@@ -58,11 +58,11 @@ static int	get_output_fd(t_node *op_node, int flags)
 		close(get_input_fd(op_node));
 		return (CLOSE);
 	}
-	if (type == DLESS)
+	if (type == DLESS && (tmp_file = ft_mktemp(ft_strdup("/tmp/21sh_XXXXXX"))))
 	{
-		tmp_file = ft_mktemp(ft_strdup("/tmp/21sh_XXXXXX"));
 		fd = open(tmp_file, O_WRONLY);
-		param_expand(node_token(op_node->child[1])->value, 0, g_env);
+		param_expand(node_token(op_node->child[1])->value, 0, g_env, true);
+		remove_bslash(node_token(op_node->child[1])->value);
 		ft_putstr_fd(node_token(op_node->child[1])->value->str, fd);
 		close(fd);
 		fd = open(tmp_file, O_RDONLY);
