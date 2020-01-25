@@ -6,7 +6,7 @@
 /*   By: fratajcz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 19:22:51 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/19 14:16:10 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/25 16:33:37 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char		*get_lcp(t_list_head *comp_list, char *partial)
 	first = comp_list->next->data;
 	last = comp_list->prev->data;
 	i = 0;
-	while (first[i] == last[i])
+	while (first[i] != '\0' && first[i] == last[i])
 		i++;
 	if (ft_strlen(partial) == (unsigned int)i)
 		return (NULL);
