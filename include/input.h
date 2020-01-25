@@ -70,7 +70,7 @@ typedef struct		s_input
 typedef int			(*t_key_func)(t_input *);
 
 int					init_input(t_input *input, struct s_term *term);
-t_key_func 			*init_functable(void);
+t_key_func			*init_functable(void);
 char				*readline(t_input *input, const char *prompt);
 
 int					addchar(t_input *input, t_uint8 **bufp);

@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-t_key_func *init_functable(void)
+t_key_func	*init_functable(void)
 {
 	t_key_func	*table;
 
