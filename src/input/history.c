@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-static char		*str(t_list *list)
+static char		*str(t_list_head *list)
 {
 	return (((t_dstr *)list->data)->str);
 }

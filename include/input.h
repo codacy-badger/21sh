@@ -51,8 +51,8 @@ typedef struct		s_input
 	unsigned long	keys[KEYS_NB];
 	unsigned char	key[8];
 	unsigned long	oldkey;
-	t_list			*head;
-	t_list			*curr;
+	t_list_head		*head;
+	t_list_head		*curr;
 	t_dstr			*line;
 	t_dstr			*temp;
 	t_dstr			*clip;

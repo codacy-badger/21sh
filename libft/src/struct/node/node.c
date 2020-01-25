@@ -16,7 +16,7 @@ t_node		*ft_node_new(void *data)
 {
 	t_node *node;
 
-	node = malloc(sizeof(t_node));
+	node = (t_node *)ft_xmalloc(sizeof(t_node));
 	if (node == NULL)
 		return (NULL);
 	node->data = data;
@@ -31,9 +31,9 @@ static int	ft_node_realloc(t_node *node)
 	t_node	**child_new;
 	int		i;
 
-	child_new = malloc(sizeof(t_node **) * node->capacity * 2);
+	child_new = (t_node **)ft_xmalloc(sizeof(t_node **) * node->capacity * 2);
 	if (child_new == NULL)
-		return (ALLOC_ERROR);
+		return (-1);
 	node->capacity *= 2;
 	i = 0;
 	while (i < node->nb_children)
@@ -50,15 +50,15 @@ int			ft_node_add_child(t_node *parent, t_node *child)
 {
 	if (parent->child == NULL)
 	{
-		parent->child = malloc(sizeof(t_node *) * 2);
+		parent->child = (t_node **)ft_xmalloc(sizeof(t_node *) * 2);
 		if (parent->child == NULL)
-			return (ALLOC_ERROR);
+			return (-1);
 		parent->capacity = 2;
 	}
 	else if (parent->capacity == parent->nb_children)
 	{
-		if (ft_node_realloc(parent) == ALLOC_ERROR)
-			return (ALLOC_ERROR);
+		if (ft_node_realloc(parent) == -1)
+			return (-1);
 	}
 	parent->child[parent->nb_children++] = child;
 	return (0);

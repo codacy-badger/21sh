@@ -15,8 +15,12 @@
 static void	del_input(t_input *input)
 {
 	while (input->head->next != input->head)
-		ft_lstdel(input->head->next, ft_dstr_del, NULL);
-	ft_lstdel(input->head, NULL, NULL);
+	{
+		ft_dstr_del((void *)&input->head->next->data, NULL);
+		ft_list_del(input->head->next);
+	}
+	ft_list_del(input->head);
+	
 	ft_dstr_del((void **)&input->line, NULL);
 	ft_dstr_del((void **)&input->clip, NULL);
 }

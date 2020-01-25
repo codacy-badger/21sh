@@ -36,12 +36,6 @@ SRC =	mem/ft_xmalloc.c \
 		str/ft_putstr_fd.c \
 		str/ft_putendl.c\
 		str/ft_strrchr.c\
-		array/ft_strarray_dup.c \
-		array/ft_strarray_realloc.c \
-		array/ft_strarray_del.c \
-		array/ft_htable_to_array.c \
-		path/ft_path_addsuffix.c \
-		path/ft_path_getsuffix.c \
 		char/ft_iswhitespace.c \
 		char/ft_isprint.c \
 		char/ft_isalpha.c \
@@ -64,26 +58,6 @@ SRC =	mem/ft_xmalloc.c \
 		math/ft_isprime.c \
 		math/ft_nextprime.c \
 		math/ft_next_power_of_two.c\
-		struct/buffer/ft_buff_new.c \
-		struct/buffer/ft_bufferize.c \
-		struct/buffer/ft_bufferize_nbr.c \
-		struct/buffer/ft_buff_flush.c \
-		struct/buffer/ft_buff_del.c \
-		struct/queue/ft_queue_new.c \
-		struct/queue/ft_enqueue.c \
-		struct/queue/ft_dequeue.c \
-		struct/queue/ft_queue_del.c \
-		struct/queue/ft_queue_isempty.c \
-		struct/stack/ft_stack_new.c \
-		struct/stack/ft_push.c \
-		struct/stack/ft_pop.c \
-		struct/stack/ft_pop_back.c \
-		struct/stack/ft_stack_del.c \
-		struct/stack/ft_stack_count.c \
-		struct/stack/ft_stack_isempty.c \
-		struct/lst/ft_lstnew.c \
-		struct/lst/ft_lstadd.c \
-		struct/lst/ft_lstdel.c \
 		struct/list/ft_list_first_head.c \
 		struct/list/ft_list_new_head.c \
 		struct/list/ft_list_add.c \
@@ -96,17 +70,6 @@ SRC =	mem/ft_xmalloc.c \
 		struct/list/ft_list_foreach_rev.c \
 		struct/list/ft_list_sort.c \
 		struct/node/node.c\
-		struct/hash/ft_htnew.c \
-		struct/hash/ft_hentrynew_cpy.c \
-		struct/hash/ft_hentrynew_ptr.c \
-		struct/hash/ft_hentrydel.c \
-		struct/hash/ft_htget.c \
-		struct/hash/ft_hkey.c \
-		struct/hash/ft_htadd.c \
-		struct/hash/ft_htgetval.c \
-		struct/hash/ft_htclr.c \
-		struct/hash/ft_htdel.c \
-		struct/hash/ft_htdelone.c \
 		struct/dstr/ft_dstr_new.c \
 		struct/dstr/ft_dstr_add.c \
 		struct/dstr/ft_dstr_insert.c \

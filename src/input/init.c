@@ -53,7 +53,7 @@ int			init_input(struct s_input *input, struct s_term *term)
 	{
 		init_keys(input);
 		input->termp = term;
-		input->head = ft_lstnew(NULL);
+		input->head = ft_list_first_head(NULL);
 		input->curr = input->head;
 	}
 	input->first_line = true;
