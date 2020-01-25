@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 18:17:30 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/25 16:29:31 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/25 16:55:51 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static bool	is_escapable(char c)
 ** increment i after deleting a backslash at the end of a word.
 */
 
-void	remove_quotes(t_dstr *str)
+void		remove_quotes(t_dstr *str)
 {
 	char	quote_status;
 	int		i;
@@ -91,7 +91,7 @@ void	remove_quotes(t_dstr *str)
 	}
 }
 
-void	remove_bslash(t_dstr *str)
+void		remove_bslash(t_dstr *str)
 {
 	int i;
 

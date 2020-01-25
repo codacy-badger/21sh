@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_del.c                                        :+:      :+:    :+:   */
+/*   del.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 20:08:08 by fratajcz          #+#    #+#             */
-/*   Updated: 2019/11/22 00:37:04 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/25 16:54:19 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	del_input(t_input *input)
 		ft_list_del(input->head->next);
 	}
 	ft_list_del(input->head);
-	
 	ft_dstr_del((void **)&input->line, NULL);
 	ft_dstr_del((void **)&input->clip, NULL);
 }
