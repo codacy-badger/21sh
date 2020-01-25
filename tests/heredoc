@@ -52,5 +52,5 @@ testing backslash removal
 \'\"\$
 \$lol\
 $\
-$USER
+\$USER
 EOF
