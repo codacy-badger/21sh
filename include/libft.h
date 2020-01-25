@@ -18,91 +18,10 @@
 # include <string.h>
 # include <stdbool.h>
 
-/*
-** Type of structs content, PTR points to the content, CPY copy the content.
-*/
-# define PTR			0
-# define CPY			1
-# define ALLOC_ERROR	3
-
 typedef unsigned char	t_uint8;
 typedef unsigned short	t_uint16;
 typedef unsigned int	t_uint32;
 typedef unsigned long	t_uint64;
-
-/*
-** -----------------------------Struct buffer-----------------------------
-*/
-
-typedef struct			s_buff
-{
-	unsigned char		*bytes;
-	size_t				size;
-	size_t				i;
-	void				(*flush_func)(struct s_buff *buff);
-	int					fd;
-}						t_buff;
-
-t_buff					*ft_buff_new(size_t buff_size, int fd,
-									void (*flush_func)(t_buff *buff));
-void					ft_bufferize(t_buff *buff, const char *data,
-															size_t data_size);
-void					ft_bufferize_nbr(t_buff *buff, long nbr, t_uint32 base,
-																	int prefix);
-void					ft_buff_flush(t_buff *buff);
-void					ft_buff_del(t_buff *buff);
-
-/*
-** -----------------------------Struct queue-----------------------------
-*/
-
-typedef struct			s_queue
-{
-	void				*content;
-	size_t				content_size;
-	struct s_queue		*next;
-}						t_queue;
-
-t_queue					*ft_queue_new(const void *content, size_t content_size);
-void					ft_enqueue(t_queue **queue, t_queue *new);
-void					ft_dequeue(t_queue **queue, void (*del)(void *));
-void					ft_queue_del(t_queue **queue, void (*del)(void *));
-int						ft_queue_isempty(t_queue **queue);
-
-/*
-** -----------------------------Struct stack-----------------------------
-*/
-
-typedef struct			s_stack
-{
-	void				*content;
-	size_t				content_size;
-	struct s_stack		*next;
-}						t_stack;
-
-t_stack					*ft_stack_new(const void *content, size_t content_size);
-void					ft_push(t_stack **stack, t_stack *new);
-void					ft_pop(t_stack **stack, void (*del)(void *));
-void					ft_pop_back(t_stack **stack, void (*del)(void *));
-void					ft_stack_del(t_stack **stack, void (*del)(void *));
-int						ft_stack_count(t_stack **stack);
-int						ft_stack_isempty(t_stack **stack);
-
-/*
-** -----------------------------Struct t_list-----------------------------
-*/
-
-typedef struct			s_list
-{
-	void				*data;
-	struct s_list		*prev;
-	struct s_list		*next;
-}						t_list;
-
-t_list					*ft_lstnew(void *data);
-void					ft_lstdel(t_list *head,
-						void (*del)(void **, void *), void *priv);
-void					ft_lstadd(t_list *head, t_list *new);
 
 /*
 ** -----------------------------Struct list-----------------------------
@@ -150,50 +69,6 @@ typedef struct			s_node
 
 t_node					*ft_node_new(void *data);
 int						ft_node_add_child(t_node *parent, t_node *child);
-
-/*
-** -----------------------------Struct hashtable-----------------------------
-*/
-
-typedef struct			s_hentry
-{
-	char				*key;
-	void				*value;
-	struct s_hentry		**head;
-	struct s_hentry		*prev;
-	struct s_hentry		*next;
-	char				type;
-}						t_hentry;
-
-typedef struct			s_htable
-{
-	t_hentry			**table;
-	t_uint32			count;
-	t_uint32			size;
-}						t_htable;
-
-t_htable				*ft_htnew(t_uint32 size);
-
-/*
-** Low level
-*/
-t_hentry				*ft_hentrynew_cpy(const char *key,
-										const void *value, size_t size);
-t_hentry				*ft_hentrynew_ptr(const char *key,
-														const void *value);
-void					ft_hentrydel(t_hentry **ahentry);
-t_hentry				*ft_htget(t_htable *htable, const char *key);
-t_uint32				ft_hkey(t_htable *htable, const char *key);
-
-/*
-** High level
-*/
-int						ft_htadd(t_htable *htable, const char *key,
-											const void *value, ssize_t size);
-void					*ft_htgetval(t_htable *htable, const char *key);
-void					ft_htclr(t_htable *htable);
-void					ft_htdel(t_htable **ahtable);
-void					ft_htdelone(t_htable *htable, const char *key);
 
 /*
 ** -------------------------Dynamic strings------------------------
@@ -257,23 +132,6 @@ char					*ft_strndup(const char *s1, size_t n);
 
 void					ft_putstr_fd(const char *str, int fd);
 void					ft_putendl(char const *s);
-
-/*
-** -----------------------------Array-----------------------------
-*/
-
-char					**ft_strarray_dup(char **array);
-char					**ft_strarray_realloc(char **array, size_t new_size);
-void					ft_strarray_del(char ***array);
-char					**ft_htable_to_array(t_htable *htable);
-
-/*
-** -----------------------------Path-----------------------------
-*/
-
-char					*ft_path_addsuffix(const char *path, const char *suffix,
-																char free_old);
-char					*ft_path_getsuffix(const char *path, char alloc);
 
 /*
 ** -----------------------------Char-----------------------------

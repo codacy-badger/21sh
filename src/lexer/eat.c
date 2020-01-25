@@ -96,7 +96,7 @@ int			eat(t_lexer *lexer)
 	delete_last_nl(lexer);
 	if (lexer->inputp->interactive
 	&& lexer->str && lexer->str[0] != 0 && lexer->str[0] != ' ')
-		ft_lstadd(lexer->inputp->head,
-				ft_lstnew(ft_dstr_new(lexer->str, ft_strlen(lexer->str), 1)));
+		ft_list_add_tail(ft_dstr_new(lexer->str, ft_strlen(lexer->str), 1),
+		lexer->inputp->head);
 	return (reset_lexer(lexer));
 }

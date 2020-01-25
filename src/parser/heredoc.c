@@ -14,11 +14,11 @@
 
 extern int	g_parse_error;
 
-static void	append_line_to_hist(t_list *hist_head, char *line)
+static void	append_line_to_hist(t_list_head *hist_head, char *line)
 {
 	t_dstr	*hist;
 
-	hist = hist_head->prev->data;
+	hist = (t_dstr *)hist_head->prev->data;
 	ft_dstr_add(hist, '\n');
 	ft_dstr_insert(hist, hist->len, line, ft_strlen(line));
 	if (hist->str[hist->len - 1] == '\n')

@@ -12,6 +12,21 @@
 
 #include "shell.h"
 
+static void	increase_shlvl(t_env *env)
+{
+	char	*shlvl_str;
+	int		shlvl_int;
+
+	shlvl_str = get_env_var("SHLVL", env);
+	if (shlvl_str != NULL)
+		shlvl_int = ft_atoi(shlvl_str) + 1;
+	else
+		shlvl_int = 1;
+	shlvl_str = ft_itoa(shlvl_int);
+	set_env_var("SHLVL", shlvl_str, env);
+	free(shlvl_str);
+}
+
 static int	parse_args(t_sh *shell, int argc, char **argv)
 {
 	int		fd;
@@ -46,5 +61,7 @@ int			init(t_sh *shell, int argc, char **argv)
 	init_input(&shell->input, &shell->term);
 	init_lexer(&shell->lexer, &shell->input);
 	shell->env = env_dup(environ);
+	increase_shlvl(&shell->env);
+	g_env = &shell->env;
 	return (0);
 }
