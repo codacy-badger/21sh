@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 18:17:30 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/25 15:54:52 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/25 16:29:31 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,25 +62,31 @@ static bool	is_escapable(char c)
 ** increment i after deleting a backslash at the end of a word.
 */
 
-void		remove_quotes(t_dstr *str)
+void	remove_quotes(t_dstr *str)
 {
 	char	quote_status;
-	bool	is_bslash;
 	int		i;
+	bool	is_bslash;
 
 	quote_status = NONE;
 	i = 0;
 	while (str->str[i])
 	{
-		if (quote_start(str->str, i, &quote_status)
-		&& ((g_dquote && quote_status == BSLASH
-		&& !is_escapable(str->str[i + 1]) && ++i)
-		|| ft_dstr_remove(str, i, 1)))
-			continue ;
+		if (quote_start(str->str, i, &quote_status))
+		{
+			if (g_dquote && quote_status == BSLASH
+					&& !is_escapable(str->str[i + 1]))
+				i++;
+			else
+				ft_dstr_remove(str, i, 1);
+			continue;
+		}
 		is_bslash = (quote_status == BSLASH);
-		if (quote_stop(str->str, i, &quote_status)
-		&& ((is_bslash && ++i) || ft_dstr_remove(str, i, 1)))
-			continue ;
+		if (quote_stop(str->str, i, &quote_status))
+		{
+			is_bslash ? i++ : ft_dstr_remove(str, i, 1);
+			continue;
+		}
 		i++;
 	}
 }
