@@ -16,7 +16,7 @@ export DIR_21SH=$PWD
 export ls=ls
 export arg=-a
 export arg2=/
-export 'loop=bonjour$loop'
+export "loop=bonjour\$loop"
 ./21sh $DIR/expansion > $DIR/exp.21sh 2>&1
 bash $DIR/expansion > $DIR/exp.bash 2>&1
 
@@ -87,20 +87,20 @@ mkdir -p $DIR/bash $DIR/21sh
 
 for file in $DIR/*.21sh
 do
-	name=$(basename $(echo $file | cut -d '.' -f 1))
+	name="$(basename "$(echo "$file" | cut -d '.' -f 1)")"
 	$CSPLIT --silent --suppress-matched "$file" '/~~~/' '{*}'\
 		--prefix "$DIR/21sh/$name "
 done
 for file in $DIR/*.bash
 do
-	name=$(basename $(echo $file | cut -d '.' -f 1))
+	name="$(basename "$(echo "$file" | cut -d '.' -f 1)")"
 	$CSPLIT --silent --suppress-matched "$file" '/~~~/' '{*}'\
 		--prefix "$DIR/bash/$name "
 done
 
 for file in $DIR/bash/*
 do
-	file=`basename "$file"`
+	file="$(basename "$file")"
 	if diff -u -U 10 "$DIR/21sh/$file" "$DIR/bash/$file"; then
 		echo "$file" ✅
 	else
