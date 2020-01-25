@@ -6,7 +6,7 @@
 /*   By: fratajcz <fratajcz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 18:17:30 by fratajcz          #+#    #+#             */
-/*   Updated: 2020/01/23 13:41:24 by fratajcz         ###   ########.fr       */
+/*   Updated: 2020/01/25 15:54:52 by fratajcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,7 @@ void	remove_bslash(t_dstr *str)
 				ft_dstr_remove(str, i, 2);
 				continue;
 			}
-			if (str->str[i + 1] == '$' || str->str[i + 1] == '\\'
-					|| str->str[i + 1] == '\'' || str->str[i + 1] == '"')
+			if (str->str[i + 1] == '$' || str->str[i + 1] == '\\')
 				ft_dstr_remove(str, i, 1);
 		}
 		i++;
