@@ -45,3 +45,12 @@ cat << EOF
 testing line cont combined with expansion\
 $HOME
 EOF
+
+cat << EOF
+testing backslash removal
+\t\\t\\\t\\\\t
+\'\"\$
+\$lol\
+$\
+$USER
+EOF
