@@ -46,14 +46,14 @@ int			addchar(t_input *input, t_uint8 **bufp)
 	return (CONTINUE);
 }
 
-/*
-** functions table ?
-*/
-
 static int	process(t_input *input, t_uint8 **bufp)
 {
+	static t_key_func *functable = NULL;
+
 	if (!input->interactive)
 		return (addchar(input, bufp));
+	if (functable == NULL)
+		functable = init_functable();
 	if (**bufp != '\t')
 		input->first_tab_press = true;
 	if (input->esc)
@@ -62,31 +62,9 @@ static int	process(t_input *input, t_uint8 **bufp)
 		return (addchar(input, bufp));
 	if ((*input->key = *(*bufp)++) == 27)
 		return (escape(input, bufp));
-	if (*input->key == 10)
-		return (enter(input));
 	if (*input->key == 127)
 		return (backspace(input));
-	if (*input->key == 14)
-		return (move_nextword(input));
-	if (*input->key == 24)
-		return (move_prevword(input));
-	if (*input->key == 21)
-		return (cut_before(input));
-	if (*input->key == 11)
-		return (cut_after(input));
-	if (*input->key == 23)
-		return (cut_word(input));
-	if (*input->key == 25)
-		return (paste(input));
-	if (*input->key == 12)
-		return (redraw(input));
-	if (*input->key == 3)
-		return (ctrl_c(input));
-	if (*input->key == 4)
-		return (ctrl_d(input));
-	if (*input->key == '\t')
-		return (rl_complete(input));
-	return (0);
+	return (functable[*input->key](input));
 }
 
 static void	readline_init(t_input *input, const char *prompt)
