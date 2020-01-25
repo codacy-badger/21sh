@@ -48,5 +48,4 @@ void			free_argv(t_argv *argv);
 void			kill_all_forks(void);
 int				set_pipe_redir(int input_fd, int fildes[2]);
 
-
 #endif

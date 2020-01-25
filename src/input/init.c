@@ -12,6 +12,25 @@
 
 #include "shell.h"
 
+t_key_func	*init_functable(void)
+{
+	t_key_func	*table;
+
+	table = ft_xmalloc(sizeof(t_key_func) * 32);
+	table[10] = &enter;
+	table[14] = &move_nextword;
+	table[24] = &move_prevword;
+	table[21] = &cut_before;
+	table[11] = &cut_after;
+	table[23] = &cut_word;
+	table[25] = &paste;
+	table[12] = &redraw;
+	table[3] = &ctrl_c;
+	table[4] = &ctrl_d;
+	table[9] = &rl_complete;
+	return (table);
+}
+
 static void	init_keycaps(struct s_input *input)
 {
 	char	*str;
