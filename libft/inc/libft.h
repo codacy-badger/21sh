@@ -24,6 +24,33 @@ typedef unsigned int	t_uint32;
 typedef unsigned long	t_uint64;
 
 /*
+** -----------------------------Struct double-----------------------------
+*/
+
+# define DOUBLE_EXPONENT_MASK		0x7ff
+# define DOUBLE_MANTISSA_MASK		0xfffffffffffff
+# define DOUBLE_EXPONENT_MAX		(0x800 - 1)
+# define DOUBLE_EXPONENT_SHIFT		(0x400 - 1)
+
+# define LDOUBLE_EXPONENT_MASK		0x7fff
+# define LDOUBLE_MANTISSA_MASK		0xffffffffffffffff
+# define LDOUBLE_EXPONENT_MAX		(0x8000 - 1)
+# define LDOUBLE_EXPONENT_SHIFT		(0x4000 - 1)
+
+typedef struct			s_double
+{
+	double				f;
+	long double			lf;
+	t_uint8				neg;
+	t_uint16			exponent;
+	t_uint64			mantissa;
+	int					real_exponent;
+	t_uint8				is_denormalized;
+	t_uint8				is_inf;
+	t_uint8				is_nan;
+}						t_double;
+
+/*
 ** -----------------------------Struct list-----------------------------
 */
 
@@ -174,5 +201,26 @@ long					ft_atoi(const char *str);
 long					ft_atoi_base(const char *nbr, t_uint32 base);
 char					*ft_itoa(long n);
 char					*ft_itoa_base(long n, t_uint32 base);
+
+/*
+** -----------------------------Old lib-----------------------------
+*/
+
+void					ft_ceil_double(double *fp, size_t precision);
+void					ft_ceil_ldouble(long double *fp, size_t precision);
+void					ft_frexpl(t_double *t_f, long double lf);
+void					ft_frexp(t_double *t_f, double f);
+char					*ft_dtoa(double f, size_t precision);
+char					*ft_ldtoa(long double lf, size_t precision);
+char					*ft_strprefix(char *str, char *prefix, int alloc);
+char					*ft_strsuffix(char *str, char *suffix, int alloc);
+void					ft_strtolower(char *str);
+char					*ft_utoa_base(uintmax_t n, unsigned int base);
+char					*ft_utoa(uintmax_t n);
+int						ft_dtoc_36(int d);
+int						ft_islower(int c);
+int						ft_isupper(int c);
+void					ft_putstr(const char *s);
+char					*ft_strpad(char *str, size_t field_width, int side, char c);
 
 #endif
