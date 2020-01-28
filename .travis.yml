@@ -12,10 +12,11 @@ env:
 
 addons:
   apt:
-    packages: &common-apt-packages
+    packages:
       - make
       - clang
       - libncurses-dev
+      - tcsh
 
 install: make
 script: tests/test.sh
