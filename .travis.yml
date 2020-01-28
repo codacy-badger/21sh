@@ -1,0 +1,21 @@
+os:
+  - linux
+
+dist: xenial
+
+language: c
+
+compiler: clang
+
+env:
+  - DBG_FLAGS="-fsanitize=address -glldb -coverage"
+
+addons:
+  apt:
+    packages: &common-apt-packages
+      - make
+      - clang
+      - libncurses-dev
+
+install: make
+script: tests/test.sh
