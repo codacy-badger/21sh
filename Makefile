@@ -1,5 +1,5 @@
 NAME = 21sh 
-CC = clang 
+CC = gcc 
 CFLAGS = -Wall -Wextra $(DBG_FLAGS)# -Werror
 LFLAGS = -ltermcap
 DIR_SRC = src/
